@@ -1,0 +1,7 @@
+Slides/*
+/.quarto/
+*cache*
+*_freeze*
+.Rproj.user
+.Rhistory
+QuorseNotes.Rproj

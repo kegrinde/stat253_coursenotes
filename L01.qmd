@@ -1,0 +1,53 @@
+---
+title: "Setup Justification"
+---
+
+## Slides-first mentality
+
+`_quarto.yml` assumes that the format is going to be `beamer` slides. This is because I use VSCode to make my slides, and Cmd-Shift-K will build according to the `_quarto.yml` file. This means I prototype my notes as slides, then just kinda assume that the book will look good.
+
+The `_quarto-book.yml` has a special name. The `-book` part tells quarto that it's part of the "Book" project.
+
+## Rendering the Book
+
+```sh
+quarto render --profile book
+```
+
+Alternately,
+
+```sh
+quarto preview --profile book
+```
+
+## Conditional Render by Project
+
+The following allows for different content in the slides versus the book.
+
+```
+::: {.content-visible when-profile="book"}
+Content here will only be visible when rendered using --profile book
+:::
+```
+
+```
+::: {.content-visible unless-profile="book"}
+Content here will only be visible when **not** rendered using --profile book
+:::
+```
+
+Notice that both of these are defined in `.vscode/quarto-bookslides.code-snippets`, and thus can be easily inserted when editing with VSCode (a similar setup exists in RStudio, with different syntax).
+
+
+## Publishing on GitHub
+
+- See [Getting Started With Git](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git) for some instructions getting git set up.
+    - See [here](https://jennybc.github.io/2014-05-12-ubc/ubc-r/session03_git.html) for a wonderful introduction to using git with RStudio.
+- GitHub Desktop can make the process simpler if you aren't comfortable with a command line (outside of R).
+
+
+The `_quarto-book.yml` file puts the book in the "docs" folder, and GitHub allows you to serve a static site (i.e., host a webpage) from the `docs/` folder. The `output-dir: docs` in `_quarto-book.yml` is required!
+
+On GitHub, go to Settings -> Pages and tell it to serve the site from `docs/`. 
+
+That's it! There are no other steps to getting your book as a github website! You're done!

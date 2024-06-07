@@ -1,0 +1,36 @@
+---
+title: "The `_quarto.yml` file"
+---
+
+Let's go through the file line-by-line.
+
+```yml
+date-fromat: iso
+date: "last-modified"
+author: "Dr. Devan Becker"
+institute: "Wilfrid Laurier University"
+```
+
+- `date-format` to `institute` are self-explanatory.
+    - See [date formats](https://quarto.org/docs/reference/dates.html) for more advanced things
+
+```yml
+execute:
+  warning: false
+  cache: true
+  freeze: auto
+```
+
+- The `execute` options will apply to everything.
+
+```yml
+profile:
+  default: slides
+  group:
+  - [slides, book]
+```
+
+This is where a lot of the magic happens! The profiles allow for easy switching between output formats, each of which has their own option.
+
+- The default profile being "slides" means that `Ctrl+Shift+K` will preview to slides!
+    - You can change this depending on what you're developing.

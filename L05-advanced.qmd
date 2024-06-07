@@ -1,0 +1,108 @@
+# Some advanced things
+
+## webR
+
+Instructions from this [presentation](https://nrennie.rbind.io/teaching-with-webR).
+
+Install the [webR Quarto extension](https://github.com/coatless/quarto-webr):
+
+```sh
+quarto add coatless/quarto-webr
+```
+
+Add the webR filter to the yaml:
+
+```yaml
+format: revealjs
+filters:
+  - webr
+```
+
+Add a webR code block:
+
+````md
+```{webr-r}
+# set a random seed and generate data
+set.seed(123)
+x <- rnorm(100)
+
+# calculate mean
+mean(x)
+```
+````
+
+## ShinyLive
+
+[Shiny Live](https://topepo.github.io/shinylive-in-book-test/) allows either R or Python shiny apps to be run from within the book - without storing the book on a shiny server! See [here](https://github.com/RamiKrispin/shinylive-r) for a tutorial.
+
+Every time the user opens your book, the shiny app installs all of the required packages. For best results, keep packages to a minimum.
+
+(This repo does not have an example because the extension adds dependencies. I'll maybe make another repo just to outline the steps I needed to take.)
+
+## Quizzes for your LMS
+
+In my slides, I include something like:
+
+```md
+## Q1
+
+Which of the following statements is *False*?
+
+a. True
+b. False
+
+<!--- B --->
+```
+
+A custom R script extracts the "B" from the comment string, then formats an MC question according to my LMS. 
+
+The question is shown only on the slides, students answer on the LMS.
+
+::: {.content-visible when-profile="book"}
+This is specific to the way I do things, but it has saved quite a bit of time and lets me do quizzes tied to their student numbers without an external tool.
+:::
+
+## Partially Populated Slides with Full Notes
+
+```{r}
+#| echo: true
+Sys.getenv("QUARTO_PROFILE")
+```
+
+\pspace
+
+Using the profile in R:
+
+```{r}
+blank <- function(x) {
+    if(Sys.getenv("QUARTO_PROFILE") == "book") {
+        return(x)
+    } else {
+        return("________")
+    }
+}
+```
+
+Forgetful Sally was so forgetful that when she tried to remember something she drew a `r blank("blank")`.
+
+
+## Solutions (html only)
+
+How can I get an arbitrary block of text to be hidden until the user asks for it?
+
+<details>
+<summary>**Solution**</summary>
+```md
+<details>
+<summary>**Solution**</summary>
+
+</details>
+```
+
+</details>
+
+## Include from a private repo
+
+You can have a separate repo that is private (e.g., if it has quizzes with solutions), then [include](https://quarto.org/docs/authoring/includes.html) files from that repo. 
+
+- An "include" is a file that is copied verbatim when rendering.

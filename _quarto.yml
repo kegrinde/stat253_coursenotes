@@ -1,0 +1,14 @@
+date-fromat: iso
+date: "last-modified"
+author: "Dr. Devan Becker"
+institute: "Wilfrid Laurier University"
+
+execute:
+  warning: false
+  cache: true
+  freeze: auto
+
+profile:
+  default: slides
+  group:
+  - [slides, book]
