@@ -1,7 +1,4 @@
 date-fromat: iso
-date: "last-modified"
-author: "Dr. Kelsey Grinde"
-institute: "Macalester College"
 
 execute:
   warning: false

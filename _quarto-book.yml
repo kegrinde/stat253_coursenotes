@@ -5,13 +5,13 @@ project:
 number-depth: 2
 
 book:
-  title: "STAT 253 Course Notes"
-  subtitle: "Fall 2024"
+  title: "STAT 253: Statistical Machine Learning"
+  subtitle: "Fall 2024 Course Notes"
   repo-url: https://github.com/kegrinde/stat253_coursenotes
   repo-actions: [issue, source]  
   page-footer:
     left: |
-      Copyright Kelsey Grinde, released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0.
+      Copyright Kelsey Grinde, CC BY-NC-SA 4.0
   sidebar: 
     collapse-level: 2
   page-navigation: true

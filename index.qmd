@@ -1,27 +1,30 @@
+---
+author: "Dr. Kelsey Grinde"
+affiliation: "Macalester College"
+date-modified: today
+---
+
 # Welcome! {.unnumbered}
 
-<center>
-<img src="images/blackbox.png" width="300">
+This is the course website for Statistical Machine Learning (STAT 253) at 
+Macalester College for the Fall 2024 semester.
 
-[Image source](https://www.maxpixel.net/static/photo/1x/Cardboard-Box-Black-Box-Three-Dimensional-Container-310220.png)
-</center>
+The site was built by [Kelsey Grinde](https://kegrinde.github.io).
+It draws heavily upon our course textbook, the 2nd edition of 
+[An Introduction to Statistical Learning with Applications in R](https://www.statlearning.com/), as well as on materials prepared by fellow Macalester statistics faculty 
+[Brianna Heggeseth](https://bcheggeseth.github.io), 
+[Alicia Johnson](https://ajohns24.github.io), and 
+[Leslie Myint](https://lmyint.github.io). 
 
-<br>
-<br>
+The structure of this site was inspired by an [eCOTS 2024](https://www.causeweb.org/cause/ecots/ecots24) workshop led by Devin Becker: 
+see [here](https://github.com/DB7-CourseNotes/QuorseNotes/tree/main) for materials.
 
-This is the course website for Statistical Machine Learning (STAT 253) at Macalester College for Fall 2024.
-
-The site was built by Macalester Professor [Kelsey Grinde](https://kegrinde.github.io).
-It draws heavily upon our course textbook, the 2nd edition of [An Introduction to Statistical Learning with Applications in R](https://hastie.su.domains/ISLR2/ISLRv2_corrected_June_2023.pdf.download.html), 
-as well as on materials prepared by fellow Macalester Professors [Brianna Heggeseth](https://bcheggeseth.github.io), 
-[Alicia Johnson](https://ajohns24.github.io), and [Leslie Myint](https://lmyint.github.io). 
-The structure of this site was inspired by a [workshop](https://github.com/DB7-CourseNotes/QuorseNotes/tree/main) led by Dr. Devin Becker.
-
-
+*Note that this page will be under active construction throughout the semester. 
+If you find any typos or other issues, please click the `Report an issue` button 
+above and/or email [kgrinde@macalester.edu](mailto:kgrinde@macalester.edu).*
 
 
 
-<br>
 <br>
 <br>
 
