@@ -5,27 +5,28 @@ project:
 number-depth: 2
 
 book:
-  title: "Quarto Course Notes"
-  subtitle: "Slides and a Book"
-  repo-url: https://github.com/DB7-CourseNotes/QuorseNotes
+  title: "STAT 253 Course Notes"
+  subtitle: "Fall 2024"
+  repo-url: https://github.com/kegrinde/stat253_coursenotes
   repo-actions: [issue, source]  
   page-footer:
     left: |
-      Copyright Devan Becker, released under Creative Commons Attribution-ShareAlike 4.0.
+      Copyright Kelsey Grinde, released under Creative Commons Attribution-ShareAlike 4.0.
   sidebar: 
     collapse-level: 2
   page-navigation: true
   chapters:
     - index.qmd
-    - part: Setup
+    - L01.qmd
+    - part: "Regression: Model Evaluation"
       chapters:
-        - L01.qmd
-    - part: Slides and Book
+        - L02.qmd
+        - L03.qmd
+        - L04.qmd
+    - part: "Regression: Building Models"
       chapters:
-        - L02-quarto-yml.qmd
-        - L03-quarto-book-yml.qmd
-        - L04-quarto-slides-yml.qmd
-        - L05-advanced.qmd
+        - L05.qmd
+        - L06.qmd
   appendices:
     - Lab01-R.Rmd
     - Lab02-Python.ipynb

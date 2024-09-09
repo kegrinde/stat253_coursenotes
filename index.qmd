@@ -1,10 +1,30 @@
-# Introduction {.unnumbered}
+# Welcome! {.unnumbered}
 
-## This is the Quarto Book!
+<center>
+<img src="images/blackbox.png" width="300">
 
-Rendered via:
+[Image source](https://www.maxpixel.net/static/photo/1x/Cardboard-Box-Black-Box-Three-Dimensional-Container-310220.png)
+</center>
 
-```sh
-quarto render --profile book
-```
+<br>
+<br>
 
+This is the course website for Statistical Machine Learning (STAT 253) at Macalester College for Fall 2024.
+
+The site was built by Macalester Professor [Kelsey Grinde](https://kegrinde.github.io).
+It draws heavily upon our course textbook, the 2nd edition of [An Introduction to Statistical Learning with Applications in R](https://hastie.su.domains/ISLR2/ISLRv2_corrected_June_2023.pdf.download.html), 
+as well as on materials prepared by fellow Macalester Professors [Brianna Heggeseth](https://bcheggeseth.github.io), 
+[Alicia Johnson](https://ajohns24.github.io), and [Leslie Myint](https://lmyint.github.io). 
+The structure of this site was inspired by a [workshop](https://github.com/DB7-CourseNotes/QuorseNotes/tree/main) led by Dr. Devin Becker.
+
+
+
+
+
+<br>
+<br>
+<br>
+
+![](images/cc_license_button.png)
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).

@@ -29,7 +29,7 @@ Github will take care of the rest for you!
 
 What if you're starting from course notes, and want to make slides?
 
-Example: The OpenIntro textbooks make their $\LaTeX$ code available. I've converted a handful of chapters to Quarto (the rest in progress as I go).
+Example: The OpenIntro textbooks make their LaTeX code available. I've converted a handful of chapters to Quarto (the rest in progress as I go).
 
 ## Turn the text into "speaker notes"
 

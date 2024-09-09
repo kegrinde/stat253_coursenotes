@@ -1,7 +1,7 @@
 date-fromat: iso
 date: "last-modified"
-author: "Dr. Devan Becker"
-institute: "Wilfrid Laurier University"
+author: "Dr. Kelsey Grinde"
+institute: "Macalester College"
 
 execute:
   warning: false
