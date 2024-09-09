@@ -3,6 +3,8 @@ title: "Quorse Notes Overview Presentation"
 subtitle: "During the presentation (optional): Get a free github account, install git or GitHub desktop, and open RStudio or VSCode\\newline This workshop is being recorded."
 date: 2024-06-07
 date-format: "[eCOTS Workshop \\newline ] MMMM DD, YYYY"
+author: "D. Becker"
+affiliation: "Wilfrid Laurier University"
 ---
 
 ## Introduction

@@ -10,316 +10,278 @@
     ]
   },
   {
-    "objectID": "index.html#welcome-to-the-course-notes-for-stat-253",
-    "href": "index.html#welcome-to-the-course-notes-for-stat-253",
-    "title": "Quarto Course Notes",
-    "section": "Welcome to the course notes for STAT 253!",
-    "text": "Welcome to the course notes for STAT 253!\nRendered via:\nquarto render --profile book",
-    "crumbs": [
-      "Introduction"
-    ]
-  },
-  {
-    "objectID": "L01.html",
-    "href": "L01.html",
-    "title": "1  What’s Machine Learning",
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
     "section": "",
-    "text": "1.1 Welcome\nTBD",
+    "text": "Note: this page is currently under construction!\nThe schedule below is a tentative outline of our plans for the semester.\nBefore each class period, please watch the indicated videos and check on your understanding by actively reviewing the associated Learning Goals.\nReadings refer to chapters/sections in the Introduction to Statistical Learning (ISLR) textbook (available online here). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n1/18\nIntroductions & Overview\nISLR: Chap 1 & Section 2.1 (Skip 2.1.2, 2.1.3 for now.)\nSlides for Today\n1 Introductions Activity\nBoard Notes\n\nComplete Before Class Tasks (CP1)\nHomework 1 (due 1/24)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n1/23\nModel Evaluation\nConcept Video (script)\nCheckpoint 1\nR Tutorial Video (code)\nISLR Reading: Section 2.2 (skip 2.2.3 for now.), Section 3.1\nSlides for Today\n2 Evaluating Regression Models Activity (Rmd)\nBoard Notes\n\nComplete Before Class Tasks (CP2)\nHomework 1 (due 1/24)\nConcept Video: Evaluating Regression Models\nR Tutorial Video: Introduction to TidyModels\n\n\n1/25\nOverfitting\nCheckpoint 2\nR Tutorial Video (code)\nISLR: Section 2.1.2, 5.1\nSlides for Today\n3 Overfitting Activity (Part 1 Rmd, Part 2 Rmd)\nBoard Notes\n\nComplete Before Class Tasks (CP3)\nHomework 2 (due 2/1)\nContent Video: Overfitting\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n1/30\nCross Validation\nConcept Video 1 (script)\nConcept Video 2 (script)\nCheckpoint 3\nR tutorial(code) ISLR: 5.1\nSlides for Today\n4 Cross-Validation Activity (Rmd)\nBoard Notes\nComplete Before Class Tasks (CP4)\nHomework 2 (due 2/1)\nConcept Video: Cross-Validation\nR Tutorial: Training, Testing and Cross-Validation\n\n\n2/1\nModel Selection\nR code tutorial (code)\nCheckpoint 4\nISLR: 6.1\nSlides for Today\n5 Model Selection Activity (Part 1 Rmd, Part 2 Rmd)\nBoard Notes\n\nComplete Before Class Tasks (CP5)\nHomework 3 (due 2/13)\nConcept Video: Model Building / Selection\nR Tutorial Video: Preprocessing and Recipes\nR Tutorial Video: Subset Selection\n\n\n\n\n\n\n\n\n\nWeek 4\n\n\n\n\n\n\nDate\n\n\nTopic\n\n\nBefore Class: Videos/Readings\n\n\nIn Class: Slides/Notes\n\n\nAfter Class: Assignments\n\n\nAdditional Resources (Optional)\n\n\n\n\n2/6\n\n\nLASSO (Shrinkage/Regularization)\n\n\nConcept Video 1\nConcept Video 2 (script)\nCheckpoint 5\nR code tutorial part 1& part 2 (code)\nISLR: 6.2\n\n\nSlides for Today\n6 LASSO Activity (Rmd)\nBoard Notes\n\n\nComplete Before Class Tasks\nHomework 3 (due 2/13)\n\n\nConcept Video: LASSO (Shrinkage/Regularization)\nR Tutorial Video: Lasso and Regularization\n\n\n\n\n2/8\n\n\nNonparametric Models\n\n\nISLR: 2.1.2, 3.5\n\n\nSlides for Today\n7 Nonparametric Model Activity (Rmd)\nBoard Notes\n\n\n\nComplete Before Class Tasks (CP6)\nHomework 3 (due 2/13)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 5\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n2/13\nKNN Regression and the Bias-Variance Tradeoff\nConcept Video 1 (slides)\nConcept Video 2 (slides)\nCheckpoint 6\nR code tutorial (code)\nISLR: 2.2.2 for the bias-variance tradeoff; 3.5 for KNN regression\nSlides for Today\n8 KNN Regression Activity (Rmd)\nBoard Notes\n\nComplete Before Class Tasks (CP7)\nConcept Video: KNN Regression and the Bias-Variance Tradeoff\nR Tutorial: KNN Regression\n\n\n\n2/15\nLOESS & GAM\nConcept Video 1 (slides)\nConcept Video 2 (slides)\nCheckpoint 7\nISLR: 7.1-7.4; 7.6-7.7\nSlides for Today\n9 LOESS and GAM Activity (Rmd)\nBoard Notes\n\nComplete Before Class Tasks\nHomework 4 (due 2/22)\nConcept Video: Local Regression and Generalized Additive Models\nR Tutorial Video: Local Regression and GAM\nConcept Video: Modeling Nonlinearity: Polynomial Regression and Splines\nR Tutorial Video:Nonlinearity: Polynomial Regression and Splines\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 6\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n2/20\nRegression Wrap Up\nBecome familar with Flights data (group assignment 1)\nSlides for Today\n10 Regression Review\nBoard Notes\nComplete Before Class Tasks\nHomework 4 (due 2/22)\n\n\n\n2/22\nClassification via Logistic Regression\nConcept Video 1 (slides)\nConcept Video 2 (slides)\nCheckpoint 8\nISLR: 4.1 - 4.3\nSlides for Today\n11 Logistic Regression Activity (Rmd)\nBoard Notes\n\n\nConcept Video: Logistic Regression\nR Tutorial Video: Logistic Regression\n\n\n\n\n\n\n\n\nWeek 7\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n2/27\nCONCEPT QUIZ 1 (in-class)\n\n\n\n\n\n\n2/29\nNO CLASS - ATTEND 2 MSCS Capstone Talks\n\nWrite summaries in #capstone channel on Slack for each talk.\nGroup Assignment 1 (due 3/5)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 8\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n3/5\nEvaluating Classification Models\nConcept Video 1\nConcept Video 2 (slides)\nCheckpoint 9\nISLR: 4.1 - 4.3\nSlides for Today\n12 Evaluating (binary) Classification Models Activity (Rmd)\nBoard Notes\nComplete Before Class Tasks\nHomework 5 (due 3/8)\nConcept Video: Evaluating Classification Models\nR Tutorial Video: Evaluating Classification\n\n\n3/7\nKNN & Decision Trees\nISLR: 2.2.3, 8.1\nSlides for Today\n13 KNN & Decision Trees (Rmd)\nBoard Notes\n\nComplete Before Class Tasks\nHomework 5 (due 3/8)\nConcept Video: Decision Trees\nR Tutorial Video: Decision Trees\n\n\n\n\n\n\n\nSpring Break - NO CLASS\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 9\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n3/19\nMore KNN & Decision Trees\nConcept Video 1\nConcept Video 2 (Slides)\nCheckpoint 10\nISLR: 8.1\nSlides for Today\n14 More KNN & Decision Trees (Rmd)\nBoard Notes\n\nComplete Before Class Tasks\nHW5 (past due, grace period until today)\nHW6 (due 3/28)\nConcept Video: Decision Trees\nR Tutorial: Decision Trees\n\n\n\n3/21\nBagging and Random Forests\nISLR: 8.2\nSlides for Today\n15 Bagging and Random Forests (Rmd)\nBoard Notes\n\nComplete Before Class Tasks\nHW6 (due 3/28)\nConcept Video: Bagging and Random Forests\nR Tutorial Video: Bagging and Random Forests\n\n\n\n\n\n\n\n\n\nWeek 10\n\n\n\n\n\n\nDate\n\n\nTopic\n\n\nBefore Class: Videos/Readings\n\n\nIn Class: Slides/Notes\n\n\nAfter Class: Assignments\n\n\nAdditional Resources (Optional)\n\n\n\n\n3/26\n\n\nClassification Review\n\n\nConcept Video (Slides)\nCheckpoint 11\n\n\nSlides for Today\n16 Unit 4-5 Review\nBoard Notes\n\n\nComplete Before Class Tasks\nHW6 (due 3/28)\n\n\n\n\n\n\n3/28\n\n\nCatch up day\n\n\n\n\nSlides for Today\nBoard Notes\n\n\nComplete Before Class Tasks\nHW6 (due 3/28)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 11\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n4/2\nHierarchical Clustering\nConcept Video 1\nConcept Video 2 (slides)\nCheckpoint 12\nISLR: 10.3.2\nSlides for Today\n17 Hierarchical Clustering (Rmd)\nBoard Notes\nGroup Assignment 2,\nStudy for Quiz 2\nConcept Video: Hierarchical Clustering\n\n\n4/4\nCONCEPT QUIZ 2 (in-class)\n\n\nComplete Before Class Tasks\nGroup Assigment 2 (due 4/11)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 12\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n4/9\nWork Day\n\nBoard Notes\nComplete Before Class Tasks\nGroup Assignment 2 (due 4/11)\n\n\n\n4/11\nK-means Clustering\nConcept Video (slides)\nCheckpoint 13\nISLR: 10.3.1\nSlides for Today\n18 K-Means Clustering (Rmd)\nBoard Notes\nComplete Before Class Tasks\nHW7 (due 4/23)\nConcept Video: K-Means Clustering\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 13\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n4/16\nPrincipal Components Analysis\nConcept Video (slides)\nCheckpoint 14\nISLR: 10.2\nSlides for Today\n19 Principal Component Analysis (Rmd)\nBoard Notes\nComplete Before Class Tasks\nHW7 (due 4/23)\nConcept Video: Principal Components Analysis\n\n\n4/18\nPC Regression\n\nSlides for Today\n20 Principal Component Regression (Rmd)\nBoard Notes\nComplete Before Class Tasks\nHW7 (due 4/23)\n\n\n\n\n\n\n\n\nWeek 14\n\n\n\n\n\n\nDate\n\n\nTopic\n\n\nBefore Class: Videos/Readings\n\n\nIn Class: Slides/Notes\n\n\nAfter Class: Assignments\n\n\nAdditional Resources (Optional)\n\n\n\n\n4/23\n\n\nWork Day\n\n\n\n\nSlides for Today\nBoard Notes\n\nStudy for Quiz 3\nHW7 (due 4/23)\nGroup Assignment 3 (due 4/29)\n\n\n\n\n\n\n\n4/25\n\n\nCONCEPT QUIZ 3 (in-class)\n\n\n\n\nLast Day of Class\n\n\nGroup Assignment 3 (due 4/29)",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What's Machine Learning</span>"
+      "Overview",
+      "Schedule"
     ]
   },
   {
-    "objectID": "L01.html#overview",
-    "href": "L01.html#overview",
-    "title": "1  What’s Machine Learning",
-    "section": "1.2 Overview",
-    "text": "1.2 Overview\nTBD",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What's Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "L01.html#exercises",
-    "href": "L01.html#exercises",
-    "title": "1  What’s Machine Learning",
-    "section": "1.3 Exercises",
-    "text": "1.3 Exercises",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What's Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "L01.html#solutions",
-    "href": "L01.html#solutions",
-    "title": "1  What’s Machine Learning",
-    "section": "1.4 Solutions",
-    "text": "1.4 Solutions",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What's Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "L01.html#wrap-up",
-    "href": "L01.html#wrap-up",
-    "title": "1  What’s Machine Learning",
-    "section": "1.5 Wrap-Up",
-    "text": "1.5 Wrap-Up",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>What's Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "L02.html",
-    "href": "L02.html",
-    "title": "2  The _quarto.yml file",
+    "objectID": "learning-objectives.html",
+    "href": "learning-objectives.html",
+    "title": "Learning Goals",
     "section": "",
-    "text": "Let’s go through the file line-by-line.\ndate-fromat: iso\ndate: \"last-modified\"\nauthor: \"Dr. Devan Becker\"\ninstitute: \"Wilfrid Laurier University\"\n\ndate-format to institute are self-explanatory.\n\nSee date formats for more advanced things\n\n\nexecute:\n  warning: false\n  cache: true\n  freeze: auto\n\nThe execute options will apply to everything.\n\nprofile:\n  default: slides\n  group:\n  - [slides, book]\nThis is where a lot of the magic happens! The profiles allow for easy switching between output formats, each of which has their own option.\n\nThe default profile being “slides” means that Ctrl+Shift+K will preview to slides!\n\nYou can change this depending on what you’re developing.",
+    "text": "General Skills\nComputational Thinking\nEthical Data Thinking\nData Communication\nCollaborative Learning",
+    "crumbs": [
+      "Overview",
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning-objectives.html#general-skills",
+    "href": "learning-objectives.html#general-skills",
+    "title": "Learning Goals",
+    "section": "",
+    "text": "Be able to perform the following tasks:\n\nDecomposition: Break a task into smaller tasks to be able to explain the process to another person or computer\nPattern Recognition: Recognize patterns in tasks by noticing similarities and common differences\nAbstraction: Represent an idea or process in general terms so that you can use it to solve other projects that are similar in nature\nAlgorithmic Thinking: Develop a step-by-step strategy for solving a problem\n\n\n\n\n\nIdentify ethical issues associated with applications of statistical machine learning in a variety of settings\nAssess and critique the actions of individuals and organizations as it relates to ethical use of data\n\n\n\n\nIn written and oral formats:\n\nInform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs.\n\n\n\n\nUnderstand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).\nDevelop a common purpose and agreement on goals.\nBe able to contribute questions or concerns in a respectful way.\nShare and contribute to the group’s learning in an equitable manner.",
+    "crumbs": [
+      "Overview",
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning-objectives.html#course-topics",
+    "href": "learning-objectives.html#course-topics",
+    "title": "Learning Goals",
+    "section": "Course Topics",
+    "text": "Course Topics\nSpecific learning objectives for our course topics are listed below. Use these to guide your synthesis of video and reading material for specific topics.\nIntroduction to Statistical Machine Learning\n\nFormulate research questions that align with regression, classification, or unsupervised learning tasks.\nIdentify the appropriate task (regression, classification, unsupervised) for a given research question.\n\n\nUnit 1\nEvaluating Regression Models\n\nCreate and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.\nCalculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.\n\n\nOverfitting and cross-validation\n\nExplain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance\nAccurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric\nExplain what role CV has in a predictive modeling analysis and its connection to overfitting\nExplain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time\n\n\nUnit 2\nModel selection\n\nExplain the difference between inferential models and predictive models and how the model building processes differ\nClearly describe the backward stepwise selection algorithm and why they are examples of greedy algorithms\nCompare best subset and stepwise algorithms in terms of optimality of output and computational time\n\n\nLASSO (shrinkage/regularization)\n\nExplain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection\nExplain how the lambda tuning parameter affects model performance and how this is related to overfitting\n\n\nUnit 3\nKNN Regression and the Bias-Variance Tradeoff\n\nClearly describe / implement by hand the KNN algorithm for making a regression prediction\nExplain how the number of neighbors relates to the bias-variance tradeoff\nExplain the difference between parametric and nonparametric methods\nExplain how the curse of dimensionality relates to the performance of KNN\n\n\nLocal Regression and Generalized Additive Models\n\nClearly describe the local regression algorithm for making a prediction\nExplain how bandwidth (span) relate to the bias-variance tradeoff\nDescribe some different formulations for a GAM (how the arbitrary functions are represented)\nExplain how to make a prediction from a GAM\nInterpret the output from a GAM\n\n\nUnit 4\nClassification via Logistic regression\n\nUse a logistic regression model to make hard (class) and soft (probability) predictions\nInterpret non-intercept coefficients from logistic regression models in the data context\n\n\nEvaluating classification models\n\nCalculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity\nConstruct and interpret plots of predicted probabilities across classes\nExplain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric\nAppropriately use and interpret the no-information rate to evaluate accuracy metrics\n\n\nDecision trees\n\nClearly describe the recursive binary splitting algorithm for tree building for both regression and classification\nCompute the weighted average Gini index to measure the quality of a classification tree split\nCompute the sum of squared residuals to measure the quality of a regression tree split\nExplain how recursive binary splitting is a greedy algorithm\nExplain how different tree parameters relate to the bias-variance tradeoff\n\n\nBagging and random forests\n\nExplain the rationale for bagging\nExplain the rationale for selecting a random subset of predictors at each split (random forests)\nExplain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff\nExplain the rationale for and implement out-of-bag error estimation for both regression and classification\nExplain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)\n\n\nHierarchical clustering\n\nClearly describe / implement by hand the hierarchical clustering algorithm\nCompare and contrast k-means and hierarchical clustering in their outputs and algorithms\nInterpret cuts of the dendrogram for single and complete linkage\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters\n\n\nK-means clustering\n\nClearly describe / implement by hand the k-means algorithm\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters\n\n\nPrincipal Component Analysis\n\nExplain the goal of dimension reduction and how this can be useful in a supervised learning setting\nInterpret and use the information provided by principal component loadings and scores\nInterpret and use a scree plot to guide dimension reduction",
+    "crumbs": [
+      "Overview",
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html",
+    "href": "L01-introductions.html",
+    "title": "1  Introductions",
+    "section": "",
+    "text": "Learning Goals",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#learning-goals",
+    "href": "L01-introductions.html#learning-goals",
+    "title": "1  Introductions",
+    "section": "",
+    "text": "Identify the appropriate task (regression, classification, unsupervised) for a given research question.\nDevelop foundation to be able to: Formulate research questions that align with regression, classification, or unsupervised learning tasks.",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#small-group-discussion-envisioning-a-community-of-learners",
+    "href": "L01-introductions.html#small-group-discussion-envisioning-a-community-of-learners",
+    "title": "1  Introductions",
+    "section": "Small Group Discussion: Envisioning a Community of Learners",
+    "text": "Small Group Discussion: Envisioning a Community of Learners\nDirections:\n\nIn small groups, please first introduce yourselves in whatever way you feel appropriate (e.g. name, pronouns, how you’re feeling at the moment, things you’re looking forward to, best part of winter break, why you are motivated to take this class).\nWhen everyone is ready, discuss the prompts below. One of you volunteer to record a few thoughts in this Google Doc. The instructor will summarize responses from all the sections to create a resource that everyone can use.\n\n\nPrompts:\n\nCollectivist education focuses on prioritizing the group first before the individual while individualist education focuses solely on the success of the individual. Considering your own experiences and backgrounds, discuss your values as they relate to collectivist and individualistic aspects of your own education.\nIt is important to create a set of agreements to guide our community in and out of class. Which of the following do you think are most important to keep in mind for our time together in this course and why? What might you add to our guiding principles?\n\nW.A.I.T. (Why Am I Talking/Why Aren’t I Talking)\nBe curious\nExtend and receive grace\nUnderstand impact vs. intention\nBreathe and lean into discomfort\nEmbrace diversity of experience\n\nWhat strategies have you found work well for you to succeed in learning both in and out of class that you want to continue this semester?\nWhat are some things that have contributed to positive learning experiences in your courses that you would like to have in place for this course? What has contributed to negative experiences that you would like to prevent?",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#notes-overview",
+    "href": "L01-introductions.html#notes-overview",
+    "title": "1  Introductions",
+    "section": "Notes: Overview",
+    "text": "Notes: Overview\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data. (NOTE: humans are in charge of the exploration & application!)\n\n\nIn STAT 253 we will…\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. We’ll focus on concepts and applications over mathematical theory. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool\n\n\n\n\n\nSUPERVISED LEARNING\nWe want to model the relationship between some output variable \\(y\\) and input variables \\(x = (x_1, x_2,..., x_p)\\):\n\\[\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend `epsilon`)} \\\\\n\\end{split}\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = body mass index\n\\(x\\) = (number of live births, age, marital status, education, etc)\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a pair of crickets courted (yes, no) \\(x\\) = (species, pair of same species, CHC profile, etc)\n\n\n\nUNSUPERVISED LEARNING\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data with respect to \\(x\\).\nTypes of unsupervised learning tasks:\n\nclustering\nIdentify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values. example:\n\n\\(x\\) = (body mass index at 2 weeks, 1 month, 2 months, 4 months, 6 months, etc)\n\ndimension reduction\nTurn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals. example:\n\n\\(x\\) = (cuticular hydrocarbon compounds concentrations based on gas chromatography analysis)",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#in-class-activity---exercises",
+    "href": "L01-introductions.html#in-class-activity---exercises",
+    "title": "1  Introductions",
+    "section": "In-Class Activity - Exercises",
+    "text": "In-Class Activity - Exercises\nI used a machine learning algorithm, one we’ll learn later this semester, to form groups based on your responses to the pre-course informational survey. BUT it didn’t provide any explanation of why these are the groups it picked. To that end, we need humans.\nGet into your assigned group.\n\nEverybody introduce themselves.\nTry to figure out why the algorithm put you into a group together. (I don’t personally know the answer!)\nDiscuss the following scenarios as a group, then check your answers.\n\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n::: {.cell}\n:::\n::: {.cell layout-align=“center”} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n::: {.cell layout-align=“center”} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nI collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nclassification (\\(y\\) = major is categorical)\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A:\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nregression (\\(y\\) = time to mac is quantitative)\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A:\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nclustering (no outcome \\(y\\)).\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "U01-motivation.html",
+    "href": "U01-motivation.html",
+    "title": "Motivating Question",
+    "section": "",
+    "text": "We are in the regression setting. We want to build a model of some quantitative output variable \\(y\\) by some predictors \\(x\\):\n\\[y = f(x) + \\epsilon\\]\nAfter building this model, it’s important to evaluate it: Is our regression model a “good” model?\n\nIs the model wrong?\nIs the model strong?\nDoes the model produce accurate predictions?\nIs the model fair?\n\n\n\nIs the model wrong? What assumptions does our model make and are these reasonable?\n\n\n\n\n\n\n\n\n\n\nTo check:\nExamine a residual plot, ie. a scatterplot of the residuals vs predictions for each case. Points should appear randomly scattered with no clear pattern. If you see any patterns in the residuals that suggest you are systematically over or underpredicting for different prediction values, this indicates that the assumption about the relationship with predictors could be wrong.\nExample: Model \\(y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\epsilon\\). What about the plots below reveals that this model is “wrong”?\n\n\n\n\n\n\n\n\n\n\nWhat about the plots below reveals that this model is “not wrong”?\n\n\n\n\n\n\n\n\n\n\n\nIs the model strong? How well does our model explain the variability in the response?\n\n\n\n\n\n\n\n\n\n\nCheck: \\(R^2\\), the proportion of variability in \\(y\\) that’s explained by the model. The closer to 1 the better.\n\\[R^2 = 1 - \\frac{\\text{Var}(\\text{residuals})}{\\text{Var}(y)} = 1 - \\frac{\\sum_{i=1}^n(y_i - \\hat{y}_i)^2}{\\sum_{i=1}^n(y_i - \\overline{y})^2}\\]\n\n\nDoes the model produce accurate predictions?\n\n\n\n\n\n\n\n\n\n\n\nCheck: Summarize the combined size of the residuals, \\(y_1 - \\hat{y}_1\\), \\(y_2 - \\hat{y}_2\\), …, \\(y_n - \\hat{y}_n\\) where \\(n\\) is sample size. The closer to 0 the better!\n\\[\\begin{split}\n\\text{MSE}  & = \\text{ mean squared error } = \\frac{1}{n}\\sum_{i=1}^n (y_i - \\hat{y}_i)^2 \\\\\n\\text{RMSE} & = \\text{ root mean squared error } = \\sqrt{MSE}  \\\\\n\\text{MAE}  & = \\text{ mean absolute error } = \\frac{1}{n}\\sum_{i=1}^n |y_i - \\hat{y}_i| \\\\\n\\end{split}\\]\n\n\nIs the model fair?\n\n\nWho collected the data / who funded the data collection?\nHow did they collect the data?\nWhy did they collect the data?\nWhat are the implications of the analysis, ethical or otherwise?\n\nDig Deeper (optional)\nDigging deeper, there’s more theory behind our regression model assumptions, thus more to the question of “is our model wrong?”. Specifically, in applying the linear regression model\n\\[y = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\epsilon\\]\nwe assume that at any given set of predictors \\(x = (x_1,x_2,...,x_n)\\),\n\\[\\epsilon \\stackrel{ind}{\\sim} N(0, \\sigma^2)\\]\nEquivalently, \\(y \\stackrel{ind}{\\sim} N(\\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}, \\; \\sigma^2)\\).\n\nWe can break this assumption and \\(N()\\) notation down into 4 pieces:\n\nIndependence: \\(\\epsilon \\stackrel{\\color{red}{ind}}{\\sim} N(0, \\sigma^2)\\) The observations on subject \\(i\\) are independent of the observations on any other subject.\n\nNOTE: If our data don’t meet this model assumption, our predictions and inference (eg: confidence intervals & hypothesis tests) might produce misleading results. Take Correlated Data to learn more about working with dependent data.\n\nTrend: \\(\\epsilon \\stackrel{ind}{\\sim} N(\\color{red}{0}, \\sigma^2)\\) At any \\(x\\), the residuals have mean 0. That is, responses are balanced above and below the model. Thus the model accurately captures the trend of the relationship.\n\nNOTE: If our data don’t meet this model assumption, our model is wrong. This issue might be corrected by transforming \\(y\\) or \\(x\\).\n\nHomoskedasticity: \\(\\epsilon \\stackrel{ind}{\\sim} N(0, \\color{red}{\\sigma}^2)\\) At any \\(x\\), the standard deviation among the residuals is \\(\\sigma\\). That is, deviations from the trend are no greater at any one “part” of the model than at another NOTE: If our data don’t meet this model assumption, our inference (eg: confidence intervals & hypothesis tests) might produce misleading results. This issue might be corrected by transforming \\(y\\).\nNormality: \\(\\epsilon \\stackrel{ind}{\\sim} \\color{red}{N}(0, \\sigma^2)\\) The residuals are normally distributed. Thus individual responses are normally distributed around the trend (closer to the trend and then tapering off).\n\nNOTE: If our data don’t meet this model assumption and the violation is extreme, our inference (eg: confidence intervals & hypothesis tests) might produce misleading results. This issue might be corrected by transforming \\(y\\).",
     "crumbs": [
       "Regression: Model Evaluation",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>The `_quarto.yml` file</span>"
+      "Motivating Question"
     ]
   },
   {
-    "objectID": "L03.html",
-    "href": "L03.html",
-    "title": "3  The _quarto-book.yml file",
+    "objectID": "L02-evaluating-regression-models.html",
+    "href": "L02-evaluating-regression-models.html",
+    "title": "2  Model Evaluation",
     "section": "",
-    "text": "There’s a lot more going on in this file!\nproject:\n  type: book\n  output-dir: docs\n\nnumber-depth: 2\n\nThe type defines the book, and we pass further options in the next bit.\noutput-dir: docs is important!\nnumber-depth just says we’ll use chapters like 3.2, rather than just having chapter 3 with a bunch of un-numbered sub-headings.\n\nbook:\n  title: \"Quarto Course Notes\"\n  subtitle: \"Slides and a Book\"\n  repo-url: https://github.com/DB7-CourseNotes/QuorseNotes\n  repo-actions: [issue, source]  \nThe above chunk defines the titles and the location of the book. By providing the repo url, you give readers an easy way to find the source code (I hide this from my students, but acknowledge that they might find it one day).\n  page-footer:\n    left: |\n      Copyright Devan Becker, released under Creative Commons Attribution-ShareAlike 4.0.\n  sidebar: \n    collapse-level: 2\n  page-navigation: true\n\ncollapse-level is useful when “parts” are defined. It helps keep the sidebar a little cleaner by collapsing parts.\n\n  chapters:\n    - index.qmd\n    - part: Setup\n      chapters:\n        - L01.qmd\n    - part: Slides and Book\n      chapters:\n        - L02-quarto-yml.qmd\n        - L03-quarto-book-yml.qmd\n        - L04-quarto-slides-yml.qmd\n        - L05-advanced.qmd\n  appendices:\n    - Lab01-R.Rmd\n    - Lab02-Python.ipynb\n    - DGBecker_QuorseNotes.qmd\nIn the chunk above, we tell the book exactly what to include and where. These are the exact file names, and if you rename a file you must rename it here as well.\nI have it split into parts and an appendix. Note that I also have an index.qmd file that’s not in any chapter.\nformat:\n  html:\n    theme:\n      light: [sandstone, smaller_lists.scss]\n      dark: [superhero, smaller_lists.scss]\n    mainfont: ubuntu, sans-serif\n    execute:\n      echo: true\n      code-fold: true\nIn this chunk, I defined the appearance, font, and some execution options. Code folding allows students to just look at the output, but dig into the code as necessary (it can be turned off for individual code chunks).",
+    "text": "Learning Goals",
     "crumbs": [
       "Regression: Model Evaluation",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>The `_quarto-book.yml` file</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
     ]
   },
   {
-    "objectID": "L04.html",
-    "href": "L04.html",
-    "title": "4  The _quarto-slides.yml file",
+    "objectID": "L02-evaluating-regression-models.html#learning-goals",
+    "href": "L02-evaluating-regression-models.html#learning-goals",
+    "title": "2  Model Evaluation",
     "section": "",
-    "text": "project:\n  output-dir: Slides\n\nSend the slides to the “Slides” directory.\n\nformat: \n  beamer:\n    theme: Madrid\n    colortheme: PrimaryBullets\n    aspectratio: 169\n    toc: false\n    include-in-header: \"defs_beamer.tex\"\n    execute:\n      echo: false\n      fig-width: 7\n      fig-height: 3.5\n      code-line-numbers: false\n\nformat defines the format, but only when the profile is not set to book.\n\nbeamer produces pdf slides, using the LaTeX beamer class. If this is unfamiliar to you, you can change this to be html slides. The code used for conditional inclusion is based on the profile, not the output format.\n\ntheme: Madrid is specific to the beamer class.\ncolortheme: PrimaryBullets uses my custom beamer colortheme (which also affects the theme. this is bad programming on my part, but it looks nice). If you use this, you should change the name, institution, and email in the definition!\naspectratio and toc (table of contents), are beamer specific settings.\ninclude-in-header uses a custom LaTeX definition file for spacing in books versus slides. See below.\nexecute makes figures the right size for 16x9 slides. It also makes echo false by default (the book uses true by default).\n\n\n\nFor include-in-header: defs_beamer.tex, I use two special commands to make sure that I can control spacing in the slides and the book separately. In slides, I want to add spacing between lists. The \\lspace command is defined as \\newline if the file is executed without profile --book, and it’s defined as nothing if the profile is set to book. Similarly, \\pspace adds a space between paragraphs if the book is rendering to slides and does nothing for the book.",
+    "text": "Practice building and evaluating linear regression models in RStudio working on:\n\nCreate and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.\nCalculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.\n\nReview some STAT 155 concepts and RStudio tools.\nStart using the tidymodels package to build and evaluate regression models.\nGet used to the course workflow, e.g. taking notes.",
     "crumbs": [
       "Regression: Model Evaluation",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>The `_quarto-slides.yml` file</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
     ]
   },
   {
-    "objectID": "L05.html",
-    "href": "L05.html",
-    "title": "5  Some advanced things",
+    "objectID": "L02-evaluating-regression-models.html#small-group-discussion-recap-video",
+    "href": "L02-evaluating-regression-models.html#small-group-discussion-recap-video",
+    "title": "2  Model Evaluation",
+    "section": "Small Group Discussion: Recap Video",
+    "text": "Small Group Discussion: Recap Video\nDirections:\n\nIn small groups, please first introduce yourself in whatever way you feel appropriate (e.g. name, pronouns, how you’re feeling at the moment, things you’re looking forward to, best part of winter break, why you are motivated to take this class). Check in with each other as human beings.\nWhen everyone is ready, glance through the summary of concepts (below) covered in the video.\n\nPrompt:\n\nWhat vocabulary or notation was new to you?\nWhat concepts were new to you?\nWhat concepts are still unclear to you at this moment?\n\n\n\n\nWe are in the regression setting. We want to build a model of some quantitative output variable \\(y\\) by some predictors \\(x\\):\n\\[y = f(x) + \\epsilon\\]\nThere are many regression tools that we might use to build this model. We’ll use a linear regression model which assumes that \\(y\\) is a linear combination of the \\(x\\)’s:\n\\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots \\beta_p x_p + \\epsilon\\]\nAfter building any model, it’s important to evaluate it: Is our regression model a “good” model?\n\nIs the model wrong?\nIs the model strong?\nDoes the model produce accurate predictions?\nIs the model fair?\n\nNOTE:\nWe will review these concepts through the exercises below. A detailed overview is provided in the “Motivating Question” section under “Regression: Model Evaluation” in the course website.",
+    "crumbs": [
+      "Regression: Model Evaluation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#notes-r-code",
+    "href": "L02-evaluating-regression-models.html#notes-r-code",
+    "title": "2  Model Evaluation",
+    "section": "Notes: R code",
+    "text": "Notes: R code\nThis section is for future reference. It is a summary of code you’ll learn below for building and evaluating regression models. Throughout, suppose we wish to build and evaluate a linear regression model of y vs x1 and x2 using our sample_data.\n\n# Load packages\nlibrary(tidyverse)\nlibrary(tidymodels)\n\nBuilding a linear regression model\n\n# STEP 1: specify the type of model to build\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\n# STEP 2: estimate the specified model using sample data\nmodel_estimate &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2, data = sample_data)\n\n# Get the model coefficients\nmodel_estimate %&gt;% \n  tidy()\n\nObtaining predictions (& residuals) for each observation\n\n# Obtain y predictions and residuals for each observation in our sample_data\n# (We can replace sample_data with any data frame that includes y, x1, and x2)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data)\n\n# Obtain y predictions (but not residuals) for some given x1, x2 values, when we haven't yet observed y\n# (We can replace the data.frame with any data frame that includes x1 and x2)\nmodel_estimate %&gt;% \n  augment(new_data = data.frame(x1 = ___, x2 = ___))\n  \n# Another approach using predict()\nmodel_estimate %&gt;% \n  predict(new_data = data.frame(x1 = ___, x2 = ___))\n\nEvaluating the model\n\n# Is it strong? (R^2)\nmodel_estimate %&gt;% \n  glance()\n\n# Does it produce accurate predictions? (MAE)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  mae(truth = y, estimate = .pred)\n\n# Is it wrong? (residual plot)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point() + \ngeom_hline(yintercept = 0)",
+    "crumbs": [
+      "Regression: Model Evaluation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#in-class-activity---exercises",
+    "href": "L02-evaluating-regression-models.html#in-class-activity---exercises",
+    "title": "2  Model Evaluation",
+    "section": "In-Class Activity - Exercises",
+    "text": "In-Class Activity - Exercises\nCapital Bikeshare provides a bike-sharing service in the Washington DC area. Customers can pick up and drop off bikes at any station around the city. Of primary interest to the company is:\nHow many registered riders can we expect today?\nTo this end, you will build, evaluate, and compare 2 different linear regression models of ridership using the following Capital Bikeshare dataset (originally from the UCI Machine Learning Repository):\n\n# Load packages we'll need to wrangle and plot the data\nlibrary(tidyverse)\n\n# Load the data\nbikes &lt;- read.csv(\"https://bcheggeseth.github.io/253_spring_2024/data/bike_share.csv\")\n\n# Only keep / select some variables\n# And round some variables (just for our demo purposes)\nbikes &lt;- bikes %&gt;% \n  rename(rides = riders_registered, temp = temp_feel) %&gt;% \n  mutate(windspeed = round(windspeed), temp = round(temp)) %&gt;% \n  select(rides, windspeed, temp, weekend)\n\n\n# Check out the dimensions\ndim(bikes)\n\n# Check out the first 3 rows\nhead(bikes, 3)\n\nThis dataset contains the following information for a sample of different dates:\n\n\n\nvariable\ndescription\n\n\n\n\nrides\ncount of daily rides by registered users\n\n\nwindspeed\nwind speed in miles per hour\n\n\ntemp\nwhat the temperature feels like in degrees Fahrenheit\n\n\nweekend\nwhether or not it falls on a weekend\n\n\n\n\nPlot the relationships We’ll consider two linear regression models of ridership:\n\nrides ~ windspeed + temp rides ~ windspeed + temp + weekend\nFirst, let’s plot these relationships. NOTE: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.\n\n# Start small: rides vs temp\nggplot(___, aes(y = ___, x = ___)) + \n  geom___()\n\n\n# rides vs temp & windspeed\nggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + \n  geom_point()\n\n\n# rides vs temp & windspeed & weekend\nggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + \n  geom_point() +  \n  facet_wrap(~ ___)\n\n\n\nSolution\n\n\n# Start small: rides vs temp\nggplot(bikes, aes(y = rides, x = temp)) + \n  geom_point()\n\n\n\n\n\n\n\n# rides vs temp & windspeed\nggplot(bikes, aes(y = rides, x = temp, color = windspeed)) + \n  geom_point()\n\n\n\n\n\n\n\n# rides vs temp & windspeed & weekend\nggplot(bikes, aes(y = rides, x = temp, color = windspeed)) + \n  geom_point() +  \n  facet_wrap(~ weekend)\n\n\n\n\n\n\n\n\n\n\n\ntidymodels STEP 1: model specification\nWe’ll build and evaluate our two models of ridership using the tidymodels package. This code is more complicated than the lm() function we used in STAT 155. BUT: - tidymodels is part of the broader tidyverse (what we use to plot and wrangle data), thus the syntax is more consistent - tidymodels generalizes to the other ML algorithms we’ll survey in this course, thus will eventually minimize the unique syntax we need to learn\n\n\n# Load package\nlibrary(tidymodels)\n\nThe first step is to specify what type of model we want to build. We’ll store this as lm_spec, our linear regression model (lm) specification (spec).\n\nlm_spec &lt;- linear_reg() %&gt;%   # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\nThis code specifies but doesn’t build any model – we didn’t even give it any data or specify the variables of interest!\n\n# Check it out\nlm_spec\n\n\n\nSolution\n\n\n# Load package\nlibrary(tidymodels)\n\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\nlm_spec\n\nLinear Regression Model Specification (regression)\n\nComputational engine: lm \n\n\n\n\n\ntidymodels STEP 2: model estimation We can now estimate or fit our two ridership models using the specified model structure (lm_spec) and our sample bikes data:\n\n\n# Fit bike_model_1\nbike_model_1 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp, data = bikes)\n\n# Check out the coefficients\nbike_model_1 %&gt;% \n  tidy()\n\n\n# YOUR TURN\n# Fit bike_model_2 & check out the coefficients\n\n\n\nSolution\n\n\nbike_model_1 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp, data = bikes)\n\nbike_model_2 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp + weekend, data = bikes)\n\n# Check out the results:\nbike_model_1 %&gt;% \n  tidy()\n\n# A tibble: 3 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    -20.8    300.     -0.0694 9.45e- 1\n2 windspeed      -36.1      9.42   -3.83   1.37e- 4\n3 temp            55.4      3.33   16.6    7.58e-53\n\nbike_model_2 %&gt;% \n  tidy()\n\n# A tibble: 4 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    298.     289.        1.03 3.02e- 1\n2 windspeed      -35.6      9.00     -3.95 8.46e- 5\n3 temp            54.3      3.18     17.1  3.82e-55\n4 weekendTRUE   -858.     101.       -8.46 1.47e-16\n\n\n\n\n\nIs it fair? Now, let’s evaluate our two models. First, do you have any concerns about the context in which the data were collected and analyzed? About the potential impact of this analysis?\n\n\n\nSolution\n\nWhat do you think?\n\nWho might be harmed?\nWho benefits?\n\n\n\n\nIs it strong? We can measure and compare the strength of these models using \\(R^2\\), the proportion of variability in our response variable that’s explained by the model. Report which model is stronger and interpret its \\(R^2\\).\n\n\n# Obtain R^2 for bike_model_1\nbike_model_1 %&gt;% \n  glance()\n\n\n# YOUR TURN\n# Obtain R^2 for bike_model_2\n\n\n\nSolution\n\nModel 2 is stronger than model 1 (\\(R^2\\) of 0.372 vs 0.310). But it only explains 31% of the variability in ridership from day to day.\n\n# Obtain R^2 for bike_model_1\nbike_model_1 %&gt;% \n  glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic  p.value    df logLik    AIC    BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1     0.310         0.308 1298.      163. 2.44e-59     2 -6276. 12560. 12578.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\nbike_model_2 %&gt;% \n  glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic  p.value    df logLik    AIC    BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1     0.372         0.369 1239.      143. 5.82e-73     3 -6242. 12493. 12516.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\n\n\n\nPause: get the residuals and predictions Our next model evaluation questions will focus on the models’ predictions and prediction errors, or residuals. We can obtain this information by augmenting our models with our original bikes data. For example:\n\n\n# Calculate predicted ridership (.pred) & corresponding residuals (.resid) using bike_model_1\n# Just look at first 6 days\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head()\n\nWe can also predict outcomes for new observations using either augment() or predict(). Note the difference in the output:\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  augment(new_data = data.frame(windspeed = 20, temp = 60))\n\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  predict(new_data = data.frame(windspeed = 20, temp = 60))\n\n\n\nSolution\n\naugment() gives the predictions and residuals for all rows in the data. predict() only gives you predictions.\n\n# Obtain the predictions & residuals using bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head()\n\n# A tibble: 6 × 6\n  .pred .resid rides windspeed  temp weekend\n  &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  \n1 3183. -2529.   654        11    65 TRUE   \n2 2911. -2241.   670        17    64 TRUE   \n3 2080.  -851.  1229        17    49 FALSE  \n4 2407.  -953.  1454        11    51 FALSE  \n5 2446.  -928.  1518        13    53 FALSE  \n6 2699. -1181.  1518         6    53 FALSE  \n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  augment(new_data = data.frame(windspeed = 20, temp = 60))\n\n# A tibble: 1 × 3\n  .pred windspeed  temp\n  &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1 2581.        20    60\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  predict(new_data = data.frame(windspeed = 20, temp = 60))\n\n# A tibble: 1 × 1\n  .pred\n  &lt;dbl&gt;\n1 2581.\n\n\n\n\n\nDoes it produce accurate predictions? Recall that the mean absolute error (MAE) measures the typical prediction error. Specifically, it is the mean of the absolute values of the residual errors for the days in our dataset.\n\n\nUse the residuals to calculate the MAE for the 2 models. HINT: abs().\n\n\n# MAE for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = ___(___(___)))\n\n# MAE for bike_model_2\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = ___(___(___)))\n\n\nDoing the calculation from scratch helps solidify your understanding of how MAE is calculated, thus interpreted. Check your calculations using a shortcut function.\n\n\n# Calculate MAE for the first model\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n\n\n# YOUR TURN\n# Calculate MAE for the second model\n\n\nWhich model has more accurate predictions? Interpret the MAE for this model and comment on whether it’s “large” or “small”. NOTE: “large” or “small” is defined by the context (e.g. relative to the observed range of ridership, the consequences of a bad prediction, etc).\n\n\n\nSolution\n\nOn average, the model 1 predictions are off by ~1080 riders and the model 2 predictions are off by ~1038 riders. Is this a lot? Consider this error relative to the scale of the data: there are roughly 1000 - 7000 riders per day.\n\n# a\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = mean(abs(.resid)))\n\n# A tibble: 1 × 1\n    mae\n  &lt;dbl&gt;\n1 1080.\n\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = mean(abs(.resid)))\n\n# A tibble: 1 × 1\n    mae\n  &lt;dbl&gt;\n1 1038.\n\n# b\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 mae     standard       1080.\n\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 mae     standard       1038.\n\n\n\n\n\nIs it wrong? To determine whether the linear regression assumptions behind bike_model_1 and bike_model_2 are reasonable, we can review residual plots, i.e. plots of the residuals vs predictions for each observation in our dataset. Run the code below and summarize your assessment of whether our models are wrong. RECALL: We want the appoints to appear random and centered around 0 across the entire range of the model / predictions.\n\n\n# Residual plot for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point() + \ngeom_hline(yintercept = 0)\n\n\n# YOUR TURN\n# Residual plot for bike_model_2\n\n\n\nSolution\n\nBoth models look roughly “right” BUT there is a little downward slope at the extreme end of the residual plots. This corresponds to the observed phenomenon that when it’s really hot, ridership starts dipping. In a future model, we might incorporate a quadratic temperature term.\n\n# Residual plot for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point() + \ngeom_hline(yintercept = 0)\n\n\n\n\n\n\n\n# Residual plot for bike_model_2\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point() + \ngeom_hline(yintercept = 0)\n\n\n\n\n\n\n\n\n\n\n\nArt vs science Inspecting residual plots is more art than science.1 It requires a lot of practice. Consider another example using simulated data. First, build a model that assumes all predictors are roughly linearly related:\n\n\n# Import data\nsimulated_data &lt;- read.csv(\"https://ajohns24.github.io/data/simulated_data.csv\")\n\n# Model y by the 6 input variables\nnew_model &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2 + x3 + x4 + x5 + x6, simulated_data)\n\nNext, check out a pairs plot. Is there anything here that makes you think that our model assumption is bad?\n\nlibrary(GGally)\nggpairs(simulated_data)\n\n\n\n\n\n\n\n\nFinally, check out a residual plot. Any concerns now?\n\nnew_model %&gt;% \n  ___(new_data = ___) %&gt;% \n  ggplot(aes(x = ___, y = ___)) + \ngeom_point(size = 0.1) + \ngeom_hline(yintercept = 0)\n\n\n\nSolution\n\nArt + Science!\n\nnew_model %&gt;% \n  augment(new_data = simulated_data) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point(size = 0.1) + \ngeom_hline(yintercept = 0)\n\n\n\n\n\n\n\n\n\n\n\nDetails: communication & code style Communication is a key machine learning skill, including written summaries, presentations, and code. Just like an essay, code must have structure, signposts, and grammar that will make it easier for others to follow. The below code runs, but it is “bad code”.\n\n\nFix this code and add comments so that it is easier for yourself and others to follow.\nAlso pay attention to what this code does.\n\n\nbikes%&gt;%group_by(weekend)%&gt;%summarize(median(rides))\n\nmynewdatasetissmallerthantheoriginal&lt;-bikes%&gt;%filter(rides&lt;=700,weekend==FALSE,temp&gt;60)\nmynewdatasetissmallerthantheoriginal\n\nmynewdatasetusescelsius&lt;-bikes%&gt;%mutate(temp=(temp-32)*5/9)\nhead(mynewdatasetusescelsius)\n\n\n\nSolution\n\n\n# Calculate the median ridership by weekend\n# Put each new thought or action on its own line! \n# This makes it easier to follow the steps.\nbikes %&gt;% \n  group_by(weekend) %&gt;% \n  summarize(median(rides))\n\n# A tibble: 2 × 2\n  weekend `median(rides)`\n  &lt;lgl&gt;             &lt;dbl&gt;\n1 FALSE              3848\n2 TRUE               2955\n\n# Obtain days on which there are at most 700 rides,\n# it's the weekend, and temps are above 60 degrees\n# Use a shorter name that's easier to read and type.\n# Add spaces to make things easier to read.\n# Add line breaks to make it easier to follow the steps.\nwarm_weekends &lt;- bikes %&gt;%\n  filter(rides &lt;= 700, weekend == FALSE, temp &gt; 60)\nwarm_weekends\n\n  rides windspeed temp weekend\n1   577        18   67   FALSE\n2   655        18   68   FALSE\n3    20        24   72   FALSE\n\n# Store temp in Celsius\nbikes_celsius &lt;- bikes %&gt;% \n  mutate(temp = (temp - 32)*5/9)\nhead(bikes_celsius)\n\n  rides windspeed      temp weekend\n1   654        11 18.333333    TRUE\n2   670        17 17.777778    TRUE\n3  1229        17  9.444444   FALSE\n4  1454        11 10.555556   FALSE\n5  1518        13 11.666667   FALSE\n6  1518         6 11.666667   FALSE\n\n\n\n\n\nSTAT 155 Review: model interpretation & application Let’s interpret and apply bike_model_2.\n\n\n___ %&gt;% \n  tidy()\n\n\nHow can we interpret the temp coefficient?\n\n\nWe expect roughly 54 more riders on warm days.\nWe expect roughly 54 more riders per every 1 degree increase in temperature.\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders on warm days.\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders per every 1 degree increase in temperature.\n\n\nHow can we interpret the weekendTRUE coefficient?\n\n\nWe expect roughly 858 fewer riders on weekends.\nWe expect roughly 858 fewer riders per every extra weekend.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders per every extra weekend.\n\n\nReproduce the predicted ridership and corresponding residual for day 1 from scratch (how were these calculated?!):\n\n\nbike_model_2 %&gt;% \n  ___(new_data = bikes) %&gt;% \n  head(1)\n\n\n\nSolution\n\n\n# Get the coefficients\nbike_model_2 %&gt;% \n  tidy()\n\n# A tibble: 4 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    298.     289.        1.03 3.02e- 1\n2 windspeed      -35.6      9.00     -3.95 8.46e- 5\n3 temp            54.3      3.18     17.1  3.82e-55\n4 weekendTRUE   -858.     101.       -8.46 1.47e-16\n\n\n\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders per every 1 degree increase in temperature.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends.\n\n\n# Predict ridership on day 1\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head(1)\n\n# A tibble: 1 × 6\n  .pred .resid rides windspeed  temp weekend\n  &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  \n1 2581. -1927.   654        11    65 TRUE   \n\n# This matches .pred\n298.45 - 35.57*11 + 54.33*65 - 857.76*1\n\n[1] 2580.87\n\n# Calculate the residual (observed - predicted)\n# This matches .resid\n654 - 2580.87\n\n[1] -1926.87\n\n\n\n\n\nSTAT 155 Review: data wrangling Through the “Details: communication & code style” and elsewhere, you’ve reviewed the use of various dplyr data wrangling verbs: filter(), mutate(), summarize(), group_by(), and select(). Use these to complete the following tasks.\n\n\nCalculate the mean temperature across all days in the data set.\nCalculate the mean temperature on weekends vs weekdays.\nPrint out the 3 days with the highest temperatures. HINT: arrange() or arrange(desc())\nName and store a new data set which: - only includes the days that fall on a weekend and have temps below 80 degrees - has a new variable, temp_above_freezing, which calculates how far the temperature is above (or below) freezing (32 degrees F) - only includes the windspeed, temp, and temp_above_freezing variables.\n\n\n\nSolution\n\n\n# a\nbikes %&gt;% \n  summarize(mean(temp))\n\n  mean(temp)\n1   74.69083\n\n# b\nbikes %&gt;% \n  group_by(weekend) %&gt;% \n  summarize(mean(temp))\n\n# A tibble: 2 × 2\n  weekend `mean(temp)`\n  &lt;lgl&gt;          &lt;dbl&gt;\n1 FALSE           75.1\n2 TRUE            73.7\n\n# c\nbikes %&gt;% \n  arrange(desc(temp)) %&gt;% \n  head(3)\n\n  rides windspeed temp weekend\n1  2825         9  108   FALSE\n2  3152        15  106   FALSE\n3  2298         9  104    TRUE\n\n# d\nnew_data &lt;- bikes %&gt;% \n  filter(weekend == TRUE, temp &lt; 80) %&gt;% \n  mutate(temp_above_freezing = temp - 32) %&gt;% \n  select(windspeed, temp, temp_above_freezing)\nhead(new_data)\n\n  windspeed temp temp_above_freezing\n1        11   65                  33\n2        17   64                  32\n3        18   47                  15\n4        24   42                  10\n5        11   54                  22\n6        13   53                  21\n\n\n\n\n\nSTAT 155 Review: plots\nConstruct plots of the following relationships:\n\n\nrides vs temp\nrides vs weekend\nrides vs temp and weekend\n\n\n\nSolution\n\n\n# a. rides vs temp\nggplot(bikes, aes(y = rides, x = temp)) + \n  geom_point()\n\n\n\n\n\n\n\n# b. rides vs weekend\nggplot(bikes, aes(y = rides, x = weekend)) + \n  geom_boxplot()\n\n\n\n\n\n\n\nggplot(bikes, aes(x = rides, fill = weekend)) + \n  geom_density(alpha = 0.5)\n\n\n\n\n\n\n\n# c. rides vs temp and weekend\n ggplot(bikes, aes(y = rides, x = temp, color = weekend)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\nDone!\n\nKnit your notes.\nCheck the solutions on the course website.",
+    "crumbs": [
+      "Regression: Model Evaluation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#footnotes",
+    "href": "L02-evaluating-regression-models.html#footnotes",
+    "title": "2  Model Evaluation",
     "section": "",
-    "text": "5.1 webR\nInstructions from this presentation.\nInstall the webR Quarto extension:\nAdd the webR filter to the yaml:\nAdd a webR code block:",
+    "text": "Stefanski, Leonard A. (2007). Residual (Sur)Realism. “The American Statistician,” 61, pp 163-177.↩︎",
     "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
+      "Regression: Model Evaluation",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
     ]
   },
   {
-    "objectID": "L05.html#webr",
-    "href": "L05.html#webr",
-    "title": "5  Some advanced things",
+    "objectID": "r_rstudio.html",
+    "href": "r_rstudio.html",
+    "title": "R and RStudio Setup",
     "section": "",
-    "text": "quarto add coatless/quarto-webr\n\nformat: revealjs\nfilters:\n  - webr\n\n```{webr-r}\n# set a random seed and generate data\nset.seed(123)\nx &lt;- rnorm(100)\n\n# calculate mean\nmean(x)\n```",
+    "text": "Troubleshooting\nHere’s how to fix it:",
     "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
+      "Appendices",
+      "R and RStudio Setup"
     ]
   },
   {
-    "objectID": "L05.html#shinylive",
-    "href": "L05.html#shinylive",
-    "title": "5  Some advanced things",
-    "section": "5.2 ShinyLive",
-    "text": "5.2 ShinyLive\nShiny Live allows either R or Python shiny apps to be run from within the book - without storing the book on a shiny server! See here for a tutorial.\nEvery time the user opens your book, the shiny app installs all of the required packages. For best results, keep packages to a minimum.\n(This repo does not have an example because the extension adds dependencies. I’ll maybe make another repo just to outline the steps I needed to take.)",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
-    ]
-  },
-  {
-    "objectID": "L05.html#quizzes-for-your-lms",
-    "href": "L05.html#quizzes-for-your-lms",
-    "title": "5  Some advanced things",
-    "section": "5.3 Quizzes for your LMS",
-    "text": "5.3 Quizzes for your LMS\nIn my slides, I include something like:\n## Q1\n\nWhich of the following statements is *False*?\n\na. True\nb. False\n\n&lt;!--- B ---&gt;\nA custom R script extracts the “B” from the comment string, then formats an MC question according to my LMS.\nThe question is shown only on the slides, students answer on the LMS.\nThis is specific to the way I do things, but it has saved quite a bit of time and lets me do quizzes tied to their student numbers without an external tool.",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
-    ]
-  },
-  {
-    "objectID": "L05.html#partially-populated-slides-with-full-notes",
-    "href": "L05.html#partially-populated-slides-with-full-notes",
-    "title": "5  Some advanced things",
-    "section": "5.4 Partially Populated Slides with Full Notes",
-    "text": "5.4 Partially Populated Slides with Full Notes\n\nSys.getenv(\"QUARTO_PROFILE\")\n\n[1] \"book\"\n\n\nUsing the profile in R:\n\nblank &lt;- function(x) {\n    if(Sys.getenv(\"QUARTO_PROFILE\") == \"book\") {\n        return(x)\n    } else {\n        return(\"________\")\n    }\n}\n\nForgetful Sally was so forgetful that when she tried to remember something she drew a blank.",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
-    ]
-  },
-  {
-    "objectID": "L05.html#solutions-html-only",
-    "href": "L05.html#solutions-html-only",
-    "title": "5  Some advanced things",
-    "section": "5.5 Solutions (html only)",
-    "text": "5.5 Solutions (html only)\nHow can I get an arbitrary block of text to be hidden until the user asks for it?\n\n\nSolution\n\n&lt;details&gt;\n&lt;summary&gt;**Solution**&lt;/summary&gt;\n\n&lt;/details&gt;",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
-    ]
-  },
-  {
-    "objectID": "L05.html#include-from-a-private-repo",
-    "href": "L05.html#include-from-a-private-repo",
-    "title": "5  Some advanced things",
-    "section": "5.6 Include from a private repo",
-    "text": "5.6 Include from a private repo\nYou can have a separate repo that is private (e.g., if it has quizzes with solutions), then include files from that repo.\n\nAn “include” is a file that is copied verbatim when rendering.",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Some advanced things</span>"
-    ]
-  },
-  {
-    "objectID": "L06.html",
-    "href": "L06.html",
-    "title": "6  Authoring Workflow",
+    "objectID": "r_rstudio.html#troubleshooting",
+    "href": "r_rstudio.html#troubleshooting",
+    "title": "R and RStudio Setup",
     "section": "",
-    "text": "7 The Forward Workflow\nOnce you’ve got this all set up, how do you actually do it???",
+    "text": "Problem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\n\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
     "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Authoring Workflow</span>"
+      "Appendices",
+      "R and RStudio Setup"
     ]
   },
   {
-    "objectID": "L06.html#make-slides",
-    "href": "L06.html#make-slides",
-    "title": "6  Authoring Workflow",
-    "section": "7.1 Make Slides!",
-    "text": "7.1 Make Slides!\n\nStart as if you’re preparing lecture slides.\n\nPreview the slides as you go.\n\nYou must learn to let go and accept the Quarto syntax\n\nIt’s probably easier than the syntax you’re used to.\nFor new syntax that you can’t get your head around, make snippets.\n\nI can’t do anything without my columns snippet.",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Authoring Workflow</span>"
-    ]
-  },
-  {
-    "objectID": "L06.html#add-lecture-notes",
-    "href": "L06.html#add-lecture-notes",
-    "title": "6  Authoring Workflow",
-    "section": "7.2 Add lecture notes",
-    "text": "7.2 Add lecture notes\nIn a when-profile=\"book\" chunk, add what your lecture notes would be. The students will have these online in a nice, searchable format!\nYou can also add some exercises (and solutions) in the",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Authoring Workflow</span>"
-    ]
-  },
-  {
-    "objectID": "L06.html#build-the-book-and-commit",
-    "href": "L06.html#build-the-book-and-commit",
-    "title": "6  Authoring Workflow",
-    "section": "7.3 Build the book and commit",
-    "text": "7.3 Build the book and commit\nGithub will take care of the rest for you!",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Authoring Workflow</span>"
-    ]
-  },
-  {
-    "objectID": "L06.html#turn-the-text-into-speaker-notes",
-    "href": "L06.html#turn-the-text-into-speaker-notes",
-    "title": "6  Authoring Workflow",
-    "section": "8.1 Turn the text into “speaker notes”",
-    "text": "8.1 Turn the text into “speaker notes”\n\nKeep images and diagrams.\n\nPossibly move them around.\n\nUse bullet points to summarise the text.\nAdd a lot more subheadings!\n\nAlso helps separate the text into more manageable chunks.\n\n\nIf done well, the bullet points seem natural around the text.\nYou may",
-    "crumbs": [
-      "Regression: Building Models",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Authoring Workflow</span>"
-    ]
-  },
-  {
-    "objectID": "Lab01-R.html",
-    "href": "Lab01-R.html",
-    "title": "Appendix A — R Lab 1",
+    "objectID": "r_resources.html",
+    "href": "r_resources.html",
+    "title": "R Resources",
     "section": "",
-    "text": "plot(mpg ~ wt, data = mtcars)",
+    "text": "Tidymodels resources",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>A</span>  <span class='chapter-title'>R Lab 1</span>"
+      "R Resources"
     ]
   },
   {
-    "objectID": "Lab02-Python.html",
-    "href": "Lab02-Python.html",
-    "title": "Appendix B — Python Lab 1",
+    "objectID": "r_resources.html#tidymodels-resources",
+    "href": "r_resources.html#tidymodels-resources",
+    "title": "R Resources",
     "section": "",
-    "text": "import numpy as np\nfrom sklearn.linear_model import LinearRegression\nimport matplotlib.pyplot as plt\n\n\nx = np.random.uniform(0, 10, 50)\ne = np.random.normal(0, 3, x.size)\ny = 12 - 5 * x + e\n\nplt.scatter(x, y)\nplt.show()",
+    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Python Lab 1</span>"
+      "R Resources"
     ]
   },
   {
-    "objectID": "DGBecker_QuorseNotes.html",
-    "href": "DGBecker_QuorseNotes.html",
-    "title": "Appendix C — Quorse Notes Overview Presentation",
+    "objectID": "r_resources.html#tidyverse-resources",
+    "href": "r_resources.html#tidyverse-resources",
+    "title": "R Resources",
+    "section": "Tidyverse resources",
+    "text": "Tidyverse resources\n\nBrianna Heggeseth’s COMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#visualization-resources",
+    "href": "r_resources.html#visualization-resources",
+    "title": "R Resources",
+    "section": "Visualization resources",
+    "text": "Visualization resources\n\nggplot2 reference\nColors in R",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#general-r-resources",
+    "href": "r_resources.html#general-r-resources",
+    "title": "R Resources",
+    "section": "General R resources",
+    "text": "General R resources\n\nRStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#some-example-code",
+    "href": "r_resources.html#some-example-code",
+    "title": "R Resources",
+    "section": "Some example code",
+    "text": "Some example code\nCreating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "stat155.html",
+    "href": "stat155.html",
+    "title": "STAT 155 Review",
     "section": "",
-    "text": "C.1 Introduction",
+    "text": "COMPREHENSIVE REVIEW\nA comprehensive STAT 155 review is provided by the Prof. Johnson’s Spring 2022 STAT 155 manual here and the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint here.\n\n\n\nQUICK REVIEW\nLet \\(y\\) be a response variable with a set of \\(k\\) explanatory variables \\(x = (x_{1}, x_{2}, ..., x_{k})\\). Then the population linear regression model is\n\\[\\begin{split}\ny & = f(x) + \\varepsilon  = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\nNOTES:\n\n\\(\\beta\\) is the Greek letter “beta”. \\(\\varepsilon\\) is the Greek letter “epsilon”.\n\n“Linear” regression is so named because it assumes that \\(y\\) is a linear combination of the \\(x\\)’s. It does not mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: \\(x_2 = x_1^2\\).\n\\(f(x) = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}\\) captures the trend of the relationship\n\n\\(\\beta_0\\) = intercept coefficient\nthe model value when \\(x_1=x_2=\\cdots=x_k=0\\)\n\\(\\beta_i\\) = \\(x_i\\) coefficient\nhow \\(x_i\\) is related to \\(y\\) when holding constant all other \\(x_i\\)\n\n\\(\\epsilon\\) reflects deviation from the trend (the residual)\n\n\n\n\n\nFitting the Model\nOnce we have a population model in mind, we can “fit the model” (i.e. estimate the \\(\\beta\\) population coefficients) using sample data:\n\\[\\begin{split}\ny & =  \\hat{f}(x) + \\varepsilon \\\\\n& = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{1} + \\hat{\\beta}_2 x_{2} + \\cdots + \\hat{\\beta}_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\n\n\nTo this end, collect a sample of data on \\(n\\) subjects. Use subscripts to denote the data for subject \\(i\\): \\(y_i\\) and \\(x_{ij}\\). Then the predicted response and residual (prediction error) for subject \\(i\\) are\n\nprediction \\[\\hat{y}_i = \\hat{f}(x_i) = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\hat{\\beta}_2 x_{i2} + \\cdots + \\hat{\\beta}_k x_{ik}\\]\nresidual / prediction error \\[y_i - \\hat{y}_i\\]\n\n\n\n\nLeast Squares Criterion\nEstimate (\\(\\beta_0, \\beta_1,..., \\beta_k\\)) by (\\(\\hat{\\beta}_0, \\hat{\\beta}_1,..., \\hat{\\beta}_k)\\) that minimize the sum of squared residuals: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 = (y_1-\\hat{y}_1)^2 + (y_2-\\hat{y}_2)^2 + \\cdots + (y_n-\\hat{y}_n)^2\\]",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Quorse Notes Overview Presentation</span>"
-    ]
-  },
-  {
-    "objectID": "DGBecker_QuorseNotes.html#introduction",
-    "href": "DGBecker_QuorseNotes.html#introduction",
-    "title": "Appendix C — Quorse Notes Overview Presentation",
-    "section": "",
-    "text": "Overview\n\nThese are slides… or are they?\n\nIf you’re reading this, the answer is no! This is a portion that is only visible when compiled as a book!\n\nThis book chapter created from a slideshow will introduce the basic workflow and some ideas. (Check the source code for this paragraph).\nIt will be helpful to have a GitHub account, GitHub desktop installed, and RStudio/VSCode running.\n\n\nWorkflow Preview\nOnce everything is set up:\n\nMake slides (or adapt from elsewhere)\nAdd in participation activities\nDo some live demonstrations in class\nPush to GitHub after class\n\nEverything is now available to the students on a website\n\n\n\n\nMain Benefits\n\nOpen source and reproducible\nEasy to use, searchable book for students including all information from class\nOnly one extra step on top of Quarto slides!",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Quorse Notes Overview Presentation</span>"
-    ]
-  },
-  {
-    "objectID": "DGBecker_QuorseNotes.html#introduction-to-quarto",
-    "href": "DGBecker_QuorseNotes.html#introduction-to-quarto",
-    "title": "Appendix C — Quorse Notes Overview Presentation",
-    "section": "C.2 Introduction to Quarto",
-    "text": "C.2 Introduction to Quarto\n\nqmd versus Rmd\nIf you rename myfile.Rmd to myfile.qmd, it works exactly the same.\nqmd is the next generation of RMarkdown.\n\nMore code options\nMore output options\nMore language options (python, julia, lua, etc.)\nMore editor options\n\n\n\nThe General Quarto Idea\nOne input file, many outputs.\n\nAccepts qmd, Rmd, and ipynb as input files\nOutputs to pdf, html, docx, pptx, md, epub, odt, etc.\n\n\n\nCode and Prose\nThis is text. The following is R code.\n\n```{r}\n#| eval: false\nprint(\"This is R code, but it won't be executed,\")\n```\n\nHere’s some more text.\n\n```{r}\n#| eval: true\nprint(\"This is R code, and it will be executed,\")\n```\n\n[1] \"This is R code, and it will be executed,\"\n\n\n\n\nMath, too!\nBasic math works in all output formats:\n\n\n$$\nma^{th} = f(un)\n$$\n\n\\[\nma^{th} = f(un)\n\\]\n\n\n\n\nSo Much More!\n\nCode line numbering, with line highlight.\nInteractive elements (shiny, runnable code, ).\nNon-linear slideshows.\nSo much more!",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Quorse Notes Overview Presentation</span>"
-    ]
-  },
-  {
-    "objectID": "DGBecker_QuorseNotes.html#setup-steps",
-    "href": "DGBecker_QuorseNotes.html#setup-steps",
-    "title": "Appendix C — Quorse Notes Overview Presentation",
-    "section": "C.3 Setup Steps",
-    "text": "C.3 Setup Steps\n\nThe YAML files\nYAML: Yet Another Markup Language\n\nBasically, human-readable files that tell a computer what to do.\nYou’ve seen this syntax if you’ve used RMarkdown!\n\nauthor: \"Dr. Devan Becker\"\ndate: \"last-modified\"\ndate-format: \"iso\"\n\nexecute:\n    warning: false\n    cache: true\n\n\nYAML Separation\n\n\n_quarto.yml\ndate-fromat: iso\n...\n\nexecute:\n  warning: false\n  ...\n\nprofile:\n  group:\n  - [slides, book]\n\n_quarto-slides.yml\nproject:\n  output-dir: Slides\n\nformat: \n  beamer:\n    ...\n    execute:\n      echo: false\n      ...\n\n_quarto-book.yml\nproject:\n  type: book\n  output-dir: docs\nbook:\n  title: \"Quarto Course Notes\"\n  ...\n  chapters:\n    - index.qmd\n    ...\n\nformat:\n  html:\n    ...\n\n\n\nThe _quarto.yml file includes options that apply to everything.\n\nThe profile group indicates that slides are the default.\n\nThe other two have specific options for slides and book, respectively.\n\n\n\nSpecial Things in quarto-book.yml\n\nLinks to the github repo.\nPage headers and footers.\nNavigation options.\nChapters (separated into parts) and appendices.\nThemes/appearance\n\n\n\nGitHub Pages Workflow\n\nIn _quarto-slides.yml, send the outputs whereever\n\nI have a folder called “Slides”, so I use project: output-dir: Slides\n\nIn quarto-book.yml, send the outputs to a folder called “docs”\n\nIt must be called docs for this to work.\n\nOn GitHub, go to Settings -&gt; Pages\n\nChoose “Deploy from a branch”\nChoose “main” and “docs”\n\n\nAnytime you push to the repo, the html files made by quarto are built into a website!\n\nMust “build” the html files locally.\n\n\n\nAlternative Workflows\n\nGithub pages, but use a different branch\n\nAdds some complexity, but allows the source files to be private.\n\nAny static site host\n\nSet output-dir to any folder that gets pushed to the website.\nUseful if you already have a web host set up.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Quorse Notes Overview Presentation</span>"
-    ]
-  },
-  {
-    "objectID": "DGBecker_QuorseNotes.html#authoring",
-    "href": "DGBecker_QuorseNotes.html#authoring",
-    "title": "Appendix C — Quorse Notes Overview Presentation",
-    "section": "C.4 Authoring",
-    "text": "C.4 Authoring\n\nSome Conveniences\n\nCustom beamer definitions for spacing in slides\n\n\\lspace (list space) is a newline in slides, nothing in book.\n\\pspace (paragraph space) is a whitespace character in slides, nothing in book\n\nSnippets in RStudio\n\nbook-only and not-book, but also LaTeX symbols\n\n\n\n\nConditional Rendering\n\nThese are slides… or are they?\n\n::: {.content-visible when-profile=\"slides\"}\nIf you're reading this, then yes they are!!!\n:::\n\n::: {.content-visible when-profile=\"book\"}\nIf you're reading this, the answer is no! This is a portion that is only\nvisible when compiled as a book!\n:::\nRStudio snippets make these really easy!\n\n\nPreviewing\nWith the given setup, Cmd + Shift + K will build the slides (not book).\nTo see the book you can either:\n\nRun quarto preview --profile book in the terminal\n\nQuarto will update as you edit!\n\nChange the default profile briefly, then change it back.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Quorse Notes Overview Presentation</span>"
-    ]
-  },
-  {
-    "objectID": "DGBecker_QuorseNotes.html#summary",
-    "href": "DGBecker_QuorseNotes.html#summary",
-    "title": "Appendix C — Quorse Notes Overview Presentation",
-    "section": "C.5 Summary",
-    "text": "C.5 Summary\n\nqmd files\n\nInclude code, math, pictures, etc.\nRender to slides for class.\n\nControl what’s included.\n\nRender to an online book.\n\nInclude extra content and capabilities.\nHosted publicly for free!\n\nAdd class discussion points, make available where the students expect it.\n\nWrite once, publish anyywhere!\n\n\nLimitations\n\nStop making new materials!\n\nSearch for open source or previous materials, edit for your style!\n\nIt’s always tempting to use the fancy new hotness - be careful!\n\nMore features = less future proof.\n\nIf you use my template, you’re bound to open source!\n\nYou can change it substantially and change the license, but the repo is bound to Sharealike.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Quorse Notes Overview Presentation</span>"
+      "STAT 155 Review"
     ]
   }
 ]

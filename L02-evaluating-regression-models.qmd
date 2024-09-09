@@ -1,0 +1,784 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r 02_setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning = FALSE,message=FALSE)
+library(tidyverse)
+library(gridExtra)
+library(conflicted)
+conflicts_prefer(dplyr::filter)
+```
+
+**Note: this page is currently under construction!**
+
+# Model Evaluation 
+
+## Learning Goals {-}
+
+-   Practice building and evaluating linear regression models in
+    RStudio working on:
+    - Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.
+    - Calculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.
+-   Review some STAT 155 concepts and RStudio tools.
+-   Start using the **tidymodels** package to build and evaluate regression models.
+-   Get used to the course workflow, e.g. taking notes.
+
+
+
+## Small Group Discussion: Recap Video {-}
+
+**Directions:**
+
+-   In small groups, please first introduce yourself in whatever way you
+    feel appropriate (e.g. name, pronouns, how you’re feeling at the
+    moment, things you’re looking forward to, best part of winter break,
+    why you are motivated to take this class). Check in with each other
+    as human beings.
+-   When everyone is ready, glance through the summary of concepts
+    (below) covered in the video.
+
+**Prompt:**
+
+-   What vocabulary or notation was new to you?
+-   What concepts were new to you?
+-   What concepts are still unclear to you at this moment?
+
+<center><img src="images/MLdiagram1.jpg"/></center>
+
+We are in the **regression** setting. We want to build a model of some
+**quantitative** output variable $y$ by some predictors $x$:
+
+$$y = f(x) + \epsilon$$
+
+There are many regression tools that we might use to build this model.
+We'll use a **linear regression** model which assumes that $y$ is a
+linear combination of the $x$'s:
+
+$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots \beta_p x_p + \epsilon$$
+
+After *building* any model, it's important to *evaluate* it: **Is our
+*regression model* a "*good*" model?**
+
+1.  Is the model wrong?
+2.  Is the model strong?
+3.  Does the model produce accurate predictions?
+4.  Is the model fair?
+
+**NOTE:**
+
+We will review these concepts through the exercises below. A detailed
+overview is provided in the "Motivating Question" section under
+"Regression: Model Evaluation" in the course website.
+
+## Notes: R code {-}
+
+This section is for **future** reference. It is a summary of code you'll
+learn below for building and evaluating regression models. Throughout,
+suppose we wish to build and evaluate a linear regression model of `y`
+vs `x1` and `x2` using our `sample_data`.
+
+```{r eval = FALSE}
+# Load packages
+library(tidyverse)
+library(tidymodels)
+```
+
+**Building a linear regression model**
+
+```{r eval = FALSE}
+# STEP 1: specify the type of model to build
+lm_spec <- linear_reg() %>% # we want a linear regression model
+  set_mode("regression") %>%  # this is a regression task (y is quantitative)
+  set_engine("lm")# we'll estimate the model using the lm function
+
+# STEP 2: estimate the specified model using sample data
+model_estimate <- lm_spec %>% 
+  fit(y ~ x1 + x2, data = sample_data)
+
+# Get the model coefficients
+model_estimate %>% 
+  tidy()
+```
+
+**Obtaining predictions (& residuals) for each observation**
+
+```{r eval = FALSE}
+# Obtain y predictions and residuals for each observation in our sample_data
+# (We can replace sample_data with any data frame that includes y, x1, and x2)
+model_estimate %>% 
+  augment(new_data = sample_data)
+
+# Obtain y predictions (but not residuals) for some given x1, x2 values, when we haven't yet observed y
+# (We can replace the data.frame with any data frame that includes x1 and x2)
+model_estimate %>% 
+  augment(new_data = data.frame(x1 = ___, x2 = ___))
+  
+# Another approach using predict()
+model_estimate %>% 
+  predict(new_data = data.frame(x1 = ___, x2 = ___))
+```
+
+**Evaluating the model**
+
+```{r eval = FALSE}
+# Is it strong? (R^2)
+model_estimate %>% 
+  glance()
+
+# Does it produce accurate predictions? (MAE)
+model_estimate %>% 
+  augment(new_data = sample_data) %>% 
+  mae(truth = y, estimate = .pred)
+
+# Is it wrong? (residual plot)
+model_estimate %>% 
+  augment(new_data = sample_data) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+geom_point() + 
+geom_hline(yintercept = 0)
+```
+
+## In-Class Activity - Exercises {-}
+
+Capital Bikeshare provides a bike-sharing service in the Washington DC
+area. Customers can pick up and drop off bikes at any station around the
+city. Of primary interest to the company is:
+
+**How many registered riders can we expect today?**
+
+To this end, you will build, evaluate, and compare 2 different **linear
+regression models** of ridership using the following Capital Bikeshare
+dataset (originally from the UCI Machine Learning Repository):
+
+```{r}
+# Load packages we'll need to wrangle and plot the data
+library(tidyverse)
+
+# Load the data
+bikes <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bike_share.csv")
+
+# Only keep / select some variables
+# And round some variables (just for our demo purposes)
+bikes <- bikes %>% 
+  rename(rides = riders_registered, temp = temp_feel) %>% 
+  mutate(windspeed = round(windspeed), temp = round(temp)) %>% 
+  select(rides, windspeed, temp, weekend)
+```
+
+```{r results='hide'}
+# Check out the dimensions
+dim(bikes)
+
+# Check out the first 3 rows
+head(bikes, 3)
+```
+
+This dataset contains the following information for a sample of
+different dates:
+
+| variable     | description                                  |
+|:-------------|:---------------------------------------------|
+| rides        | count of daily rides by registered users         |
+| windspeed    | wind speed in miles per hour                 |
+| temp         | what the temperature feels like in degrees Fahrenheit |
+| weekend      | whether or not it falls on a weekend             |
+
+
+
+1. **Plot the relationships** We'll consider two linear
+regression models of ridership:
+
+`rides ~ windspeed + temp` `rides ~ windspeed + temp + weekend`
+
+First, let's *plot* these relationships. NOTE: Don't write in any chunk
+with starter code. Copy, paste, and modify the code in the chunk below
+it.
+
+```{r eval = FALSE}
+# Start small: rides vs temp
+ggplot(___, aes(y = ___, x = ___)) + 
+  geom___()
+```
+
+```{r eval = FALSE}
+# rides vs temp & windspeed
+ggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + 
+  geom_point()
+```
+
+```{r eval = FALSE}
+# rides vs temp & windspeed & weekend
+ggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + 
+  geom_point() +  
+  facet_wrap(~ ___)
+```
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+# Start small: rides vs temp
+ggplot(bikes, aes(y = rides, x = temp)) + 
+  geom_point()
+
+# rides vs temp & windspeed
+ggplot(bikes, aes(y = rides, x = temp, color = windspeed)) + 
+  geom_point()
+
+# rides vs temp & windspeed & weekend
+ggplot(bikes, aes(y = rides, x = temp, color = windspeed)) + 
+  geom_point() +  
+  facet_wrap(~ weekend)
+```
+</details>  <br>
+
+
+
+2. **tidymodels STEP 1: model specification**\
+We'll build and evaluate our two models of ridership using the
+**tidymodels** package. This code is more complicated than the `lm()`
+function we used in STAT 155. BUT: - **tidymodels** is part of the
+broader **tidyverse** (what we use to plot and wrangle data), thus the
+syntax is more consistent - **tidymodels** generalizes to the other ML
+algorithms we'll survey in this course, thus will eventually *minimize*
+the unique syntax we need to learn
+
+```{r}
+# Load package
+library(tidymodels)
+```
+
+The first step is to **specify what type of model we want to build**.
+We'll store this as `lm_spec`, our linear regression model (`lm`)
+specification (`spec`).
+
+```{r}
+lm_spec <- linear_reg() %>%   # we want a linear regression model
+  set_mode("regression") %>%  # this is a regression task (y is quantitative)
+  set_engine("lm")# we'll estimate the model using the lm function
+```
+
+This code *specifies* but doesn't *build* any model -- we didn't even
+give it any data or specify the variables of interest!
+
+```{r eval = FALSE}
+# Check it out
+lm_spec
+```
+
+
+
+```{r echo = FALSE}
+bike_model_2 <- lm_spec %>% 
+  fit(rides ~ windspeed + temp + weekend, data = bikes)
+
+```
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+# Load package
+library(tidymodels)
+
+lm_spec <- linear_reg() %>% # we want a linear regression model
+  set_mode("regression") %>%  # this is a regression task (y is quantitative)
+  set_engine("lm")# we'll estimate the model using the lm function
+
+lm_spec
+```
+</details>  <br>
+
+3. **tidymodels STEP 2: model estimation** We can now estimate
+or `fit` our two ridership models using the specified model structure
+(`lm_spec`) and our sample `bikes` data:
+
+```{r results='hide'}
+# Fit bike_model_1
+bike_model_1 <- lm_spec %>% 
+  fit(rides ~ windspeed + temp, data = bikes)
+
+# Check out the coefficients
+bike_model_1 %>% 
+  tidy()
+```
+
+```{r}
+# YOUR TURN
+# Fit bike_model_2 & check out the coefficients
+
+
+```
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+bike_model_1 <- lm_spec %>% 
+  fit(rides ~ windspeed + temp, data = bikes)
+
+bike_model_2 <- lm_spec %>% 
+  fit(rides ~ windspeed + temp + weekend, data = bikes)
+
+# Check out the results:
+bike_model_1 %>% 
+  tidy()
+bike_model_2 %>% 
+  tidy()
+```
+</details>  <br>
+
+
+
+4. **Is it fair?** Now, let's *evaluate* our two models.
+First, do you have any concerns about the context in which the data were
+collected and analyzed? About the potential impact of this analysis?
+
+<details>
+<summary>Solution</summary>
+What do you think?
+
+- Who might be harmed?
+- Who benefits?
+
+</details>  <br>
+
+5. **Is it strong?** We can measure and compare the strength
+of these models using $R^2$, *the proportion of variability in our
+response variable that's explained by the model*. Report which model is
+stronger and interpret its $R^2$.
+
+```{r eval = FALSE}
+# Obtain R^2 for bike_model_1
+bike_model_1 %>% 
+  glance()
+```
+
+```{r}
+# YOUR TURN
+# Obtain R^2 for bike_model_2
+
+```
+
+<details>
+<summary>Solution</summary>
+Model 2 is stronger than model 1 ($R^2$
+of 0.372 vs 0.310). But it only explains 31% of the variability in
+ridership from day to day.
+
+```{r}
+# Obtain R^2 for bike_model_1
+bike_model_1 %>% 
+  glance()
+bike_model_2 %>% 
+  glance()
+```
+</details>  <br>
+
+6. **Pause: get the residuals and predictions** Our next model
+evaluation questions will focus on the models' predictions and
+prediction *errors*, or *residuals*. We can obtain this information by
+*augmenting* our models with our original `bikes` data. For example:
+
+```{r eval = FALSE}
+# Calculate predicted ridership (.pred) & corresponding residuals (.resid) using bike_model_1
+# Just look at first 6 days
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  head()
+```
+
+We can also predict outcomes for *new* observations using either
+`augment()` or `predict()`. Note the difference in the output:
+
+```{r eval = FALSE}
+# Predict ridership on a 60 degree day with 20 mph winds
+bike_model_1 %>% 
+  augment(new_data = data.frame(windspeed = 20, temp = 60))
+```
+
+```{r eval = FALSE}
+# Predict ridership on a 60 degree day with 20 mph winds
+bike_model_1 %>% 
+  predict(new_data = data.frame(windspeed = 20, temp = 60))
+```
+
+<details>
+<summary>Solution</summary>
+
+`augment()` gives the predictions and residuals for all rows in the data. `predict()` only gives you predictions.
+
+```{r}
+# Obtain the predictions & residuals using bike_model_1
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  head()
+
+# Predict ridership on a 60 degree day with 20 mph winds
+bike_model_1 %>% 
+  augment(new_data = data.frame(windspeed = 20, temp = 60))
+
+# Predict ridership on a 60 degree day with 20 mph winds
+bike_model_1 %>% 
+  predict(new_data = data.frame(windspeed = 20, temp = 60))
+```
+</details>  <br>
+
+7. **Does it produce accurate predictions?** Recall that the
+**mean absolute error** (MAE) measures the typical prediction error.
+Specifically, it is the *mean* of the *absolute* values of the residual
+*errors* for the days in our dataset. 
+
+a. Use the residuals to calculate the MAE for the 2 models. HINT: `abs()`.
+
+```{r eval = FALSE}
+# MAE for bike_model_1
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  summarize(mae = ___(___(___)))
+
+# MAE for bike_model_2
+bike_model_2 %>% 
+  augment(new_data = bikes) %>% 
+  summarize(mae = ___(___(___)))
+```
+
+b.  Doing the calculation from scratch helps solidify your understanding
+    of how MAE is calculated, thus interpreted. Check your calculations
+    using a shortcut function.
+
+```{r eval = FALSE}
+# Calculate MAE for the first model
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  mae(truth = rides, estimate = .pred)
+```
+
+```{r eval = FALSE}
+# YOUR TURN
+# Calculate MAE for the second model
+
+```
+
+c.  Which model has more accurate predictions? Interpret the MAE for
+    this model and comment on whether it's "large" or "small". NOTE:
+    "large" or "small" is defined by the context (e.g. relative to the
+    observed range of ridership, the consequences of a bad prediction,
+    etc).
+
+
+<details>
+<summary>Solution</summary>
+On average, the model 1 predictions are off by \~1080 riders and the model 2 predictions
+are off by \~1038 riders. Is this a lot? Consider this error relative to
+the scale of the data: there are roughly 1000 - 7000 riders per day.
+
+```{r}
+# a
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  summarize(mae = mean(abs(.resid)))
+bike_model_2 %>% 
+  augment(new_data = bikes) %>% 
+  summarize(mae = mean(abs(.resid)))
+  
+# b
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  mae(truth = rides, estimate = .pred)
+bike_model_2 %>% 
+  augment(new_data = bikes) %>% 
+  mae(truth = rides, estimate = .pred)
+```
+</details>  <br>
+
+8. **Is it wrong?** To determine whether the linear regression
+assumptions behind `bike_model_1` and `bike_model_2` are reasonable, we
+can review residual plots, i.e. plots of the residuals vs predictions
+for each observation in our dataset. Run the code below and summarize
+your assessment of whether our models are wrong. RECALL: We want the
+appoints to appear *random* and *centered around 0* across the entire
+range of the model / predictions.
+
+```{r eval = FALSE}
+# Residual plot for bike_model_1
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+geom_point() + 
+geom_hline(yintercept = 0)
+```
+
+```{r}
+# YOUR TURN
+# Residual plot for bike_model_2
+
+```
+
+<details>
+<summary>Solution</summary>
+Both models look roughly "right" BUT there
+is a little downward slope at the extreme end of the residual plots.
+This corresponds to the observed phenomenon that when it's really hot,
+ridership starts dipping. In a future model, we might incorporate a
+quadratic temperature term.
+
+```{r message = FALSE, warning = FALSE}
+# Residual plot for bike_model_1
+bike_model_1 %>% 
+  augment(new_data = bikes) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+geom_point() + 
+geom_hline(yintercept = 0)
+  
+# Residual plot for bike_model_2
+bike_model_2 %>% 
+  augment(new_data = bikes) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+geom_point() + 
+geom_hline(yintercept = 0)
+```
+</details>  <br>
+
+9. **Art vs science** Inspecting residual plots is more art
+than science.[^1] It requires a lot of practice. Consider another
+example using simulated data. First, build a model that assumes all
+predictors are roughly linearly related:
+
+[^1]: Stefanski, Leonard A. (2007). Residual (Sur)Realism. "The American
+    Statistician," 61, pp 163-177.
+
+```{r}
+# Import data
+simulated_data <- read.csv("https://ajohns24.github.io/data/simulated_data.csv")
+
+# Model y by the 6 input variables
+new_model <- lm_spec %>% 
+  fit(y ~ x1 + x2 + x3 + x4 + x5 + x6, simulated_data)
+```
+
+Next, check out a pairs plot. Is there anything here that makes you
+think that our model assumption is bad?
+
+```{r cache = TRUE, fig.height = 5, fig.width = 5}
+library(GGally)
+ggpairs(simulated_data)
+```
+
+Finally, check out a residual plot. Any concerns now?
+
+```{r eval = FALSE}
+new_model %>% 
+  ___(new_data = ___) %>% 
+  ggplot(aes(x = ___, y = ___)) + 
+geom_point(size = 0.1) + 
+geom_hline(yintercept = 0)
+```
+
+<details>
+<summary>Solution</summary>
+
+Art + Science!
+
+```{r}
+new_model %>% 
+  augment(new_data = simulated_data) %>% 
+  ggplot(aes(x = .pred, y = .resid)) + 
+geom_point(size = 0.1) + 
+geom_hline(yintercept = 0)
+```
+</details>  <br>
+
+10. **Details: communication & code style** Communication is a
+key machine learning skill, including written summaries, presentations,
+and **code**. Just like an essay, code must have structure, signposts,
+and grammar that will make it easier for others to follow. The below
+code runs, but it is "bad code".
+
+- Fix this code and add **comments** so that it is easier for yourself
+and others to follow. 
+- Also pay attention to what this code *does*.
+
+```{r eval = FALSE}
+bikes%>%group_by(weekend)%>%summarize(median(rides))
+
+mynewdatasetissmallerthantheoriginal<-bikes%>%filter(rides<=700,weekend==FALSE,temp>60)
+mynewdatasetissmallerthantheoriginal
+
+mynewdatasetusescelsius<-bikes%>%mutate(temp=(temp-32)*5/9)
+head(mynewdatasetusescelsius)
+```
+
+<details>
+<summary>Solution</summary>
+```{r}
+# Calculate the median ridership by weekend
+# Put each new thought or action on its own line! 
+# This makes it easier to follow the steps.
+bikes %>% 
+  group_by(weekend) %>% 
+  summarize(median(rides))
+
+# Obtain days on which there are at most 700 rides,
+# it's the weekend, and temps are above 60 degrees
+# Use a shorter name that's easier to read and type.
+# Add spaces to make things easier to read.
+# Add line breaks to make it easier to follow the steps.
+warm_weekends <- bikes %>%
+  filter(rides <= 700, weekend == FALSE, temp > 60)
+warm_weekends
+
+# Store temp in Celsius
+bikes_celsius <- bikes %>% 
+  mutate(temp = (temp - 32)*5/9)
+head(bikes_celsius)
+```
+</details>  <br>
+
+11. **STAT 155 Review: model interpretation & application**
+Let's **interpret** and **apply** `bike_model_2`.
+
+```{r eval = FALSE}
+___ %>% 
+  tidy()
+```
+
+a.  How can we interpret the `temp` coefficient?
+
+-   We expect roughly 54 more riders on warm days.
+-   We expect roughly 54 more riders per every 1 degree increase in
+    temperature.
+-   When controlling for windspeed and weekend status, we expect roughly
+    54 more riders on warm days.
+-   When controlling for windspeed and weekend status, we expect roughly
+    54 more riders per every 1 degree increase in temperature.
+
+b.  How can we interpret the `weekendTRUE` coefficient?
+
+-   We expect roughly 858 fewer riders on weekends.
+-   We expect roughly 858 fewer riders per every extra weekend.
+-   When controlling for windspeed and temperature, we expect roughly
+    858 fewer riders on weekends.
+-   When controlling for windspeed and temperature, we expect roughly
+    858 fewer riders per every extra weekend.
+
+c.  Reproduce the predicted ridership and corresponding residual for day
+    1 from scratch (how were these calculated?!):
+
+```{r eval = FALSE}
+bike_model_2 %>% 
+  ___(new_data = bikes) %>% 
+  head(1)
+```
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+# Get the coefficients
+bike_model_2 %>% 
+  tidy()
+```
+
+a.  When controlling for windspeed and weekend status, we expect roughly
+    54 more riders per every 1 degree increase in temperature.
+b.  When controlling for windspeed and temperature, we expect roughly
+    858 fewer riders on weekends.
+
+```{r}
+# Predict ridership on day 1
+bike_model_2 %>% 
+  augment(new_data = bikes) %>% 
+  head(1)
+  
+# This matches .pred
+298.45 - 35.57*11 + 54.33*65 - 857.76*1
+
+# Calculate the residual (observed - predicted)
+# This matches .resid
+654 - 2580.87
+```
+
+</details>  <br>
+
+12. **STAT 155 Review: data wrangling** Through the "Details:
+communication & code style" and elsewhere, you've reviewed the use of
+various `dplyr` data wrangling verbs: `filter()`, `mutate()`,
+`summarize()`, `group_by()`, and `select()`. Use these to complete the
+following tasks. 
+
+a. Calculate the mean temperature across all days in
+the data set. 
+b. Calculate the mean temperature on weekends vs weekdays.
+c. Print out the 3 days with the *highest* temperatures. HINT:
+`arrange()` or `arrange(desc())` 
+d. Name and store a new data set
+which: - only includes the days that fall on a weekend *and* have temps
+below 80 degrees - has a new variable, `temp_above_freezing`, which
+calculates how far the temperature is above (or below) freezing (32
+degrees F) - only includes the `windspeed`, `temp`, and
+`temp_above_freezing` variables.
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+# a
+bikes %>% 
+  summarize(mean(temp))
+
+# b
+bikes %>% 
+  group_by(weekend) %>% 
+  summarize(mean(temp))
+
+# c
+bikes %>% 
+  arrange(desc(temp)) %>% 
+  head(3)
+
+# d
+new_data <- bikes %>% 
+  filter(weekend == TRUE, temp < 80) %>% 
+  mutate(temp_above_freezing = temp - 32) %>% 
+  select(windspeed, temp, temp_above_freezing)
+head(new_data)
+
+```
+</details>  <br>
+
+12. **STAT 155 Review: plots**\
+Construct plots of the following relationships: 
+
+a. rides vs temp 
+b. rides vs weekend 
+c. rides vs temp and weekend
+
+<details>
+<summary>Solution</summary>
+```{r}
+# a. rides vs temp
+ggplot(bikes, aes(y = rides, x = temp)) + 
+  geom_point()
+  
+# b. rides vs weekend
+ggplot(bikes, aes(y = rides, x = weekend)) + 
+  geom_boxplot()
+ggplot(bikes, aes(x = rides, fill = weekend)) + 
+  geom_density(alpha = 0.5)
+  
+# c. rides vs temp and weekend
+ ggplot(bikes, aes(y = rides, x = temp, color = weekend)) + 
+  geom_point()
+```
+</details>  <br>
+
+**Done!** 
+
+- Knit your notes. 
+- Check the solutions on the course website.
+

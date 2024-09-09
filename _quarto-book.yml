@@ -11,26 +11,25 @@ book:
   repo-actions: [issue, source]  
   page-footer:
     left: |
-      Copyright Kelsey Grinde, released under Creative Commons Attribution-ShareAlike 4.0.
+      Copyright Kelsey Grinde, released under Creative Commons Attribution-NonCommercial-ShareAlike 4.0.
   sidebar: 
     collapse-level: 2
   page-navigation: true
   chapters:
     - index.qmd
-    - L01.qmd
+    - part: "Overview"
+      chapters: 
+        - schedule.qmd
+        - learning-objectives.qmd
+        - L01-introductions.qmd
     - part: "Regression: Model Evaluation"
       chapters:
-        - L02.qmd
-        - L03.qmd
-        - L04.qmd
-    - part: "Regression: Building Models"
-      chapters:
-        - L05.qmd
-        - L06.qmd
+        - U01-motivation.qmd
+        - L02-evaluating-regression-models.qmd
   appendices:
-    - Lab01-R.Rmd
-    - Lab02-Python.ipynb
-    - DGBecker_QuorseNotes.qmd
+    - r_rstudio.qmd
+    - r_resources.qmd
+    - stat155.qmd
 
 format:
   html:

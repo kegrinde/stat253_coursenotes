@@ -1,0 +1,80 @@
+```{r project_r, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+
+# R Resources {-}
+
+## Tidymodels resources {-}
+
+- [Tidymodels package documentation](https://www.tidymodels.org/)
+- [Tidy Modeling with R textbook (Max Kuhn and Julia Silge)](https://www.tmwr.org/)
+- [ISLR Labs with Tidymodels (Emil Hvitfeldt)](https://emilhvitfeldt.github.io/ISLR-tidymodels-labs/)
+- [Intro to Tidymodels Presentation (Lucy D'Agostino McGowan)](https://sta-363-s20.lucymcgowan.com/slides/12-tidymodels.html#1)
+
+## Tidyverse resources {-}
+
+- [Brianna Heggeseth's COMP/STAT 112 website](https://bcheggeseth.github.io/112_fall_2023/) (with code examples and videos)
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [Exploratory Data Analysis with R](https://bookdown.org/rdpeng/exdata/)
+- [John's Hopkins Tidyverse course text](https://jhudatascience.org/tidyversecourse/index.html)
+
+## Visualization resources {-}
+
+- [ggplot2 reference](http://ggplot2.tidyverse.org/reference/)
+- [Colors in R](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
+
+
+## General R resources {-}
+
+- [RStudio cheatsheets](https://posit.co/resources/cheatsheets/)
+- [Advanced R](https://adv-r.hadley.nz/)
+- [R Programming Wikibook](http://en.wikibooks.org/wiki/R_Programming)
+- Debugging in R
+    - [Article](https://support.posit.co/hc/en-us/articles/205612627-Debugging-with-RStudio)
+    - [Video](https://vimeo.com/99375765)
+    
+
+<br><br>
+
+## Some example code {-}
+
+**Creating new variables**
+
+`case_when()` from the `dplyr` package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.
+
+```{r}
+# Turn quant_var into a Low/Med/High version
+data <- data %>%
+    mutate(cat_var = case_when(
+            quant_var < 10 ~ "Low",
+            quant_var >= 10 & quant_var <= 20 ~ "Med",
+            quant_var > 20 ~ "High"
+        )
+    )
+
+# Turn cat_var (A, B, C categories) into another categorical variable
+# (collapse A and B into one category)
+data <- data %>%
+    mutate(new_cat_var = case_when(
+            cat_var %in% c("A", "B") ~ "A or B"
+            cat_var=="C" ~ "C"
+        )
+    )
+
+# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable
+# Doing this for multiple variables allows you to create an index
+data <- data %>%
+    mutate(x1_score = case_when(
+            x1==0 ~ 10,
+            x1==1 ~ 20,
+            x1==2 ~ 50
+        )
+    )
+
+# Add together multiple variables with mutate
+data <- data %>%
+    mutate(index = x1_score + x2_score + x3_score)
+```
+
+

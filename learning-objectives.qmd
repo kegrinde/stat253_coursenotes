@@ -1,0 +1,175 @@
+# Learning Goals {.unnumbered}
+
+**Note: this page is currently under construction!**
+
+The goal of this course is for you to further develop general skills necessary for statistics and data science and gain a working understanding of set of machine learning algorithms.
+
+Specific course topics and general skills are listed below. Use these to guide your synthesis of course material for your concept quizzes and group mini projects throughout the entire semester.
+
+## General Skills {.unnumbered}
+
+**Computational Thinking**
+
+-   Be able to perform the following tasks:
+
+    -   Decomposition: Break a task into smaller tasks to be able to explain the process to another person or computer
+    -   Pattern Recognition: Recognize patterns in tasks by noticing similarities and common differences
+    -   Abstraction: Represent an idea or process in general terms so that you can use it to solve other projects that are similar in nature
+    -   Algorithmic Thinking: Develop a step-by-step strategy for solving a problem
+
+<br>
+
+**Ethical Data Thinking**
+
+-   Identify ethical issues associated with applications of statistical machine learning in a variety of settings
+-   Assess and critique the actions of individuals and organizations as it relates to ethical use of data
+
+<br>
+
+**Data Communication**
+
+-   In written and oral formats:
+
+    -   Inform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs.
+
+**Collaborative Learning**
+
+-   Understand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).
+-   Develop a common purpose and agreement on goals.
+-   Be able to contribute questions or concerns in a respectful way.
+-   Share and contribute to the group's learning in an equitable manner.
+
+## Course Topics {.unnumbered}
+
+Specific learning objectives for our course topics are listed below. Use these to guide your synthesis of video and reading material for specific topics.
+
+
+
+**Introduction to Statistical Machine Learning**
+
+-   Formulate research questions that align with regression, classification, or unsupervised learning tasks.
+-   Identify the appropriate task (regression, classification, unsupervised) for a given research question.
+
+<br>
+
+**Unit 1**
+
+**Evaluating Regression Models**
+
+-   Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.
+-   Calculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.
+
+<br>
+
+**Overfitting and cross-validation**
+
+-   Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance
+-   Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric
+-   Explain what role CV has in a predictive modeling analysis and its connection to overfitting
+-   Explain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time
+
+<br>
+
+**Unit 2**
+
+**Model selection**
+
+-   Explain the difference between inferential models and predictive models and how the model building processes differ
+-   Clearly describe the backward stepwise selection algorithm and why they are examples of greedy algorithms
+-   Compare best subset and stepwise algorithms in terms of optimality of output and computational time
+
+<br>
+
+**LASSO (shrinkage/regularization)**
+
+-   Explain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection
+-   Explain how the lambda tuning parameter affects model performance and how this is related to overfitting
+
+<br>
+
+**Unit 3**
+
+**KNN Regression and the Bias-Variance Tradeoff**
+
+-   Clearly describe / implement by hand the KNN algorithm for making a regression prediction
+-   Explain how the number of neighbors relates to the bias-variance tradeoff
+-   Explain the difference between parametric and nonparametric methods
+-   Explain how the curse of dimensionality relates to the performance of KNN
+
+<br>
+
+
+**Local Regression and Generalized Additive Models**
+
+-   Clearly describe the local regression algorithm for making a prediction
+-   Explain how bandwidth (span) relate to the bias-variance tradeoff
+-   Describe some different formulations for a GAM (how the arbitrary functions are represented)
+-   Explain how to make a prediction from a GAM
+-   Interpret the output from a GAM
+
+<br>
+
+**Unit 4**
+
+**Classification via Logistic regression**
+
+-   Use a logistic regression model to make hard (class) and soft (probability) predictions
+-   Interpret non-intercept coefficients from logistic regression models in the data context
+
+<br>
+
+**Evaluating classification models**
+
+-   Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity
+-   Construct and interpret plots of predicted probabilities across classes
+-   Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric
+-   Appropriately use and interpret the no-information rate to evaluate accuracy metrics
+
+<br>
+
+**Decision trees**
+
+-   Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
+-   Compute the weighted average Gini index to measure the quality of a classification tree split
+-   Compute the sum of squared residuals to measure the quality of a regression tree split
+-   Explain how recursive binary splitting is a greedy algorithm
+-   Explain how different tree parameters relate to the bias-variance tradeoff
+
+<br>
+
+**Bagging and random forests**
+
+-   Explain the rationale for bagging
+-   Explain the rationale for selecting a random subset of predictors at each split (random forests)
+-   Explain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff
+-   Explain the rationale for and implement out-of-bag error estimation for both regression and classification
+-   Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)
+
+<br>
+
+**Hierarchical clustering**
+
+-   Clearly describe / implement by hand the hierarchical clustering algorithm
+-   Compare and contrast k-means and hierarchical clustering in their outputs and algorithms
+-   Interpret cuts of the dendrogram for single and complete linkage
+-   Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+-   Describe the tradeoff of more vs. less clusters in terms of interpretability
+-   Implement strategies for interpreting / contextualizing the clusters
+
+<br>
+
+**K-means clustering**
+
+-   Clearly describe / implement by hand the k-means algorithm
+-   Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+-   Describe the tradeoff of more vs. less clusters in terms of interpretability
+-   Implement strategies for interpreting / contextualizing the clusters
+
+<br>
+
+
+**Principal Component Analysis**
+
+- Explain the goal of dimension reduction and how this can be useful in a supervised learning setting
+- Interpret and use the information provided by principal component loadings and scores
+- Interpret and use a scree plot to guide dimension reduction

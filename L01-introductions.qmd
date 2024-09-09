@@ -1,0 +1,361 @@
+
+# Introductions
+
+**Note: this page is currently under construction!**
+
+## Learning Goals {-}
+
+- Identify the appropriate task (regression, classification, unsupervised) for a given research question.
+- Develop foundation to be able to: Formulate research questions that align with regression, classification, or unsupervised learning tasks.
+
+## Small Group Discussion: Envisioning a Community of Learners {-}
+
+**Directions:**
+
+- In small groups, please first introduce yourselves in whatever way you feel appropriate (e.g. name, pronouns, how you're feeling at the moment, things you're looking forward to, best part of winter break, why you are motivated to take this class).
+- When everyone is ready, discuss the prompts below. One of you volunteer to record a few thoughts in [this Google Doc](https://docs.google.com/document/d/1I3sLH44lSisS8szVp4h6rTXPzz_QYYi6OfWZCw91a_Q/edit?usp=sharing). The instructor will summarize responses from all the sections to create a resource that everyone can use.
+
+<br>
+
+**Prompts:**
+
+1. Collectivist education focuses on prioritizing the group first before the individual while individualist education focuses solely on the success of the individual. Considering your own experiences and backgrounds, discuss your values as they relate to collectivist and individualistic aspects of your own education. 
+
+2. It is important to create a set of agreements to guide our community in and out of class. Which of the following do you think are most important to keep in mind for our time together in this course and why? What might you add to our guiding principles?
+
+    - W.A.I.T. (Why Am I Talking/Why Aren't I Talking) 
+    - Be curious
+    - Extend and receive grace
+    - Understand impact vs. intention
+    - Breathe and lean into discomfort
+    - Embrace diversity of experience
+
+
+3. What strategies have you found work well for you to succeed in learning both in and out of class that you want to continue this semester?
+
+4. What are some things that have contributed to positive learning experiences in your courses that you would like to have in place for this course? What has contributed to negative experiences that you would like to prevent?
+
+
+<br><br><br>
+
+## Notes: Overview {-}
+
+**"Machine Learning"** was coined back in 1959 by Arthur Samuel, an early contributor to AI.
+
+
+**From Kohavi & Provost (1998):** Machine Learning is the exploration & application of algorithms that can *learn* from existing patterns and make predictions using data. (NOTE: _humans_ are in charge of the _exploration & application_!)
+
+
+\
+
+
+In STAT 253 we will...
+
+- Pick up where **STAT 155** left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)
+
+- Explore *universal* ML concepts using tools and software common among statisticians (hence "statistical" machine learning).
+
+- **Survey** a breadth of modern ML tools and algorithms that fall into the workflow below. We'll focus on concepts and applications over mathematical theory. Part of the cognitive load will be:
+    - keeping all the tools in place (what are they and when to use them)
+    - understanding the connections between the tools
+    - adapting (not memorizing) code to implement each tool
+    
+
+![](images/MLDiagram.jpg){width="80%"}
+
+\
+
+
+**SUPERVISED LEARNING**       
+
+We want to model the relationship between some *output* variable $y$ and *input* variables $x = (x_1, x_2,..., x_p)$: 
+
+$$\begin{split}
+y 
+& = f(x) + \varepsilon \\
+& = \text{(trend in the relationship) } + \text{ (residual deviation from the trend `epsilon`)} \\
+\end{split}$$
+
+
+Types of supervised learning tasks:       
+
+- **regression**: $y$ is *quantitative*       
+    example:        
+    $y$ = body mass index        
+    $x$ = (number of live births, age, marital status, education, etc)
+    
+- **classification**: $y$ is *categorical*        
+    example:        
+    $y$ = whether a pair of crickets courted (yes, no)
+    $x$ = (species, pair of same species, CHC profile, etc)
+
+
+
+
+
+\
+
+
+**UNSUPERVISED LEARNING**       
+
+We have some *input* variables $x = (x_1, x_2,..., x_p)$ but there's *no output variable* $y$. Thus the goal is to use $x$ to understand and/or modify the structure of our data with respect to $x$.
+
+
+Types of unsupervised learning tasks:       
+
+- clustering        
+    Identify and examine *groups* or *clusters* of data points that are similar with respect to their $x_i$ values.
+    example: 
+    - $x$ = (body mass index at 2 weeks, 1 month, 2 months, 4 months, 6 months, etc)
+    
+- dimension reduction       
+    Turn the original set of $p$ input variables, which are potentially correlated, into a smaller set of $k < p$ variables which still preserve the majority of information in the originals.
+    example:
+    - $x$ = (cuticular hydrocarbon compounds concentrations based on gas chromatography analysis)
+
+
+
+
+## In-Class Activity - Exercises {-}
+
+
+I used a **machine learning** algorithm, one we'll learn later this semester, to form groups based on your responses to the pre-course informational survey. BUT it didn't provide any explanation of *why* these are the groups it picked. To that end, we need **humans**.
+
+Get into your assigned group.
+
+  - Everybody introduce themselves.
+  - Try to figure out why the algorithm put you into a group together. (I don't personally know the answer!)
+  - Discuss the following scenarios as a group, then check your answers.
+
+
+Indicate whether each scenario below represents a regression, classification, or clustering task.
+
+
+
+```{r echo = FALSE,eval=TRUE,warning=FALSE,message=FALSE}
+library(conflicted)
+conflicts_prefer(dplyr::filter)
+library(tidyverse)
+library(gridExtra)
+# Process survey data
+library(here)
+library(forcats)
+survey <- read.csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vTAekhhUiwmr663g5qgzeZCpB4BjFQr3jwkZsrpXwsSg5gpptH4JNSDmcFH-WtEPnTEAT2f9HiGPQIi/pub?gid=1360039565&single=true&output=csv')
+survey <- survey[,1:17]
+names(survey) <- c("time","name","name2",'pronounce', "email","pronouns", "year", "major", "comp123", "comp127","comp112", "github", "time_to_mac", "activity",  "cute_pic", "fake_name", "section")
+survey <- survey %>% 
+  select(-time,-name2,-pronounce,-pronouns) %>% 
+  mutate(major = as.factor(major), activity = as.factor(activity)) %>% 
+  mutate(major = fct_recode(major, 
+                            "STAT/DS" = "Statistics or Data Science",
+                            "CS" = "Computer Science",
+                            "MATH" = "Mathematics")) %>% 
+  mutate(major = as.factor(if_else(major %in% c('STAT/DS','CS','MATH'),major,'Other'))) %>%
+  mutate(activity = fct_recode(activity, 
+                            "vids" = "video games",
+                            "moving" = "exercising / moving")) 
+```
+
+
+```{r echo = FALSE, include=FALSE}
+library(cluster)
+# clustering by section
+survey_sub <- survey %>% 
+  mutate(comp123 = as.factor(comp123), comp127 = as.factor(comp127),comp112 = as.factor(comp112), github = as.factor(github), year = as.factor(year))
+rownames(survey_sub) <- survey$name
+survey_sub <- survey_sub %>% 
+  select(-email, -fake_name,-name)
+
+
+# Section 1
+section <- survey_sub %>% filter(section == "TTh 9:40") %>% select(-section)
+class_cluster <- hclust(daisy(section, metric = "gower", type = list(logratio = 3)))
+plot(class_cluster, cex = 0.8, main = "", axes = FALSE, xlab = "", ylab = "", sub = "")
+
+# Section 2
+section <- survey_sub %>% filter(section == "TTh 1:20") %>% select(-section)
+class_cluster <- hclust(daisy(section, metric = "gower", type = list(logratio = 3)))
+plot(class_cluster, cex = 0.8, main = "", axes = FALSE, xlab = "", ylab = "", sub = "")
+```
+
+
+1. How is the number of people that rent bikes on a given day in Washington, D.C. ($y$) explained by the temperature ($x_1$) and whether or not it's a weekend ($x_2$)?  
+         
+    ```{r echo=FALSE, fig.width=8, fig.height=3, cache=TRUE}
+    politics <- read.csv("https://www.dropbox.com/s/08smmgkaoj1ulhx/bike_share.csv?dl=1")
+    ```
+    
+    ```{r echo=FALSE, fig.width=10, fig.height=2.5, fig.align="center",warning=FALSE,message=FALSE}
+    g1 <- ggplot(politics, aes(y=riders_registered, x=temp_feel)) + geom_point() + labs(x="temperature", y="riders") + geom_smooth(method="lm", se=FALSE)
+    g3 <- ggplot(politics, aes(y=riders_registered, x=temp_feel, color=weekend)) + geom_point() + labs(x="temperature", y="riders") + geom_smooth(method="lm", se=FALSE) + scale_color_viridis_d()
+    g2 <- ggplot(politics, aes(x=riders_registered, fill=weekend)) + geom_density(alpha=0.5) + labs(x="riders") + geom_vline(xintercept=3926, color="red")  + geom_vline(xintercept=2988, color="blue")+ scale_fill_viridis_d()
+    grid.arrange(g1, g2, g3, ncol=3)
+    ```    
+
+
+<details>
+<summary>Solution</summary>
+regression.  there's a _quantitative_ output variable $y$.
+</details>
+
+<br><br>
+
+2. Given the observed bill length ($x_1$) and bill depth ($x_2$) on a set of penguins, how many different penguin species might there be? 
+
+```{r echo=FALSE, fig.align="center", warning=FALSE, fig.width = 3.5}
+library(palmerpenguins)
+data(penguins)
+ggplot(penguins, aes(y = bill_length_mm, x = bill_depth_mm)) + geom_point()
+``` 
+
+<details>
+<summary>Solution</summary>
+clustering.  there's no output variable $y$.
+</details>
+
+<br><br>
+
+3. How can we determine whether somebody has a certain infection ($y$) based on two different blood sample measurements, Measure A ($x_1$) and Measure B ($x_2$)?   
+    
+    ```{r echo=FALSE, fig.align="center", warning=FALSE}
+    set.seed(2010)
+    dat <- data.frame(x=c(rnorm(50,3.5,1.25), rnorm(50,2,1.25), rnorm(75,0.5,1.25)), y=c(rnorm(50,2,1.25),rnorm(50,5,1.25),rnorm(75,1,1.25)), status=rep(c("WNV","SLE","Negative"), c(50,50,75)))
+    suppressPackageStartupMessages(library(dplyr))
+    dat <- dat %>% filter(x>0 & y>0)
+    ggplot(dat, aes(y=y, x=x, color=status)) + geom_point() + labs(x="Measure A", y="Measure B") + scale_color_viridis_d(option = 'E')
+    ``` 
+    
+<details>
+<summary>Solution</summary>
+classification.  there's a _categorical_ output variable $y$.
+</details>
+
+<br><br>
+
+
+4. **Machine learn about each other! Scenario A.**    
+    I collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates.
+    
+    ```{r echo = FALSE, eval = TRUE, fig.width = 10, fig.height = 6}
+    library(rpart)
+    library(rpart.plot)
+    # Classification
+    new_dat <- survey %>% 
+      select(-fake_name, -email, -section,-name) %>% 
+      unique()
+    
+    # increase minsplit to prune tree.  this is essentially the number of students that can be in a terminal node
+    # or do two trees -- one pruned and one unpruned
+    set.seed(1)
+    tree_0 <- rpart(major ~ ., new_dat, 
+                    control = rpart.control(minsplit = 5, cp = 0.02))
+    rpart.plot(tree_0, cex = 1.15, type = 0, extra = 2, box.palette="Blues")
+    ```
+    
+<details>
+<summary>Solution</summary>
+classification ($y$ = major is categorical)
+</details>
+
+ <br><br> 
+        
+    
+
+
+
+5. **Machine learn about each other! Scenario B.**    
+    Same directions as for Scenario A:    
+    ```{r echo = FALSE, eval = TRUE, fig.width = 6,warning=FALSE,message=FALSE}
+    # regression
+    g1 <- ggplot(survey, aes(y = time_to_mac, x = cute_pic)) + 
+      geom_point() + 
+      geom_smooth(se = FALSE)
+    g2 <- ggplot(survey %>% mutate(year = fct_relevel(year,c('First Year','Sophomore','Junior','Senior'))), aes(y = time_to_mac, x = year)) + 
+      geom_boxplot()
+    grid.arrange(g1,g2,ncol=2)
+    ```
+
+
+<details>
+<summary>Solution</summary>
+regression ($y$ = time to mac is quantitative)
+</details> 
+
+<br><br>
+
+6. **Machine learn about each other! Scenario C.**    
+    Same directions as for Scenario A:    
+    ```{r echo = FALSE, eval = TRUE, fig.width = 8, fig.height = 6}
+    # clustering
+    #survey_clean <- survey %>% 
+    #  filter(email != "langford_2", email != "desouza_2", name != "Minions")
+       
+    survey_sub <- survey %>% select( -section,-fake_name, -email,-name) %>%
+  mutate(comp123 = as.factor(comp123), comp127 = as.factor(comp127),comp112 = as.factor(comp112), github = as.factor(github), year = as.factor(year))
+    rownames(survey_sub) <- survey$fake_name
+    
+  
+    gower_dist <- daisy(survey_sub, metric = "gower", type = list(logratio = 3))
+    
+    # Dendrogram of scaled data
+    class_cluster <- hclust(gower_dist)
+    plot(class_cluster, cex = 0.8, main = "", axes = FALSE, xlab = "", ylab = "", sub = "")
+    ```
+    
+<details>
+<summary>Solution</summary>
+clustering (no outcome $y$).
+</details> 
+
+<br><br>
+
+7. Use Spotify users' previous listening behavior to identify groups of similar users.     
+
+<details>
+<summary>Solution</summary>
+clustering
+</details>
+
+<br><br>
+<!-- clustering -->
+
+8. Predict workers' wages by their years of experience.    
+
+<!-- regression -->
+<details>
+<summary>Solution</summary>
+regression ($y$ = wages)
+</details>
+
+<br><br>
+
+9. Predict workers' wages by their college major.    
+
+
+<!-- regression -->
+
+<details>
+<summary>Solution</summary>
+regression ($y$ = wages)
+</details>
+
+ <br><br>
+
+10. Use a customer's age to predict whether they've seen the *Barbie* movie.    
+
+<!-- classification -->
+<details>
+<summary>Solution</summary>
+classification ($y$ = whether or not watched the film)
+</details>
+
+<br><br>
+
+11. Look for similarities among genetic samples taken from a group of patients.  
+
+<!-- clustering -->
+
+<details>
+<summary>Solution</summary>
+clustering (no outcome $y$)
+</details> 

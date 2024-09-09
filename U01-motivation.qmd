@@ -1,0 +1,228 @@
+# Motivating Question {.unnumbered}
+
+```{r 02_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning = FALSE,message=FALSE)
+library(tidyverse)
+library(gridExtra)
+library(conflicted)
+conflicts_prefer(dplyr::filter)
+```
+
+<center><img src="images/MLdiagram1.jpg"/></center>
+
+We are in the **regression** setting. We want to build a model of some
+**quantitative** output variable $y$ by some predictors $x$:
+
+$$y = f(x) + \epsilon$$
+
+After *building* this model, it's important to *evaluate* it: **Is our
+*regression model* a "*good*" model?**
+
+1.  Is the model wrong?
+
+2.  Is the model strong?
+
+3.  Does the model produce accurate predictions?
+
+4.  Is the model fair?
+
+
+<br><br>
+
+1. **Is the model wrong?** What assumptions does our model make and are these reasonable?
+
+```{r echo = FALSE, fig.width = 8}
+set.seed(2000)
+x1 <- rnorm(100)
+y1 <- x1 + rnorm(100, sd = 0.25)
+y2 <- x1 + rnorm(100, sd = 6)
+y3 <- x1^2 + rnorm(100, sd = 0.5)
+dat <- data.frame(x1, y1, y2, y3)
+g1 <- ggplot(dat, aes(x = x1, y = y1)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  lims(y = c(-10,10)) + 
+  labs(title = "strong: R^2 = 0.93")
+
+g2 <- ggplot(dat, aes(x = x1, y = y2)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  lims(y = c(-10,10)) + 
+  labs(title = "weak: R^2 = 0.09")
+
+g3 <- ggplot(dat, aes(x = x1, y = y3)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "wrong")
+g4 <- ggplot(dat, aes(x = x1, y = y3)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ x + I(x^2)) + 
+  labs(title = "not wrong")
+  
+grid.arrange(g3,g4,ncol=2)
+```
+
+**To check:**
+
+Examine a **residual plot**, ie. a scatterplot of the residuals vs predictions for each case. Points should appear randomly scattered with no clear pattern. If you see any patterns in the residuals that suggest you are systematically over or underpredicting for different prediction values, this indicates that the assumption about the relationship with predictors could be wrong.
+
+
+**Example:** Model $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon$.
+What about the plots below reveals that this model is "wrong"?
+
+```{r echo = FALSE, fig.width = 8, eval = TRUE}
+dat2 <- dat %>% 
+  ##mutate(x2 = log(2*y3 + rnorm(100, sd = 0.5)), y = y3) %>%
+  mutate(y = x1^2 + 2 + rnorm(100, sd = 0.25)) %>% 
+  mutate(x2 = y +2 + rnorm(100, sd = 1)) %>%
+  select(x1, x2, y) 
+
+g1.a <- ggplot(dat2, aes(y = y, x = x2, color = x1)) + 
+  geom_point() + 
+  labs(y = "y")
+
+mod <- lm(y ~ x1 + x2, dat2)
+g3.a <- ggplot(mod, aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
+
+grid.arrange(g1.a,g3.a,ncol = 2)
+```
+
+<br>
+
+What about the plots below reveals that this model is "not wrong"?
+
+```{r echo = FALSE, fig.width = 8, eval = TRUE}
+set.seed(253)
+dat2 <- dat %>% 
+  mutate(x2 = rnorm(100, mean = 5, sd = 2)) %>% 
+  mutate(y = x1 + x2 + rnorm(100, sd = 0.25)) %>% 
+  select(x1, x2, y) 
+
+g1.a <- ggplot(dat2, aes(y = y, x = x2, color = x1)) + 
+  geom_point() + 
+  labs(y = "y")
+
+mod <- lm(y ~ x1 + x2, dat2)
+g3.a <- ggplot(mod, aes(x = .fitted, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
+
+grid.arrange(g1.a,g3.a,ncol = 2)
+```
+
+<br>
+
+2.  **Is the model strong?** How well does our model explain the
+    variability in the response?
+
+```{r echo = FALSE, fig.width = 8}
+grid.arrange(g1,g2,ncol=2)
+```
+
+Check: $R^2$, the proportion of variability in $y$ that's explained by
+the model. The closer to 1 the better.
+
+$$R^2 = 1 - \frac{\text{Var}(\text{residuals})}{\text{Var}(y)} = 1 - \frac{\sum_{i=1}^n(y_i - \hat{y}_i)^2}{\sum_{i=1}^n(y_i - \overline{y})^2}$$
+
+<br>
+
+3.  **Does the model produce accurate predictions?**
+
+```{r echo = FALSE, fig.width = 8}
+mod1 <- lm(y1 ~ x1, dat)
+mod2 <- lm(y2 ~ x1, dat)
+dat  <- dat %>% 
+  mutate(fit1 = mod1$fitted, fit2 = mod2$fitted)
+g1new <- g1 + 
+  lims(y = c(-20,20)) + 
+  geom_segment(data = dat, aes(x = x1, xend = x1, y = y1, yend = fit1), color = "red") + 
+  labs(title = "very accurate")
+g2new <- g2 + 
+lims(y = c(-20,20)) + 
+geom_segment(data = dat, aes(x = x1, xend = x1, y = y2, yend = fit2), color = "red") + 
+  labs(title = "not very accurate")
+
+
+grid.arrange(g1new,g2new,ncol=2)
+```
+
+<!-- ![](https://www.macalester.edu/~ajohns24/images/stat253/evaluate_predictions.png) -->
+
+Check: Summarize the combined size of the residuals, $y_1 - \hat{y}_1$,
+$y_2 - \hat{y}_2$, ..., $y_n - \hat{y}_n$ where $n$ is sample size. The
+closer to 0 the better!
+
+$$\begin{split}
+\text{MSE}  & = \text{ mean squared error } = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
+\text{RMSE} & = \text{ root mean squared error } = \sqrt{MSE}  \\
+\text{MAE}  & = \text{ mean absolute error } = \frac{1}{n}\sum_{i=1}^n |y_i - \hat{y}_i| \\
+\end{split}$$
+
+<br>
+
+4.  **Is the model fair?**
+
+-   Who collected the data / who funded the data collection?
+-   How did they collect the data?
+-   Why did they collect the data?
+-   What are the implications of the analysis, ethical or otherwise?
+
+**Dig Deeper (optional)**
+
+Digging deeper, there's more theory behind our regression model
+assumptions, thus more to the question of "is our model wrong?".
+Specifically, in applying the linear regression model
+
+$$y = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_k x_{k} + \epsilon$$
+
+we assume that at any given set of predictors $x = (x_1,x_2,...,x_n)$,
+
+$$\epsilon \stackrel{ind}{\sim} N(0, \sigma^2)$$
+
+Equivalently,
+$y \stackrel{ind}{\sim} N(\beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_k x_{k}, \; \sigma^2)$.
+
+<br>
+
+We can break this assumption and $N()$ notation down into 4 pieces:
+
+1.  **Independence**:
+    $\epsilon \stackrel{\color{red}{ind}}{\sim} N(0, \sigma^2)$ The
+    observations on subject $i$ are independent of the observations on
+    any other subject.
+
+NOTE: If our data *don't* meet this model assumption, our predictions
+and inference (eg: confidence intervals & hypothesis tests) might
+produce misleading results. Take *Correlated Data* to learn more about
+working with dependent data.
+
+2.  **Trend:**
+    $\epsilon \stackrel{ind}{\sim} N(\color{red}{0}, \sigma^2)$ At any
+    $x$, the residuals have mean 0. That is, responses are balanced
+    above and below the model. Thus the model accurately captures the
+    *trend* of the relationship.
+
+NOTE: If our data *don't* meet this model assumption, our model is
+wrong. This issue might be corrected by transforming $y$ or $x$.
+
+3.  **Homoskedasticity:**
+    $\epsilon \stackrel{ind}{\sim} N(0, \color{red}{\sigma}^2)$ At any
+    $x$, the standard deviation among the residuals is $\sigma$. That
+    is, deviations from the trend are no greater at any one "part" of
+    the model than at another NOTE: If our data *don't* meet this model
+    assumption, our inference (eg: confidence intervals & hypothesis
+    tests) might produce misleading results. This issue might be
+    corrected by transforming $y$.
+
+4.  **Normality:**
+    $\epsilon \stackrel{ind}{\sim} \color{red}{N}(0, \sigma^2)$ The
+    residuals are *normally distributed*. Thus individual responses are
+    normally distributed around the trend (closer to the trend and then
+    tapering off).
+
+NOTE: If our data *don't* meet this model assumption and the violation
+is extreme, our inference (eg: confidence intervals & hypothesis tests)
+might produce misleading results. This issue might be corrected by
+transforming $y$.

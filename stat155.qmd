@@ -1,0 +1,80 @@
+# STAT 155 Review {-}
+
+**COMPREHENSIVE REVIEW**
+
+A comprehensive STAT 155 review is provided by the Prof. Johnson's Spring 2022 STAT 155 manual [here](https://ajohns24.github.io/155_Spring_2022/) and the STAT 155 Notes created by
+Profs. Grinde, Heggeseth, and Myint [here](https://mac-stat.github.io/Stat155Notes/).
+
+
+\
+\
+
+
+
+**QUICK REVIEW**    
+
+Let $y$ be a response variable with a set of $k$ explanatory variables $x = (x_{1}, x_{2}, ..., x_{k})$.  Then the **population** linear regression model is
+
+$$\begin{split}
+y & = f(x) + \varepsilon  = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_k x_{k} + \varepsilon \\
+\end{split}$$
+
+
+
+NOTES:    
+
+- $\beta$ is the Greek letter "beta". $\varepsilon$ is the Greek letter "epsilon".    
+- "Linear" regression is so named because it assumes that $y$ is a *linear combination* of the $x$'s.  It does *not* mean that the relationship itself is linear!!  For example, one of the predictors might be a quadratic term: $x_2 = x_1^2$.    
+
+- $f(x) = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_k x_{k}$ captures the **trend** of the relationship      
+
+    - $\beta_0$ = **intercept coefficient**    
+        the model value when $x_1=x_2=\cdots=x_k=0$     
+    
+    - $\beta_i$ = **$x_i$ coefficient**    
+        how $x_i$ is related to $y$ *when holding constant all other $x_i$*
+    
+
+
+- $\epsilon$ reflects deviation from the trend (the residual)
+
+    
+
+\
+\
+\
+
+
+
+**Fitting the Model**    
+
+Once we have a population model in mind, we can "fit the model" (i.e. *estimate* the $\beta$ population coefficients) using sample data:  
+
+
+$$\begin{split}
+y & =  \hat{f}(x) + \varepsilon \\
+ & = \hat{\beta}_0 + \hat{\beta}_1 x_{1} + \hat{\beta}_2 x_{2} + \cdots + \hat{\beta}_k x_{k} + \varepsilon \\
+ \end{split}$$
+
+
+\
+
+
+To this end, collect a sample of data on $n$ subjects.  Use subscripts to denote the data for subject $i$: $y_i$ and $x_{ij}$.  Then the predicted response and residual (prediction error) for subject $i$ are
+
+- **prediction** $$\hat{y}_i = \hat{f}(x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_{i1} + \hat{\beta}_2 x_{i2} + \cdots + \hat{\beta}_k x_{ik}$$    
+    
+- **residual / prediction error**    $$y_i - \hat{y}_i$$    
+    
+    
+
+\
+\
+
+
+**Least Squares Criterion**    
+
+Estimate ($\beta_0, \beta_1,..., \beta_k$) by ($\hat{\beta}_0, \hat{\beta}_1,..., \hat{\beta}_k)$ that *minimize* the sum of squared residuals:    $$\sum_{i=1}^n(y_i - \hat{y}_i)^2 = (y_1-\hat{y}_1)^2 + (y_2-\hat{y}_2)^2 + \cdots + (y_n-\hat{y}_n)^2$$
+
+
+    
