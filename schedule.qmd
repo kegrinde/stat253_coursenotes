@@ -1,0 +1,18 @@
+# Schedule {.unnumbered}
+
+**Note: this page is currently under construction!**
+
+The schedule below is a tentative outline of our plans for the semester.
+
+Before each class period, please watch the indicated videos and check on your understanding by actively reviewing the associated [Learning Goals](learning-objectives.html).
+
+Readings refer to chapters/sections in the Introduction to Statistical Learning (ISLR) textbook (available online [here](https://hastie.su.domains/ISLR2/ISLRv2_corrected_June_2023.pdf.download.html)). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.
+
+<br>
+
+````{=html}
+```{r, echo=FALSE, results='asis',eval=TRUE}
+xfun::file_string("schedule_table.html")
+```
+````
+
