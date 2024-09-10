@@ -2,7 +2,7 @@ date-fromat: iso
 
 execute:
   warning: false
-  cache: true
+  cache: false
   freeze: auto
 
 profile:

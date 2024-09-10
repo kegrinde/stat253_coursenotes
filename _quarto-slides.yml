@@ -2,14 +2,11 @@ project:
   output-dir: Slides
 
 format: 
-  beamer:
-    theme: Madrid
-    colortheme: PrimaryBullets
-    aspectratio: 169
-    toc: false
-    include-in-header: "defs_beamer.tex"
-    execute:
-      echo: false
-      fig-width: 7
-      fig-height: 3.5
-      code-line-numbers: false
+  revealjs:
+    theme: slides.scss
+    multiplex: true
+    transition: fade
+    chalkboard: true
+    auto-stretch: false
+    scrollable: true
+    footer: <https://kegrinde.github.io/stat253_coursenotes>

@@ -301,7 +301,7 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Note: this page is currently under construction!</strong></p>
+<p><strong>WARNING: this page is currently under construction!</strong></p>
 <section id="learning-goals" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="learning-goals">Learning Goals</h2>
 <ul>
@@ -488,7 +488,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -498,7 +498,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -509,7 +509,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-10-3.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -835,7 +835,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -848,7 +848,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-32-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-32-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -873,7 +873,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -900,7 +900,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1131,7 +1131,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1141,7 +1141,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-44-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-44-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1150,7 +1150,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-44-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-44-3.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1160,7 +1160,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-44-4.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-44-4.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1183,6 +1183,44 @@ Solution
 </section>
 
 </main> <!-- /main -->
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

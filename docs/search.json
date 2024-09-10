@@ -58,51 +58,106 @@
     "href": "L01-introductions.html",
     "title": "1  Introductions",
     "section": "",
-    "text": "Learning Goals",
+    "text": "Welcome!\nNote: everything you need for class today is on the course website: https://kegrinde.github.io/stat253_coursenotes/",
     "crumbs": [
       "Overview",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
     ]
   },
   {
-    "objectID": "L01-introductions.html#learning-goals",
-    "href": "L01-introductions.html#learning-goals",
+    "objectID": "L01-introductions.html#whats-machine-learning",
+    "href": "L01-introductions.html#whats-machine-learning",
     "title": "1  Introductions",
-    "section": "",
-    "text": "Identify the appropriate task (regression, classification, unsupervised) for a given research question.\nDevelop foundation to be able to: Formulate research questions that align with regression, classification, or unsupervised learning tasks.",
+    "section": "What’s Machine Learning?",
+    "text": "What’s Machine Learning?\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data. (NOTE: humans are in charge of the exploration & application!)\n\n\nIn STAT 253 we will…\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. We’ll focus on concepts and applications over mathematical theory. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool",
     "crumbs": [
       "Overview",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
     ]
   },
   {
-    "objectID": "L01-introductions.html#small-group-discussion-envisioning-a-community-of-learners",
-    "href": "L01-introductions.html#small-group-discussion-envisioning-a-community-of-learners",
+    "objectID": "L01-introductions.html#supervised-learning",
+    "href": "L01-introductions.html#supervised-learning",
     "title": "1  Introductions",
-    "section": "Small Group Discussion: Envisioning a Community of Learners",
-    "text": "Small Group Discussion: Envisioning a Community of Learners\nDirections:\n\nIn small groups, please first introduce yourselves in whatever way you feel appropriate (e.g. name, pronouns, how you’re feeling at the moment, things you’re looking forward to, best part of winter break, why you are motivated to take this class).\nWhen everyone is ready, discuss the prompts below. One of you volunteer to record a few thoughts in this Google Doc. The instructor will summarize responses from all the sections to create a resource that everyone can use.\n\n\nPrompts:\n\nCollectivist education focuses on prioritizing the group first before the individual while individualist education focuses solely on the success of the individual. Considering your own experiences and backgrounds, discuss your values as they relate to collectivist and individualistic aspects of your own education.\nIt is important to create a set of agreements to guide our community in and out of class. Which of the following do you think are most important to keep in mind for our time together in this course and why? What might you add to our guiding principles?\n\nW.A.I.T. (Why Am I Talking/Why Aren’t I Talking)\nBe curious\nExtend and receive grace\nUnderstand impact vs. intention\nBreathe and lean into discomfort\nEmbrace diversity of experience\n\nWhat strategies have you found work well for you to succeed in learning both in and out of class that you want to continue this semester?\nWhat are some things that have contributed to positive learning experiences in your courses that you would like to have in place for this course? What has contributed to negative experiences that you would like to prevent?",
+    "section": "Supervised Learning",
+    "text": "Supervised Learning\nWe want to model the relationship between some output variable \\(y\\) and input variables \\(x = (x_1, x_2,..., x_p)\\):\n\\[\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend `epsilon`)} \\\\\n\\end{split}\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = body mass index\n\\(x\\) = (number of live births, age, marital status, education, etc)\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a pair of crickets courted (yes, no) \\(x\\) = (species, pair of same species, CHC profile, etc)",
     "crumbs": [
       "Overview",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
     ]
   },
   {
-    "objectID": "L01-introductions.html#notes-overview",
-    "href": "L01-introductions.html#notes-overview",
+    "objectID": "L01-introductions.html#unsupervised-learning",
+    "href": "L01-introductions.html#unsupervised-learning",
     "title": "1  Introductions",
-    "section": "Notes: Overview",
-    "text": "Notes: Overview\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data. (NOTE: humans are in charge of the exploration & application!)\n\n\nIn STAT 253 we will…\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. We’ll focus on concepts and applications over mathematical theory. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool\n\n\n\n\n\nSUPERVISED LEARNING\nWe want to model the relationship between some output variable \\(y\\) and input variables \\(x = (x_1, x_2,..., x_p)\\):\n\\[\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend `epsilon`)} \\\\\n\\end{split}\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = body mass index\n\\(x\\) = (number of live births, age, marital status, education, etc)\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a pair of crickets courted (yes, no) \\(x\\) = (species, pair of same species, CHC profile, etc)\n\n\n\nUNSUPERVISED LEARNING\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data with respect to \\(x\\).\nTypes of unsupervised learning tasks:\n\nclustering\nIdentify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values. example:\n\n\\(x\\) = (body mass index at 2 weeks, 1 month, 2 months, 4 months, 6 months, etc)\n\ndimension reduction\nTurn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals. example:\n\n\\(x\\) = (cuticular hydrocarbon compounds concentrations based on gas chromatography analysis)",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data with respect to \\(x\\).\nTypes of unsupervised learning tasks:\n\nclustering\nIdentify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values. example:\n\n\\(x\\) = (body mass index at 2 weeks, 1 month, 2 months, 4 months, 6 months, etc)\n\ndimension reduction\nTurn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals. example:\n\n\\(x\\) = (cuticular hydrocarbon compounds concentrations based on gas chromatography analysis)",
     "crumbs": [
       "Overview",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
     ]
   },
   {
-    "objectID": "L01-introductions.html#in-class-activity---exercises",
-    "href": "L01-introductions.html#in-class-activity---exercises",
+    "objectID": "L01-introductions.html#meet-your-classmates",
+    "href": "L01-introductions.html#meet-your-classmates",
     "title": "1  Introductions",
-    "section": "In-Class Activity - Exercises",
-    "text": "In-Class Activity - Exercises\nI used a machine learning algorithm, one we’ll learn later this semester, to form groups based on your responses to the pre-course informational survey. BUT it didn’t provide any explanation of why these are the groups it picked. To that end, we need humans.\nGet into your assigned group.\n\nEverybody introduce themselves.\nTry to figure out why the algorithm put you into a group together. (I don’t personally know the answer!)\nDiscuss the following scenarios as a group, then check your answers.\n\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n::: {.cell}\n:::\n::: {.cell layout-align=“center”} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n::: {.cell layout-align=“center”} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nI collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nclassification (\\(y\\) = major is categorical)\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A:\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nregression (\\(y\\) = time to mac is quantitative)\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A:\n::: {.cell} ::: {.cell-output-display}  ::: :::\n\n\n\nSolution\n\nclustering (no outcome \\(y\\)).\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))",
+    "section": "Meet Your Classmates!",
+    "text": "Meet Your Classmates!\nI used a machine learning algorithm, one we’ll learn later this semester, to form groups based on your responses to the pre-course informational survey. BUT it didn’t provide any explanation of why these are the groups it picked. To that end, we need humans.\n\nGet into your assigned group.\nIntroduce yourselves in whatever way you feel appropriate (ideas: name, pronouns, how you’re feeling at the moment, things you’re looking forward to, best part of summer, why you are motivated to take this class)\nTry to figure out why the algorithm put you into a group together. (I don’t personally know the answer!)\nPrepare to introduce your group to the bigger class:\n\nEach person will introduce themself\nOne person will explain why they think the group was put together",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#meet-your-instructor",
+    "href": "L01-introductions.html#meet-your-instructor",
+    "title": "1  Introductions",
+    "section": "Meet Your Instructor",
+    "text": "Meet Your Instructor\nA few highlights from my answers to the Pre-Course Information Gathering Survey…\n\nPreferred name: “Kelsey” or “Professor Grinde”\nPronouns: she/her/hers\nHometown(s): Plymouth –&gt; Northfield –&gt; Seattle –&gt; St. Paul\nCan you tell me a bit about how you’ve been spending your time this summer? What’s been particularly important or meaningful to you? What brings you joy right now? What is on your mind? What do you do when you’re not in class?",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#instructions",
+    "href": "L01-introductions.html#instructions",
+    "title": "1  Introductions",
+    "section": "Instructions",
+    "text": "Instructions\n\nDiscuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go\nI’ll move around to groups to check in on your progress and see what questions you have\nYou can check your answers by clicking the drop-down “Solutions” button",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#questions",
+    "href": "L01-introductions.html#questions",
+    "title": "1  Introductions",
+    "section": "Questions",
+    "text": "Questions\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nI collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclassification (\\(y\\) = major is categorical)\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A:\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nregression (\\(y\\) = time to mac is quantitative)\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A:\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\)).\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#scavenger-hunt",
+    "href": "L01-introductions.html#scavenger-hunt",
+    "title": "1  Introductions",
+    "section": "Scavenger Hunt",
+    "text": "Scavenger Hunt\nTake a few minutes to make sure you know how to find all of the following:\n\ncourse website\nsyllabus\ntextbook\nSTAT 253 Slack\noffice hour times and locations\nassignment deadlines\ninformation on what you need to complete before class each day\nin-class activities\nassignment instructions / submission",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#whats-next",
+    "href": "L01-introductions.html#whats-next",
+    "title": "1  Introductions",
+    "section": "What’s next?",
+    "text": "What’s next?\nWhat to work on after class today:\n\ncarefully review the syllabus\n\nif time allows, we’ll discuss a few highlights now!\nmore to come in the next few class sessions\n\njoin Slack\nupdate your versions of R/RStudio (see R and RStudio Setup)\ncomplete the pre-class tasks for Thursday (videos/reading/checkpoint)\n\nreview the checkpoint recommendations/policies on Moodle before you start!\n\nstart HW0 (due Friday)",
     "crumbs": [
       "Overview",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
