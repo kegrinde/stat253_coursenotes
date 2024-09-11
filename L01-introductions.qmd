@@ -296,7 +296,11 @@ classification.  there's a _categorical_ output variable $y$.
 4. **Machine learn about each other! Scenario A.**    
     I collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; _and_ (3) summarize what the output tells you about your classmates.
     
-```{r echo = FALSE, eval = TRUE, fig.width = 10, fig.height = 6}
+```{r q4}
+#| echo: false
+#| eval: true
+#| fig-width: 16
+#| fig-height: 7
 library(rpart)
 library(rpart.plot)
 # Classification
@@ -326,7 +330,12 @@ classification ($y$ = major is categorical)
 5. **Machine learn about each other! Scenario B.**    
     Same directions as for Scenario A:    
     
-```{r echo = FALSE, eval = TRUE, fig.width = 6,warning=FALSE,message=FALSE}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 6
+#| warning: false
+#| message: false
 # regression
 g1 <- ggplot(survey, aes(y = time_to_mac, x = cute_pic)) + 
   geom_point() + 
