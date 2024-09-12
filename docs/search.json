@@ -1,0 +1,375 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "STAT 253: Statistical Machine Learning",
+    "section": "",
+    "text": "Welcome!\nThis is the course website for Statistical Machine Learning (STAT 253) at Macalester College for the Fall 2024 semester.\nThe site was built by Kelsey Grinde. It draws heavily upon our course textbook, the 2nd edition of An Introduction to Statistical Learning with Applications in R, as well as on materials prepared by fellow Macalester statistics faculty Brianna Heggeseth, Alicia Johnson, and Leslie Myint.\nThe structure of this site was inspired by an eCOTS 2024 workshop led by Devin Becker: see here for materials.\nNote that this page will be under active construction throughout the semester. If you find any typos or other issues, please click the Report an issue button above and/or email kgrinde@macalester.edu.\n \n\nThis work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.",
+    "crumbs": [
+      "Welcome!"
+    ]
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "The schedule below is a tentative outline of our plans for the semester.\nBefore each class period, please watch the indicated videos and check on your understanding by actively reviewing the associated Learning Goals.\nReadings refer to chapters/sections in the Introduction to Statistical Learning (ISLR) textbook (available online here). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.\n\n\n\n\n\nWeek 1\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/3\nCANCELED\n\n\n\n\n\n\n9/5\nCANCELED\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/10\nIntroductions & Overview\nBackground Survey\nISLR Reading: Chap 1 & Section 2.1 (Skip 2.1.2, 2.1.3 for now)\nIntroductions\n\nComplete CP1 (before next class)\nStart HW0 (9/13)\n\n\n\n9/12\nModel Evaluation\nConcept Video (script)\nCheckpoint 1\nR Tutorial Video (code)\nISLR: Section 2.2 (skip 2.2.3 for now.), Section 3.1\nSlides\nEvaluating Regression Models Activity (QMD)\nComplete CP2\nFinish HW0\nConcept Video: Evaluating Regression Models\nR Tutorial Video: Introduction to TidyModels\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/17\nOverfitting\nCheckpoint 2\nR Tutorial Video (code)\nISLR: Section 2.1.2, 5.1\nSlides\nOverfitting Activity (Part 1 QMD, Part 2 QMD)\nComplete CP3\nStart HW1\nContent Video: Overfitting\n\n\n9/19\nCross Validation\nConcept Video 1 (script)\nConcept Video 2 (script)\nCheckpoint 3\nR tutorial(code) ISLR: 5.1\nSlides\nCross-Validation Activity (QMD)\nComplete CP4\nContinue HW1\nConcept Video: Cross-Validation\nR Tutorial: Training, Testing and Cross-Validation\n\n\n\nNote: this page is currently under construction! More dates and links coming soon.",
+    "crumbs": [
+      "Overview",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "learning-objectives.html",
+    "href": "learning-objectives.html",
+    "title": "Learning Goals",
+    "section": "",
+    "text": "General Skills\nComputational Thinking\nEthical Data Thinking\nData Communication\nCollaborative Learning",
+    "crumbs": [
+      "Overview",
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning-objectives.html#general-skills",
+    "href": "learning-objectives.html#general-skills",
+    "title": "Learning Goals",
+    "section": "",
+    "text": "Be able to perform the following tasks:\n\nDecomposition: Break a task into smaller tasks to be able to explain the process to another person or computer\nPattern Recognition: Recognize patterns in tasks by noticing similarities and common differences\nAbstraction: Represent an idea or process in general terms so that you can use it to solve other projects that are similar in nature\nAlgorithmic Thinking: Develop a step-by-step strategy for solving a problem\n\n\n\n\n\nIdentify ethical issues associated with applications of statistical machine learning in a variety of settings\nAssess and critique the actions of individuals and organizations as it relates to ethical use of data\n\n\n\n\nIn written and oral formats:\n\nInform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs.\n\n\n\n\nUnderstand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).\nDevelop a common purpose and agreement on goals.\nBe able to contribute questions or concerns in a respectful way.\nShare and contribute to the group’s learning in an equitable manner.",
+    "crumbs": [
+      "Overview",
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "learning-objectives.html#course-topics",
+    "href": "learning-objectives.html#course-topics",
+    "title": "Learning Goals",
+    "section": "Course Topics",
+    "text": "Course Topics\nSpecific learning objectives for our course topics are listed below. Use these to guide your synthesis of video and reading material for specific topics.\nIntroduction to Statistical Machine Learning\n\nFormulate research questions that align with regression, classification, or unsupervised learning tasks.\nIdentify the appropriate task (regression, classification, unsupervised) for a given research question.\n\n\nUnit 1\nEvaluating Regression Models\n\nCreate and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.\nCalculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.\n\n\nOverfitting and cross-validation\n\nExplain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance\nAccurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric\nExplain what role CV has in a predictive modeling analysis and its connection to overfitting\nExplain the pros/cons of higher vs. lower k in k-fold CV in terms of sample size and computing time\n\n\nUnit 2\nModel selection\n\nExplain the difference between inferential models and predictive models and how the model building processes differ\nClearly describe the backward stepwise selection algorithm and why they are examples of greedy algorithms\nCompare best subset and stepwise algorithms in terms of optimality of output and computational time\n\n\nLASSO (shrinkage/regularization)\n\nExplain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection\nExplain how the lambda tuning parameter affects model performance and how this is related to overfitting\n\n\nUnit 3\nKNN Regression and the Bias-Variance Tradeoff\n\nClearly describe / implement by hand the KNN algorithm for making a regression prediction\nExplain how the number of neighbors relates to the bias-variance tradeoff\nExplain the difference between parametric and nonparametric methods\nExplain how the curse of dimensionality relates to the performance of KNN\n\n\nLocal Regression and Generalized Additive Models\n\nClearly describe the local regression algorithm for making a prediction\nExplain how bandwidth (span) relate to the bias-variance tradeoff\nDescribe some different formulations for a GAM (how the arbitrary functions are represented)\nExplain how to make a prediction from a GAM\nInterpret the output from a GAM\n\n\nUnit 4\nClassification via Logistic regression\n\nUse a logistic regression model to make hard (class) and soft (probability) predictions\nInterpret non-intercept coefficients from logistic regression models in the data context\n\n\nEvaluating classification models\n\nCalculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity\nConstruct and interpret plots of predicted probabilities across classes\nExplain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric\nAppropriately use and interpret the no-information rate to evaluate accuracy metrics\n\n\nDecision trees\n\nClearly describe the recursive binary splitting algorithm for tree building for both regression and classification\nCompute the weighted average Gini index to measure the quality of a classification tree split\nCompute the sum of squared residuals to measure the quality of a regression tree split\nExplain how recursive binary splitting is a greedy algorithm\nExplain how different tree parameters relate to the bias-variance tradeoff\n\n\nBagging and random forests\n\nExplain the rationale for bagging\nExplain the rationale for selecting a random subset of predictors at each split (random forests)\nExplain how the size of the random subset of predictors at each split relates to the bias-variance tradeoff\nExplain the rationale for and implement out-of-bag error estimation for both regression and classification\nExplain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)\n\n\nHierarchical clustering\n\nClearly describe / implement by hand the hierarchical clustering algorithm\nCompare and contrast k-means and hierarchical clustering in their outputs and algorithms\nInterpret cuts of the dendrogram for single and complete linkage\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters\n\n\nK-means clustering\n\nClearly describe / implement by hand the k-means algorithm\nDescribe the rationale for how clustering algorithms work in terms of within-cluster variation\nDescribe the tradeoff of more vs. less clusters in terms of interpretability\nImplement strategies for interpreting / contextualizing the clusters\n\n\nPrincipal Component Analysis\n\nExplain the goal of dimension reduction and how this can be useful in a supervised learning setting\nInterpret and use the information provided by principal component loadings and scores\nInterpret and use a scree plot to guide dimension reduction",
+    "crumbs": [
+      "Overview",
+      "Learning Goals"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html",
+    "href": "L01-introductions.html",
+    "title": "1  Introductions",
+    "section": "",
+    "text": "Welcome!\nNote: everything you need for class today is on the course website: https://kegrinde.github.io/stat253_coursenotes/",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#whats-machine-learning",
+    "href": "L01-introductions.html#whats-machine-learning",
+    "title": "1  Introductions",
+    "section": "What’s Machine Learning?",
+    "text": "What’s Machine Learning?\n“Machine Learning” was coined back in 1959 by Arthur Samuel, an early contributor to AI.\nFrom Kohavi & Provost (1998): Machine Learning is the exploration & application of algorithms that can learn from existing patterns and make predictions using data. (NOTE: humans are in charge of the exploration & application!)\n\n\nIn STAT 253 we will…\n\nPick up where STAT 155 left off, acquiring tools that can be used to learn from data in greater depth and a wider variety of settings. (STAT 155 is a foundational subset of ML!)\nExplore universal ML concepts using tools and software common among statisticians (hence “statistical” machine learning).\nSurvey a breadth of modern ML tools and algorithms that fall into the workflow below. We’ll focus on concepts and applications over mathematical theory. Part of the cognitive load will be:\n\nkeeping all the tools in place (what are they and when to use them)\nunderstanding the connections between the tools\nadapting (not memorizing) code to implement each tool",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#supervised-learning",
+    "href": "L01-introductions.html#supervised-learning",
+    "title": "1  Introductions",
+    "section": "Supervised Learning",
+    "text": "Supervised Learning\nWe want to model the relationship between some output variable \\(y\\) and input variables \\(x = (x_1, x_2,..., x_p)\\):\n\\[\\begin{split}\ny\n& = f(x) + \\varepsilon \\\\\n& = \\text{(trend in the relationship) } + \\text{ (residual deviation from the trend `epsilon`)} \\\\\n\\end{split}\\]\nTypes of supervised learning tasks:\n\nregression: \\(y\\) is quantitative\nexample:\n\\(y\\) = body mass index\n\\(x\\) = (number of live births, age, marital status, education, etc)\nclassification: \\(y\\) is categorical\nexample:\n\\(y\\) = whether a pair of crickets courted (yes, no) \\(x\\) = (species, pair of same species, CHC profile, etc)",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#unsupervised-learning",
+    "href": "L01-introductions.html#unsupervised-learning",
+    "title": "1  Introductions",
+    "section": "Unsupervised Learning",
+    "text": "Unsupervised Learning\nWe have some input variables \\(x = (x_1, x_2,..., x_p)\\) but there’s no output variable \\(y\\). Thus the goal is to use \\(x\\) to understand and/or modify the structure of our data with respect to \\(x\\).\nTypes of unsupervised learning tasks:\n\nclustering\nIdentify and examine groups or clusters of data points that are similar with respect to their \\(x_i\\) values. example:\n\n\\(x\\) = (body mass index at 2 weeks, 1 month, 2 months, 4 months, 6 months, etc)\n\ndimension reduction\nTurn the original set of \\(p\\) input variables, which are potentially correlated, into a smaller set of \\(k &lt; p\\) variables which still preserve the majority of information in the originals. example:\n\n\\(x\\) = (cuticular hydrocarbon compounds concentrations based on gas chromatography analysis)",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#meet-your-classmates",
+    "href": "L01-introductions.html#meet-your-classmates",
+    "title": "1  Introductions",
+    "section": "Meet Your Classmates!",
+    "text": "Meet Your Classmates!\nI used a machine learning algorithm, one we’ll learn later this semester, to form groups based on your responses to the pre-course informational survey. BUT it didn’t provide any explanation of why these are the groups it picked. To that end, we need humans.\n\nGet into your assigned group.\nIntroduce yourselves in whatever way you feel appropriate (ideas: name, pronouns, how you’re feeling at the moment, things you’re looking forward to, best part of summer, why you are motivated to take this class)\nTry to figure out why the algorithm put you into a group together. (I don’t personally know the answer!)\nPrepare to introduce your group to the bigger class:\n\nEach person will introduce themself\nOne person will explain why they think the group was put together",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#meet-your-instructor",
+    "href": "L01-introductions.html#meet-your-instructor",
+    "title": "1  Introductions",
+    "section": "Meet Your Instructor",
+    "text": "Meet Your Instructor\nA few highlights from my answers to the Pre-Course Information Gathering Survey…\n\nPreferred name: “Kelsey” or “Professor Grinde”\nPronouns: she/her/hers\nHometown(s): Plymouth –&gt; Northfield –&gt; Seattle –&gt; St. Paul\nCan you tell me a bit about how you’ve been spending your time this summer? What’s been particularly important or meaningful to you? What brings you joy right now? What is on your mind? What do you do when you’re not in class?",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#instructions",
+    "href": "L01-introductions.html#instructions",
+    "title": "1  Introductions",
+    "section": "Instructions",
+    "text": "Instructions\n\nDiscuss the following scenarios as a group, talking through your ideas, questions, and reasoning as you go\nI’ll move around to groups to check in on your progress and see what questions you have\nYou can check your answers by clicking the drop-down “Solutions” button",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#questions",
+    "href": "L01-introductions.html#questions",
+    "title": "1  Introductions",
+    "section": "Questions",
+    "text": "Questions\nIndicate whether each scenario below represents a regression, classification, or clustering task.\n\nHow is the number of people that rent bikes on a given day in Washington, D.C. (\\(y\\)) explained by the temperature (\\(x_1\\)) and whether or not it’s a weekend (\\(x_2\\))?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nregression. there’s a quantitative output variable \\(y\\).\n\n\n\nGiven the observed bill length (\\(x_1\\)) and bill depth (\\(x_2\\)) on a set of penguins, how many different penguin species might there be?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering. there’s no output variable \\(y\\).\n\n\n\nHow can we determine whether somebody has a certain infection (\\(y\\)) based on two different blood sample measurements, Measure A (\\(x_1\\)) and Measure B (\\(x_2\\))?\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclassification. there’s a categorical output variable \\(y\\).\n\n\n\nMachine learn about each other! Scenario A.\nI collected some data on STAT 253 students (you!) and analyzed it using a machine learning algorithm. In your groups: (1) brainstorm what research question is being investigated; (2) determine whether this is a regression, classification, or clustering task; and (3) summarize what the output tells you about your classmates.\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclassification (\\(y\\) = major is categorical)\n\n\n\nMachine learn about each other! Scenario B.\nSame directions as for Scenario A:\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nregression (\\(y\\) = time to mac is quantitative)\n\n\n\nMachine learn about each other! Scenario C.\nSame directions as for Scenario A:\n\n\n\n\n\n\n\n\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\)).\n\n\n\nUse Spotify users’ previous listening behavior to identify groups of similar users.\n\n\n\nSolution\n\nclustering\n\n \n\nPredict workers’ wages by their years of experience.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nPredict workers’ wages by their college major.\n\n\n\n\nSolution\n\nregression (\\(y\\) = wages)\n\n\n\nUse a customer’s age to predict whether they’ve seen the Barbie movie.\n\n\n\n\nSolution\n\nclassification (\\(y\\) = whether or not watched the film)\n\n\n\nLook for similarities among genetic samples taken from a group of patients.\n\n\n\n\nSolution\n\nclustering (no outcome \\(y\\))",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#scavenger-hunt",
+    "href": "L01-introductions.html#scavenger-hunt",
+    "title": "1  Introductions",
+    "section": "Scavenger Hunt",
+    "text": "Scavenger Hunt\nTake a few minutes to make sure you know how to find all of the following:\n\ncourse website\nsyllabus\ntextbook\nSTAT 253 Slack\noffice hour times and locations\nassignment deadlines\ninformation on what you need to complete before class each day\nin-class activities\nassignment instructions / submission",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "L01-introductions.html#whats-next",
+    "href": "L01-introductions.html#whats-next",
+    "title": "1  Introductions",
+    "section": "What’s next?",
+    "text": "What’s next?\nWhat to work on after class today:\n\ncarefully review the syllabus\n\nif time allows, we’ll discuss a few highlights now!\nmore to come in the next few class sessions\n\njoin Slack\nupdate your versions of R/RStudio (see R and RStudio Setup)\ncomplete the pre-class tasks for Thursday (videos/reading/checkpoint)\n\nreview the checkpoint recommendations/policies on Moodle before you start!\n\nstart HW0 (due Friday)",
+    "crumbs": [
+      "Overview",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introductions</span>"
+    ]
+  },
+  {
+    "objectID": "U01-motivation.html",
+    "href": "U01-motivation.html",
+    "title": "Motivating Question",
+    "section": "",
+    "text": "We are in the regression setting. We want to build a model of some quantitative output variable \\(y\\) by some predictors \\(x\\):\n\\[y = f(x) + \\epsilon\\]\nAfter building this model, it’s important to evaluate it: Is our regression model a “good” model?\n\nIs the model wrong?\nIs the model strong?\nDoes the model produce accurate predictions?\nIs the model fair?\n\n\n\nIs the model wrong? What assumptions does our model make and are these reasonable?\n\n\n\n\n\n\n\n\n\n\nTo check:\nExamine a residual plot, ie. a scatterplot of the residuals vs predictions for each case. Points should appear randomly scattered with no clear pattern. If you see any patterns in the residuals that suggest you are systematically over or underpredicting for different prediction values, this indicates that the assumption about the relationship with predictors could be wrong.\nExample: Model \\(y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\epsilon\\). What about the plots below reveals that this model is “wrong”?\n\n\n\n\n\n\n\n\n\n\nWhat about the plots below reveals that this model is “not wrong”?\n\n\n\n\n\n\n\n\n\n\n\nIs the model strong? How well does our model explain the variability in the response?\n\n\n\n\n\n\n\n\n\n\nCheck: \\(R^2\\), the proportion of variability in \\(y\\) that’s explained by the model. The closer to 1 the better.\n\\[R^2 = 1 - \\frac{\\text{Var}(\\text{residuals})}{\\text{Var}(y)} = 1 - \\frac{\\sum_{i=1}^n(y_i - \\hat{y}_i)^2}{\\sum_{i=1}^n(y_i - \\overline{y})^2}\\]\n\n\nDoes the model produce accurate predictions?\n\n\n\n\n\n\n\n\n\n\n\nCheck: Summarize the combined size of the residuals, \\(y_1 - \\hat{y}_1\\), \\(y_2 - \\hat{y}_2\\), …, \\(y_n - \\hat{y}_n\\) where \\(n\\) is sample size. The closer to 0 the better!\n\\[\\begin{split}\n\\text{MSE}  & = \\text{ mean squared error } = \\frac{1}{n}\\sum_{i=1}^n (y_i - \\hat{y}_i)^2 \\\\\n\\text{RMSE} & = \\text{ root mean squared error } = \\sqrt{MSE}  \\\\\n\\text{MAE}  & = \\text{ mean absolute error } = \\frac{1}{n}\\sum_{i=1}^n |y_i - \\hat{y}_i| \\\\\n\\end{split}\\]\n\n\nIs the model fair?\n\n\nWho collected the data / who funded the data collection?\nHow did they collect the data?\nWhy did they collect the data?\nWhat are the implications of the analysis, ethical or otherwise?\n\nDig Deeper (optional)\nDigging deeper, there’s more theory behind our regression model assumptions, thus more to the question of “is our model wrong?”. Specifically, in applying the linear regression model\n\\[y = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\epsilon\\]\nwe assume that at any given set of predictors \\(x = (x_1,x_2,...,x_n)\\),\n\\[\\epsilon \\stackrel{ind}{\\sim} N(0, \\sigma^2)\\]\nEquivalently, \\(y \\stackrel{ind}{\\sim} N(\\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}, \\; \\sigma^2)\\).\n\nWe can break this assumption and \\(N()\\) notation down into 4 pieces:\n\nIndependence: \\(\\epsilon \\stackrel{\\color{red}{ind}}{\\sim} N(0, \\sigma^2)\\) The observations on subject \\(i\\) are independent of the observations on any other subject.\n\nNOTE: If our data don’t meet this model assumption, our predictions and inference (eg: confidence intervals & hypothesis tests) might produce misleading results. Take Correlated Data to learn more about working with dependent data.\n\nTrend: \\(\\epsilon \\stackrel{ind}{\\sim} N(\\color{red}{0}, \\sigma^2)\\) At any \\(x\\), the residuals have mean 0. That is, responses are balanced above and below the model. Thus the model accurately captures the trend of the relationship.\n\nNOTE: If our data don’t meet this model assumption, our model is wrong. This issue might be corrected by transforming \\(y\\) or \\(x\\).\n\nHomoskedasticity: \\(\\epsilon \\stackrel{ind}{\\sim} N(0, \\color{red}{\\sigma}^2)\\) At any \\(x\\), the standard deviation among the residuals is \\(\\sigma\\). That is, deviations from the trend are no greater at any one “part” of the model than at another NOTE: If our data don’t meet this model assumption, our inference (eg: confidence intervals & hypothesis tests) might produce misleading results. This issue might be corrected by transforming \\(y\\).\nNormality: \\(\\epsilon \\stackrel{ind}{\\sim} \\color{red}{N}(0, \\sigma^2)\\) The residuals are normally distributed. Thus individual responses are normally distributed around the trend (closer to the trend and then tapering off).\n\nNOTE: If our data don’t meet this model assumption and the violation is extreme, our inference (eg: confidence intervals & hypothesis tests) might produce misleading results. This issue might be corrected by transforming \\(y\\).",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "Motivating Question"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html",
+    "href": "L02-evaluating-regression-models.html",
+    "title": "2  Model Evaluation",
+    "section": "",
+    "text": "Settling In",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#directions",
+    "href": "L02-evaluating-regression-models.html#directions",
+    "title": "2  Model Evaluation",
+    "section": "Directions",
+    "text": "Directions\n\nIn small groups, please first introduce yourself (in whatever way you feel appropriate) and check in with each other as human beings.\nWhen everyone is ready, glance through the summary of concepts covered in the video (see “Video Recap” below) and discuss the following prompts:\n\nWhat vocabulary or notation was new to you?\nWhat concepts were new to you?\nWhat concepts are still unclear to you at this moment?\n\nPrepare to share a few highlights from your group discussion with the entire class",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#video-recap",
+    "href": "L02-evaluating-regression-models.html#video-recap",
+    "title": "2  Model Evaluation",
+    "section": "Video Recap",
+    "text": "Video Recap\n\n\n\nWe are in the regression setting. We want to build a model of some quantitative output variable \\(y\\) by some predictors \\(x\\):\n\\[y = f(x) + \\epsilon\\]\nThere are many regression tools that we might use to build this model. We’ll use a linear regression model which assumes that \\(y\\) is a linear combination of the \\(x\\)’s:\n\\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots \\beta_p x_p + \\epsilon\\]\nAfter building any model, it’s important to evaluate it: Is our regression model a “good” model?\n\nIs the model wrong?\nIs the model strong?\nDoes the model produce accurate predictions?\nIs the model fair?\n\nWe will review these concepts through today’s exercises. A detailed overview is provided in the “Motivating Question” section under “Regression: Model Evaluation (Unit 1)” on the course website.",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#intro-to-tidymodels",
+    "href": "L02-evaluating-regression-models.html#intro-to-tidymodels",
+    "title": "2  Model Evaluation",
+    "section": "Intro to tidymodels",
+    "text": "Intro to tidymodels\nThroughout the semester, we are going to use the tidymodels package in R.\n\nSimilar flavor to tidyverse structure\nMore general structure that allows us to fit many other types of models\n\n. . .\nAt first, it will seem like a lot more code (perhaps even unnecessarily so).\n. . .\nFor example, what you did in STAT 155 with\n\nlm(y ~ x1 + x2, data = sample_data)\n\n. . .\nwill now look like\n\n# STEP 1: model specification\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\n# STEP 2: model estimation\nmodel_estimate &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2, data = sample_data)\n\n\nBut you’ll need to trust me…",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#highlight-useful-model-evaluation-functions",
+    "href": "L02-evaluating-regression-models.html#highlight-useful-model-evaluation-functions",
+    "title": "2  Model Evaluation",
+    "section": "Highlight: Useful Model Evaluation Functions",
+    "text": "Highlight: Useful Model Evaluation Functions\nA few useful functions to use on model_estimate:\n\n. . .\n\nmodel_estimate %&gt;% \n  tidy() #gives you coefficients (and se, t-statistics)\n\n\n. . .\n\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) # gives you predictions and residuals for sample_data\n\n\n. . .\n\nmodel_estimate %&gt;% \n  glance() #gives you some model evaluation metrics (is it strong?)\n\n\n. . .\n\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  mae(truth = y, estimate = .pred) # calculates MAE to measure accuracy of predictions\n\n. . .\nMore info, for future reference, below!",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#future-reference-r-code-for-building-and-evaluating-regression-models",
+    "href": "L02-evaluating-regression-models.html#future-reference-r-code-for-building-and-evaluating-regression-models",
+    "title": "2  Model Evaluation",
+    "section": "Future Reference: R Code for Building and Evaluating Regression Models",
+    "text": "Future Reference: R Code for Building and Evaluating Regression Models\nThis section is for future reference. It is a summary of code you’ll learn below for building and evaluating regression models. Throughout, suppose we wish to build and evaluate a linear regression model of y vs x1 and x2 using our sample_data.\n\n# Load packages\nlibrary(tidyverse)\nlibrary(tidymodels)\n\nBuilding a linear regression model\n\n# STEP 1: specify the type of model to build\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\") # we'll estimate the model using the lm function\n\n# STEP 2: estimate the specified model using sample data\nmodel_estimate &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2, data = sample_data)\n\n# Get the model coefficients\nmodel_estimate %&gt;% \n  tidy()\n\nObtaining predictions (& residuals) for each observation\n\n# Obtain y predictions and residuals for each observation in our sample_data\n# (We can replace sample_data with any data frame that includes y, x1, and x2)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data)\n\n# Obtain y predictions (but not residuals) for some given x1, x2 values, when we haven't yet observed y\n# (We can replace the data.frame with any data frame that includes x1 and x2)\nmodel_estimate %&gt;% \n  augment(new_data = data.frame(x1 = ___, x2 = ___))\n  \n# Another approach using predict()\nmodel_estimate %&gt;% \n  predict(new_data = data.frame(x1 = ___, x2 = ___))\n\nEvaluating the model\n\n# Is it strong? (R^2)\nmodel_estimate %&gt;% \n  glance()\n\n# Does it produce accurate predictions? (MAE)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  mae(truth = y, estimate = .pred)\n\n# Is it wrong? (residual plot)\nmodel_estimate %&gt;% \n  augment(new_data = sample_data) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \n  geom_point() + \n  geom_hline(yintercept = 0)",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#instructions",
+    "href": "L02-evaluating-regression-models.html#instructions",
+    "title": "2  Model Evaluation",
+    "section": "Instructions",
+    "text": "Instructions\n\nWork through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD\nBe kind to yourself/each other! You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.\nFocus on patterns in code. Review, but do not try to memorize any provided code. Focus on the general steps and patterns.\nIf you’re given some starter code with blanks (e.g. below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.\n\n\n# Start small: rides vs temp\nggplot(___, aes(y = ___, x = ___)) + \n  geom___()\n\n\nAsk questions! We will not have time to discuss all exercises at the end of class. Talk through your questions as a group, and ask me questions as I walk around the room!\nCollaborate. We’re sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to:\n\nActively contribute to discussion (don’t work on your own)\nActively include all group members in discussion\nCreate a space where others feel comfortable making mistakes & sharing their ideas (remember that we all come to this class with different experiences, both personal and academic)\nStay in sync while respecting that everybody has different learning strategies, work styles, note taking strategies, etc. If some people are working on exercise 10 and others are on exercise 2, that’s probably not a good collaboration.\nDon’t rush. You won’t hand anything in and can finish up outside of class.",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#questions",
+    "href": "L02-evaluating-regression-models.html#questions",
+    "title": "2  Model Evaluation",
+    "section": "Questions",
+    "text": "Questions\n\nCapital Bikeshare provides a bike-sharing service in the Washington DC area. Customers can pick up and drop off bikes at any station around the city. Of primary interest to the company is:\nHow many registered riders can we expect today?\nTo this end, you will build, evaluate, and compare 2 different linear regression models of ridership using the following Capital Bikeshare dataset (originally from the UCI Machine Learning Repository):\n\n# Load packages we'll need to wrangle and plot the data\nlibrary(tidyverse)\n\n# Load the data\nbikes &lt;- read.csv(\"https://mac-stat.github.io/data/bike_share.csv\")\n\n# Only keep / select some variables\n# And round some variables (just for our demo purposes)\nbikes &lt;- bikes %&gt;% \n  rename(rides = riders_registered, temp = temp_feel) %&gt;% \n  mutate(windspeed = round(windspeed), temp = round(temp)) %&gt;% \n  select(rides, windspeed, temp, weekend)\n\n\n# Check out the dimensions\ndim(bikes)\n\n# Check out the first 3 rows\nhead(bikes, 3)\n\nThis dataset contains the following information for a sample of different dates:\n\n\n\nvariable\ndescription\n\n\n\n\nrides\ncount of daily rides by registered users\n\n\nwindspeed\nwind speed in miles per hour\n\n\ntemp\nwhat the temperature feels like in degrees Fahrenheit\n\n\nweekend\nwhether or not it falls on a weekend\n\n\n\n We’ll consider two linear regression models of ridership:\nrides ~ windspeed + temp and rides ~ windspeed + temp + weekend\n\n\nPlot the relationships. First, let’s plot these relationships. REMINDER: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.\n\n\n# Start small: rides vs temp\nggplot(___, aes(y = ___, x = ___)) + \n  geom___()\n\n\n# rides vs temp & windspeed\nggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + \n  geom_point()\n\n\n# rides vs temp & windspeed & weekend\nggplot(bikes, aes(y = ___, x = ___, ___ = windspeed)) + \n  geom_point() +  \n  facet_wrap(~ ___)\n\n\n\nSolution\n\n\n# Start small: rides vs temp\nggplot(bikes, aes(y = rides, x = temp)) + \n  geom_point()\n\n\n\n\n\n\n\n# rides vs temp & windspeed\nggplot(bikes, aes(y = rides, x = temp, color = windspeed)) + \n  geom_point()\n\n\n\n\n\n\n\n# rides vs temp & windspeed & weekend\nggplot(bikes, aes(y = rides, x = temp, color = windspeed)) + \n  geom_point() +  \n  facet_wrap(~ weekend)\n\n\n\n\n\n\n\n\n\n\n\ntidymodels STEP 1: model specification. We’ll build and evaluate our two models of ridership using the tidymodels package. This code is more complicated than the lm()function we used in STAT 155. BUT:\n\n\ntidymodels is part of the broader tidyverse (what we use to plot and wrangle data), thus the syntax is more consistent\ntidymodels generalizes to the other ML algorithms we’ll survey in this course, thus will eventually minimize the unique syntax we need to learn\n\n\n# Load package\nlibrary(tidymodels)\n\nThe first step is to specify what type of model we want to build. We’ll store this as lm_spec, our linear regression model (lm) specification (spec).\n\nlm_spec &lt;- linear_reg() %&gt;%   # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\nThis code specifies but doesn’t build any model – we didn’t even give it any data or specify the variables of interest!\n\n# Check it out\nlm_spec\n\n\n\nSolution\n\n\n# Load package\nlibrary(tidymodels)\n\nlm_spec &lt;- linear_reg() %&gt;% # we want a linear regression model\n  set_mode(\"regression\") %&gt;%  # this is a regression task (y is quantitative)\n  set_engine(\"lm\")# we'll estimate the model using the lm function\n\nlm_spec\n\nLinear Regression Model Specification (regression)\n\nComputational engine: lm \n\n\n\n\n\ntidymodels STEP 2: model estimation. We can now estimate or fit our two ridership models using the specified model structure (lm_spec) and our sample bikes data:\n\n\n# Fit bike_model_1\nbike_model_1 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp, data = bikes)\n\n# Check out the coefficients\nbike_model_1 %&gt;% \n  tidy()\n\n\n# YOUR TURN\n# Fit bike_model_2 & check out the coefficients\n\n\n\nSolution\n\n\nbike_model_1 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp, data = bikes)\n\nbike_model_2 &lt;- lm_spec %&gt;% \n  fit(rides ~ windspeed + temp + weekend, data = bikes)\n\n# Check out the results:\nbike_model_1 %&gt;% \n  tidy()\n\n# A tibble: 3 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    -20.8    300.     -0.0694 9.45e- 1\n2 windspeed      -36.1      9.42   -3.83   1.37e- 4\n3 temp            55.4      3.33   16.6    7.58e-53\n\nbike_model_2 %&gt;% \n  tidy()\n\n# A tibble: 4 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    298.     289.        1.03 3.02e- 1\n2 windspeed      -35.6      9.00     -3.95 8.46e- 5\n3 temp            54.3      3.18     17.1  3.82e-55\n4 weekendTRUE   -858.     101.       -8.46 1.47e-16\n\n\n\n\n\n\nIs it fair? Now, let’s evaluate our two models. First, do you have any concerns about the context in which the data were collected and analyzed? About the potential impact of this analysis?\n\n\n\nSolution\n\nWhat do you think?\n\nWho might be harmed?\nWho benefits?\n\n\n\n\nIs it strong? We can measure and compare the strength of these models using \\(R^2\\), the proportion of variability in our response variable that’s explained by the model. Report which model is stronger and interpret its \\(R^2\\).\n\n\n# Obtain R^2 for bike_model_1\nbike_model_1 %&gt;% \n  glance()\n\n\n# YOUR TURN\n# Obtain R^2 for bike_model_2\n\n\n\nSolution\n\nModel 2 is stronger than model 1 (\\(R^2\\) of 0.372 vs 0.310). But it only explains 37% of the variability in ridership from day to day.\n\n# Obtain R^2 for bike_model_1\nbike_model_1 %&gt;% \n  glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic  p.value    df logLik    AIC    BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1     0.310         0.308 1298.      163. 2.44e-59     2 -6276. 12560. 12578.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\nbike_model_2 %&gt;% \n  glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic  p.value    df logLik    AIC    BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1     0.372         0.369 1239.      143. 5.82e-73     3 -6242. 12493. 12516.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\n\n\n\nPause: get the residuals and predictions. Our next model evaluation questions will focus on the models’ predictions and prediction errors, or residuals. We can obtain this information by augmenting our models with our original bikes data. For example:\n\n\n# Calculate predicted ridership (.pred) & corresponding residuals (.resid) using bike_model_1\n# Just look at first 6 days\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head()\n\nWe can also predict outcomes for new observations using either augment() or predict(). Note the difference in the output:\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  augment(new_data = data.frame(windspeed = 20, temp = 60))\n\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  predict(new_data = data.frame(windspeed = 20, temp = 60))\n\n\n\nSolution\n\naugment() gives the predictions and residuals for all rows in the data. predict() only gives you predictions.\n\n# Obtain the predictions & residuals using bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head()\n\n# A tibble: 6 × 6\n  .pred .resid rides windspeed  temp weekend\n  &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  \n1 3183. -2529.   654        11    65 TRUE   \n2 2911. -2241.   670        17    64 TRUE   \n3 2080.  -851.  1229        17    49 FALSE  \n4 2407.  -953.  1454        11    51 FALSE  \n5 2446.  -928.  1518        13    53 FALSE  \n6 2699. -1181.  1518         6    53 FALSE  \n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  augment(new_data = data.frame(windspeed = 20, temp = 60))\n\n# A tibble: 1 × 3\n  .pred windspeed  temp\n  &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;\n1 2581.        20    60\n\n# Predict ridership on a 60 degree day with 20 mph winds\nbike_model_1 %&gt;% \n  predict(new_data = data.frame(windspeed = 20, temp = 60))\n\n# A tibble: 1 × 1\n  .pred\n  &lt;dbl&gt;\n1 2581.\n\n\n\n\n\nDoes it produce accurate predictions? Recall that the mean absolute error (MAE) measures the typical prediction error. Specifically, it is the mean of the absolute values of the residual errors for the days in our dataset.\n\n\nUse the residuals to calculate the MAE for the 2 models. HINT: abs().\n\n\n# MAE for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = ___(___(___)))\n\n# MAE for bike_model_2\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = ___(___(___)))\n\n\nDoing the calculation from scratch helps solidify your understanding of how MAE is calculated, thus interpreted. Check your calculations using a shortcut function.\n\n\n# Calculate MAE for the first model\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n\n\n# YOUR TURN\n# Calculate MAE for the second model\n\n\nWhich model has more accurate predictions? Interpret the MAE for this model and comment on whether it’s “large” or “small”. NOTE: “large” or “small” is defined by the context (e.g. relative to the observed range of ridership, the consequences of a bad prediction, etc).\n\n\n\nSolution\n\nOn average, the model 1 predictions are off by ~1080 riders and the model 2 predictions are off by ~1038 riders. Is this a lot? Consider this error relative to the scale of the data: there are roughly 1000 - 7000 riders per day.\n\n# a\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = mean(abs(.resid)))\n\n# A tibble: 1 × 1\n    mae\n  &lt;dbl&gt;\n1 1080.\n\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  summarize(mae = mean(abs(.resid)))\n\n# A tibble: 1 × 1\n    mae\n  &lt;dbl&gt;\n1 1038.\n\n# b\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 mae     standard       1080.\n\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  mae(truth = rides, estimate = .pred)\n\n# A tibble: 1 × 3\n  .metric .estimator .estimate\n  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;\n1 mae     standard       1038.\n\n\n\n\n\nIs it wrong? To determine whether the linear regression assumptions behind bike_model_1 and bike_model_2 are reasonable, we can review residual plots, i.e. plots of the residuals vs predictions for each observation in our dataset. Run the code below and summarize your assessment of whether our models are wrong. RECALL: We want the appoints to appear random and centered around 0 across the entire range of the model / predictions.\n\n\n# Residual plot for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \n  geom_point() + \n  geom_hline(yintercept = 0)\n\n\n# YOUR TURN\n# Residual plot for bike_model_2\n\n\n\nSolution\n\nBoth models look roughly “right” BUT there is a little downward slope at the extreme end of the residual plots. This corresponds to the observed phenomenon that when it’s really hot, ridership starts dipping. In a future model, we might incorporate a quadratic temperature term.\n\n# Residual plot for bike_model_1\nbike_model_1 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point() + \ngeom_hline(yintercept = 0)\n\n\n\n\n\n\n\n# Residual plot for bike_model_2\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \ngeom_point() + \ngeom_hline(yintercept = 0)\n\n\n\n\n\n\n\n\n\n\n\nArt vs science Inspecting residual plots is more art than science.1 It requires a lot of practice. Consider another example using simulated data. First, build a model that assumes all predictors are roughly linearly related:\n\n\n# Import data\nsimulated_data &lt;- read.csv(\"https://ajohns24.github.io/data/simulated_data.csv\")\n\n# Model y by the 6 input variables\nnew_model &lt;- lm_spec %&gt;% \n  fit(y ~ x1 + x2 + x3 + x4 + x5 + x6, simulated_data)\n\nNext, check out a pairs plot. Is there anything here that makes you think that our model assumption is bad?\n\nlibrary(GGally)\nggpairs(simulated_data)\n\n\n\n\n\n\n\n\nFinally, check out a residual plot. Any concerns now?\n\nnew_model %&gt;% \n  ___(new_data = ___) %&gt;% \n  ggplot(aes(x = ___, y = ___)) + \n  geom_point(size = 0.1) + \n  geom_hline(yintercept = 0)\n\n\n\nSolution\n\nArt + Science!\n\nnew_model %&gt;% \n  augment(new_data = simulated_data) %&gt;% \n  ggplot(aes(x = .pred, y = .resid)) + \n  geom_point(size = 0.1) + \n  geom_hline(yintercept = 0)\n\n\n\n\n\n\n\n\n\n\n\nDetails: communication & code style Communication is a key machine learning skill, including written summaries, presentations, and code. Just like an essay, code must have structure, signposts, and grammar that will make it easier for others to follow. The below code runs, but it is “bad code”.\n\n\nFix this code and add comments so that it is easier for yourself and others to follow.\nAlso pay attention to what this code does.\n\n\nbikes%&gt;%group_by(weekend)%&gt;%summarize(median(rides))\n\nmynewdatasetissmallerthantheoriginal&lt;-bikes%&gt;%filter(rides&lt;=700,weekend==FALSE,temp&gt;60)\nmynewdatasetissmallerthantheoriginal\n\nmynewdatasetusescelsius&lt;-bikes%&gt;%mutate(temp=(temp-32)*5/9)\nhead(mynewdatasetusescelsius)\n\n\n\nSolution\n\n\n# Calculate the median ridership by weekend\n# Put each new thought or action on its own line! \n# This makes it easier to follow the steps.\nbikes %&gt;% \n  group_by(weekend) %&gt;% \n  summarize(median(rides))\n\n# A tibble: 2 × 2\n  weekend `median(rides)`\n  &lt;lgl&gt;             &lt;dbl&gt;\n1 FALSE              3848\n2 TRUE               2955\n\n# Obtain days on which there are at most 700 rides,\n# it's the weekend, and temps are above 60 degrees\n# Use a shorter name that's easier to read and type.\n# Add spaces to make things easier to read.\n# Add line breaks to make it easier to follow the steps.\nwarm_weekends &lt;- bikes %&gt;%\n  filter(rides &lt;= 700, weekend == FALSE, temp &gt; 60)\nwarm_weekends\n\n  rides windspeed temp weekend\n1   577        18   67   FALSE\n2   655        18   68   FALSE\n3    20        24   72   FALSE\n\n# Store temp in Celsius\nbikes_celsius &lt;- bikes %&gt;% \n  mutate(temp = (temp - 32)*5/9)\nhead(bikes_celsius)\n\n  rides windspeed      temp weekend\n1   654        11 18.333333    TRUE\n2   670        17 17.777778    TRUE\n3  1229        17  9.444444   FALSE\n4  1454        11 10.555556   FALSE\n5  1518        13 11.666667   FALSE\n6  1518         6 11.666667   FALSE\n\n\n\n\n\nSTAT 155 Review: model interpretation & application Let’s interpret and apply bike_model_2.\n\n\n___ %&gt;% \n  tidy()\n\n\nHow can we interpret the temp coefficient?\n\n\nWe expect roughly 54 more riders on warm days.\nWe expect roughly 54 more riders per every 1 degree increase in temperature.\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders on warm days.\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders per every 1 degree increase in temperature.\n\n\nHow can we interpret the weekendTRUE coefficient?\n\n\nWe expect roughly 858 fewer riders on weekends.\nWe expect roughly 858 fewer riders per every extra weekend.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders per every extra weekend.\n\n\nReproduce the predicted ridership and corresponding residual for day 1 from scratch (how were these calculated?!):\n\n\nbike_model_2 %&gt;% \n  ___(new_data = bikes) %&gt;% \n  head(1)\n\n\n\nSolution\n\n\n# Get the coefficients\nbike_model_2 %&gt;% \n  tidy()\n\n# A tibble: 4 × 5\n  term        estimate std.error statistic  p.value\n  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;\n1 (Intercept)    298.     289.        1.03 3.02e- 1\n2 windspeed      -35.6      9.00     -3.95 8.46e- 5\n3 temp            54.3      3.18     17.1  3.82e-55\n4 weekendTRUE   -858.     101.       -8.46 1.47e-16\n\n\n\nWhen controlling for windspeed and weekend status, we expect roughly 54 more riders per every 1 degree increase in temperature.\nWhen controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends (compared to weekdays).\n\n\n# Predict ridership on day 1\nbike_model_2 %&gt;% \n  augment(new_data = bikes) %&gt;% \n  head(1)\n\n# A tibble: 1 × 6\n  .pred .resid rides windspeed  temp weekend\n  &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;  \n1 2581. -1927.   654        11    65 TRUE   \n\n# This matches .pred\n298.45 - 35.57*11 + 54.33*65 - 857.76*1\n\n[1] 2580.87\n\n# Calculate the residual (observed - predicted)\n# This matches .resid\n654 - 2580.87\n\n[1] -1926.87\n\n\n\n\n\nSTAT 155 Review: data wrangling Through the “Details: communication & code style” and elsewhere, you’ve reviewed the use of various dplyr data wrangling verbs: filter(), mutate(), summarize(), group_by(), and select(). Use these to complete the following tasks.\n\n\nCalculate the mean temperature across all days in the data set.\nCalculate the mean temperature on weekends vs weekdays.\nPrint out the 3 days with the highest temperatures. HINT: arrange() or arrange(desc())\nName and store a new data set which: - only includes the days that fall on a weekend and have temps below 80 degrees - has a new variable, temp_above_freezing, which calculates how far the temperature is above (or below) freezing (32 degrees F) - only includes the windspeed, temp, and temp_above_freezing variables.\n\n\n\nSolution\n\n\n# a\nbikes %&gt;% \n  summarize(mean(temp))\n\n  mean(temp)\n1   74.69083\n\n# b\nbikes %&gt;% \n  group_by(weekend) %&gt;% \n  summarize(mean(temp))\n\n# A tibble: 2 × 2\n  weekend `mean(temp)`\n  &lt;lgl&gt;          &lt;dbl&gt;\n1 FALSE           75.1\n2 TRUE            73.7\n\n# c\nbikes %&gt;% \n  arrange(desc(temp)) %&gt;% \n  head(3)\n\n  rides windspeed temp weekend\n1  2825         9  108   FALSE\n2  3152        15  106   FALSE\n3  2298         9  104    TRUE\n\n# d\nnew_data &lt;- bikes %&gt;% \n  filter(weekend == TRUE, temp &lt; 80) %&gt;% \n  mutate(temp_above_freezing = temp - 32) %&gt;% \n  select(windspeed, temp, temp_above_freezing)\nhead(new_data)\n\n  windspeed temp temp_above_freezing\n1        11   65                  33\n2        17   64                  32\n3        18   47                  15\n4        24   42                  10\n5        11   54                  22\n6        13   53                  21\n\n\n\n\n\nSTAT 155 Review: plots\nConstruct plots of the following relationships:\n\n\nrides vs temp\nrides vs weekend\nrides vs temp and weekend\n\n\n\nSolution\n\n\n# a. rides vs temp\nggplot(bikes, aes(y = rides, x = temp)) + \n  geom_point()\n\n\n\n\n\n\n\n# b. rides vs weekend\nggplot(bikes, aes(y = rides, x = weekend)) + \n  geom_boxplot()\n\n\n\n\n\n\n\nggplot(bikes, aes(x = rides, fill = weekend)) + \n  geom_density(alpha = 0.5)\n\n\n\n\n\n\n\n# c. rides vs temp and weekend\n ggplot(bikes, aes(y = rides, x = temp, color = weekend)) + \n  geom_point()\n\n\n\n\n\n\n\n\n\n\n\nDone!\n\n\nKnit/render your notes.\nCheck the solutions on the course website.\nGet a head start on the wrap-up steps below.",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "L02-evaluating-regression-models.html#footnotes",
+    "href": "L02-evaluating-regression-models.html#footnotes",
+    "title": "2  Model Evaluation",
+    "section": "",
+    "text": "Stefanski, Leonard A. (2007). Residual (Sur)Realism. “The American Statistician,” 61, pp 163-177.↩︎",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Model Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "r_rstudio.html",
+    "href": "r_rstudio.html",
+    "title": "R and RStudio Setup",
+    "section": "",
+    "text": "Troubleshooting\nHere’s how to fix it:",
+    "crumbs": [
+      "Appendices",
+      "R and RStudio Setup"
+    ]
+  },
+  {
+    "objectID": "r_rstudio.html#troubleshooting",
+    "href": "r_rstudio.html#troubleshooting",
+    "title": "R and RStudio Setup",
+    "section": "",
+    "text": "Problem: You are on a Mac and getting the following error (or something similar):\n\n\n    Error: package or namespace load failed for ‘ggplot2’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):\n     there is no package called ‘rlang’\n\n\nFirst install the suite of Command Line Tools for Mac using the instructions here.\nNext enter install.packages(\"rlang\") in the Console.\nFinally check that entering library(ggplot2) gives no errors.",
+    "crumbs": [
+      "Appendices",
+      "R and RStudio Setup"
+    ]
+  },
+  {
+    "objectID": "r_resources.html",
+    "href": "r_resources.html",
+    "title": "R Resources",
+    "section": "",
+    "text": "Tidymodels resources",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#tidymodels-resources",
+    "href": "r_resources.html#tidymodels-resources",
+    "title": "R Resources",
+    "section": "",
+    "text": "Tidymodels package documentation\nTidy Modeling with R textbook (Max Kuhn and Julia Silge)\nISLR Labs with Tidymodels (Emil Hvitfeldt)\nIntro to Tidymodels Presentation (Lucy D’Agostino McGowan)",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#tidyverse-resources",
+    "href": "r_resources.html#tidyverse-resources",
+    "title": "R Resources",
+    "section": "Tidyverse resources",
+    "text": "Tidyverse resources\n\nBrianna Heggeseth’s COMP/STAT 112 website (with code examples and videos)\nR for Data Science\nExploratory Data Analysis with R\nJohn’s Hopkins Tidyverse course text",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#visualization-resources",
+    "href": "r_resources.html#visualization-resources",
+    "title": "R Resources",
+    "section": "Visualization resources",
+    "text": "Visualization resources\n\nggplot2 reference\nColors in R",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#general-r-resources",
+    "href": "r_resources.html#general-r-resources",
+    "title": "R Resources",
+    "section": "General R resources",
+    "text": "General R resources\n\nRStudio cheatsheets\nAdvanced R\nR Programming Wikibook\nDebugging in R\n\nArticle\nVideo",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "r_resources.html#some-example-code",
+    "href": "r_resources.html#some-example-code",
+    "title": "R Resources",
+    "section": "Some example code",
+    "text": "Some example code\nCreating new variables\ncase_when() from the dplyr package is a very versatile function for creating new variables based on existing variables. This can be useful for creating categorical or quantitative variables and for creating indices from multiple variables.\n\n# Turn quant_var into a Low/Med/High version\ndata &lt;- data %&gt;%\n    mutate(cat_var = case_when(\n            quant_var &lt; 10 ~ \"Low\",\n            quant_var &gt;= 10 & quant_var &lt;= 20 ~ \"Med\",\n            quant_var &gt; 20 ~ \"High\"\n        )\n    )\n\n# Turn cat_var (A, B, C categories) into another categorical variable\n# (collapse A and B into one category)\ndata &lt;- data %&gt;%\n    mutate(new_cat_var = case_when(\n            cat_var %in% c(\"A\", \"B\") ~ \"A or B\"\n            cat_var==\"C\" ~ \"C\"\n        )\n    )\n\n# Turn a categorical variable (x1) encoded as a numerical 0/1/2 variable into a different quantitative variable\n# Doing this for multiple variables allows you to create an index\ndata &lt;- data %&gt;%\n    mutate(x1_score = case_when(\n            x1==0 ~ 10,\n            x1==1 ~ 20,\n            x1==2 ~ 50\n        )\n    )\n\n# Add together multiple variables with mutate\ndata &lt;- data %&gt;%\n    mutate(index = x1_score + x2_score + x3_score)",
+    "crumbs": [
+      "Appendices",
+      "R Resources"
+    ]
+  },
+  {
+    "objectID": "stat155.html",
+    "href": "stat155.html",
+    "title": "STAT 155 Review",
+    "section": "",
+    "text": "COMPREHENSIVE REVIEW\nA comprehensive STAT 155 review is provided by the Prof. Johnson’s Spring 2022 STAT 155 manual here and the STAT 155 Notes created by Profs. Grinde, Heggeseth, and Myint here.\n\n\n\nQUICK REVIEW\nLet \\(y\\) be a response variable with a set of \\(k\\) explanatory variables \\(x = (x_{1}, x_{2}, ..., x_{k})\\). Then the population linear regression model is\n\\[\\begin{split}\ny & = f(x) + \\varepsilon  = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\nNOTES:\n\n\\(\\beta\\) is the Greek letter “beta”. \\(\\varepsilon\\) is the Greek letter “epsilon”.\n\n“Linear” regression is so named because it assumes that \\(y\\) is a linear combination of the \\(x\\)’s. It does not mean that the relationship itself is linear!! For example, one of the predictors might be a quadratic term: \\(x_2 = x_1^2\\).\n\\(f(x) = \\beta_0 + \\beta_1 x_{1} + \\beta_2 x_{2} + \\cdots + \\beta_k x_{k}\\) captures the trend of the relationship\n\n\\(\\beta_0\\) = intercept coefficient\nthe model value when \\(x_1=x_2=\\cdots=x_k=0\\)\n\\(\\beta_i\\) = \\(x_i\\) coefficient\nhow \\(x_i\\) is related to \\(y\\) when holding constant all other \\(x_i\\)\n\n\\(\\epsilon\\) reflects deviation from the trend (the residual)\n\n\n\n\n\nFitting the Model\nOnce we have a population model in mind, we can “fit the model” (i.e. estimate the \\(\\beta\\) population coefficients) using sample data:\n\\[\\begin{split}\ny & =  \\hat{f}(x) + \\varepsilon \\\\\n& = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{1} + \\hat{\\beta}_2 x_{2} + \\cdots + \\hat{\\beta}_k x_{k} + \\varepsilon \\\\\n\\end{split}\\]\n\n\nTo this end, collect a sample of data on \\(n\\) subjects. Use subscripts to denote the data for subject \\(i\\): \\(y_i\\) and \\(x_{ij}\\). Then the predicted response and residual (prediction error) for subject \\(i\\) are\n\nprediction \\[\\hat{y}_i = \\hat{f}(x_i) = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_{i1} + \\hat{\\beta}_2 x_{i2} + \\cdots + \\hat{\\beta}_k x_{ik}\\]\nresidual / prediction error \\[y_i - \\hat{y}_i\\]\n\n\n\n\nLeast Squares Criterion\nEstimate (\\(\\beta_0, \\beta_1,..., \\beta_k\\)) by (\\(\\hat{\\beta}_0, \\hat{\\beta}_1,..., \\hat{\\beta}_k)\\) that minimize the sum of squared residuals: \\[\\sum_{i=1}^n(y_i - \\hat{y}_i)^2 = (y_1-\\hat{y}_1)^2 + (y_2-\\hat{y}_2)^2 + \\cdots + (y_n-\\hat{y}_n)^2\\]",
+    "crumbs": [
+      "Appendices",
+      "STAT 155 Review"
+    ]
+  }
+]
