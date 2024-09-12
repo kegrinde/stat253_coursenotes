@@ -12,7 +12,7 @@ Readings refer to chapters/sections in the Introduction to Statistical Learning 
 #| echo: false
 #| results: asis
 #| eval: true
-xfun::file_string("schedule_table.html")
+xfun::file_string("schedule_table.html") 
 ```
 ````
 
