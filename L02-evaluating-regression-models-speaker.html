@@ -403,18 +403,15 @@
 <h1>Settling In</h1>
 <ul>
 <li>Sit with at least 2 new people and introduce yourself</li>
-<li>Sign up for the <a href="https://docs.google.com/document/d/1Z2Ex-_z_8vm2ZhgdT4le-DwieUCtYZM8dDysaj6bseI/edit?usp=sharing">MSCS Community Mailing List</a>
-<ul>
-<li>This is where information is shared about MSCS-related events, internship opportunities, etc.</li>
-</ul></li>
+<li>Sign up for the <a href="https://docs.google.com/document/d/1Z2Ex-_z_8vm2ZhgdT4le-DwieUCtYZM8dDysaj6bseI/edit?usp=sharing">MSCS Community Mailing List</a> for information about MSCS-related events, internship opportunities, etc.</li>
 <li>Prepare to take notes:
 <ul>
 <li>Locate the Quarto Document (QMD) for today’s activity</li>
 <li>This is where you’ll take notes! Use this however is best for your own learning — you won’t hand it in.</li>
-</ul></li>
 <li>Download and open the QMD in RStudio:
 <ul>
 <li>If your computer opens the file in a web browser, you can (1) open a new QMD in RStudio and (2) copy-paste the contents from the web browser into your QMD</li>
+</ul></li>
 <li>Save this QMD in the “STAT 253 &gt; Notes” folder you created for Checkpoint 1</li>
 <li><code>Render</code> (Knit) the QMD and check out the general structure</li>
 </ul></li>
@@ -424,7 +421,7 @@
 <section id="learning-goals" class="title-slide slide level1 unnumbered center">
 <h1>Learning Goals</h1>
 <ul>
-<li>Practice building and evaluating linear regression models in RStudio:
+<li>Practice building and evaluating linear regression models in RStudio. Specifically:
 <ul>
 <li>Create and interpret residuals vs.&nbsp;fitted, residuals vs.&nbsp;predictor plots to identify improvements in modeling and address ethical concerns.</li>
 <li>Calculate and interpret MSE, RMSE, MAE, and R-squared in a contextually meaningful way.</li>
@@ -444,7 +441,7 @@
 <h2>Directions</h2>
 <ul>
 <li>In small groups, please first introduce yourself (in whatever way you feel appropriate) and check in with each other as human beings.</li>
-<li>When everyone is ready, glance through the summary of concepts covered in the video (below) and discuss the following prompts:
+<li>When everyone is ready, glance through the summary of concepts covered in the video (see “Video Recap” below) and discuss the following prompts:
 <ul>
 <li>What vocabulary or notation was new to you?</li>
 <li>What concepts were new to you?</li>
@@ -469,23 +466,22 @@
 <li>Does the model produce accurate predictions?</li>
 <li>Is the model fair?</li>
 </ol>
-<p><strong>NOTE:</strong></p>
-<p>We will review these concepts through today’s exercises. A detailed overview is provided in the “Motivating Question” section under “Unit 1: Regression Model Evaluation” in the course website.</p>
+<p>We will review these concepts through today’s exercises. A detailed overview is provided in the “Motivating Question” section under “Regression: Model Evaluation (Unit 1)” in the course website.</p>
 </section></section>
 <section>
 <section id="notes-r-code" class="title-slide slide level1 unnumbered center">
 <h1>Notes: R Code</h1>
 
 </section>
-<section id="quick-intro-to-tidymodels" class="slide level2 unnumbered">
-<h2>Quick Intro to <code>tidymodels</code></h2>
-<p>We are going to use the <code>tidymodels</code> package in R.</p>
+<section id="intro-to-tidymodels" class="slide level2 unnumbered">
+<h2>Intro to tidymodels</h2>
+<p>We are going to use the <strong>tidymodels</strong> package in R.</p>
 <ul>
-<li>Similar flavor to <code>tidyverse</code> structure</li>
+<li>Similar flavor to <strong>tidyverse</strong> structure</li>
 <li>More general structure that allows us to fit many other types of models</li>
 </ul>
 <div class="fragment">
-<p>At first, it will seem like <em>a lot more code</em> and <em>unnecessary</em>.</p>
+<p>At first, it will seem like <em>a lot more code</em> (and perhaps even <em>unnecessary</em>).</p>
 </div>
 <div class="fragment">
 <p>For example, what you did in STAT 155 with</p>
@@ -505,13 +501,12 @@
 <span id="cb2-7"><a href=""></a>model_estimate <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
 <span id="cb2-8"><a href=""></a>  <span class="fu">fit</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="fragment">
+<p><br></p>
 <p>But you’ll need to <em>trust me</em>…</p>
 </div>
 </section>
-<section id="a-few-useful-functions" class="slide level2">
-<h2>A Few Useful Functions</h2>
+<section id="useful-model-evaluation-functions" class="slide level2 unnumbered">
+<h2>Useful Model Evaluation Functions</h2>
 <p>A few useful functions to use on <code>model_estimate</code>:</p>
 <p><br></p>
 <div class="fragment">
@@ -546,8 +541,8 @@
 <p>More info, for future reference, below!</p>
 </div>
 </section>
-<section id="reference-r-code-for-building-and-evaluating-regression-models" class="slide level2 unnumbered">
-<h2>Reference: R Code for Building and Evaluating Regression Models</h2>
+<section id="future-reference-r-code-for-building-and-evaluating-regression-models" class="slide level2 unnumbered">
+<h2>Future Reference: R Code for Building and Evaluating Regression Models</h2>
 <p>This section is for <strong>future</strong> reference. It is a summary of code you’ll learn below for building and evaluating regression models. Throughout, suppose we wish to build and evaluate a linear regression model of <code>y</code> vs <code>x1</code> and <code>x2</code> using our <code>sample_data</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Load packages</span></span>
@@ -559,7 +554,7 @@
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># STEP 1: specify the type of model to build</span></span>
 <span id="cb8-2"><a href=""></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> <span class="co"># we want a linear regression model</span></span>
 <span id="cb8-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span>  <span class="co"># this is a regression task (y is quantitative)</span></span>
-<span id="cb8-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)<span class="co"># we'll estimate the model using the lm function</span></span>
+<span id="cb8-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="co"># we'll estimate the model using the lm function</span></span>
 <span id="cb8-5"><a href=""></a></span>
 <span id="cb8-6"><a href=""></a><span class="co"># STEP 2: estimate the specified model using sample data</span></span>
 <span id="cb8-7"><a href=""></a>model_estimate <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
@@ -612,8 +607,7 @@
 <section id="instructions" class="slide level2 smaller unnumbered">
 <h2>Instructions</h2>
 <ul>
-<li>Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go</li>
-<li>Take notes in your individual Quarto documents</li>
+<li>Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD</li>
 <li><strong>Be kind to yourself/each other!</strong> You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.</li>
 <li><strong>Focus on patterns in code.</strong> Review, but do not try to <em>memorize</em> any provided code. Focus on the general steps and patterns.</li>
 <li>If you’re given some starter code with blanks (e.g.&nbsp;below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.</li>
@@ -637,19 +631,18 @@
 </section>
 <section id="questions" class="slide level2 smaller unnumbered scrollable">
 <h2>Questions</h2>
-<p><strong>We’ll work through the first three exercises as a class.</strong></p>
-<div class="fragment">
+<!--
+**We'll work through the first three exercises as a class.**
+-->
 <p>Capital Bikeshare provides a bike-sharing service in the Washington DC area. Customers can pick up and drop off bikes at any station around the city. Of primary interest to the company is:</p>
 <p><strong>How many registered riders can we expect today?</strong></p>
-</div>
-<div class="fragment">
 <p>To this end, you will build, evaluate, and compare 2 different <strong>linear regression models</strong> of ridership using the following Capital Bikeshare dataset (originally from the UCI Machine Learning Repository):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Load packages we'll need to wrangle and plot the data</span></span>
 <span id="cb12-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb12-3"><a href=""></a></span>
 <span id="cb12-4"><a href=""></a><span class="co"># Load the data</span></span>
-<span id="cb12-5"><a href=""></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/bike_share.csv"</span>)</span>
+<span id="cb12-5"><a href=""></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/bike_share.csv"</span>)</span>
 <span id="cb12-6"><a href=""></a></span>
 <span id="cb12-7"><a href=""></a><span class="co"># Only keep / select some variables</span></span>
 <span id="cb12-8"><a href=""></a><span class="co"># And round some variables (just for our demo purposes)</span></span>
@@ -692,13 +685,12 @@
 </tr>
 </tbody>
 </table>
-</div>
-<div class="fragment">
+<p><br> We’ll consider two linear regression models of ridership:</p>
+<p><code>rides ~ windspeed + temp</code> and <code>rides ~ windspeed + temp + weekend</code></p>
+<p><br></p>
 <ol type="1">
-<li><strong>Plot the relationships</strong> We’ll consider two linear regression models of ridership:</li>
+<li><strong>Plot the relationships.</strong> First, let’s <em>plot</em> these relationships. <em>REMINDER: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.</em></li>
 </ol>
-<p><code>rides ~ windspeed + temp</code> <code>rides ~ windspeed + temp + weekend</code></p>
-<p>First, let’s <em>plot</em> these relationships. NOTE: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Start small: rides vs temp</span></span>
 <span id="cb14-2"><a href=""></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">y =</span> ___, <span class="at">x =</span> ___)) <span class="sc">+</span> </span>
@@ -726,7 +718,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/q1-solution-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -736,7 +728,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-16-2.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/q1-solution-2.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -747,19 +739,20 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-16-3.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/q1-solution-3.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </details>
 <p><br></p>
-</div>
-<div class="fragment">
 <ol start="2" type="1">
-<li><strong>tidymodels STEP 1: model specification</strong><br>
-We’ll build and evaluate our two models of ridership using the <strong>tidymodels</strong> package. This code is more complicated than the <code>lm()</code> function we used in STAT 155. BUT: - <strong>tidymodels</strong> is part of the broader <strong>tidyverse</strong> (what we use to plot and wrangle data), thus the syntax is more consistent - <strong>tidymodels</strong> generalizes to the other ML algorithms we’ll survey in this course, thus will eventually <em>minimize</em> the unique syntax we need to learn</li>
+<li><strong>tidymodels STEP 1: model specification.</strong> We’ll build and evaluate our two models of ridership using the <strong>tidymodels</strong> package. This code is more complicated than the <code>lm()</code>function we used in STAT 155. BUT:</li>
 </ol>
+<ul>
+<li><strong>tidymodels</strong> is part of the broader <strong>tidyverse</strong> (what we use to plot and wrangle data), thus the syntax is more consistent</li>
+<li><strong>tidymodels</strong> generalizes to the other ML algorithms we’ll survey in this course, thus will eventually <em>minimize</em> the unique syntax we need to learn</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># Load package</span></span>
 <span id="cb20-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -796,10 +789,8 @@ Computational engine: lm </code></pre>
 </div>
 </details>
 <p><br></p>
-</div>
-<div class="fragment">
 <ol start="3" type="1">
-<li><strong>tidymodels STEP 2: model estimation</strong> We can now estimate or <code>fit</code> our two ridership models using the specified model structure (<code>lm_spec</code>) and our sample <code>bikes</code> data:</li>
+<li><strong>tidymodels STEP 2: model estimation.</strong> We can now estimate or <code>fit</code> our two ridership models using the specified model structure (<code>lm_spec</code>) and our sample <code>bikes</code> data:</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="co"># Fit bike_model_1</span></span>
@@ -850,8 +841,9 @@ Solution
 </div>
 </details>
 <p><br></p>
-</div>
-<div class="fragment">
+<!--
+. . .
+-->
 <ol start="4" type="1">
 <li><strong>Is it fair?</strong> Now, let’s <em>evaluate</em> our two models. First, do you have any concerns about the context in which the data were collected and analyzed? About the potential impact of this analysis?</li>
 </ol>
@@ -882,7 +874,7 @@ Solution
 <summary>
 Solution
 </summary>
-<p>Model 2 is stronger than model 1 (<span class="math inline">\(R^2\)</span> of 0.372 vs 0.310). But it only explains 31% of the variability in ridership from day to day.</p>
+<p>Model 2 is stronger than model 1 (<span class="math inline">\(R^2\)</span> of 0.372 vs 0.310). But it only explains 37% of the variability in ridership from day to day.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># Obtain R^2 for bike_model_1</span></span>
 <span id="cb33-2"><a href=""></a>bike_model_1 <span class="sc">%&gt;%</span> </span>
@@ -907,7 +899,7 @@ Solution
 </details>
 <p><br></p>
 <ol start="6" type="1">
-<li><strong>Pause: get the residuals and predictions</strong> Our next model evaluation questions will focus on the models’ predictions and prediction <em>errors</em>, or <em>residuals</em>. We can obtain this information by <em>augmenting</em> our models with our original <code>bikes</code> data. For example:</li>
+<li><strong>Pause: get the residuals and predictions.</strong> Our next model evaluation questions will focus on the models’ predictions and prediction <em>errors</em>, or <em>residuals</em>. We can obtain this information by <em>augmenting</em> our models with our original <code>bikes</code> data. For example:</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># Calculate predicted ridership (.pred) &amp; corresponding residuals (.resid) using bike_model_1</span></span>
@@ -1057,8 +1049,8 @@ Solution
 <span id="cb57-2"><a href=""></a>bike_model_1 <span class="sc">%&gt;%</span> </span>
 <span id="cb57-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
 <span id="cb57-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .pred, <span class="at">y =</span> .resid)) <span class="sc">+</span> </span>
-<span id="cb57-5"><a href=""></a><span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb57-6"><a href=""></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-5"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb57-6"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># YOUR TURN</span></span>
@@ -1079,7 +1071,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/q8-solution-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1092,7 +1084,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-38-2.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/q8-solution-2.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1117,7 +1109,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-40-1.png" width="480"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-12-1.png" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1127,8 +1119,8 @@ Solution
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>new_model <span class="sc">%&gt;%</span> </span>
 <span id="cb63-2"><a href=""></a>  <span class="fu">___</span>(<span class="at">new_data =</span> ___) <span class="sc">%&gt;%</span> </span>
 <span id="cb63-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> ___, <span class="at">y =</span> ___)) <span class="sc">+</span> </span>
-<span id="cb63-4"><a href=""></a><span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb63-5"><a href=""></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-4"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb63-5"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
@@ -1139,12 +1131,12 @@ Solution
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>new_model <span class="sc">%&gt;%</span> </span>
 <span id="cb64-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> simulated_data) <span class="sc">%&gt;%</span> </span>
 <span id="cb64-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .pred, <span class="at">y =</span> .resid)) <span class="sc">+</span> </span>
-<span id="cb64-4"><a href=""></a><span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb64-5"><a href=""></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb64-4"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb64-5"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-42-1.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/q9-solution-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1216,7 +1208,7 @@ Solution
 </details>
 <p><br></p>
 <ol start="11" type="1">
-<li><strong>STAT 155 Review: model interpretation &amp; application</strong> Let’s <strong>interpret</strong> and <strong>apply</strong> <code>bike_model_2</code>.</li>
+<li><strong>STAT 155 Review: model interpretation &amp; application</strong> Let’s <em>interpret</em> and <em>apply</em> <code>bike_model_2</code>.</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a>___ <span class="sc">%&gt;%</span> </span>
@@ -1268,7 +1260,7 @@ Solution
 </div>
 <ol type="a">
 <li>When controlling for windspeed and weekend status, we expect roughly 54 more riders per every 1 degree increase in temperature.</li>
-<li>When controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends.</li>
+<li>When controlling for windspeed and temperature, we expect roughly 858 fewer riders on weekends (compared to weekdays).</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a><span class="co"># Predict ridership on day 1</span></span>
@@ -1355,7 +1347,7 @@ Solution
 </div>
 </details>
 <p><br></p>
-<ol start="12" type="1">
+<ol start="13" type="1">
 <li><strong>STAT 155 Review: plots</strong><br>
 Construct plots of the following relationships:</li>
 </ol>
@@ -1375,7 +1367,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-50-1.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1385,7 +1377,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-50-2.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-2.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1394,7 +1386,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-50-3.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-3.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1404,20 +1396,21 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-50-4.png" width="960"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-4.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </details>
 <p><br></p>
-<p><strong>Done!</strong></p>
+<ol start="14" type="1">
+<li><strong>Done!</strong></li>
+</ol>
 <ul>
 <li>Knit/render your notes.</li>
 <li>Check the solutions on the course website.</li>
 <li>Get a head start on the wrap-up steps below.</li>
 </ul>
-</div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Stefanski, Leonard A. (2007). Residual (Sur)Realism. “The American Statistician,” 61, pp 163-177.</p></li></ol></aside></section></section>
 <section id="wrap-up" class="title-slide slide level1 unnumbered center">
 <h1>Wrap Up</h1>
@@ -1659,44 +1652,6 @@ Solution
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
