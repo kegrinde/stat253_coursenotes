@@ -598,6 +598,35 @@
 <section>
 <section id="exercises" class="title-slide slide level1 unnumbered center">
 <h1>Exercises</h1>
+
+</section>
+<section id="instructions" class="slide level2 smaller unnumbered">
+<h2>Instructions</h2>
+<ul>
+<li>Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD</li>
+<li><strong>Be kind to yourself/each other!</strong> You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.</li>
+<li><strong>Focus on patterns in code.</strong> Review, but do not try to <em>memorize</em> any provided code. Focus on the general steps and patterns.</li>
+<li>If you’re given some starter code with blanks (e.g.&nbsp;below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Start small: rides vs temp</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">y =</span> ___, <span class="at">x =</span> ___)) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">geom___</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Ask questions!</strong> We will not have time to discuss all exercises at the end of class. Talk through your questions as a group, and ask me questions as I walk around the room!</li>
+<li><strong>Collaborate.</strong> We’re sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to:
+<ul>
+<li>Actively contribute to discussion (don’t work on your own)</li>
+<li>Actively include all group members in discussion</li>
+<li>Create a space where others feel comfortable making mistakes &amp; sharing their ideas (remember that we all come to this class with different experiences, both personal and academic)</li>
+<li>Stay in sync while respecting that everybody has different learning strategies, work styles, note taking strategies, etc. If some people are working on exercise 10 and others are on exercise 2, that’s probably <em>not</em> a good collaboration.</li>
+<li>Don’t rush. You won’t hand anything in and can finish up outside of class.</li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="slide level2 smaller unnumbered scrollable">
+<h2>Questions</h2>
 <!--
 **We'll work through the first three exercises as a class.**
 -->
@@ -605,25 +634,25 @@
 <p><strong>How many registered riders can we expect today?</strong></p>
 <p>To this end, you will build, evaluate, and compare 2 different <strong>linear regression models</strong> of ridership using the following Capital Bikeshare dataset (originally from the UCI Machine Learning Repository):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Load packages we'll need to wrangle and plot the data</span></span>
-<span id="cb11-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb11-3"><a href=""></a></span>
-<span id="cb11-4"><a href=""></a><span class="co"># Load the data</span></span>
-<span id="cb11-5"><a href=""></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/bike_share.csv"</span>)</span>
-<span id="cb11-6"><a href=""></a></span>
-<span id="cb11-7"><a href=""></a><span class="co"># Only keep / select some variables</span></span>
-<span id="cb11-8"><a href=""></a><span class="co"># And round some variables (just for our demo purposes)</span></span>
-<span id="cb11-9"><a href=""></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">%&gt;%</span> </span>
-<span id="cb11-10"><a href=""></a>  <span class="fu">rename</span>(<span class="at">rides =</span> riders_registered, <span class="at">temp =</span> temp_feel) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-11"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">windspeed =</span> <span class="fu">round</span>(windspeed), <span class="at">temp =</span> <span class="fu">round</span>(temp)) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-12"><a href=""></a>  <span class="fu">select</span>(rides, windspeed, temp, weekend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Load packages we'll need to wrangle and plot the data</span></span>
+<span id="cb12-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-3"><a href=""></a></span>
+<span id="cb12-4"><a href=""></a><span class="co"># Load the data</span></span>
+<span id="cb12-5"><a href=""></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/bike_share.csv"</span>)</span>
+<span id="cb12-6"><a href=""></a></span>
+<span id="cb12-7"><a href=""></a><span class="co"># Only keep / select some variables</span></span>
+<span id="cb12-8"><a href=""></a><span class="co"># And round some variables (just for our demo purposes)</span></span>
+<span id="cb12-9"><a href=""></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb12-10"><a href=""></a>  <span class="fu">rename</span>(<span class="at">rides =</span> riders_registered, <span class="at">temp =</span> temp_feel) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-11"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">windspeed =</span> <span class="fu">round</span>(windspeed), <span class="at">temp =</span> <span class="fu">round</span>(temp)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-12"><a href=""></a>  <span class="fu">select</span>(rides, windspeed, temp, weekend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Check out the dimensions</span></span>
-<span id="cb12-2"><a href=""></a><span class="fu">dim</span>(bikes)</span>
-<span id="cb12-3"><a href=""></a></span>
-<span id="cb12-4"><a href=""></a><span class="co"># Check out the first 3 rows</span></span>
-<span id="cb12-5"><a href=""></a><span class="fu">head</span>(bikes, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Check out the dimensions</span></span>
+<span id="cb13-2"><a href=""></a><span class="fu">dim</span>(bikes)</span>
+<span id="cb13-3"><a href=""></a></span>
+<span id="cb13-4"><a href=""></a><span class="co"># Check out the first 3 rows</span></span>
+<span id="cb13-5"><a href=""></a><span class="fu">head</span>(bikes, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This dataset contains the following information for a sample of different dates:</p>
 <table class="caption-top">
@@ -655,34 +684,6 @@
 <p><br> We’ll consider two linear regression models of ridership:</p>
 <p><code>rides ~ windspeed + temp</code> and <code>rides ~ windspeed + temp + weekend</code></p>
 <p><br></p>
-</section>
-<section id="instructions" class="slide level2 smaller unnumbered">
-<h2>Instructions</h2>
-<ul>
-<li>Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD</li>
-<li><strong>Be kind to yourself/each other!</strong> You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.</li>
-<li><strong>Focus on patterns in code.</strong> Review, but do not try to <em>memorize</em> any provided code. Focus on the general steps and patterns.</li>
-<li>If you’re given some starter code with blanks (e.g.&nbsp;below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Start small: rides vs temp</span></span>
-<span id="cb13-2"><a href=""></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">y =</span> ___, <span class="at">x =</span> ___)) <span class="sc">+</span> </span>
-<span id="cb13-3"><a href=""></a>  <span class="fu">geom___</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><strong>Ask questions!</strong> We will not have time to discuss all exercises at the end of class. Talk through your questions as a group, and ask me questions as I walk around the room!</li>
-<li><strong>Collaborate.</strong> We’re sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to:
-<ul>
-<li>Actively contribute to discussion (don’t work on your own)</li>
-<li>Actively include all group members in discussion</li>
-<li>Create a space where others feel comfortable making mistakes &amp; sharing their ideas (remember that we all come to this class with different experiences, both personal and academic)</li>
-<li>Stay in sync while respecting that everybody has different learning strategies, work styles, note taking strategies, etc. If some people are working on exercise 10 and others are on exercise 2, that’s probably <em>not</em> a good collaboration.</li>
-<li>Don’t rush. You won’t hand anything in and can finish up outside of class.</li>
-</ul></li>
-</ul>
-</section>
-<section id="questions" class="slide level2 smaller unnumbered scrollable">
-<h2>Questions</h2>
 <ol type="1">
 <li><strong>Plot the relationships.</strong> First, let’s <em>plot</em> these relationships. <em>REMINDER: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.</em></li>
 </ol>
@@ -713,7 +714,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/q1-solution-1.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/q1-solution-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -723,7 +724,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/q1-solution-2.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/q1-solution-2.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -734,7 +735,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/q1-solution-3.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/q1-solution-3.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1066,7 +1067,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/q8-solution-1.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/q8-solution-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1079,7 +1080,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/q8-solution-2.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/q8-solution-2.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1104,7 +1105,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-12-1.png" width="480"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-12-1.png" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1131,7 +1132,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/q9-solution-1.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/q9-solution-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1362,7 +1363,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1372,7 +1373,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-2.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-14-2.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1381,7 +1382,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-3.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-14-3.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1391,7 +1392,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L02-evaluating-regression-models_files/figure-html/unnamed-chunk-14-4.png" width="672"></p>
+<p><img data-src="L02-evaluating-regression-models_files/figure-revealjs/unnamed-chunk-14-4.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1407,7 +1408,7 @@ Solution
 <li>Get a head start on the wrap-up steps below.</li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>Stefanski, Leonard A. (2007). Residual (Sur)Realism. “The American Statistician,” 61, pp 163-177.</p></li></ol></aside></section></section>
-<section id="wrap-up" class="title-slide slide level1 unnumbered center">
+<section id="wrap-up" class="title-slide slide level1 smaller unnumbered center">
 <h1>Wrap-Up</h1>
 <ul>
 <li><strong>Finishing the activity:</strong>
@@ -1647,6 +1648,44 @@ Solution
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
