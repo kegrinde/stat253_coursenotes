@@ -22,7 +22,7 @@ book:
         - schedule.qmd
         - learning-objectives.qmd
         - L01-introductions.qmd
-    - part: "Regression: Model Evaluation"
+    - part: "Regression: Model Evaluation (Unit 1)"
       chapters:
         - U01-motivation.qmd
         - L02-evaluating-regression-models.qmd
@@ -40,3 +40,4 @@ format:
     execute:
       echo: true
       code-fold: true
+      cache: true

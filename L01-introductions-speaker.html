@@ -468,7 +468,7 @@ Turn the original set of <span class="math inline">\(p\)</span> input variables,
 <li><p><strong>Hometown(s)</strong>: Plymouth –&gt; Northfield –&gt; Seattle –&gt; St.&nbsp;Paul</p></li>
 <li><p>Can you tell me a bit about how you’ve been spending your time this <strong>summer</strong>? What’s been particularly <strong>important or meaningful</strong> to you? What brings you joy right now? <strong>What is on your mind</strong>? What do you do when you’re <strong>not in class</strong>?</p></li>
 </ul>
-<p><img data-src="images/loons.png" style="width:32.0%"> <img data-src="images/family.jpg" style="width:27.0%"> <img data-src="images/Roo.png" style="width:26.0%"></p>
+<p><img data-src="images/loons.png" style="width:32.0%"> <img data-src="images/family.jpg" style="width:27.0%"> <img data-src="images/Roo.png" style="width:26.0%" alt="Roo"></p>
 </section></section>
 <section>
 <section id="exercises" class="title-slide slide level1 unnumbered center">
@@ -493,7 +493,7 @@ Turn the original set of <span class="math inline">\(p\)</span> input variables,
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="L01-introductions_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="L01-introductions_files/figure-html/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -512,7 +512,7 @@ regression. there’s a <em>quantitative</em> output variable <span class="math 
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="L01-introductions_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="336"></p>
+<p><img data-src="L01-introductions_files/figure-html/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="336"></p>
 </figure>
 </div>
 </div>
@@ -531,7 +531,7 @@ clustering. there’s no output variable <span class="math inline">\(y\)</span>.
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="L01-introductions_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="L01-introductions_files/figure-html/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -551,7 +551,7 @@ I collected some data on STAT 253 students (you!) and analyzed it using a machin
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L01-introductions_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+<p><img data-src="L01-introductions_files/figure-html/q4-1.png" width="1536"></p>
 </figure>
 </div>
 </div>
@@ -571,7 +571,7 @@ Same directions as for Scenario A:</li>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L01-introductions_files/figure-revealjs/unnamed-chunk-6-1.png" width="576"></p>
+<p><img data-src="L01-introductions_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -591,7 +591,7 @@ Same directions as for Scenario A:</li>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L01-introductions_files/figure-revealjs/unnamed-chunk-7-1.png" width="768"></p>
+<p><img data-src="L01-introductions_files/figure-html/unnamed-chunk-6-1.png" width="768"></p>
 </figure>
 </div>
 </div>
@@ -916,44 +916,6 @@ clustering (no outcome <span class="math inline">\(y\)</span>)
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
