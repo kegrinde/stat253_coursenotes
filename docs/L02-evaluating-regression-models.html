@@ -282,7 +282,7 @@ window.Quarto = {
   <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R Code</a>
   <ul class="collapse">
   <li><a href="#intro-to-tidymodels" id="toc-intro-to-tidymodels" class="nav-link" data-scroll-target="#intro-to-tidymodels">Intro to tidymodels</a></li>
-  <li><a href="#useful-model-evaluation-functions" id="toc-useful-model-evaluation-functions" class="nav-link" data-scroll-target="#useful-model-evaluation-functions">Useful Model Evaluation Functions</a></li>
+  <li><a href="#highlight-useful-model-evaluation-functions" id="toc-highlight-useful-model-evaluation-functions" class="nav-link" data-scroll-target="#highlight-useful-model-evaluation-functions">Highlight: Useful Model Evaluation Functions</a></li>
   <li><a href="#future-reference-r-code-for-building-and-evaluating-regression-models" id="toc-future-reference-r-code-for-building-and-evaluating-regression-models" class="nav-link" data-scroll-target="#future-reference-r-code-for-building-and-evaluating-regression-models">Future Reference: R Code for Building and Evaluating Regression Models</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
@@ -290,7 +290,7 @@ window.Quarto = {
   <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
   <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
   </ul></li>
-  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap Up</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L02-evaluating-regression-models.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -323,19 +323,15 @@ window.Quarto = {
 <li>Sign up for the <a href="https://docs.google.com/document/d/1Z2Ex-_z_8vm2ZhgdT4le-DwieUCtYZM8dDysaj6bseI/edit?usp=sharing">MSCS Community Mailing List</a> for information about MSCS-related events, internship opportunities, etc.</li>
 <li>Prepare to take notes:
 <ul>
-<li>Locate the Quarto Document (QMD) for today’s activity</li>
-<li>This is where you’ll take notes! Use this however is best for your own learning — you won’t hand it in.</li>
-<li>Download and open the QMD in RStudio:
-<ul>
-<li>If your computer opens the file in a web browser, you can (1) open a new QMD in RStudio and (2) copy-paste the contents from the web browser into your QMD</li>
-</ul></li>
+<li>Download <a href="template_qmds/02-regression-model-evaluation-notes.qmd">this Quarto Document</a></li>
 <li>Save this QMD in the “STAT 253 &gt; Notes” folder you created for Checkpoint 1</li>
 <li><code>Render</code> (Knit) the QMD and check out the general structure</li>
+<li>This is where you’ll take notes today! Use this however is best for your own learning — you won’t hand it in.</li>
 </ul></li>
 </ul>
 </section>
-<section id="learning-goals" class="level1 unnumbered">
-<h1 class="unnumbered">Learning Goals</h1>
+<section id="learning-goals" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Learning Goals</h1>
 <ul>
 <li>Practice building and evaluating linear regression models in RStudio. Specifically:
 <ul>
@@ -349,8 +345,8 @@ window.Quarto = {
 </section>
 <section id="small-group-discussion" class="level1 unnumbered">
 <h1 class="unnumbered">Small Group Discussion</h1>
-<section id="directions" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="directions">Directions</h2>
+<section id="directions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="directions">Directions</h2>
 <ul>
 <li>In small groups, please first introduce yourself (in whatever way you feel appropriate) and check in with each other as human beings.</li>
 <li>When everyone is ready, glance through the summary of concepts covered in the video (see “Video Recap” below) and discuss the following prompts:
@@ -378,20 +374,20 @@ window.Quarto = {
 <li>Does the model produce accurate predictions?</li>
 <li>Is the model fair?</li>
 </ol>
-<p>We will review these concepts through today’s exercises. A detailed overview is provided in the “Motivating Question” section under “Regression: Model Evaluation (Unit 1)” in the course website.</p>
+<p>We will review these concepts through today’s exercises. A detailed overview is provided in the “Motivating Question” section under “Regression: Model Evaluation (Unit 1)” on the course website.</p>
 </section>
 </section>
 <section id="notes-r-code" class="level1 unnumbered">
 <h1 class="unnumbered">Notes: R Code</h1>
 <section id="intro-to-tidymodels" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="intro-to-tidymodels">Intro to tidymodels</h2>
-<p>We are going to use the <strong>tidymodels</strong> package in R.</p>
+<p>Throughout the semester, we are going to use the <strong>tidymodels</strong> package in R.</p>
 <ul>
 <li>Similar flavor to <strong>tidyverse</strong> structure</li>
 <li>More general structure that allows us to fit many other types of models</li>
 </ul>
 <p>. . .</p>
-<p>At first, it will seem like <em>a lot more code</em> (and perhaps even <em>unnecessary</em>).</p>
+<p>At first, it will seem like <em>a lot more code</em> (perhaps even <em>unnecessarily so</em>).</p>
 <p>. . .</p>
 <p>For example, what you did in STAT 155 with</p>
 <div class="cell">
@@ -412,8 +408,8 @@ window.Quarto = {
 <p><br></p>
 <p>But you’ll need to <em>trust me</em>…</p>
 </section>
-<section id="useful-model-evaluation-functions" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="useful-model-evaluation-functions">Useful Model Evaluation Functions</h2>
+<section id="highlight-useful-model-evaluation-functions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="highlight-useful-model-evaluation-functions">Highlight: Useful Model Evaluation Functions</h2>
 <p>A few useful functions to use on <code>model_estimate</code>:</p>
 <p><br></p>
 <p>. . .</p>
@@ -497,40 +493,13 @@ window.Quarto = {
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>model_estimate <span class="sc">%&gt;%</span> </span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .pred, <span class="at">y =</span> .resid)) <span class="sc">+</span> </span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="exercises" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises</h1>
-<section id="instructions" class="level2 smaller unnumbered">
-<h2 class="smaller unnumbered anchored" data-anchor-id="instructions">Instructions</h2>
-<ul>
-<li>Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD</li>
-<li><strong>Be kind to yourself/each other!</strong> You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.</li>
-<li><strong>Focus on patterns in code.</strong> Review, but do not try to <em>memorize</em> any provided code. Focus on the general steps and patterns.</li>
-<li>If you’re given some starter code with blanks (e.g.&nbsp;below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start small: rides vs temp</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">y =</span> ___, <span class="at">x =</span> ___)) <span class="sc">+</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom___</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><strong>Ask questions!</strong> We will not have time to discuss all exercises at the end of class. Talk through your questions as a group, and ask me questions as I walk around the room!</li>
-<li><strong>Collaborate.</strong> We’re sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to:
-<ul>
-<li>Actively contribute to discussion (don’t work on your own)</li>
-<li>Actively include all group members in discussion</li>
-<li>Create a space where others feel comfortable making mistakes &amp; sharing their ideas (remember that we all come to this class with different experiences, both personal and academic)</li>
-<li>Stay in sync while respecting that everybody has different learning strategies, work styles, note taking strategies, etc. If some people are working on exercise 10 and others are on exercise 2, that’s probably <em>not</em> a good collaboration.</li>
-<li>Don’t rush. You won’t hand anything in and can finish up outside of class.</li>
-</ul></li>
-</ul>
-</section>
-<section id="questions" class="level2 smaller unnumbered">
-<h2 class="smaller unnumbered anchored" data-anchor-id="questions">Questions</h2>
 <!--
 **We'll work through the first three exercises as a class.**
 -->
@@ -538,25 +507,25 @@ window.Quarto = {
 <p><strong>How many registered riders can we expect today?</strong></p>
 <p>To this end, you will build, evaluate, and compare 2 different <strong>linear regression models</strong> of ridership using the following Capital Bikeshare dataset (originally from the UCI Machine Learning Repository):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages we'll need to wrangle and plot the data</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/bike_share.csv"</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep / select some variables</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># And round some variables (just for our demo purposes)</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">%&gt;%</span> </span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">rides =</span> riders_registered, <span class="at">temp =</span> temp_feel) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">windspeed =</span> <span class="fu">round</span>(windspeed), <span class="at">temp =</span> <span class="fu">round</span>(temp)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rides, windspeed, temp, weekend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages we'll need to wrangle and plot the data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/bike_share.csv"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep / select some variables</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># And round some variables (just for our demo purposes)</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">rides =</span> riders_registered, <span class="at">temp =</span> temp_feel) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">windspeed =</span> <span class="fu">round</span>(windspeed), <span class="at">temp =</span> <span class="fu">round</span>(temp)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rides, windspeed, temp, weekend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the dimensions</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(bikes)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 3 rows</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bikes, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the dimensions</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(bikes)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 3 rows</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bikes, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This dataset contains the following information for a sample of different dates:</p>
 <table class="caption-top table">
@@ -588,6 +557,33 @@ window.Quarto = {
 <p><br> We’ll consider two linear regression models of ridership:</p>
 <p><code>rides ~ windspeed + temp</code> and <code>rides ~ windspeed + temp + weekend</code></p>
 <p><br></p>
+<section id="instructions" class="level2 smaller unnumbered">
+<h2 class="smaller unnumbered anchored" data-anchor-id="instructions">Instructions</h2>
+<ul>
+<li>Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD</li>
+<li><strong>Be kind to yourself/each other!</strong> You will be rusty and make mistakes, and that’s ok! Mistakes are important to learning.</li>
+<li><strong>Focus on patterns in code.</strong> Review, but do not try to <em>memorize</em> any provided code. Focus on the general steps and patterns.</li>
+<li>If you’re given some starter code with blanks (e.g.&nbsp;below), don’t type in those chunks. Instead, copy, paste, and modify the starter code in the chunk below it.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start small: rides vs temp</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(___, <span class="fu">aes</span>(<span class="at">y =</span> ___, <span class="at">x =</span> ___)) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom___</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong>Ask questions!</strong> We will not have time to discuss all exercises at the end of class. Talk through your questions as a group, and ask me questions as I walk around the room!</li>
+<li><strong>Collaborate.</strong> We’re sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to:
+<ul>
+<li>Actively contribute to discussion (don’t work on your own)</li>
+<li>Actively include all group members in discussion</li>
+<li>Create a space where others feel comfortable making mistakes &amp; sharing their ideas (remember that we all come to this class with different experiences, both personal and academic)</li>
+<li>Stay in sync while respecting that everybody has different learning strategies, work styles, note taking strategies, etc. If some people are working on exercise 10 and others are on exercise 2, that’s probably <em>not</em> a good collaboration.</li>
+<li>Don’t rush. You won’t hand anything in and can finish up outside of class.</li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="level2 smaller unnumbered">
+<h2 class="smaller unnumbered anchored" data-anchor-id="questions">Questions</h2>
 <ol type="1">
 <li><strong>Plot the relationships.</strong> First, let’s <em>plot</em> these relationships. <em>REMINDER: Don’t write in any chunk with starter code. Copy, paste, and modify the code in the chunk below it.</em></li>
 </ol>
@@ -1314,7 +1310,7 @@ Solution
 </section>
 </section>
 <section id="wrap-up" class="level1 unnumbered">
-<h1 class="unnumbered">Wrap Up</h1>
+<h1 class="unnumbered">Wrap-Up</h1>
 <ul>
 <li><strong>Finishing the activity:</strong>
 <ul>

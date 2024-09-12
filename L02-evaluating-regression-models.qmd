@@ -21,15 +21,13 @@ conflicts_prefer(dplyr::filter)
 - Sit with at least 2 new people and introduce yourself 
 - Sign up for the [MSCS Community Mailing List](https://docs.google.com/document/d/1Z2Ex-_z_8vm2ZhgdT4le-DwieUCtYZM8dDysaj6bseI/edit?usp=sharing) for information about MSCS-related events, internship opportunities, etc.
 - Prepare to take notes: 
-  - Locate the Quarto Document (QMD) for today's activity 
-  - This is where you'll take notes! Use this however is best for your own learning --- you won't hand it in.
-  - Download and open the QMD in RStudio:
-    - If your computer opens the file in a web browser, you can (1) open a new QMD in RStudio and (2) copy-paste the contents from the web browser into your QMD
+  - Download [this Quarto Document](template_qmds/02-regression-model-evaluation-notes.qmd) 
   - Save this QMD in the "STAT 253 > Notes" folder you created for Checkpoint 1
   - `Render` (Knit) the QMD and check out the general structure
+  - This is where you'll take notes today! Use this however is best for your own learning --- you won't hand it in.
 
 
-# Learning Goals {-}
+# Learning Goals {.unnumbered .smaller}
 
 -   Practice building and evaluating linear regression models in RStudio. Specifically: 
     - Create and interpret residuals vs. fitted, residuals vs. predictor plots to identify improvements in modeling and address ethical concerns.
@@ -42,7 +40,7 @@ conflicts_prefer(dplyr::filter)
 
 # Small Group Discussion {-}
 
-## Directions {-}
+## Directions {.unnumbered .smaller}
 
 - In small groups, please first introduce yourself (in whatever way you feel appropriate) and check in with each other as human beings.
 - When everyone is ready, glance through the summary of concepts covered in the video (see 
@@ -79,20 +77,20 @@ After *building* any model, it's important to *evaluate* it: **Is our
 
 We will review these concepts through today's exercises. A detailed
 overview is provided in the "Motivating Question" section under
-"Regression: Model Evaluation (Unit 1)" in the course website.
+"Regression: Model Evaluation (Unit 1)" on the course website.
 
 # Notes: R Code {-}
 
 ## Intro to tidymodels {-}
 
-We are going to use the **tidymodels** package in R.
+Throughout the semester, we are going to use the **tidymodels** package in R.
 
 - Similar flavor to **tidyverse** structure
 - More general structure that allows us to fit many other types of models
 
 . . .
 
-At first, it will seem like *a lot more code* (and perhaps even *unnecessary*).
+At first, it will seem like *a lot more code* (perhaps even *unnecessarily so*).
 
 . . .
 
@@ -125,7 +123,8 @@ model_estimate <- lm_spec %>%
 But you'll need to *trust me*...
 
 
-## Useful Model Evaluation Functions {.unnumbered}
+
+## Highlight: Useful Model Evaluation Functions {.unnumbered}
 
 A few useful functions to use on `model_estimate`:
 
@@ -169,6 +168,7 @@ model_estimate %>%
 . . .
 
 More info, for future reference, below!
+
 
 ## Future Reference: R Code for Building and Evaluating Regression Models {-}
 
@@ -234,42 +234,12 @@ model_estimate %>%
 model_estimate %>% 
   augment(new_data = sample_data) %>% 
   ggplot(aes(x = .pred, y = .resid)) + 
-geom_point() + 
-geom_hline(yintercept = 0)
+  geom_point() + 
+  geom_hline(yintercept = 0)
 ```
 
 
 # Exercises {-}
-
-## Instructions {.smaller .unnumbered} 
-
-- Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD
-- **Be kind to yourself/each other!** You will be rusty and make mistakes, and that's ok! Mistakes are important to learning.
-- **Focus on patterns in code.** Review, but do not try to *memorize* any provided code. 
-Focus on the general steps and patterns. 
-- If you're given some starter code with blanks (e.g. below), don't type in those chunks. 
-Instead, copy, paste, and modify the starter code in the chunk below it.
-```{r example-startercode}
-#| eval: false
-# Start small: rides vs temp
-ggplot(___, aes(y = ___, x = ___)) + 
-  geom___()
-```
-- **Ask questions!** We will not have time to discuss all exercises at the end of class. 
-Talk through your questions as a group, and ask me questions as I walk around the room!
-- **Collaborate.** We're sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to: 
-  - Actively contribute to discussion (don't work on your own)
-  - Actively include all group members in discussion
-  - Create a space where others feel comfortable making mistakes & sharing their ideas 
-  (remember that we all come to this class with different experiences, both personal and academic)
-  - Stay in sync while respecting that everybody has different learning strategies, 
-  work styles, note taking strategies, etc. If some people are working on exercise 10
-  and others are on exercise 2, that's probably *not* a good collaboration.
-  - Don't rush. You won't hand anything in and can finish up outside of class.
-
-
-
-## Questions {.smaller .unnumbered} 
 
 <!--
 **We'll work through the first three exercises as a class.**
@@ -328,6 +298,36 @@ We'll consider two linear regression models of ridership:
 `rides ~ windspeed + temp` and `rides ~ windspeed + temp + weekend`
 
 <br>
+
+## Instructions {.smaller .unnumbered} 
+
+- Work through these exercises as a group, talking through your ideas, questions, and reasoning as you go and taking notes in your QMD
+- **Be kind to yourself/each other!** You will be rusty and make mistakes, and that's ok! Mistakes are important to learning.
+- **Focus on patterns in code.** Review, but do not try to *memorize* any provided code. 
+Focus on the general steps and patterns. 
+- If you're given some starter code with blanks (e.g. below), don't type in those chunks. 
+Instead, copy, paste, and modify the starter code in the chunk below it.
+```{r example-startercode}
+#| eval: false
+# Start small: rides vs temp
+ggplot(___, aes(y = ___, x = ___)) + 
+  geom___()
+```
+- **Ask questions!** We will not have time to discuss all exercises at the end of class. 
+Talk through your questions as a group, and ask me questions as I walk around the room!
+- **Collaborate.** We're sitting in groups for a reason. Collaboration improves higher-level thinking, confidence, communication, community, and more. I expect you to: 
+  - Actively contribute to discussion (don't work on your own)
+  - Actively include all group members in discussion
+  - Create a space where others feel comfortable making mistakes & sharing their ideas 
+  (remember that we all come to this class with different experiences, both personal and academic)
+  - Stay in sync while respecting that everybody has different learning strategies, 
+  work styles, note taking strategies, etc. If some people are working on exercise 10
+  and others are on exercise 2, that's probably *not* a good collaboration.
+  - Don't rush. You won't hand anything in and can finish up outside of class.
+
+
+
+## Questions {.smaller .unnumbered} 
 
 1. **Plot the relationships.** 
 First, let's *plot* these relationships. *REMINDER: Don't write in any chunk 
@@ -932,7 +932,7 @@ ggplot(bikes, aes(x = rides, fill = weekend)) +
 - Get a head start on the wrap-up steps below.
 
 
-# Wrap Up {-}
+# Wrap-Up {-}
 
 - **Finishing the activity:** 
   - If you didn't finish the activity, no problem! Be sure to complete the activity
