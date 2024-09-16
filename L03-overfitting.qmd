@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 - Prepare to take notes: 
   - Locate the QMDs for today's activity 
   - Save these documents in your "STAT 253 > Notes" folder
-  - You can open Part 1 but **DO NOT OPEN PART 2** 
+  - You can open the Part 1 QMD but **DO NOT OPEN PART 2** 
 
 
 # Learning Goals {.unnumbered}
@@ -55,7 +55,7 @@ We are still considering **Model Evaluation for Regression**.
 </center>
 
 
-```{r experiment-setup}
+```{r experiment-data-setup}
 #| echo: false
 #| eval: false
 library(tidyverse)
@@ -127,7 +127,7 @@ library(tidymodels)
 # group 3 = 160
 # group 4 = 174
 # group 5 = 86
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat___.csv") %>% 
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat___.csv") %>% 
   filter(ankle < 30) %>% 
   rename(body_fat = fatSiri)
 ```
@@ -181,7 +181,7 @@ Each group will have slightly different coefficients because they have different
 
 ```{r eval=TRUE}
 #This is an example with one of the samples
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat50.csv") %>% 
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat50.csv") %>% 
   filter(ankle < 30) %>% 
   rename(body_fat = fatSiri)
 
@@ -278,17 +278,28 @@ $R^2$ would increase and MAE would decrease.
 
 # Exercises (Part 1) {-}
 
-## Directions {.unnumbered}
+## Directions {.unnumbered .smaller}
 
-Take 5 minutes to complete exercises 1 and 2 (choosing one of three models).
+- Open the Part 1 QMD file.
+- Take **5 minutes** to complete exercises 1 and 2 (choosing one of three models).
+- We'll pause for a few minutes to discuss each group's answers to these exercises.
+- Then, and only then, you can finish exercises 3 - 5. 
 
+Remember: 
+
+- Be kind to yourself/each other. You will make mistakes!
+- Collaborate: 
+  - actively contribute to discussion (don't work on your own)
+  - actively include all group members in discussion 
+  - create a space where others feel comfortable making mistakes and sharing their ideas
+  - stay in sync
 
 
 ## Questions {.unnumbered}
 
 1. **Select a model**       
 
-  Consider 3 different models of `height`, estimated below. As a group, use *your* data to choose which is the best predictive model of `height`. Calculate the MAE for this model.
+Consider 3 different models of `height`, estimated below. As a group, use *your* data to choose which is the best predictive model of `height`. Calculate the MAE for this model.
 
 ```{r eval = FALSE}
 # height vs hip
@@ -312,9 +323,9 @@ model_3 %>%
     
 ```{r eval = FALSE}
 # Calculate the MAE for your model
-  ___ %>% 
-    augment(new_data = humans) %>% 
-mae(truth = height, estimate = .pred)
+___ %>% 
+  augment(new_data = humans) %>% 
+  mae(truth = height, estimate = .pred)
 ```
     
 
@@ -347,7 +358,7 @@ model_3 %>%
 
 2. **Share your results**       
     Only when you're done with exercise 1:       
-    - Open this ["Top Model Competition" Google Doc](https://docs.google.com/spreadsheets/d/1DL1YadxFDV1o_pPHyST8u8QEyUKbjTRX1LH2NzhVtYU/edit?usp=sharing).
+    - Open this ["Top Model Competition" Google Doc](https://docs.google.com/spreadsheets/d/1dWCdwXNjNvrD3-aADaMQxh87euDePvKK1dROSMycp_U/edit?usp=sharing).
     - Record your team name.
     - Record which model you chose (1, 2, or 3).
     - Record the MAE for your model.
@@ -366,7 +377,7 @@ What do you know?! 40 new people just walked into the doctor's office and the do
 
 ```{r eval=TRUE}
 # Import the new data
-new_patients <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat182.csv") %>% 
+new_patients <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat182.csv") %>% 
   filter(ankle < 30) %>% 
   rename(body_fat = fatSiri)
 ```
@@ -521,6 +532,17 @@ model_train %>%
 
 
 # Exercises (Part 2) {-}
+
+## Directions {-}
+
+- Open the Part 2 QMD file
+- Same directions as before: 
+  - Be kind to yourself/each other
+  - Collaborate
+- We will not discuss these exercises as a class. 
+Be sure to ask questions as I walk around the room.
+
+## Questions {-}
 
 The following exercises are inspired by Chapter 5.3.1 of ISLR.
 
@@ -948,3 +970,22 @@ Check out the online solutions for exercise 6. Instead of calculating MAE from s
 - Check the solutions in the course website.
 - If you finish all that during class, start on Homework 2!
 
+# Wrap-Up {.unnumbered .smaller}
+
+- **Finishing the activity** 
+  - If you didn't finish the activity, no problem! Be sure to complete the activity
+  outside of class, review the solutions in the online manual, and ask any questions 
+  on Slack or in office hours.
+  - Re-organize and review your notes to help deepen your understanding, solidify your 
+  learning, and make homework go more smoothly!
+- An **R code video**, posted under the pre-course materials for today's class 
+(see the "Schedule" page on this website), talks through the new code. 
+This video is OPTIONAL. Decide what's right for you. 
+- Continue to check in on **Slack**. I'll be posting announcements there from now on. 
+- **Upcoming due dates:** 
+  - CP3: due 10 minutes before our next class. 
+    - There are two (short) videos to watch in advance.
+  - HW1 (Regression Model Evaluation): due next Tuesday at 11:59 pm
+    - Start today, even if you just review the directions and scan the exercises. 
+    - (Homework is not designed to be completed in one sitting!)
+    - Using Slack, invite others to work on homework with you!

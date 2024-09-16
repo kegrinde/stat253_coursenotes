@@ -301,7 +301,12 @@ window.Quarto = {
   <li><a href="#overfitting" id="toc-overfitting" class="nav-link" data-scroll-target="#overfitting">Overfitting</a></li>
   <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code">R Code</a></li>
   </ul></li>
-  <li><a href="#exercises-part-2" id="toc-exercises-part-2" class="nav-link" data-scroll-target="#exercises-part-2">Exercises (Part 2)</a></li>
+  <li><a href="#exercises-part-2" id="toc-exercises-part-2" class="nav-link" data-scroll-target="#exercises-part-2">Exercises (Part 2)</a>
+  <ul class="collapse">
+  <li><a href="#directions-2" id="toc-directions-2" class="nav-link" data-scroll-target="#directions-2">Directions</a></li>
+  <li><a href="#questions-2" id="toc-questions-2" class="nav-link" data-scroll-target="#questions-2">Questions</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L03-overfitting.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -407,7 +412,7 @@ We are still considering **Model Evaluation for Regression**.
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># group 3 = 160</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># group 4 = 174</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># group 5 = 86</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/bodyfat___.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat___.csv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -441,7 +446,7 @@ Solution
 <p>Each group will have slightly different coefficients because they have different samples of data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#This is an example with one of the samples</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/bodyfat50.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat50.csv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -543,9 +548,25 @@ Solution
 </section>
 <section id="exercises-part-1" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises (Part 1)</h1>
-<section id="directions-1" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="directions-1">Directions</h2>
-<p>Take 5 minutes to complete exercises 1 and 2 (choosing one of three models).</p>
+<section id="directions-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="directions-1">Directions</h2>
+<ul>
+<li>Open the Part 1 QMD file.</li>
+<li>Take <strong>5 minutes</strong> to complete exercises 1 and 2 (choosing one of three models).</li>
+<li>We’ll pause for a few minutes to discuss each group’s answers to these exercises.</li>
+<li>Then, and only then, you can finish exercises 3 - 5.</li>
+</ul>
+<p>Remember:</p>
+<ul>
+<li>Be kind to yourself/each other. You will make mistakes!</li>
+<li>Collaborate:
+<ul>
+<li>actively contribute to discussion (don’t work on your own)</li>
+<li>actively include all group members in discussion</li>
+<li>create a space where others feel comfortable making mistakes and sharing their ideas</li>
+<li>stay in sync</li>
+</ul></li>
+</ul>
 </section>
 <section id="questions-1" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="questions-1">Questions</h2>
@@ -574,9 +595,9 @@ Solution
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the MAE for your model</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  ___ <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>___ <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
@@ -627,7 +648,7 @@ Solution
 <li><strong>Share your results</strong><br>
 Only when you’re done with exercise 1:
 <ul>
-<li>Open this <a href="https://docs.google.com/spreadsheets/d/1DL1YadxFDV1o_pPHyST8u8QEyUKbjTRX1LH2NzhVtYU/edit?usp=sharing">“Top Model Competition” Google Doc</a>.</li>
+<li>Open this <a href="https://docs.google.com/spreadsheets/d/1dWCdwXNjNvrD3-aADaMQxh87euDePvKK1dROSMycp_U/edit?usp=sharing">“Top Model Competition” Google Doc</a>.</li>
 <li>Record your team name.</li>
 <li>Record which model you chose (1, 2, or 3).</li>
 <li>Record the MAE for your model.</li>
@@ -639,7 +660,7 @@ Only when you’re done with exercise 1:
 <p>What do you know?! 40 new people just walked into the doctor’s office and the doctor wants to predict their <code>height</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the new data</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>new_patients <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/bodyfat182.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>new_patients <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat182.csv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -796,6 +817,20 @@ In summary, which model seems best? What’s the central theme here?</li>
 </section>
 <section id="exercises-part-2" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises (Part 2)</h1>
+<section id="directions-2" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="directions-2">Directions</h2>
+<ul>
+<li>Open the Part 2 QMD file</li>
+<li>Same directions as before:
+<ul>
+<li>Be kind to yourself/each other</li>
+<li>Collaborate</li>
+</ul></li>
+<li>We will not discuss these exercises as a class. Be sure to ask questions as I walk around the room.</li>
+</ul>
+</section>
+<section id="questions-2" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="questions-2">Questions</h2>
 <p>The following exercises are inspired by Chapter 5.3.1 of ISLR.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages &amp; data</span></span>
@@ -1234,6 +1269,32 @@ Solution
 <li>Knit your notes.</li>
 <li>Check the solutions in the course website.</li>
 <li>If you finish all that during class, start on Homework 2!</li>
+</ul>
+</section>
+</section>
+<section id="wrap-up" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Wrap-Up</h1>
+<ul>
+<li><strong>Finishing the activity</strong>
+<ul>
+<li>If you didn’t finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the online manual, and ask any questions on Slack or in office hours.</li>
+<li>Re-organize and review your notes to help deepen your understanding, solidify your learning, and make homework go more smoothly!</li>
+</ul></li>
+<li>An <strong>R code video</strong>, posted under the pre-course materials for today’s class (see the “Schedule” page on this website), talks through the new code. This video is OPTIONAL. Decide what’s right for you.</li>
+<li>Continue to check in on <strong>Slack</strong>. I’ll be posting announcements there from now on.</li>
+<li><strong>Upcoming due dates:</strong>
+<ul>
+<li>CP3: due 10 minutes before our next class.
+<ul>
+<li>There are two (short) videos to watch in advance.</li>
+</ul></li>
+<li>HW1 (Regression Model Evaluation): due next Tuesday at 11:59 pm
+<ul>
+<li>Start today, even if you just review the directions and scan the exercises.</li>
+<li>(Homework is not designed to be completed in one sitting!)</li>
+<li>Using Slack, invite others to work on homework with you!</li>
+</ul></li>
+</ul></li>
 </ul>
 
 
