@@ -371,5 +371,27 @@
       "Appendices",
       "STAT 155 Review"
     ]
+  },
+  {
+    "objectID": "L03-overfitting.html",
+    "href": "L03-overfitting.html",
+    "title": "3  Overfitting",
+    "section": "",
+    "text": "Settling In\n\n\nLearning Goals\n\n\nSmall Group Discussion\n\n\nNotes\n\n\nExercises",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Overfitting</span>"
+    ]
+  },
+  {
+    "objectID": "L04-cross-validation.html",
+    "href": "L04-cross-validation.html",
+    "title": "4  Cross-Validation",
+    "section": "",
+    "text": "Settling In\n\n\nLearning Goals\n\n\nSmall Group Discussion\n\n\nNotes\n\n\nExercises",
+    "crumbs": [
+      "Regression: Model Evaluation (Unit 1)",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Cross-Validation</span>"
+    ]
   }
 ]

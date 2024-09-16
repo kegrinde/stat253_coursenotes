@@ -26,6 +26,8 @@ book:
       chapters:
         - U01-motivation.qmd
         - L02-evaluating-regression-models.qmd
+        - L03-overfitting.qmd
+        - L04-cross-validation.qmd
   appendices:
     - r_rstudio.qmd
     - r_resources.qmd

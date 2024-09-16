@@ -1,0 +1,14 @@
+---
+title: "Cross-Validation"
+logo: "images/mac.png"
+---
+
+# Settling In {.unnumbered}
+
+# Learning Goals {.unnumbered}
+
+# Small Group Discussion {.unnumbered}
+
+# Notes {.unnumbered}
+
+# Exercises {.unnumbered}
