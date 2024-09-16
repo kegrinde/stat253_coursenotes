@@ -1,6 +1,9 @@
 project:
   type: book
   output-dir: docs
+  resources: 
+    - "data/*"
+    - "template_qmds/*"
 
 number-depth: 2
 
