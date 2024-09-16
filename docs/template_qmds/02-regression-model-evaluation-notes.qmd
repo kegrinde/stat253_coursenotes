@@ -2,10 +2,11 @@
 title: "Model Evaluation (Notes)"
 subtitle: "Stat 253"
 author: "Your Name"
-output: 
-  html_document:
+format:
+  html:
     toc: true
-    toc_float: true
+    toc-depth: 2
+    embed-resources: true
 ---
 
 ```{r include = FALSE}
@@ -39,7 +40,7 @@ knitr::opts_chunk$set(
 
 
 
-# Small Group Discussion: Recap Video {-}
+# Small Group Discussion: Video Recap {-}
 
 
 We are in the **regression** setting. We want to build a model of some **quantitative** output variable $y$ by some predictors $x$:
@@ -57,7 +58,7 @@ After *building* any model, it's important to *evaluate* it: **Is our _regressio
 3. Does the model produce accurate predictions?    
 4. Is the model fair?
 
-## Notes: R code {-}
+# Notes: R code {-}
 
 This section is for **future** reference. It is a summary of code you'll
 learn below for building and evaluating regression models. Throughout,
@@ -125,7 +126,7 @@ geom_point() +
 geom_hline(yintercept = 0)
 ```
 
-## In-Class Activity - Exercises {-}
+# Exercises {-}
 
 Capital Bikeshare provides a bike-sharing service in the Washington DC
 area. Customers can pick up and drop off bikes at any station around the
