@@ -10,7 +10,7 @@
 <link href="L03-overfitting_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
-  <title>Lesson 3: TBD</title>
+  <title>Overfitting</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="L03-overfitting_files/libs/revealjs/dist/theme/quarto.css">
   <link href="L03-overfitting_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -328,21 +393,1003 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Lesson 3: TBD</h1>
+  <h1 class="title">Overfitting</h1>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section class="slide level2">
+<section id="settling-in" class="title-slide slide level1 unnumbered smaller center">
+<h1>Settling In</h1>
+<ul>
+<li>Sit in your NEW randomly assigned group</li>
+<li>Introduce yourselves and choose a team name (you’ll need this later)</li>
+<li>Review the finalized <a href="https://docs.google.com/presentation/d/1s7SeaT7i_IuJ_0pZKhpHn_9_LUz6_zi17fLUWbdfJFI/edit?usp=sharing">Course Syllabus</a></li>
+<li>Catch up on any <a href="https://macstat253.slack.com">Slack</a> messages you might have missed</li>
+<li>Prepare to take notes:
+<ul>
+<li>Locate the QMDs for today’s activity (see the “Schedule” page on our website)</li>
+<li>Save these documents in your “STAT 253 &gt; Notes” folder</li>
+<li>You can open the Part 1 QMD…</li>
+<li>.. but <strong>DO NOT</strong> open Part 2 (yet)</li>
+</ul></li>
+</ul>
+</section>
 
+<section id="learning-goals" class="title-slide slide level1 unnumbered center">
+<h1>Learning Goals</h1>
+<ul>
+<li>Explain why training/in-sample model evaluation metrics can provide a misleading view of true test/out-of-sample performance</li>
+<li>Implement testing and training sets in R using the <code>tidymodels</code> package</li>
+</ul>
+</section>
+
+<section>
+<section id="small-group-discussion" class="title-slide slide level1 unnumbered center">
+<h1>Small Group Discussion</h1>
+<p>To start class today, we’re going to do a Model Evaluation Experiment!</p>
+</section>
+<section id="directions" class="slide level2 unnumbered smaller">
+<h2>Directions</h2>
+<p>Let’s <em>build</em> and <em>evaluate</em> a predicted model of an adult’s height (<span class="math inline">\(y\)</span>) using some predictors <span class="math inline">\(x_i\)</span> (e.g., age, weight, etc.).</p>
+<ul>
+<li>Introduce yourself in whatever way you feel appropriate and check in with each other as human beings</li>
+<li>Come up with a team name</li>
+<li>Work through the steps below as a group, after you are told your group number
+<ul>
+<li>Each group will be given a different sample of 40 adults</li>
+<li>Start by predicting <code>height</code> (in) using <code>hip</code> circumference (cm)</li>
+<li>Evaluate the model on your sample.</li>
+</ul></li>
+<li>Be prepared to share your answers to:
+<ul>
+<li>How good is your simple model?</li>
+<li>What would happen if we added more predictors?</li>
+</ul></li>
+</ul>
+</section>
+<section id="questions" class="slide level2 unnumbered smaller">
+<h2>Questions</h2>
+<!--
+**Steps:** 
+We are still considering **Model Evaluation for Regression**.
+-->
+<center>
+<img src="images/MLdiagram1.jpg">
+</center>
+<p><br>
+<br>
+</p>
+<p><strong>Goal:</strong></p>
+<ul>
+<li><p>Let’s <em>build</em> and <em>evaluate</em> a predictive model of an adult’s height (<span class="math inline">\(y\)</span>) using some predictors <span class="math inline">\(x_i\)</span> (eg: age, height, etc).</p></li>
+<li><p>Since <span class="math inline">\(y\)</span> is <em>quantitative</em> this is a <strong>regression task</strong>.</p></li>
+<li><p>There are countless possible models of <span class="math inline">\(y\)</span> vs <span class="math inline">\(x\)</span>. We’ll utilize a <strong>linear regression model</strong>:</p></li>
+</ul>
+<p><span class="math display">\[y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon\]</span></p>
+<ul>
+<li>And after building this model, we’ll <strong>evaluate</strong> it.</li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Data:</strong> Each group will be given a different sample of 40 adults.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Load packages needed for this analysis</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># Load your data: fill in the blanks at end of url with your number</span></span>
+<span id="cb2-2"><a href=""></a><span class="co"># group 1 = 50</span></span>
+<span id="cb2-3"><a href=""></a><span class="co"># group 2 = 143</span></span>
+<span id="cb2-4"><a href=""></a><span class="co"># group 3 = 160</span></span>
+<span id="cb2-5"><a href=""></a><span class="co"># group 4 = 174</span></span>
+<span id="cb2-6"><a href=""></a><span class="co"># group 5 = 86</span></span>
+<span id="cb2-7"><a href=""></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat___.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href=""></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-9"><a href=""></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Check out a density plot of your y outcomes</span></span>
+<span id="cb3-2"><a href=""></a><span class="fu">ggplot</span>(humans, <span class="fu">aes</span>(<span class="at">x =</span> height)) <span class="sc">+</span> </span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">geom_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p><strong>Model building:</strong> Build a linear regression model of <code>height</code> (in) by <code>hip</code> circumference (cm).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb4-2"><a href=""></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">___</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href=""></a>  <span class="fu">set_mode</span>(___) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href=""></a>  <span class="fu">set_engine</span>(___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># STEP 2: model estimation</span></span>
+<span id="cb5-2"><a href=""></a>model_1 <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href=""></a>  <span class="fu">___</span>(height <span class="sc">~</span> hip, <span class="at">data =</span> humans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># Check out the coefficients</span></span>
+<span id="cb6-2"><a href=""></a><span class="co"># Do all groups have the same coefficients? Should they?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<p>Each group will have slightly different coefficients because they have different samples of data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co">#This is an example with one of the samples</span></span>
+<span id="cb7-2"><a href=""></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat50.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href=""></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href=""></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span>
+<span id="cb7-5"><a href=""></a></span>
+<span id="cb7-6"><a href=""></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb7-7"><a href=""></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">'regression'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-9"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">'lm'</span>)</span>
+<span id="cb7-10"><a href=""></a></span>
+<span id="cb7-11"><a href=""></a><span class="co"># STEP 2: model estimation</span></span>
+<span id="cb7-12"><a href=""></a>model_1 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb7-13"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> hip, <span class="at">data =</span> humans)</span>
+<span id="cb7-14"><a href=""></a></span>
+<span id="cb7-15"><a href=""></a><span class="co"># Check out the coefficients</span></span>
+<span id="cb7-16"><a href=""></a>model_1  <span class="sc">%&gt;%</span> </span>
+<span id="cb7-17"><a href=""></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic      p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept)   52.5      7.68        6.84 0.0000000460
+2 hip            0.179    0.0778      2.30 0.0272      </code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<p><strong>Model evaluation:</strong> How <em>good</em> is our model?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Calculate the R^2 for model_1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># Use your model to predict height for your subjects</span></span>
+<span id="cb10-2"><a href=""></a><span class="co"># Just print the first 6 results</span></span>
+<span id="cb10-3"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href=""></a>  <span class="fu">___</span>(<span class="at">new_data =</span> ___) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Calculate the MAE, i.e. typical prediction error, for your model</span></span>
+<span id="cb11-2"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href=""></a>  <span class="fu">___</span>(<span class="at">truth =</span> ___, <span class="at">estimate =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<p>Again, each group will have slightly different answers here because they have different samples of data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Calculate the R^2 for model_1</span></span>
+<span id="cb12-2"><a href=""></a>model_1 <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href=""></a>  <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.125         0.101  2.26      5.29  0.0272     1  -86.1  178.  183.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Use your model to predict height for your subjects</span></span>
+<span id="cb14-2"><a href=""></a><span class="co"># Just print the first 6 results</span></span>
+<span id="cb14-3"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 21
+  .pred .resid fatBrozek body_fat density   age weight height adiposity
+  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+1  70.3  -1.09      24.7     25.4    1.04    43   177    69.2      26  
+2  70.8  -1.52      22       22.5    1.05    38   187.   69.2      27.5
+3  70.2  -1.19       9.4      8.8    1.08    29   161.   69        23.8
+4  68.9   4.58       7.1      6.3    1.08    49   153.   73.5      19.9
+5  69.3   2.91       9.9      9.4    1.08    23   160.   72.2      21.6
+6  70.2  -2.48      22.7     23.3    1.05    52   167    67.8      25.6
+# ℹ 12 more variables: fatFreeWeight &lt;dbl&gt;, neck &lt;dbl&gt;, chest &lt;dbl&gt;,
+#   abdomen &lt;dbl&gt;, hip &lt;dbl&gt;, thigh &lt;dbl&gt;, knee &lt;dbl&gt;, ankle &lt;dbl&gt;,
+#   biceps &lt;dbl&gt;, forearm &lt;dbl&gt;, wrist &lt;dbl&gt;, hipin &lt;dbl&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Calculate the MAE, i.e. typical prediction error, for your model</span></span>
+<span id="cb16-2"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        1.88</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<p><strong>Reflection</strong></p>
+<p>In addition to <code>hip</code> circumference, suppose we incorporated more predictors into our model of <code>height</code>. What would happen to <span class="math inline">\(R^2\)</span>? To the MAE?</p>
+<details>
+<summary>
+Solution
+</summary>
+<span class="math inline">\(R^2\)</span> would increase and MAE would decrease.
+</details>
+</section></section>
+<section>
+<section id="exercises-part-1" class="title-slide slide level1 unnumbered center">
+<h1>Exercises (Part 1)</h1>
+
+</section>
+<section id="directions-1" class="slide level2 unnumbered smaller">
+<h2>Directions</h2>
+<ul>
+<li>Open the Part 1 QMD file.</li>
+<li>Take <strong>5 minutes</strong> to complete exercises 1 and 2 (choosing one of three models).</li>
+<li>We’ll pause for a few minutes to discuss each group’s answers to these exercises.</li>
+<li>Then, and only then, you can finish exercises 3 - 5.</li>
+</ul>
+<p>REMINDERS:</p>
+<ul>
+<li>Be kind to yourself/each other. You will make mistakes!</li>
+<li>Collaborate:
+<ul>
+<li>actively contribute to discussion (don’t work on your own)</li>
+<li>actively include all group members in discussion</li>
+<li>create a space where others feel comfortable making mistakes and sharing their ideas</li>
+<li>stay in sync</li>
+</ul></li>
+</ul>
+</section>
+<section id="questions-1" class="slide level2 unnumbered smaller scrollable">
+<h2>Questions</h2>
+<ol type="1">
+<li><strong>Select a model</strong></li>
+</ol>
+<p>Consider 3 different models of <code>height</code>, estimated below. As a group, use <em>your</em> data to choose which is the best predictive model of <code>height</code>. Calculate the MAE for this model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># height vs hip</span></span>
+<span id="cb18-2"><a href=""></a>model_1 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> hip, <span class="at">data =</span> humans)</span>
+<span id="cb18-4"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href=""></a>  <span class="fu">tidy</span>()</span>
+<span id="cb18-6"><a href=""></a></span>
+<span id="cb18-7"><a href=""></a><span class="co"># height vs hip &amp; weight</span></span>
+<span id="cb18-8"><a href=""></a>model_2 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb18-9"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> hip <span class="sc">+</span> weight, <span class="at">data =</span> humans)</span>
+<span id="cb18-10"><a href=""></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb18-11"><a href=""></a>  <span class="fu">tidy</span>()</span>
+<span id="cb18-12"><a href=""></a></span>
+<span id="cb18-13"><a href=""></a><span class="co"># height vs a lot of predictors (AND some interaction terms)</span></span>
+<span id="cb18-14"><a href=""></a>model_3 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb18-15"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> chest <span class="sc">*</span> age <span class="sc">*</span> weight <span class="sc">*</span> body_fat <span class="sc">*</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist, <span class="at">data =</span> humans)</span>
+<span id="cb18-16"><a href=""></a>model_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb18-17"><a href=""></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Calculate the MAE for your model</span></span>
+<span id="cb19-2"><a href=""></a>___ <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<p>Will vary by group. MAE is calculated here for each model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># Build the models</span></span>
+<span id="cb20-2"><a href=""></a>model_1 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> hip, <span class="at">data =</span> humans)</span>
+<span id="cb20-4"><a href=""></a>model_2 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> hip <span class="sc">+</span> weight, <span class="at">data =</span> humans)</span>
+<span id="cb20-6"><a href=""></a>model_3 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href=""></a>  <span class="fu">fit</span>(height <span class="sc">~</span> chest <span class="sc">*</span> age <span class="sc">*</span> weight <span class="sc">*</span> body_fat <span class="sc">*</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist, <span class="at">data =</span> humans)</span>
+<span id="cb20-8"><a href=""></a></span>
+<span id="cb20-9"><a href=""></a><span class="co"># Evaluate the models</span></span>
+<span id="cb20-10"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb20-11"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-12"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        1.88</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        1.67</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>model_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard    1.53e-10</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>Share your results</strong><br>
+Only when you’re done with exercise 1:
+<ul>
+<li>Open this <a href="https://docs.google.com/spreadsheets/d/1dWCdwXNjNvrD3-aADaMQxh87euDePvKK1dROSMycp_U/edit?usp=sharing">“Top Model Competition” Google Doc</a>.</li>
+<li>Record your team name.</li>
+<li>Record which model you chose (1, 2, or 3).</li>
+<li>Record the MAE for your model.</li>
+<li><strong>WAIT.</strong> Don’t keep going.</li>
+</ul></li>
+</ol>
+<p><br><br><br><br><br><br></p>
+<p><strong>Don’t peak</strong></p>
+<p>What do you know?! 40 new people just walked into the doctor’s office and the doctor wants to predict their <code>height</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="co"># Import the new data</span></span>
+<span id="cb26-2"><a href=""></a>new_patients <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat182.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href=""></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href=""></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<ol start="3" type="1">
+<li><strong>Intuition</strong><br>
+Consider using <em>your</em> model to predict <code>height</code> for these 40 <em>new</em> subjects. On average, do you think these predictions will be better or worse than for your original patients? Why?</li>
+</ol>
+<p><br>
+<br>
+</p>
+<ol start="4" type="1">
+<li><strong>How well does your model do in the real world?</strong><br>
+Use <em>your</em> model to predict <code>height</code> for the <em>new</em> patients and calculate the typical prediction error (MAE). <strong>Record this in the Google sheet.</strong></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>___ <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_patients) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># Predict height (assume, for example, I choose model_1)</span></span>
+<span id="cb28-2"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_patients) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 21
+  .pred .resid fatBrozek body_fat density   age weight height adiposity
+  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+1  71.5 -1.96       27.1     28      1.04    62   201.   69.5      29.3
+2  70.4 -0.141      20.9     21.3    1.05    42   163    70.2      23.3
+3  69.7 -0.497      26.1     27      1.04    72   168    69.2      24.7
+4  69.1 -1.39        4.1      3      1.09    35   152.   67.8      23.4
+5  68.5 -2.99        1.9      0.7    1.1     35   126.   65.5      20.6
+6  71.9 -1.91       31       32.3    1.03    57   206.   70        29.5
+# ℹ 12 more variables: fatFreeWeight &lt;dbl&gt;, neck &lt;dbl&gt;, chest &lt;dbl&gt;,
+#   abdomen &lt;dbl&gt;, hip &lt;dbl&gt;, thigh &lt;dbl&gt;, knee &lt;dbl&gt;, ankle &lt;dbl&gt;,
+#   biceps &lt;dbl&gt;, forearm &lt;dbl&gt;, wrist &lt;dbl&gt;, hipin &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="co"># Calculate the MAE for model_1</span></span>
+<span id="cb30-2"><a href=""></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_patients) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        1.73</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="co"># Calculate the MAE for model_2</span></span>
+<span id="cb32-2"><a href=""></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_patients) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        1.68</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="co"># Calculate the MAE for model_3</span></span>
+<span id="cb34-2"><a href=""></a>model_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_patients) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-4"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        105.</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="5" type="1">
+<li><strong>Reflection</strong><br>
+In summary, which model seems best? What’s the central theme here?</li>
+</ol>
+</section></section>
+<section>
+<section id="notes" class="title-slide slide level1 unnumbered center">
+<h1>Notes</h1>
+
+</section>
+<section id="overfitting" class="slide level2 unnumbered smaller">
+<h2>Overfitting</h2>
+<p>When we add more and more predictors into a model, it can become <em>overfit</em> to the noise in our sample data:</p>
+<ul>
+<li>our model loses the broader trend / big picture</li>
+<li>thus does not generalize to <em>new</em> data</li>
+<li>thus results in bad predictions and a bad understanding of the relationship among the new data points</li>
+</ul>
+<p><strong>Preventing overfitting: training and testing</strong></p>
+<ul>
+<li><strong>In-sample</strong> metrics, i.e.&nbsp;measures of how well the model performs on the same sample data that we used to build it, tend to be overly optimistic and lead to overfitting.</li>
+<li>Instead, we should <em>build</em> and <em>evaluate</em>, or <strong>train</strong> and <strong>test</strong>, our model using different data.</li>
+</ul>
+</section>
+<section id="r-code" class="slide level2 unnumbered smaller">
+<h2>R Code</h2>
+<p>This section is for <strong>future</strong> reference. It is a summary of code you’ll learn below for creating and applying training and testing data. Throughout, suppose we wish to build and evaluate a linear regression model of <code>y</code> vs <code>x1</code> and <code>x2</code> using our <code>sample_data</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb36-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb36-3"><a href=""></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Split the sample data into training and test sets</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># Set the random number seed</span></span>
+<span id="cb37-2"><a href=""></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb37-3"><a href=""></a></span>
+<span id="cb37-4"><a href=""></a><span class="co"># Split the sample_data</span></span>
+<span id="cb37-5"><a href=""></a><span class="co"># "prop" is the proportion of data assigned to the training set</span></span>
+<span id="cb37-6"><a href=""></a><span class="co"># it must be some number between 0 and 1</span></span>
+<span id="cb37-7"><a href=""></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(sample_data, <span class="at">strata =</span> y, <span class="at">prop =</span> ___)</span>
+<span id="cb37-8"><a href=""></a></span>
+<span id="cb37-9"><a href=""></a><span class="co"># Get the training data from the split</span></span>
+<span id="cb37-10"><a href=""></a>data_train <span class="ot">&lt;-</span> data_split <span class="sc">%&gt;%</span> </span>
+<span id="cb37-11"><a href=""></a>  <span class="fu">training</span>()</span>
+<span id="cb37-12"><a href=""></a></span>
+<span id="cb37-13"><a href=""></a><span class="co"># Get the testing data from the split</span></span>
+<span id="cb37-14"><a href=""></a>data_test <span class="ot">&lt;-</span> data_split <span class="sc">%&gt;%</span> </span>
+<span id="cb37-15"><a href=""></a>  <span class="fu">testing</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Build a training model</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb38-2"><a href=""></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb38-5"><a href=""></a></span>
+<span id="cb38-6"><a href=""></a><span class="co"># STEP 2: model estimation using the training data</span></span>
+<span id="cb38-7"><a href=""></a>model_train <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb38-8"><a href=""></a>  <span class="fu">fit</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> data_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Use the training model to make predictions for the test data</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># Make predictions</span></span>
+<span id="cb39-2"><a href=""></a>model_train <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> data_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Evaluate the training model using the test data</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># Calculate the test MAE</span></span>
+<span id="cb40-2"><a href=""></a>model_train <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> data_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> y, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section>
+<section id="exercises-part-2" class="title-slide slide level1 unnumbered center">
+<h1>Exercises (Part 2)</h1>
+
+</section>
+<section id="directions-2" class="slide level2 unnumbered">
+<h2>Directions</h2>
+<ul>
+<li>Open the Part 2 QMD file</li>
+<li>Same directions as before:
+<ul>
+<li>Be kind to yourself/each other</li>
+<li>Collaborate</li>
+</ul></li>
+<li>We will not discuss these exercises as a class. Be sure to ask questions as I walk around the room.</li>
+</ul>
+</section>
+<section id="questions-2" class="slide level2 unnumbered smaller scrollable">
+<h2>Questions</h2>
+<p>The following exercises are inspired by Chapter 5.3.1 of ISLR.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="co"># Load packages &amp; data</span></span>
+<span id="cb41-2"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: You might first need to install the ISLR package</span></span>
+<span id="cb41-3"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb41-4"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb41-5"><a href=""></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb41-6"><a href=""></a><span class="fu">data</span>(Auto)</span>
+<span id="cb41-7"><a href=""></a>cars <span class="ot">&lt;-</span> Auto <span class="sc">%&gt;%</span> </span>
+<span id="cb41-8"><a href=""></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(mpg, horsepower, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s use the <code>cars</code> data to compare three <strong>linear regression models</strong> of fuel efficiency in miles per gallon (<code>mpg</code>) by engine power (<code>horsepower</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="co"># Raw data</span></span>
+<span id="cb42-2"><a href=""></a>cars_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(<span class="at">x =</span> horsepower, <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
+<span id="cb42-3"><a href=""></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb42-4"><a href=""></a>cars_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="co"># model 1: 1 predictor (y = b0 + b1 x)</span></span>
+<span id="cb43-2"><a href=""></a>cars_plot <span class="sc">+</span> </span>
+<span id="cb43-3"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="co"># model 2: 2 predictors (y = b0 + b1 x + b2 x^2)</span></span>
+<span id="cb44-2"><a href=""></a>cars_plot <span class="sc">+</span> </span>
+<span id="cb44-3"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="co"># model 3: 19 predictors (y = b0 + b1 x + b2 x^2 + ... + b19 x^19)</span></span>
+<span id="cb45-2"><a href=""></a>cars_plot <span class="sc">+</span> </span>
+<span id="cb45-3"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">19</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Goal</strong></p>
+<p>Let’s evaluate and compare these models by <strong>training</strong> and <strong>testing</strong> them using different data.</p>
+<ol type="1">
+<li><strong>155 review: set.seed()</strong></li>
+</ol>
+<p>Run the two chunks below <em>multiple</em> times each. Afterward, summarize what <code>set.seed()</code> does and why it’s important to being able to <em>reproduce</em> a random sample.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">sample_n</span>(cars, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb47-2"><a href=""></a><span class="fu">sample_n</span>(cars, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<p><code>set.seed()</code> is used to create the same “random numbers” each time a random function is called.</p>
+<p>Note that is if you want to get exactly the same random result, <code>set.seed()</code> needs to be run right before the call to random function, every time.</p>
+<p>It is important so that you can reproduce the same random sample every time you knit your work.</p>
+There might be different results across computers/platforms as they might be using different pseudo-random number generators. The most important thing is for your code to be consistent.
+</details>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>Training and test sets</strong></li>
+</ol>
+<p>Let’s <em>randomly</em> split our original 392 sample cars into two separate pieces: select 80% of the cars to <strong>train (build)</strong> the model and the other 20% to <strong>test (evaluate)</strong> the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="co"># Set the random number seed</span></span>
+<span id="cb48-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
+<span id="cb48-3"><a href=""></a>    </span>
+<span id="cb48-4"><a href=""></a><span class="co"># Split the cars data into 80% / 20%</span></span>
+<span id="cb48-5"><a href=""></a><span class="co"># Ensure that the sub-samples are similar with respect to mpg</span></span>
+<span id="cb48-6"><a href=""></a>cars_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(cars, <span class="at">strata =</span> mpg, <span class="at">prop =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb49-2"><a href=""></a><span class="co"># What do these numbers mean?</span></span>
+<span id="cb49-3"><a href=""></a>cars_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># Get the training data from the split</span></span>
+<span id="cb50-2"><a href=""></a>cars_train <span class="ot">&lt;-</span> cars_split <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href=""></a>  <span class="fu">training</span>()</span>
+<span id="cb50-4"><a href=""></a>    </span>
+<span id="cb50-5"><a href=""></a><span class="co"># Get the testing data from the split</span></span>
+<span id="cb50-6"><a href=""></a>cars_test <span class="ot">&lt;-</span> cars_split <span class="sc">%&gt;%</span> </span>
+<span id="cb50-7"><a href=""></a>  <span class="fu">testing</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="co"># The original data has 392 cars</span></span>
+<span id="cb51-2"><a href=""></a><span class="fu">nrow</span>(cars)</span>
+<span id="cb51-3"><a href=""></a>    </span>
+<span id="cb51-4"><a href=""></a><span class="co"># How many cars are in cars_train?</span></span>
+<span id="cb51-5"><a href=""></a>    </span>
+<span id="cb51-6"><a href=""></a><span class="co"># How many cars are in cars_test?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="co"># Set the random number seed</span></span>
+<span id="cb52-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
+<span id="cb52-3"><a href=""></a></span>
+<span id="cb52-4"><a href=""></a><span class="co"># Split the cars data into 80% / 20%</span></span>
+<span id="cb52-5"><a href=""></a><span class="co"># Ensure that the sub-samples are similar with respect to mpg</span></span>
+<span id="cb52-6"><a href=""></a>cars_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(cars, <span class="at">strata =</span> mpg, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb52-7"><a href=""></a>cars_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Training/Testing/Total&gt;
+&lt;312/80/392&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="co"># Get the training data from the split</span></span>
+<span id="cb54-2"><a href=""></a>cars_train <span class="ot">&lt;-</span> cars_split <span class="sc">%&gt;%</span> </span>
+<span id="cb54-3"><a href=""></a>  <span class="fu">training</span>()</span>
+<span id="cb54-4"><a href=""></a></span>
+<span id="cb54-5"><a href=""></a><span class="co"># Get the testing data from the split</span></span>
+<span id="cb54-6"><a href=""></a>cars_test <span class="ot">&lt;-</span> cars_split <span class="sc">%&gt;%</span> </span>
+<span id="cb54-7"><a href=""></a>  <span class="fu">testing</span>()</span>
+<span id="cb54-8"><a href=""></a></span>
+<span id="cb54-9"><a href=""></a><span class="co"># The original data has 392 cars</span></span>
+<span id="cb54-10"><a href=""></a><span class="fu">nrow</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 392</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="co"># How many cars are in cars_train?</span></span>
+<span id="cb56-2"><a href=""></a><span class="fu">nrow</span>(cars_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 312</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># How many cars are in cars_test?</span></span>
+<span id="cb58-2"><a href=""></a><span class="fu">nrow</span>(cars_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 80</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><strong>Reflect on the above code</strong></li>
+</ol>
+<ol type="a">
+<li>Why do we want the training and testing data to be similar with respect to <code>mpg</code> (<code>strata = mpg</code>)? What if they <em>weren’t</em>?</li>
+<li>Why did we need all this new code instead of just using the <em>first</em> 80% of cars in the sample for training and the <em>last</em> 20% for testing?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>Suppose, for example, the training cars all had higher <code>mpg</code> than the test cars. Then the training model likely would not perform well on the test cars, thus we’d get an overly pessimistic measure of model quality.</li>
+<li>If the cars are ordered in some way (eg: from biggest to smallest) then our training and testing samples would have systematically different properties.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="4" type="1">
+<li><strong>Build the training model</strong></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb60-2"><a href=""></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb60-5"><a href=""></a></span>
+<span id="cb60-6"><a href=""></a><span class="co"># STEP 2: model estimation using the training data</span></span>
+<span id="cb60-7"><a href=""></a><span class="co"># Construct the 19th order polynomial model using the TRAINING data</span></span>
+<span id="cb60-8"><a href=""></a>model_19_train <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb60-9"><a href=""></a>  <span class="fu">___</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">19</span>), <span class="at">data =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb61-2"><a href=""></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href=""></a><span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-4"><a href=""></a><span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb61-5"><a href=""></a></span>
+<span id="cb61-6"><a href=""></a><span class="co"># STEP 2: model estimation using the training data</span></span>
+<span id="cb61-7"><a href=""></a><span class="co"># Construct the 19th order polynomial model using the TRAINING data</span></span>
+<span id="cb61-8"><a href=""></a>model_19_train <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb61-9"><a href=""></a><span class="fu">fit</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, <span class="dv">19</span>), <span class="at">data =</span> cars_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<p><br></p>
+<ol start="5" type="1">
+<li><strong>Evaluate the training model</strong></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a><span class="co"># How well does the TRAINING model predict the TRAINING data?</span></span>
+<span id="cb62-2"><a href=""></a><span class="co"># Calculate the training (in-sample) MAE</span></span>
+<span id="cb62-3"><a href=""></a>model_19_train <span class="sc">%&gt;%</span> </span>
+<span id="cb62-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> ___) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-5"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> mpg, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a><span class="co"># How well does the TRAINING model predict the </span><span class="al">TEST</span><span class="co"> data?</span></span>
+<span id="cb63-2"><a href=""></a><span class="co"># Calculate the test MAE</span></span>
+<span id="cb63-3"><a href=""></a>model_19_train <span class="sc">%&gt;%</span> </span>
+<span id="cb63-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> ___) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-5"><a href=""></a>  <span class="fu">mae</span>(<span class="at">truth =</span> mpg, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="co"># How well does the training model predict the training data?</span></span>
+<span id="cb64-2"><a href=""></a><span class="co"># Calculate the training (in-sample) MAE</span></span>
+<span id="cb64-3"><a href=""></a>model_19_train <span class="sc">%&gt;%</span> </span>
+<span id="cb64-4"><a href=""></a><span class="fu">augment</span>(<span class="at">new_data =</span> cars_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb64-5"><a href=""></a><span class="fu">mae</span>(<span class="at">truth =</span> mpg, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        2.99</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a><span class="co"># How well does the training model predict the test data?</span></span>
+<span id="cb66-2"><a href=""></a><span class="co"># Calculate the test MAE</span></span>
+<span id="cb66-3"><a href=""></a>model_19_train <span class="sc">%&gt;%</span> </span>
+<span id="cb66-4"><a href=""></a><span class="fu">augment</span>(<span class="at">new_data =</span> cars_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb66-5"><a href=""></a><span class="fu">mae</span>(<span class="at">truth =</span> mpg, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        6.59</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="6" type="1">
+<li><strong>Punchline</strong><br>
+The table below summarizes your results for <code>train_model_19</code> as well as the other two models of interest. (You should confirm the other two model results outside of class!)</li>
+</ol>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">Training MAE</th>
+<th style="text-align: right;">Testing MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>mpg ~ horsepower</code></td>
+<td style="text-align: right;">3.78</td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mpg ~ poly(horsepower, 2)</code></td>
+<td style="text-align: right;">3.20</td>
+<td style="text-align: right;">3.49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>mpg ~ poly(horsepower, 19)</code></td>
+<td style="text-align: right;">2.99</td>
+<td style="text-align: right;">6.59</td>
+</tr>
+</tbody>
+</table>
+<p>Answer the following and reflect on why each answer <em>makes sense</em>:</p>
+<ol type="a">
+<li><em>Within</em> each model, how do the training errors compare to the testing errors? (This isn’t <em>always</em> the case, but is common.)<br>
+</li>
+<li>Why about the training and test errors for the third model suggest that it is <em>overfit</em> to our sample data?</li>
+<li>Which model seems the best with respect to the <em>training</em> errors?<br>
+</li>
+<li>Which model is the best with respect to the <em>testing</em> errors?<br>
+</li>
+<li>Which model would you choose?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>the training errors are smaller<br>
+</li>
+<li>the test MAE is much larger than the training MAE</li>
+<li>the 19th order polynomial<br>
+</li>
+<li>the quadratic<br>
+</li>
+<li>the quadratic</li>
+</ol>
+<p><strong>Code for the curious</strong></p>
+<p>I wrote a function <code>calculate_MAE()</code> to automate the calculations in the table. If you’re curious, pick through this code!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a><span class="co"># Write function to calculate MAEs</span></span>
+<span id="cb68-2"><a href=""></a>calculate_MAE <span class="ot">&lt;-</span> <span class="cf">function</span>(poly_order){</span>
+<span id="cb68-3"><a href=""></a>  <span class="co"># Construct a training model</span></span>
+<span id="cb68-4"><a href=""></a>  model <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb68-5"><a href=""></a>    <span class="fu">fit</span>(mpg <span class="sc">~</span> <span class="fu">poly</span>(horsepower, poly_order), cars_train)</span>
+<span id="cb68-6"><a href=""></a>  </span>
+<span id="cb68-7"><a href=""></a>  <span class="co"># Calculate the training MAE</span></span>
+<span id="cb68-8"><a href=""></a>  train_it <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> </span>
+<span id="cb68-9"><a href=""></a>    <span class="fu">augment</span>(<span class="at">new_data =</span> cars_train) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-10"><a href=""></a>    <span class="fu">mae</span>(<span class="at">truth =</span> mpg, <span class="at">estimate =</span> .pred)</span>
+<span id="cb68-11"><a href=""></a>      </span>
+<span id="cb68-12"><a href=""></a>  <span class="co"># Calculate the testing MAE</span></span>
+<span id="cb68-13"><a href=""></a>  test_it <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span> </span>
+<span id="cb68-14"><a href=""></a>    <span class="fu">augment</span>(<span class="at">new_data =</span> cars_test) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-15"><a href=""></a>    <span class="fu">mae</span>(<span class="at">truth =</span> mpg, <span class="at">estimate =</span> .pred)</span>
+<span id="cb68-16"><a href=""></a>      </span>
+<span id="cb68-17"><a href=""></a>  <span class="co"># Return the results</span></span>
+<span id="cb68-18"><a href=""></a>  <span class="fu">return</span>(<span class="fu">data.frame</span>(<span class="at">train_MAE =</span> train_it<span class="sc">$</span>.estimate, <span class="at">test_MAE =</span> test_it<span class="sc">$</span>.estimate))</span>
+<span id="cb68-19"><a href=""></a>}</span>
+<span id="cb68-20"><a href=""></a>    </span>
+<span id="cb68-21"><a href=""></a><span class="co"># Calculate training and testing MSEs</span></span>
+<span id="cb68-22"><a href=""></a><span class="fu">calculate_MAE</span>(<span class="at">poly_order =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  train_MAE test_MAE
+1  3.779331 4.004333</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a><span class="fu">calculate_MAE</span>(<span class="at">poly_order =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  train_MAE test_MAE
+1  3.199882 3.487022</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a><span class="fu">calculate_MAE</span>(<span class="at">poly_order =</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  train_MAE test_MAE
+1  2.989305 6.592341</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href=""></a><span class="co"># For those of you interested in trying all orders...</span></span>
+<span id="cb74-2"><a href=""></a></span>
+<span id="cb74-3"><a href=""></a>results <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_df</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>,calculate_MAE) <span class="sc">%&gt;%</span> </span>
+<span id="cb74-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">order =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb74-5"><a href=""></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">names_to=</span><span class="st">'Metric'</span>,<span class="at">values_to =</span> <span class="st">'MAE'</span>) </span>
+<span id="cb74-6"><a href=""></a></span>
+<span id="cb74-7"><a href=""></a>results <span class="sc">%&gt;%</span></span>
+<span id="cb74-8"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> order, <span class="at">y =</span> MAE, <span class="at">color =</span> Metric)) <span class="sc">+</span> </span>
+<span id="cb74-9"><a href=""></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb74-10"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> results <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Metric <span class="sc">==</span> <span class="st">'test_MAE'</span>) <span class="sc">%&gt;%</span> <span class="fu">slice_min</span>(MAE)) <span class="sc">+</span> </span>
+<span id="cb74-11"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> results <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Metric <span class="sc">==</span> <span class="st">'train_MAE'</span>) <span class="sc">%&gt;%</span> <span class="fu">slice_min</span>(MAE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L03-overfitting_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="7" type="1">
+<li><strong>Final reflection</strong>
+<ol type="a">
+<li>The training / testing procedure provided a more honest evaluation and comparison of our model predictions. How might we <em>improve</em> upon this procedure? What problems can you anticipate in splitting our data into 80% / 20%?</li>
+<li>Summarize the key themes from today in your own words.</li>
+</ol></li>
+</ol>
+<!-- %These comparisons are based on the training and test sets we happened to get.  Obviously, if we chose new training and test sets, we would get different answers!   -->
+<!-- %We're only using half of the data to train the model.  We'd get better predictions if we used more.  Tends to overestimate error (p178) -->
+<details>
+<summary>
+Solution
+</summary>
+<p>This will be discussed in the next video!</p>
+</details>
+<p><br></p>
+<ol start="8" type="1">
+<li><strong>STAT 155 REVIEW: data drill</strong></li>
+</ol>
+<ol type="a">
+<li>Construct and interpret a plot of <code>mpg</code> vs <code>horsepower</code> and <code>year</code>.</li>
+<li>Calculate the average <code>mpg</code>.</li>
+<li>Calculate the average <code>mpg</code> for each <code>year</code>. HINT: <code>group_by()</code></li>
+<li>Plot the <em>average</em> <code>mpg</code> by <code>year</code>.</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href=""></a><span class="co"># a. One of many options</span></span>
+<span id="cb75-2"><a href=""></a><span class="fu">ggplot</span>(cars, <span class="fu">aes</span>(<span class="at">x =</span> horsepower, <span class="at">y =</span> mpg, <span class="at">color =</span> year)) <span class="sc">+</span> </span>
+<span id="cb75-3"><a href=""></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L03-overfitting_files/figure-revealjs/unnamed-chunk-50-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a><span class="co"># b</span></span>
+<span id="cb76-2"><a href=""></a>cars <span class="sc">%&gt;%</span> </span>
+<span id="cb76-3"><a href=""></a><span class="fu">summarize</span>(<span class="fu">mean</span>(mpg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean(mpg)
+1  23.44592</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href=""></a><span class="co"># c</span></span>
+<span id="cb78-2"><a href=""></a>cars <span class="sc">%&gt;%</span> </span>
+<span id="cb78-3"><a href=""></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-4"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">mean_mpg =</span> <span class="fu">mean</span>(mpg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 2
+    year mean_mpg
+   &lt;dbl&gt;    &lt;dbl&gt;
+ 1    70     17.7
+ 2    71     21.1
+ 3    72     18.7
+ 4    73     17.1
+ 5    74     22.8
+ 6    75     20.3
+ 7    76     21.6
+ 8    77     23.4
+ 9    78     24.1
+10    79     25.1
+11    80     33.8
+12    81     30.2
+13    82     32  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href=""></a><span class="co"># d</span></span>
+<span id="cb80-2"><a href=""></a>cars <span class="sc">%&gt;%</span> </span>
+<span id="cb80-3"><a href=""></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-4"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">mean_mpg =</span> <span class="fu">mean</span>(mpg)) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-5"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean_mpg, <span class="at">x =</span> year)) <span class="sc">+</span> </span>
+<span id="cb80-6"><a href=""></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L03-overfitting_files/figure-revealjs/unnamed-chunk-50-2.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="9" type="1">
+<li><strong>Digging deeper (optional)</strong></li>
+</ol>
+<p>Check out the online solutions for exercise 6. Instead of calculating MAE from scratch for 3 different models, I wrote a function <code>calculate_MAE()</code> to automate the process. After picking through this code, adapt the function so that it also returns the <span class="math inline">\(R^2\)</span> value of each model.</p>
+<p><strong>Done!</strong></p>
+<ul>
+<li>Knit your notes.</li>
+<li>Check the solutions in the course website.</li>
+<li>If you finish all that during class, start on Homework 2!</li>
+</ul>
+</section></section>
+<section>
+<section id="wrap-up" class="title-slide slide level1 unnumbered center">
+<h1>Wrap-Up</h1>
+
+</section>
+<section id="finishing-the-activity" class="slide level2 unnumbered">
+<h2>Finishing the Activity</h2>
+<ul>
+<li>If you didn’t finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the online manual, and ask any questions on Slack or in office hours.</li>
+<li>Re-organize and review your notes to help deepen your understanding, solidify your learning, and make homework go more smoothly!</li>
+</ul>
+</section>
+<section id="after-class" class="slide level2 unnumbered smaller">
+<h2>After Class</h2>
+<ul>
+<li>An <strong>R code video</strong>, posted under the pre-course materials for today’s class (see the “Schedule” page on this website), talks through the new code. This video is OPTIONAL. Decide what’s right for you.</li>
+<li>Continue to check in on <strong>Slack</strong>. I’ll be posting announcements there from now on.</li>
+<li><strong>Upcoming due dates:</strong>
+<ul>
+<li>CP3: due 10 minutes before our next class.
+<ul>
+<li>There are two (short) videos to watch in advance.</li>
+</ul></li>
+<li>HW1 (Regression Model Evaluation): due next Tuesday at 11:59 pm
+<ul>
+<li>Start today, even if you just review the directions and scan the exercises. Homework is not designed to be completed in one sitting!</li>
+<li>Invite others to work with you!</li>
+</ul></li>
+<li>Stop by office hours (preceptors or mine) with any questions</li>
+</ul></li>
+</ul>
 <div class="quarto-auto-generated-content">
 <p><img src="images/mac.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -558,6 +1605,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

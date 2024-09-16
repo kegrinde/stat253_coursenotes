@@ -5,17 +5,21 @@ logo: "images/mac.png"
 
 ```{r 03_setup, include=FALSE}
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(tidyverse)
+library(tidymodels)
 ```
 
-# Settling In {.unnumbered}
+# Settling In {.unnumbered .smaller}
 
-- Sit in your new randomly assigned group. Introduce yourselves and choose a team name (you'll need this later)
+- Sit in your NEW randomly assigned group
+- Introduce yourselves and choose a team name (you'll need this later)
 - Review the finalized [Course Syllabus](https://docs.google.com/presentation/d/1s7SeaT7i_IuJ_0pZKhpHn_9_LUz6_zi17fLUWbdfJFI/edit?usp=sharing)
 - Catch up on any [Slack](https://macstat253.slack.com) messages you might have missed
 - Prepare to take notes: 
-  - Locate the QMDs for today's activity 
+  - Locate the QMDs for today's activity (see the "Schedule" page on our website)
   - Save these documents in your "STAT 253 > Notes" folder
-  - You can open the Part 1 QMD but **DO NOT OPEN PART 2** 
+  - You can open the Part 1 QMD... 
+  - .. but **DO NOT** open Part 2 (yet)
 
 
 # Learning Goals {.unnumbered}
@@ -24,13 +28,15 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 - Implement testing and training sets in R using the `tidymodels` package
 
 
-# Small Group Discussion: Model Evaluation Experiment {-}
+# Small Group Discussion {-}
 
-Let's *build* and *evaluate* a predicted model of an adult's height ($y$) 
-using some predictors $x_i$ (e.g., age, weight, etc.)!
+To start class today, we're going to do a Model Evaluation Experiment!
 
 
 ## Directions {.unnumbered .smaller}
+
+Let's *build* and *evaluate* a predicted model of an adult's height ($y$) 
+using some predictors $x_i$ (e.g., age, weight, etc.).
 
 - Introduce yourself in whatever way you feel appropriate and check in with 
 each other as human beings
@@ -43,7 +49,7 @@ each other as human beings
   - How good is your simple model?
   - What would happen if we added more predictors?
 
-## Questions {.unnumbered}
+## Questions {.unnumbered .smaller}
 
 <!--
 **Steps:** 
@@ -238,6 +244,8 @@ model_1 %>%
 <details>
 <summary>Solution</summary>
 
+Again, each group will have slightly different answers here because they have different samples of data.
+
 ```{r eval=TRUE}
 # Calculate the R^2 for model_1
 model_1 %>%
@@ -285,7 +293,7 @@ $R^2$ would increase and MAE would decrease.
 - We'll pause for a few minutes to discuss each group's answers to these exercises.
 - Then, and only then, you can finish exercises 3 - 5. 
 
-Remember: 
+REMINDERS: 
 
 - Be kind to yourself/each other. You will make mistakes!
 - Collaborate: 
@@ -295,7 +303,7 @@ Remember:
   - stay in sync
 
 
-## Questions {.unnumbered}
+## Questions {.unnumbered .smaller}
 
 1. **Select a model**       
 
@@ -445,7 +453,7 @@ model_3 %>%
 
 # Notes {-}
 
-## Overfitting {-}
+## Overfitting {.unnumbered .smaller}
 
 
 When we add more and more predictors into a model, it can become *overfit* to the noise in our sample data:
@@ -463,7 +471,7 @@ When we add more and more predictors into a model, it can become *overfit* to th
 
 
 
-## R Code {-}
+## R Code {.unnumbered .smaller}
 
 This section is for **future** reference. It is a summary of code you'll learn below for creating and applying training and testing data. Throughout, suppose we wish to build and evaluate a linear regression model of `y` vs `x1` and `x2` using our `sample_data`. 
 
@@ -542,7 +550,7 @@ model_train %>%
 - We will not discuss these exercises as a class. 
 Be sure to ask questions as I walk around the room.
 
-## Questions {-}
+## Questions {.unnumbered .smaller}
 
 The following exercises are inspired by Chapter 5.3.1 of ISLR.
 
@@ -970,22 +978,27 @@ Check out the online solutions for exercise 6. Instead of calculating MAE from s
 - Check the solutions in the course website.
 - If you finish all that during class, start on Homework 2!
 
-# Wrap-Up {.unnumbered .smaller}
+# Wrap-Up {.unnumbered}
 
-- **Finishing the activity** 
-  - If you didn't finish the activity, no problem! Be sure to complete the activity
+## Finishing the Activity {-}
+
+- If you didn't finish the activity, no problem! Be sure to complete the activity
   outside of class, review the solutions in the online manual, and ask any questions 
-  on Slack or in office hours.
-  - Re-organize and review your notes to help deepen your understanding, solidify your 
+  on Slack or in office hours. 
+- Re-organize and review your notes to help deepen your understanding, solidify your 
   learning, and make homework go more smoothly!
+
+## After Class {.unnumbered .smaller}
+
 - An **R code video**, posted under the pre-course materials for today's class 
 (see the "Schedule" page on this website), talks through the new code. 
 This video is OPTIONAL. Decide what's right for you. 
 - Continue to check in on **Slack**. I'll be posting announcements there from now on. 
-- **Upcoming due dates:** 
+- **Upcoming due dates:**  
   - CP3: due 10 minutes before our next class. 
     - There are two (short) videos to watch in advance.
   - HW1 (Regression Model Evaluation): due next Tuesday at 11:59 pm
     - Start today, even if you just review the directions and scan the exercises. 
-    - (Homework is not designed to be completed in one sitting!)
-    - Using Slack, invite others to work on homework with you!
+    Homework is not designed to be completed in one sitting!
+    - Invite others to work with you!
+  - Stop by office hours (preceptors or mine) with any questions
