@@ -84,28 +84,28 @@ bf5 <- bf[x[161:200],]
 # 182
 bf6 <- bf[x[201:240],]
 
-write_csv(bf,file='docs/data/bodyfat.csv')
-write_csv(bf1,file='docs/data/bodyfat50.csv')
-write_csv(bf2,file='docs/data/bodyfat143.csv')
-write_csv(bf3,file='docs/data/bodyfat86.csv')
-write_csv(bf4,file='docs/data/bodyfat160.csv')
-write_csv(bf5,file='docs/data/bodyfat174.csv')
-write_csv(bf6,file='docs/data/bodyfat182.csv')
+# write_csv(bf,file='docs/data/bodyfat.csv')
+# write_csv(bf1,file='docs/data/bodyfat50.csv')
+# write_csv(bf2,file='docs/data/bodyfat143.csv')
+# write_csv(bf3,file='docs/data/bodyfat86.csv')
+# write_csv(bf4,file='docs/data/bodyfat160.csv')
+# write_csv(bf5,file='docs/data/bodyfat174.csv')
+# write_csv(bf6,file='docs/data/bodyfat182.csv')
+# 
+# humans <- read.csv("docs/data/bodyfat50.csv") %>%
+#   filter(ankle < 30) %>%
+#   rename(body_fat = fatSiri)
+write_csv(bf,file='data/bodyfat.csv')
+write_csv(bf1,file='data/bodyfat50.csv')
+write_csv(bf2,file='data/bodyfat143.csv')
+write_csv(bf3,file='data/bodyfat86.csv')
+write_csv(bf4,file='data/bodyfat160.csv')
+write_csv(bf5,file='data/bodyfat174.csv')
+write_csv(bf6,file='data/bodyfat182.csv')
 
-humans <- read.csv("docs/data/bodyfat50.csv") %>%
+humans <- read.csv("data/bodyfat50.csv") %>%
   filter(ankle < 30) %>%
   rename(body_fat = fatSiri)
-# write_csv(bf,file='data/bodyfat.csv')
-# write_csv(bf1,file='data/bodyfat50.csv')
-# write_csv(bf2,file='data/bodyfat143.csv')
-# write_csv(bf3,file='data/bodyfat86.csv')
-# write_csv(bf4,file='data/bodyfat160.csv')
-# write_csv(bf5,file='data/bodyfat174.csv')
-# write_csv(bf6,file='data/bodyfat182.csv')
-# 
-# humans <- read.csv("data/bodyfat50.csv") %>% 
-#   filter(ankle < 30) %>% 
-#   rename(body_fat = fatSiri)
 ```
 
 
