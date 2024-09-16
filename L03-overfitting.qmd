@@ -16,7 +16,7 @@ library(tidymodels)
 - Review the finalized [Course Syllabus](https://docs.google.com/presentation/d/1s7SeaT7i_IuJ_0pZKhpHn_9_LUz6_zi17fLUWbdfJFI/edit?usp=sharing)
 - Catch up on any [Slack](https://macstat253.slack.com) messages you might have missed
 - Prepare to take notes: 
-  - Locate the QMDs for today's activity (see the "Schedule" page on our website)
+  - Locate the QMDs for today's activity (see the [Course Schedule](schedule.html))
   - Save these documents in your "STAT 253 > Notes" folder
   - You can open the Part 1 QMD... 
   - .. but **DO NOT** open Part 2 (yet)
