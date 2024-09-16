@@ -55,7 +55,10 @@ We are still considering **Model Evaluation for Regression**.
 </center>
 
 
-```{r echo=FALSE, eval=FALSE}
+```{r experiment-setup}
+#| echo: false
+#| eval: false
+library(tidyverse)
 bf <- read.csv("https://ajohns24.github.io/data/bodyfat.csv")
 bf <- bf %>% 
     filter(weight < 300) %>% 
