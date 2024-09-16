@@ -286,7 +286,7 @@ window.Quarto = {
   <ul>
   <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#small-group-discussion-model-evaluation-experiment" id="toc-small-group-discussion-model-evaluation-experiment" class="nav-link" data-scroll-target="#small-group-discussion-model-evaluation-experiment">Small Group Discussion: Model Evaluation Experiment</a>
+  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a>
   <ul class="collapse">
   <li><a href="#directions" id="toc-directions" class="nav-link" data-scroll-target="#directions">Directions</a></li>
   <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
@@ -306,7 +306,11 @@ window.Quarto = {
   <li><a href="#directions-2" id="toc-directions-2" class="nav-link" data-scroll-target="#directions-2">Directions</a></li>
   <li><a href="#questions-2" id="toc-questions-2" class="nav-link" data-scroll-target="#questions-2">Questions</a></li>
   </ul></li>
-  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a>
+  <ul class="collapse">
+  <li><a href="#finishing-the-activity" id="toc-finishing-the-activity" class="nav-link" data-scroll-target="#finishing-the-activity">Finishing the Activity</a></li>
+  <li><a href="#after-class" id="toc-after-class" class="nav-link" data-scroll-target="#after-class">After Class</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L03-overfitting.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -332,17 +336,19 @@ window.Quarto = {
 </header>
 
 
-<section id="settling-in" class="level1 unnumbered">
-<h1 class="unnumbered">Settling In</h1>
+<section id="settling-in" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Settling In</h1>
 <ul>
-<li>Sit in your new randomly assigned group. Introduce yourselves and choose a team name (you’ll need this later)</li>
+<li>Sit in your NEW randomly assigned group</li>
+<li>Introduce yourselves and choose a team name (you’ll need this later)</li>
 <li>Review the finalized <a href="https://docs.google.com/presentation/d/1s7SeaT7i_IuJ_0pZKhpHn_9_LUz6_zi17fLUWbdfJFI/edit?usp=sharing">Course Syllabus</a></li>
 <li>Catch up on any <a href="https://macstat253.slack.com">Slack</a> messages you might have missed</li>
 <li>Prepare to take notes:
 <ul>
-<li>Locate the QMDs for today’s activity</li>
+<li>Locate the QMDs for today’s activity (see the “Schedule” page on our website)</li>
 <li>Save these documents in your “STAT 253 &gt; Notes” folder</li>
-<li>You can open Part 1 but <strong>DO NOT OPEN PART 2</strong></li>
+<li>You can open the Part 1 QMD…</li>
+<li>.. but <strong>DO NOT</strong> open Part 2 (yet)</li>
 </ul></li>
 </ul>
 </section>
@@ -353,11 +359,12 @@ window.Quarto = {
 <li>Implement testing and training sets in R using the <code>tidymodels</code> package</li>
 </ul>
 </section>
-<section id="small-group-discussion-model-evaluation-experiment" class="level1 unnumbered">
-<h1 class="unnumbered">Small Group Discussion: Model Evaluation Experiment</h1>
-<p>Let’s <em>build</em> and <em>evaluate</em> a predicted model of an adult’s height (<span class="math inline">\(y\)</span>) using some predictors <span class="math inline">\(x_i\)</span> (e.g., age, weight, etc.)!</p>
+<section id="small-group-discussion" class="level1 unnumbered">
+<h1 class="unnumbered">Small Group Discussion</h1>
+<p>To start class today, we’re going to do a Model Evaluation Experiment!</p>
 <section id="directions" class="level2 unnumbered smaller">
 <h2 class="unnumbered smaller anchored" data-anchor-id="directions">Directions</h2>
+<p>Let’s <em>build</em> and <em>evaluate</em> a predicted model of an adult’s height (<span class="math inline">\(y\)</span>) using some predictors <span class="math inline">\(x_i\)</span> (e.g., age, weight, etc.).</p>
 <ul>
 <li>Introduce yourself in whatever way you feel appropriate and check in with each other as human beings</li>
 <li>Come up with a team name</li>
@@ -374,8 +381,8 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
-<section id="questions" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="questions">Questions</h2>
+<section id="questions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions">Questions</h2>
 <!--
 **Steps:** 
 We are still considering **Model Evaluation for Regression**.
@@ -493,6 +500,7 @@ Solution
 <summary>
 Solution
 </summary>
+<p>Again, each group will have slightly different answers here because they have different samples of data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the R^2 for model_1</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="sc">%&gt;%</span></span>
@@ -556,7 +564,7 @@ Solution
 <li>We’ll pause for a few minutes to discuss each group’s answers to these exercises.</li>
 <li>Then, and only then, you can finish exercises 3 - 5.</li>
 </ul>
-<p>Remember:</p>
+<p>REMINDERS:</p>
 <ul>
 <li>Be kind to yourself/each other. You will make mistakes!</li>
 <li>Collaborate:
@@ -568,8 +576,8 @@ Solution
 </ul></li>
 </ul>
 </section>
-<section id="questions-1" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="questions-1">Questions</h2>
+<section id="questions-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions-1">Questions</h2>
 <ol type="1">
 <li><strong>Select a model</strong></li>
 </ol>
@@ -749,8 +757,8 @@ In summary, which model seems best? What’s the central theme here?</li>
 </section>
 <section id="notes" class="level1 unnumbered">
 <h1 class="unnumbered">Notes</h1>
-<section id="overfitting" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="overfitting">Overfitting</h2>
+<section id="overfitting" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="overfitting">Overfitting</h2>
 <p>When we add more and more predictors into a model, it can become <em>overfit</em> to the noise in our sample data:</p>
 <ul>
 <li>our model loses the broader trend / big picture</li>
@@ -763,8 +771,8 @@ In summary, which model seems best? What’s the central theme here?</li>
 <li>Instead, we should <em>build</em> and <em>evaluate</em>, or <strong>train</strong> and <strong>test</strong>, our model using different data.</li>
 </ul>
 </section>
-<section id="r-code" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="r-code">R Code</h2>
+<section id="r-code" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="r-code">R Code</h2>
 <p>This section is for <strong>future</strong> reference. It is a summary of code you’ll learn below for creating and applying training and testing data. Throughout, suppose we wish to build and evaluate a linear regression model of <code>y</code> vs <code>x1</code> and <code>x2</code> using our <code>sample_data</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
@@ -829,8 +837,8 @@ In summary, which model seems best? What’s the central theme here?</li>
 <li>We will not discuss these exercises as a class. Be sure to ask questions as I walk around the room.</li>
 </ul>
 </section>
-<section id="questions-2" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="questions-2">Questions</h2>
+<section id="questions-2" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions-2">Questions</h2>
 <p>The following exercises are inspired by Chapter 5.3.1 of ISLR.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages &amp; data</span></span>
@@ -1168,7 +1176,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L03-overfitting_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L03-overfitting_files/figure-revealjs/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1211,7 +1219,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L03-overfitting_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L03-overfitting_files/figure-revealjs/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1253,7 +1261,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L03-overfitting_files/figure-html/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L03-overfitting_files/figure-revealjs/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1272,14 +1280,18 @@ Solution
 </ul>
 </section>
 </section>
-<section id="wrap-up" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Wrap-Up</h1>
-<ul>
-<li><strong>Finishing the activity</strong>
+<section id="wrap-up" class="level1 unnumbered">
+<h1 class="unnumbered">Wrap-Up</h1>
+<section id="finishing-the-activity" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="finishing-the-activity">Finishing the Activity</h2>
 <ul>
 <li>If you didn’t finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the online manual, and ask any questions on Slack or in office hours.</li>
 <li>Re-organize and review your notes to help deepen your understanding, solidify your learning, and make homework go more smoothly!</li>
-</ul></li>
+</ul>
+</section>
+<section id="after-class" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="after-class">After Class</h2>
+<ul>
 <li>An <strong>R code video</strong>, posted under the pre-course materials for today’s class (see the “Schedule” page on this website), talks through the new code. This video is OPTIONAL. Decide what’s right for you.</li>
 <li>Continue to check in on <strong>Slack</strong>. I’ll be posting announcements there from now on.</li>
 <li><strong>Upcoming due dates:</strong>
@@ -1290,17 +1302,56 @@ Solution
 </ul></li>
 <li>HW1 (Regression Model Evaluation): due next Tuesday at 11:59 pm
 <ul>
-<li>Start today, even if you just review the directions and scan the exercises.</li>
-<li>(Homework is not designed to be completed in one sitting!)</li>
-<li>Using Slack, invite others to work on homework with you!</li>
+<li>Start today, even if you just review the directions and scan the exercises. Homework is not designed to be completed in one sitting!</li>
+<li>Invite others to work with you!</li>
 </ul></li>
+<li>Stop by office hours (preceptors or mine) with any questions</li>
 </ul></li>
 </ul>
 
 
 </section>
+</section>
 
 </main> <!-- /main -->
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
