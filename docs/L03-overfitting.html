@@ -362,6 +362,7 @@ window.Quarto = {
 <section id="small-group-discussion" class="level1 unnumbered">
 <h1 class="unnumbered">Small Group Discussion</h1>
 <p>To start class today, we’re going to do a Model Evaluation Experiment!</p>
+<p>Open the Part 1 QMD file.</p>
 <section id="directions" class="level2 unnumbered smaller">
 <h2 class="unnumbered smaller anchored" data-anchor-id="directions">Directions</h2>
 <p>Let’s <em>build</em> and <em>evaluate</em> a predicted model of an adult’s height (<span class="math inline">\(y\)</span>) using some predictors <span class="math inline">\(x_i\)</span> (e.g., age, weight, etc.).</p>
@@ -559,7 +560,6 @@ Solution
 <section id="directions-1" class="level2 unnumbered smaller">
 <h2 class="unnumbered smaller anchored" data-anchor-id="directions-1">Directions</h2>
 <ul>
-<li>Open the Part 1 QMD file.</li>
 <li>Take <strong>5 minutes</strong> to complete exercises 1 and 2 (choosing one of three models).</li>
 <li>We’ll pause for a few minutes to discuss each group’s answers to these exercises.</li>
 <li>Then, and only then, you can finish exercises 3 - 5.</li>
@@ -1176,7 +1176,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L03-overfitting_files/figure-revealjs/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L03-overfitting_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1219,7 +1219,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L03-overfitting_files/figure-revealjs/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L03-overfitting_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1261,7 +1261,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L03-overfitting_files/figure-revealjs/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L03-overfitting_files/figure-html/unnamed-chunk-50-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1276,7 +1276,7 @@ Solution
 <ul>
 <li>Knit your notes.</li>
 <li>Check the solutions in the course website.</li>
-<li>If you finish all that during class, start on Homework 2!</li>
+<li>If you finish all that during class, start your homework!</li>
 </ul>
 </section>
 </section>
@@ -1314,44 +1314,6 @@ Solution
 </section>
 
 </main> <!-- /main -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
