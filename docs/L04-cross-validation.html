@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -71,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -223,9 +286,25 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#notes-cross-validation" id="toc-notes-cross-validation" class="nav-link" data-scroll-target="#notes-cross-validation">Notes: Cross-Validation</a>
+  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">CONTEXT</a></li>
+  <li><a href="#goal-model-evaluation" id="toc-goal-model-evaluation" class="nav-link" data-scroll-target="#goal-model-evaluation">GOAL: model evaluation</a></li>
+  <li><a href="#why-is-overfitting-so-bad" id="toc-why-is-overfitting-so-bad" class="nav-link" data-scroll-target="#why-is-overfitting-so-bad">Why is overfitting so bad?</a></li>
+  <li><a href="#k-fold-cross-validation" id="toc-k-fold-cross-validation" class="nav-link" data-scroll-target="#k-fold-cross-validation">k-fold Cross Validation</a></li>
+  </ul></li>
+  <li><a href="#small-group-discussion-algorithms-and-tuning" id="toc-small-group-discussion-algorithms-and-tuning" class="nav-link" data-scroll-target="#small-group-discussion-algorithms-and-tuning">Small Group Discussion: Algorithms and Tuning</a>
+  <ul class="collapse">
+  <li><a href="#definitions" id="toc-definitions" class="nav-link" data-scroll-target="#definitions">Definitions</a></li>
+  <li><a href="#prompts" id="toc-prompts" class="nav-link" data-scroll-target="#prompts">Prompts</a></li>
+  </ul></li>
+  <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L04-cross-validation.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -251,22 +330,953 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="settling-in" class="level1 unnumbered">
-<h1 class="unnumbered">Settling In</h1>
+<section id="settling-in" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Settling In</h1>
+<ul>
+<li>Sit in the randomly assigned groups from last class.</li>
+<li>Check in with each other as humans.</li>
+</ul>
+<p>Announcements:</p>
+<div class="incremental">
+<ul class="incremental">
+<li>Thursday at 11:15am - MSCS Coffee Break
+<ul class="incremental">
+<li>Smail Gallery</li>
+</ul></li>
+<li>You should have been notified of a “Stat 253 Feedback” Google Sheet shared with you
+<ul class="incremental">
+<li>Let me know if you didn’t. This is where your individual feedback will be.</li>
+<li>I’ll send regular reminders to check this sheet.</li>
+</ul></li>
+<li>Prepare to take notes.
+<ul class="incremental">
+<li>Locate the Rmd for today’s <em>activity</em> in the Schedule of the course website (see bottom of slides for url).</li>
+<li>Save this Rmd in the “STAT 253 &gt; Notes” folder.</li>
+</ul></li>
+</ul>
+</div>
 </section>
 <section id="learning-goals" class="level1 unnumbered">
 <h1 class="unnumbered">Learning Goals</h1>
+<ul>
+<li>Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric</li>
+<li>Explain what role CV has in a predictive modeling analysis and its connection to overfitting</li>
+<li>Explain the pros/cons of higher vs.&nbsp;lower k in k-fold CV in terms of sample size and computing time</li>
+<li>Implement cross-validation in R using the <code>tidymodels</code> package</li>
+<li>Using these tools and concepts to:</li>
+<li>Inform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs</li>
+</ul>
+<p><br></p>
 </section>
-<section id="small-group-discussion" class="level1 unnumbered">
-<h1 class="unnumbered">Small Group Discussion</h1>
+<section id="notes-cross-validation" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: Cross-Validation</h1>
+<section id="context" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="context">CONTEXT</h2>
+<center>
+<img src="images/MLdiagram1.jpg">
+</center>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to build a model some output variable <span class="math inline">\(y\)</span> by some predictors <span class="math inline">\(x\)</span>.</p></li>
+<li><p><strong>task = regression</strong><br>
+<span class="math inline">\(y\)</span> is quantitative</p></li>
+<li><p><strong>model = linear regression model via least squares algorithm</strong><br>
+We’ll assume that the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> can be represented by</p>
+<p><span class="math display">\[y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \varepsilon\]</span></p></li>
+</ul>
 </section>
-<section id="notes" class="level1 unnumbered">
-<h1 class="unnumbered">Notes</h1>
+<section id="goal-model-evaluation" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="goal-model-evaluation">GOAL: model evaluation</h2>
+<p>We want more <strong>honest</strong> metrics of prediction quality that</p>
+<ol type="1">
+<li>assess how well our model predicts <strong>new outcomes</strong>; and</li>
+<li>help prevent <strong>overfitting</strong>.</li>
+</ol>
+<p><br>
+</p>
+<p><img src="https://www.lucagiusti.it/wp-content/uploads/2022/10/overfitting-Trading-strategy.png" class="img-fluid" width="400"></p>
+</section>
+<section id="why-is-overfitting-so-bad" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="why-is-overfitting-so-bad">Why is overfitting so bad?</h2>
+<p>Not only can overfitting produce misleading models, it can have serious societal impacts. Examples:</p>
+<ul>
+<li><p><a href="https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G">A former Amazon algorithm</a> built to help sift through resumes was <em>overfit</em> to its current employees in leadership positions (who weren’t representative of the general population or candidate pool).</p></li>
+<li><p>Facial recognition algorithms are often <em>overfit</em> to the people who build them (who are not broadly representative of society). As one example, this has led to <a href="https://www.nytimes.com/2019/07/08/us/detroit-facial-recognition-cameras.html">disproportionate bias in policing</a>. For more on this topic, you might check out <a href="https://www.youtube.com/watch?v=jZl55PsfZJQ">Coded Bias</a>, a documentary by Shalini Kantayya which features MIT Media Lab researcher Joy Buolamwini.</p></li>
+</ul>
+</section>
+<section id="k-fold-cross-validation" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="k-fold-cross-validation">k-fold Cross Validation</h2>
+<p>We can use <strong>k-fold cross-validation</strong> to estimate the typical error in our model predictions for <em>new</em> data:</p>
+<div class="incremental">
+<ul class="incremental">
+<li>Divide the data into <span class="math inline">\(k\)</span> folds (or groups) of approximately equal size.<br>
+</li>
+<li>Repeat the following procedures for each fold <span class="math inline">\(j = 1,2,...,k\)</span>:
+<ul class="incremental">
+<li>Remove fold <span class="math inline">\(j\)</span> from the data set.<br>
+</li>
+<li>Fit a model using the data in the other <span class="math inline">\(k-1\)</span> folds (training).<br>
+</li>
+<li>Use this model to predict the responses for the <span class="math inline">\(n_j\)</span> cases in fold <span class="math inline">\(j\)</span>: <span class="math inline">\(\hat{y}_1, ..., \hat{y}_{n_j}\)</span>.<br>
+</li>
+<li>Calculate the MAE for fold <span class="math inline">\(j\)</span> (testing): <span class="math inline">\(\text{MAE}_j = \frac{1}{n_j}\sum_{i=1}^{n_j} |y_i - \hat{y}_i|\)</span>.</li>
+</ul></li>
+<li>Combine this information into one measure of model quality: <span class="math display">\[\text{CV}_{(k)} = \frac{1}{k} \sum_{j=1}^k \text{MAE}_j\]</span></li>
+</ul>
+</div>
+<center>
+<img src="images/crossval.png">
+</center>
+</section>
+</section>
+<section id="small-group-discussion-algorithms-and-tuning" class="level1 unnumbered">
+<h1 class="unnumbered">Small Group Discussion: Algorithms and Tuning</h1>
+<section id="definitions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="definitions">Definitions</h2>
+<ul>
+<li><p><strong>algorithm</strong> = a step-by-step procedure for solving a problem (Merriam-Webster)</p></li>
+<li><p><strong>tuning parameter</strong> = a <em>parameter</em> or <em>quantity</em> upon which an algorithm depends, that must be <em>selected</em> or <em>tuned</em> to “optimize” the algorithm</p></li>
+</ul>
+<p><img src="https://c1.wallpaperflare.com/preview/461/820/840/music-low-electric-bass-strings.jpg" class="img-fluid" width="250"><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <img src="https://p1.pxfuel.com/preview/870/881/120/mixer-music-audio-studio-sound-studio-sound-mixer.jpg" class="img-fluid" width="250"></p>
+</section>
+<section id="prompts" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="prompts">Prompts</h2>
+<p>. . .</p>
+<ol type="1">
+<li><strong>Algorithms</strong></li>
+</ol>
+<ol type="a">
+<li><p>Why is <span class="math inline">\(k\)</span>-fold cross-validation an <em>algorithm</em>?</p></li>
+<li><p>What is the <em>tuning parameter</em> of this algorithm and what values can this take?</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>Yes. It follows a list of steps to get to its goal.</li>
+<li><span class="math inline">\(k\)</span>, the number of folds, is a tuning parameter. <span class="math inline">\(k\)</span> can be any integer from 1, 2, …, <span class="math inline">\(n\)</span> where <span class="math inline">\(n\)</span> is our sample size.</li>
+</ol>
+</details>
+<p><br></p>
+<p>. . .</p>
+<ol start="2" type="1">
+<li><strong>Tuning the k-fold Cross-Validation algorithm</strong></li>
+</ol>
+<!-- bring deck of cards -->
+<!-- 2/3 should be even cards and 1/3 should be odd -->
+<!-- pass them out so that 2-fold cross-validation is bad. 1/2 of the class has more, but not all, of the odd cards -->
+<!-- make students sit at 6 tables, if possible, to make 3-fold cv easier -->
+<p>Let’s explore k-fold cross-validation with some personal experience. Our class has a representative sample of cards from a non-traditional population (no “face cards”, not equal numbers, etc). We want to use these to predict whether a new card will be odd or even (a classification task).</p>
+<ol type="a">
+<li>Based on <em>all</em> of our cards, do we predict the next card will be odd or even?</li>
+<li>You’ve been split into 2 groups. Use 2-fold cross-validation to estimate the possible error of using <em>our</em> sample of cards to predict whether a <em>new</em> card will be odd or even. How’s this different than <em>validation</em>?</li>
+<li>Repeat for 3-fold cross-validation. Why might this be better than 2-fold cross-validation?</li>
+<li>Repeat for LOOCV, i.e.&nbsp;n-fold cross-validation where n is the number of students in this room. Why might this be worse than 3-fold cross-validation?</li>
+<li>What value of k do you think practitioners typically use?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>Use the percentage of odd and percentage of even among the sample of cards to help you make a prediction.</li>
+<li>We use both groups as training and testing, in turn.</li>
+<li>We have a larger dataset to train our model on. We are less likely to get an unrepresentative set as our training data.</li>
+<li>Prediction error for 1 person is highly variable.</li>
+<li>In practice, <span class="math inline">\(k = 10\)</span> and <span class="math inline">\(k=7\)</span> are common choices for cross-validation. This has been shown to hit the ‘sweet spot’ between the extremes of <span class="math inline">\(k=n\)</span> (LOOCV) and <span class="math inline">\(k=2\)</span>.</li>
+</ol>
+<ul>
+<li><span class="math inline">\(k=2\)</span> only utilizes 50% of the data for each training model, thus might result in overestimating the prediction error</li>
+<li><span class="math inline">\(k=n\)</span> leave-one-out cross-validation (LOOCV) requires us to build <span class="math inline">\(n\)</span> training models, thus might be computationally expensive for larger sample sizes <span class="math inline">\(n\)</span>. Further, with only one data point in each test set, the training sets have a lot of overlap. This correlation among the training sets can make the ultimate corresponding estimate of prediction error less reliable.</li>
+</ul>
+</details>
+<p>. . .</p>
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- **SPECIAL CASE: LEAVE ONE OUT CROSS-VALIDATION (LOOCV)** -->
+<!-- LOOCV is a special case of k-fold cross-validation in which, in each iteration, we hold out **one** data point as a test case and use the other $n-1$ data points for training.  Thus LOOCV is equivalent to $k = n$ fold CV. In pictures: In the end, we fit $n$ training models (blue lines) and test each on one test car (red dots). -->
+<!-- ```{r echo = FALSE} -->
+<!-- library(ISLR) -->
+<!-- data(Auto) -->
+<!-- cars <- Auto -->
+<!-- set.seed(2) -->
+<!-- cars_rep <- cars %>%  -->
+<!--     sample_n(size = 20, replace = FALSE)  -->
+<!-- pred <- rep(0,20) -->
+<!-- for(i in 1:20){ -->
+<!--   train <- cars_rep[-i,] -->
+<!--   test  <- cars_rep[i,] -->
+<!--   pred[i] <- predict(lm(mpg ~ horsepower, train), newdata = test) -->
+<!-- } -->
+<!-- cars_rep <- cars_rep %>%  -->
+<!--     mutate(prediction = pred) %>%  -->
+<!--     rep_sample_n(reps = 20, size = 20, replace = FALSE) %>%  -->
+<!--     group_by(replicate) %>%  -->
+<!--     arrange(name) %>%  -->
+<!--     mutate(test = (1:20 == replicate)) %>%  -->
+<!--     mutate(replicate = as.factor(replicate)) -->
+<!-- ``` -->
+<!-- ```{r echo = FALSE} -->
+<!-- train_sets <- cars_rep[cars_rep$test == FALSE, ] -->
+<!-- test_sets  <- cars_rep[cars_rep$test == TRUE, ] -->
+<!-- ``` -->
+<!-- ```{r fig.width=4, fig.height=4, echo = FALSE, eval = FALSE} -->
+<!-- ggplot(train_sets, aes(x = horsepower, y = mpg)) + -->
+<!--     geom_point() +  -->
+<!--     stat_smooth(method = "lm", aes(group = replicate), se=FALSE, fullrange = TRUE) +  -->
+<!--     geom_point(data = test_sets, aes(x = horsepower, y = mpg), color = "red", size = 4) +  -->
+<!--     geom_segment(data = test_sets, aes(x = horsepower, xend = horsepower, y = mpg, yend = prediction), color = "red") + -->
+<!--     transition_states(replicate) -->
+<!-- ``` -->
+<!-- ```{r fig.width=4, fig.height=4, echo = FALSE} -->
+<!-- ggplot(train_sets, aes(x = horsepower, y = mpg)) + -->
+<!--     geom_point() +  -->
+<!--     stat_smooth(method = "lm", aes(group = replicate), se=FALSE, fullrange = TRUE) +  -->
+<!--     geom_point(data = test_sets, aes(x = horsepower, y = mpg), color = "red", size = 4) +  -->
+<!--     geom_segment(data = test_sets, aes(x = horsepower, xend = horsepower, y = mpg, yend = prediction), color = "red")  -->
+<!-- ``` -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- **SELECTING k** -->
+<!-- In practice, $k = 10$ and $k=7$ are common choices for cross-validation.  This has been shown to hit the 'sweet spot' between the extremes of $k=n$ (LOOCV) and $k=2$.   -->
+<!-- - $k=2$ only utilizes 50% of the data for each training model, thus might result in overestimating the prediction error -->
+<!-- - $k=n$ leave-one-out cross-validation (LOOCV) requires us to build $n$ training models, thus might be computationally expensive for larger sample sizes $n$. Further, with only one data point in each test set, the training sets have a lot of overlap.  This correlation among the training sets can make the ultimate corresponding estimate of prediction error less reliable. -->
+<!-- c. As a class, we'll discuss the **bias-variance trade-off** for CV.     -->
+<!-- <!-- p183 -->
+<!-- all the CV are estimates of the prediction error of model built using our sample data     -->
+<!-- LOOCV uses data most similar to full data: little bias -->
+<!-- but also folds are similar in data - covariance increases variability in LOOCV.  -->
+<!-- "Since the mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance than does the test error estimate resulting from k-fold CV."" -->
+<!-- BUT the impact depends upon sample size, etc -->
+<!-- see for loop at the end of the activity: LOOCV varies less from sample to sample -->
+<p><br></p>
+<ol start="3" type="1">
+<li><strong>R Code Preview</strong></li>
+</ol>
+<p>We’ve been doing a 2-step process to build <strong>linear regression models</strong> using the <strong>tidymodels</strong> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: model estimation</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sample_data</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For k-fold cross-validation, we can <em>tweak</em> STEP 2.</p>
+<ul>
+<li>Discuss the code below and why we need to set the seed.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># k-fold cross-validation</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>my_model_cv <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">~</span> x1 <span class="sc">+</span> x2, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___), </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae, rsq)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+The process of creating the folds is random, so we should set the seed to have reproducibility within our work.
+</details>
+</section>
+</section>
+<section id="notes-r-code" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Notes: R code</h1>
+<p>Suppose we wish to build and evaluate a linear regression model of <code>y</code> vs <code>x1</code> and <code>x2</code> using our <code>sample_data</code>.</p>
+<p><br>
+</p>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p>. . .</p>
+<p><strong>Obtain k-fold cross-validated estimates of MAE and <span class="math inline">\(R^2\)</span></strong></p>
+<p>(Review above for discussion of these steps.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model specification</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># k-fold cross-validation</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For "v", put your number of folds k</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>model_cv <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___), </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae, rsq)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p>. . .</p>
+<p><strong>Obtain the cross-validated metrics</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p>. . .</p>
+<p><strong>Details: get the MAE and R-squared for each test fold</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MAE for each test fold: Model 1</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(.metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
 </section>
 <section id="exercises" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises</h1>
+<section id="instructions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="instructions">Instructions</h2>
+<ul>
+<li>Go to the <a href="schedule.html">Course Schedule</a> and find the QMD template for today</li>
+<li>Download, save (in your STAT 253 Notes folder, NOT your downloads!), and open that QMD</li>
+<li>Work through the exercises implementing CV with the <code>humans</code> data</li>
+<li>Same directions as before:
+<ul>
+<li>Be kind to yourself/each other</li>
+<li>Collaborate</li>
+<li>DON’T edit starter code (i.e., code with blanks <code>___</code>). Instead, copy-paste into a new code chunk below and edit from there.</li>
+</ul></li>
+<li>Ask me questions as I move around the room</li>
+</ul>
+</section>
+<section id="questions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions">Questions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages and data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/bodyfat50.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ankle <span class="sc">&lt;</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">body_fat =</span> fatSiri)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<ol type="1">
+<li><p><strong>Review: In-sample metrics</strong></p>
+<p>Use the <code>humans</code> data to build two separate models of <code>height</code>:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">___</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(___) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: model estimation</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(height <span class="sc">~</span> hip <span class="sc">+</span> weight <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle, <span class="at">data =</span> humans)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(height <span class="sc">~</span> chest <span class="sc">*</span> age <span class="sc">*</span> weight <span class="sc">*</span> body_fat <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist, <span class="at">data =</span> humans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Calculate the **in-sample** R-squared for both models:</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE R^2 for model_1 = ???</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE R^2 for model_2 = ???</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>Calculate the **in-sample** MAE for both models:</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE MAE for model_1 = ???</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(<span class="at">new_data =</span> ___) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mae</span>(<span class="at">truth =</span> ___, <span class="at">estimate =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE MAE for model_2 = ???</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(<span class="at">new_data =</span> ___) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mae</span>(<span class="at">truth =</span> ___, <span class="at">estimate =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: model estimation</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> hip <span class="sc">+</span> weight <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle, <span class="at">data =</span> humans)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> chest <span class="sc">*</span> age <span class="sc">*</span> weight <span class="sc">*</span> body_fat <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist, <span class="at">data =</span> humans)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE R^2 for model_1 = 0.40</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.401         0.310  1.98      4.42 0.00345     5  -78.8  172.  183.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE R^2 for model_2 = 0.87</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.874         0.680  1.35      4.51 0.00205    23  -48.4  147.  188.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE MAE for model_1 = 1.55</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard        1.55</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># IN-SAMPLE MAE for model_2 = 0.64</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mae</span>(<span class="at">truth =</span> height, <span class="at">estimate =</span> .pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 mae     standard       0.646</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>In-sample model comparison</strong><br>
+Which model seems “better” by the in-sample metrics you calculated above? Any concerns about either of these models?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+The in-sample metrics are better for <code>model_2</code>, but from experience in our previous class, we should expect this to be overfit.
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><p><strong>10-fold CV</strong><br>
+Complete the code to run 10-fold cross-validation for our two models.</p>
+<p><code>model_1</code>: <code>height ~ hip + weight</code><br>
+<code>model_2</code>: <code>height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist</code></p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold cross-validation for model_1</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>model_1_cv <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    ___,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">___ =</span> <span class="fu">vfold_cv</span>(___, <span class="at">v =</span> ___), </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">___ =</span> <span class="fu">metric_set</span>(mae, rsq)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold cross-validation for model_2</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>model_2_cv <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">___</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    ___,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">___ =</span> <span class="fu">vfold_cv</span>(___, <span class="at">v =</span> ___), </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">___ =</span> <span class="fu">metric_set</span>(mae, rsq)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10-fold cross-validation for model_1</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>model_1_cv <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    height <span class="sc">~</span> hip <span class="sc">+</span> weight <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(humans, <span class="at">v =</span> <span class="dv">10</span>), </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae, rsq)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: 10-fold cross-validation for model_2</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>model_2_cv <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    height <span class="sc">~</span> chest <span class="sc">*</span> age <span class="sc">*</span> weight <span class="sc">*</span> body_fat <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(humans, <span class="at">v =</span> <span class="dv">10</span>), </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae, rsq)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<p><br></p>
+<ol start="4" type="1">
+<li><strong>Calculating the CV MAE</strong></li>
+</ol>
+<ol type="a">
+<li>Use <code>collect_metrics()</code> to obtain the cross-validated MAE and <span class="math inline">\(R^2\)</span> for both models.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HINT</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>___ <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="a">
+<li>Interpret the cross-validated MAE <em>and</em> <span class="math inline">\(R^2\)</span> for <code>model_1</code>.</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model_1</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># CV MAE = 1.87, CV R-squared = 0.40</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>model_1_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  .metric .estimator  mean     n std_err .config             
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 mae     standard   1.87     10   0.159 Preprocessor1_Model1
+2 rsq     standard   0.409    10   0.124 Preprocessor1_Model1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model_2</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># CV MAE = 2.47, CV R-squared = 0.52</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>model_2_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  .metric .estimator  mean     n std_err .config             
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 mae     standard   2.47     10   0.396 Preprocessor1_Model1
+2 rsq     standard   0.526    10   0.122 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>We expect our first model to explain roughly 40% of variability in height among new adults, and to produce predictions of height that are off by 1.9 inches on average.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="5" type="1">
+<li><p><strong>Details: fold-by-fold results</strong><br>
+<code>collect_metrics()</code> gave the final CV MAE, or the average MAE across all 10 test folds. <code>unnest(.metrics)</code> provides the MAE from <em>each</em> test fold.</p>
+<ol type="a">
+<li><p>Obtain the fold-by-fold results for the <code>model_1</code> cross-validation procedure using <code>unnest(.metrics)</code>.</p>
+<p>::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HINT</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>___ <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(.metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>:::</p></li>
+<li><p>Which fold had the worst average prediction error and what was it?</p></li>
+<li><p>Recall that <code>collect_metrics()</code> reported a final CV MAE of 1.87 for <code>model_1</code>. Confirm this calculation by wrangling the fold-by-fold results from part a.</p></li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a. model_1 MAE for each test fold</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>model_1_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(.metrics) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"mae"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 7
+   splits         id     .metric .estimator .estimate .config           .notes  
+   &lt;list&gt;         &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;             &lt;list&gt;  
+ 1 &lt;split [35/4]&gt; Fold01 mae     standard        2.22 Preprocessor1_Mo… &lt;tibble&gt;
+ 2 &lt;split [35/4]&gt; Fold02 mae     standard        2.34 Preprocessor1_Mo… &lt;tibble&gt;
+ 3 &lt;split [35/4]&gt; Fold03 mae     standard        2.56 Preprocessor1_Mo… &lt;tibble&gt;
+ 4 &lt;split [35/4]&gt; Fold04 mae     standard        1.51 Preprocessor1_Mo… &lt;tibble&gt;
+ 5 &lt;split [35/4]&gt; Fold05 mae     standard        1.81 Preprocessor1_Mo… &lt;tibble&gt;
+ 6 &lt;split [35/4]&gt; Fold06 mae     standard        2.43 Preprocessor1_Mo… &lt;tibble&gt;
+ 7 &lt;split [35/4]&gt; Fold07 mae     standard        1.61 Preprocessor1_Mo… &lt;tibble&gt;
+ 8 &lt;split [35/4]&gt; Fold08 mae     standard        1.84 Preprocessor1_Mo… &lt;tibble&gt;
+ 9 &lt;split [35/4]&gt; Fold09 mae     standard        1.28 Preprocessor1_Mo… &lt;tibble&gt;
+10 &lt;split [36/3]&gt; Fold10 mae     standard        1.10 Preprocessor1_Mo… &lt;tibble&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># b. fold 3 had the worst error (2.55)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># c. use these metrics to confirm the 1.87 CV MAE for model_1</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>model_1_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(.metrics) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"mae"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(.estimate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `mean(.estimate)`
+              &lt;dbl&gt;
+1              1.87</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<p><br>
+<br>
+</p>
+<ol start="6" type="1">
+<li><p><strong>Comparing models</strong><br>
+The table below summarizes the in-sample and 10-fold CV MAE for both models.</p>
+<p><br>
+</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">IN-SAMPLE MAE</th>
+<th style="text-align: right;">10-fold CV MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>model_1</code></td>
+<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">1.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>model_2</code></td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">2.47</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<ol type="a">
+<li>Based on the in-sample MAE alone, which model appears better?<br>
+</li>
+<li>Based on the CV MAE alone, which model appears better?<br>
+</li>
+<li>Based on all of these results, which model would you pick?</li>
+<li>Do the in-sample and CV MAE suggest that <code>model_1</code> is overfit to our <code>humans</code> sample data? What about <code>model_2</code>?</li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li><code>model_2</code></li>
+<li><code>model_1</code></li>
+<li><code>model_1</code> – <code>model_2</code> produces bad predictions for new adults</li>
+<li><code>model_1</code> is <em>NOT</em> overfit – its predictions of height for new adults seem roughly as accurate as the predictions for the adults in our sample. <code>model_2</code> <em>IS</em> overfit – its predictions of height for new adults are worse than the predictions for the adults in our sample.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="7" type="1">
+<li><strong>LOOCV</strong>
+<ol type="a">
+<li>Reconsider <code>model_1</code>. Instead of estimating its prediction accuracy using the 10-fold CV MAE, use the LOOCV MAE. THINK: How many people are in our <code>humans</code> sample?</li>
+<li>How does the LOOCV MAE compare to the 10-fold CV MAE of 1.87? NOTE: These are just two different <em>approaches</em> to estimating the same thing: the typical prediction error when applying our model to new data. Thus we should expect them to be similar.<br>
+</li>
+<li>Explain why we technically don’t <em>need</em> to <code>set.seed()</code> for the LOOCV algorithm.</li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>There are 40 people in our sample, thus LOOCV is equivalent to 40-fold CV:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(humans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 39</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model_1_loocv <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    height <span class="sc">~</span> hip <span class="sc">+</span> weight <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(humans, <span class="at">v =</span> <span class="fu">nrow</span>(humans)), </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>model_1_loocv <span class="sc">%&gt;%</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  .metric .estimator  mean     n std_err .config             
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 mae     standard    1.82    39   0.179 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>The LOOCV MAE (1.82) is very similar to the 10-fold CV MAE (1.96).</li>
+<li>There’s no randomness in the test folds. Each test fold is a single person.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="8" type="1">
+<li><strong>Data drill</strong></li>
+</ol>
+<ol type="a">
+<li>Calculate the average height of people under 40 years old vs people 40+ years old.</li>
+<li>Plot height vs age among our subjects that are 30+ years old.</li>
+<li>Fix this code:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>model_3<span class="ot">&lt;-</span>lm_spec<span class="sc">%&gt;%</span><span class="fu">fit</span>(height<span class="sc">~</span>age,<span class="at">data=</span>humans)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>model_3<span class="sc">%&gt;%</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a (one of many solutions)</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>humans <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">younger_older =</span> age <span class="sc">&lt;</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(younger_older) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  younger_older `mean(height)`
+  &lt;lgl&gt;                  &lt;dbl&gt;
+1 FALSE                   70.4
+2 TRUE                    69.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># b</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>humans <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">30</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> height)) <span class="sc">+</span> </span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L04-cross-validation_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># c</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age, <span class="at">data =</span> humans)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>model_3 <span class="sc">%&gt;%</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  71.1       1.63      43.7   1.96e-33
+2 age          -0.0210    0.0363    -0.577 5.67e- 1</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="9" type="1">
+<li><strong>Reflection: Part 1</strong><br>
+The “regular” exercises are over but class is not done! Your group should agree to either work on HW2 OR the remaining reflection questions.</li>
+</ol>
+<p>This is the end of Unit 1 on “Regression: Model Evaluation”! Let’s reflect on the technical content of this unit:</p>
+<ul>
+<li>What was the main motivation / goal behind this unit?</li>
+<li>What are the four main questions that were important to this unit?</li>
+<li>For each of the following tools, describe how they work and what questions they help us address:
+<ul>
+<li>R-squared</li>
+<li>residual plots</li>
+<li>out-of-sample MAE</li>
+<li>in-sample MAE</li>
+<li>validation</li>
+<li>cross-validation</li>
+</ul></li>
+<li>In your own words, define the following: overfitting, algorithm, tuning parameter.</li>
+<li>Review the new tidymodels syntax from this unit. Identify key themes and patterns.</li>
+</ul>
+<p>I encourage you to make a copy of this <a href="https://docs.google.com/presentation/d/1Kto9AzJTb6GB4VzmkTl1F1ICzRRaQ4Ib5EVtpjIiyUY/edit?usp=sharing">document</a> and add notes/thoughts after this Unit 1.</p>
+<p><br></p>
+<ol start="10" type="1">
+<li><p><strong>Reflection: Part 2</strong><br>
+The reflection above addresses your <strong>learning goals</strong> in this course. Consider the other components that have helped you worked toward this learning throughout Unit 1.</p>
+<ol type="a">
+<li><p>With respect to <strong>collaboration</strong>, reflect upon your strengths and what you might change in the next unit:</p>
+<ul>
+<li>How actively did you contribute to group discussions?</li>
+<li>How actively did you include all other group members in discussion?</li>
+<li>In what ways did you (or did you not) help create a space where others feel comfortable making mistakes &amp; sharing their ideas?</li>
+</ul></li>
+<li><p>With respect to <strong>engagement</strong>, reflect upon your strengths and what you might change the next unit:</p>
+<ul>
+<li>Did you regularly attend, be on time for, &amp; stay for the full class sessions?</li>
+<li>Have you not missed more than 3 in-person class sessions?</li>
+<li>Were you actively present during class (eg: not on your phone, not working on other courses, etc)?</li>
+<li>Did you stay updated on Slack?</li>
+<li>When you had questions, did you ask them on Slack or in OH?</li>
+</ul></li>
+<li><p>With respect to <strong>preparation</strong>, how many of checkpoints 1–3 did you complete and pass?</p></li>
+<li><p>With respect to <strong>exploration</strong>, did you complete and pass HW1? Are you on track to complete and pass HW2?</p></li>
+</ol></li>
+</ol>
+<p><strong>Done!</strong></p>
+<ul>
+<li>Knit your notes.</li>
+<li>Check the solutions in the online manual.</li>
+<li>Check out the wrap-up steps below.</li>
+<li>If you finish all that during class, work on your homework!</li>
+</ul>
+<!-- ## Deep learning -->
+<!-- If you finish the exercises above, keep learning!  Choose your own adventure below.  Learning requires a growth mindset and curiosity -- it doesn't stop with the completion of tasks (eg: the exercises above). -->
+<!-- \ -->
+<!-- \ -->
+<!-- **OPTIONAL EXERCISE 2: ANIMATIONS**     -->
+<!-- Animations, are handy tools. For example, an animation might help us better connect to the concept of LOOCV. If you're curious how to do this, you'll need to install the `gganimate`, `infer`, and `devtools` packages **IN YOUR CONSOLE**: -->
+<!-- ```{r eval = FALSE} -->
+<!-- install.packages("devtools") -->
+<!-- install.packages("infer") -->
+<!-- devtools::install_github('thomasp85/gganimate') -->
+<!-- ``` -->
+<!-- In your Rmd, load these packages: -->
+<!-- ```{r eval = FALSE} -->
+<!-- library(gganimate) -->
+<!-- library(infer) -->
+<!-- ``` -->
+<!-- You can find a bunch of animation examples [here](https://github.com/thomasp85/gganimate) or recreate the LOOCV animation from above using the following code: -->
+<!-- ```{r eval = FALSE} -->
+<!-- # Take a sample of 20 cars -->
+<!-- # No need to pick through the code! -->
+<!-- set.seed(2) -->
+<!-- cars_rep <- cars %>%  -->
+<!--   sample_n(size = 20, replace = FALSE) %>%  -->
+<!--   rep_sample_n(reps = 20, size = 20, replace = FALSE) %>%  -->
+<!--   group_by(replicate) %>%  -->
+<!--   arrange(name) %>%  -->
+<!--   mutate(test = (1:20 == replicate)) -->
+<!-- train_sets <- cars_rep %>% filter(test == FALSE) -->
+<!-- test_sets  <- cars_rep %>% filter(test == TRUE) -->
+<!-- # This is the fun animation part -->
+<!-- ggplot(train_sets, aes(x = horsepower, y = mpg)) + -->
+<!--   geom_point() +  -->
+<!--   stat_smooth(method = "lm", aes(group = replicate), se=FALSE, fullrange = TRUE) +  -->
+<!--   geom_point(data = test_sets, aes(x = horsepower, y = mpg), color = "red", size = 4) +  -->
+<!--   transition_states(replicate) -->
+<!-- ``` -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- **OPTIONAL EXERCISE 3: FOR LOOPS** -->
+<!-- We can calculate LOOCV using a *for loop* approach.  If you've taken some CS classes, this will be a familiar concept.  If you haven't, first of all don't worry -- it won't be a requirement in this class.  However, it might be fun to learn!  Try to pick through some hints online to fill in the following code to calculate the LOOCV error (as calculated by MAE) for the quadratic model of `mpg`. -->
+<!-- ```{r eval = FALSE} -->
+<!-- # Initialize the for loop -->
+<!-- # Run the for loop -->
+<!-- for(i in 1:nrow(cars)){ -->
+<!--     # Set up the training data & test case -->
+<!--     # Fit model using the training data -->
+<!--     # Use training model to make a prediction for test case & calculate the residual -->
+<!--     # Store the MAE for the test case -->
+<!-- } -->
+<!-- ``` -->
+<!-- **HINT:** -->
+<!-- <div class = "solution">   -->
+<!-- ```{r eval = FALSE} -->
+<!-- # Initialize the for loop -->
+<!-- test_MAE <- rep(0, nrow(cars)) -->
+<!-- # Run the for loop -->
+<!-- for(i in 1:nrow(cars)){ -->
+<!--     # Set up the training data & test case -->
+<!--     train <- cars[-i,] -->
+<!--     test  <- cars[i,] -->
+<!--     # Fit model using the training data -->
+<!--     train_mod <- lm(mpg ~ poly(horsepower,2), ___) -->
+<!--     # Use training model to make a prediction for test case & calculate the residual -->
+<!--     test_predicted <- predict(___, newdata = ___)   -->
+<!--     test_residual  <- ___ -->
+<!--     # Store the MAE for the test case -->
+<!--     test_MAE[i] <- ___ -->
+<!-- } -->
+<!-- ``` -->
+<!-- </div> -->
+<!-- \ -->
+<!-- **A solution:** -->
+<!-- <div class = "solution">   -->
+<!-- ```{r eval = FALSE} -->
+<!-- # Initialize the for loop -->
+<!-- test_MAE <- rep(0, nrow(cars)) -->
+<!-- # Run the for loop -->
+<!-- for(i in 1:nrow(cars)){ -->
+<!--     # Set up the training data & test case -->
+<!--     train <- cars[-i, ] -->
+<!--     test  <- cars[i, ] -->
+<!--     # Fit model using the training data -->
+<!--     train_mod <- lm(mpg ~ poly(horsepower,2), train) -->
+<!--     # Use training model to make a prediction for test case & calculate the residual -->
+<!--     test_predicted <- predict(train_mod, newdata = test)   -->
+<!--     test_residual  <- test$mpg - test_predicted -->
+<!--     # Store the MAE for the test case -->
+<!--     test_MAE[i] <- sqrt(test_residual^2) -->
+<!-- } -->
+<!-- mean(test_MAE) -->
+<!-- ``` -->
+<!-- </div> -->
+</section>
+</section>
+<section id="wrap-up" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Wrap-Up</h1>
+<ul>
+<li><strong>Finishing the activity</strong>
+<ul>
+<li>This is the end of Unit 1, so there are reflection questions at the bottom to help you organize the concepts in your mind. Use the concept map linked in Q9!</li>
+<li>If you didn’t finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the course site, and ask any questions on Slack or in office hours.</li>
+<li>Re-organize and review your notes to help deepen your understanding, solidify your learning, and make homework go more smoothly!</li>
+</ul></li>
+<li>An <strong>R Tutorial Video,</strong> posted under the materials for today’s class on the <a href="schedule.html">Schedule</a>, talks through the new code. This video is OPTIONAL. Decide what’s right for you.</li>
+<li>Continue to check in on <strong>Slack</strong>.</li>
+</ul>
+<p><strong>Upcoming due dates</strong></p>
+<ul>
+<li>CP4: due 10 minutes before our next class
+<ul>
+<li>Covers one R code video</li>
+</ul></li>
+<li>HW1: due next Tuesday at 11:59 pm
+<ul>
+<li>Start today if you haven’t already</li>
+<li>Using Slack, invite others to work on homework with you.</li>
+<li>Pass/fail, limited revisions,</li>
+<li>Deadline is so we can get timely feedback to you, let me know if you cannot make deadline (let me know what day you’ll finish)</li>
+</ul></li>
+</ul>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>https://www.wallpaperflare.com/grayscale-photography-of-guitar-headstock-music-low-electric-bass-wallpaper-zzbyn<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
