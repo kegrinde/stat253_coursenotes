@@ -70,7 +70,7 @@ library(tidymodels)
 # group 3 = 160
 # group 4 = 174
 # group 5 = 86
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat___.csv") %>% 
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat___.csv") %>% 
   filter(ankle < 30) %>% 
   rename(body_fat = fatSiri)
 ```
@@ -157,19 +157,22 @@ In addition to `hip` circumference, suppose we incorporated more predictors into
 
 
 
-# In-Class Activity Part 1 - Exercises {-}
+# Exercises (Part 1) {-}
 
-**DIRECTIONS**
+## Directions
 
-- Be kind to yourself. You will make mistakes!
-- Be kind to each other. Collaboration improves higher-level thinking, confidence, communication, community, & more. You are expected to:
-    - actively contribute to discussion (don't work on your own)
-    - actively include all other group members in discussion
-    - create a space where others feel comfortable making mistakes & sharing their ideas (remember that you all have different experiences, both personal and academic)
-    - stay in sync
-- You will have **5 minutes** to complete exercise 1.
+- Take **5 minutes** to complete exercises 1 and 2 (choosing one of three models).
+- We'll pause for a few minutes to discuss each group's answers to these exercises.
+- Then, and only then, you can finish exercises 3 - 5. 
 
-    
+REMINDERS: 
+
+- Be kind to yourself/each other. You will make mistakes!
+- Collaborate: 
+  - actively contribute to discussion (don't work on your own)
+  - actively include all group members in discussion 
+  - create a space where others feel comfortable making mistakes and sharing their ideas
+  - stay in sync
 
 \
 \
@@ -218,7 +221,7 @@ ___ %>%
 
 Only when you're done with exercise 1:       
 
-- Open this ["Top Model Competition" Google Doc](https://docs.google.com/spreadsheets/d/1DL1YadxFDV1o_pPHyST8u8QEyUKbjTRX1LH2NzhVtYU/edit?usp=sharing)).
+- Open this ["Top Model Competition" Google Doc](https://docs.google.com/spreadsheets/d/1dWCdwXNjNvrD3-aADaMQxh87euDePvKK1dROSMycp_U/edit?usp=sharing).
 - Record your team name.
 - Record which model you chose (1, 2, or 3).
 - Record the MAE for your model.
@@ -410,7 +413,7 @@ What do you know?! 40 new people just walked into the doctor's office and the do
 
 ```{r}
 # Import the new data
-new_patients <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat182.csv") %>% 
+new_patients <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat182.csv") %>% 
   filter(ankle < 30) %>% 
   rename(body_fat = fatSiri)
 ```
@@ -455,7 +458,7 @@ In summary, which model seems best? What's the central theme here?
 
 
 
-**Now open and save the Rmd for the Part 2. **
+**Now open and save the QMD for Part 2. **
 
 
 
