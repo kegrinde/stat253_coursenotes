@@ -157,9 +157,9 @@ In addition to `hip` circumference, suppose we incorporated more predictors into
 
 
 
-# Exercises (Part 1) {-}
+# Exercises {-}
 
-## Directions
+## Directions {-}
 
 - Take **5 minutes** to complete exercises 1 and 2 (choosing one of three models).
 - We'll pause for a few minutes to discuss each group's answers to these exercises.

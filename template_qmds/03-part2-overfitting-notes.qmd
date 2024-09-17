@@ -435,7 +435,7 @@ Check out the online solutions for exercise 6. Instead of calculating MAE from s
 
 - Knit your notes.
 - Check the solutions in the course website.
-- If you finish all that during class, start on Homework 2!
+- If you finish all that during class, start your homework!
 
 
 
