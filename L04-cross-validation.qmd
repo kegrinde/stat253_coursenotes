@@ -11,6 +11,8 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 # Settling In {.unnumbered .smaller}
 
 - Sit with the same group* as last class
+  - If you missed class Tuesday, or if you're in the *9:40 section, check with me 
+  for your (potentially) new group #!
 - Introduce yourselves/check-in with each other, then discuss: 
   - What has/hasn't worked well for you in the past when it comes to working on 
   in-class exercises in small groups? 
@@ -18,7 +20,6 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 - Prepare to take notes ([Schedule](schedule.html) > 9/19 > In Class > QMD) 
 - See the #announcements on [Slack](https://macstat253.slack.com) about upcoming events
 
-*I had to make a few changes for the 9:40 section
 
 <!--
 Announcements: 
@@ -36,7 +37,7 @@ Announcements:
 -->
 
 
-# Learning Goals {.unnumbered}
+# Learning Goals {.unnumbered .smaller}
 
 -   Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric
 -   Explain what role CV has in a predictive modeling analysis and its connection to overfitting
@@ -51,7 +52,7 @@ Announcements:
 
 ## Context: Evaluating Regression Models {.unnumbered .smaller}
 
-A reminder of our current **CONTEXT:**
+A reminder of our current context:
 
 <center>
 <img src="images/MLdiagram1.jpg"/>
@@ -96,8 +97,8 @@ Not only can overfitting produce misleading models, it can have serious societal
 - Polygenic risk scores (PRSs), which aim to predict a person's risk of developing a particular disease/trait 
 based on their genetics, are often _overfit_ to the data on which they are built (which, historically, 
 has exclusively---or at least primarily---included individuals of European ancestry). 
-As a result, PRS predictions tend to be more accurate in European populations and their 
-[continued use in clinical settings could exacerbate health disparities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6563838/). 
+As a result, PRS predictions tend to be more accurate in European populations and new
+research suggests that their [continued use in clinical settings could exacerbate health disparities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6563838/). 
 
 
 
@@ -118,8 +119,9 @@ We can use **k-fold cross-validation** to estimate the typical error in our mode
 <center><img src="images/crossval.png"/></center>
 
 
-# Small Group Discussion: Algorithms and Tuning {-}
+# Small Group Discussion {-}
 
+Algorithms and Tuning
 
 ## Definitions {.unnumbered .smaller}
 
@@ -332,9 +334,7 @@ The process of creating the folds is random, so we should set the seed to have r
 
 Suppose we wish to build and evaluate a linear regression model of `y` vs `x1` and `x2` using our `sample_data`. 
 
-\
-
-. . .
+**First, load the appropriate packages**
 
 ```{r eval = FALSE}
 # Load packages
@@ -342,11 +342,8 @@ library(tidyverse)
 library(tidymodels)
 ```
 
-\
 
-. . .
-
-**Obtain k-fold cross-validated estimates of MAE and $R^2$**
+## Obtain k-fold cross-validated estimates of MAE and $R^2$ {.unnumbered .smaller}
 
 (Review above for discussion of these steps.)
 
@@ -369,11 +366,7 @@ model_cv <- lm_spec %>%
 ```
 
 
-\
-
-. . .
-
-**Obtain the cross-validated metrics**
+## Obtain the cross-validated metrics {.unnumbered .smaller}
 
 ```{r eval = FALSE}
 model_cv %>% 
@@ -382,11 +375,8 @@ model_cv %>%
 
 
 
-\
 
-. . .
-
-**Details: get the MAE and R-squared for each test fold**
+## Get the MAE and R-squared for each test fold {.unnumbered .smaller}
 
 ```{r eval = FALSE}
 # MAE for each test fold: Model 1
@@ -397,11 +387,6 @@ model_cv %>%
 
 
 
-\
-\
-\
-\
-
 
 
 
@@ -409,8 +394,8 @@ model_cv %>%
 
 ## Instructions {.unnumbered .smaller}
 
-- Go to the [Course Schedule](schedule.html) and find the QMD template for today
-- Download, save (in your STAT 253 Notes folder, NOT your downloads!), and open that QMD
+- Go to the [Course Schedule](schedule.html) and find the QMD template for today 
+  - Save this in your STAT 253 Notes folder, NOT your downloads!
 - Work through the exercises implementing CV to compare two possible models predicting `height` 
 - Same directions as before: 
   - Be kind to yourself/each other
@@ -1012,19 +997,24 @@ I encourage you to make a copy of this [document](https://docs.google.com/presen
 
 # Wrap-Up {.unnumbered .smaller}
 
-- **Today's Material**
-  - If you didn't finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the course site, and ask any questions on Slack or in office hours.
-  - This is the end of Unit 1, so there are **reflection questions** at the bottom to help you organize the concepts in your mind.
-  - An **R Tutorial Video** is posted under the materials for today's class on the [Schedule](schedule.html), talks through the new code. This video is OPTIONAL. Decide what's right for you.
+## Today's Material {.unnumbered .smaller}
+
+- If you didn't finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the course site, and ask any questions on Slack or in office hours.
+- This is the end of Unit 1, so there are **reflection questions** at the bottom to help you organize the concepts in your mind.
+- An **R Tutorial Video**, talking through the new code, is posted under the materials for today's class on the [Course Schedule](schedule.html). This video is OPTIONAL. Decide what's right for you.
   
-- **Upcoming Deadlines**
-  - CP4: due 10 minutes before our next class (covers one R code video)
-  - HW1: due next Tuesday at 11:59 pm
-    - Start today if you haven't already!
-    - Review the homework and late work/extension policies on Moodle and the Syllabus
-      - Universal flexibility: pass/revise grading (as long as your original submission meets certain criteria including on-time submission), late work/extension policy  
-      - Deadline is so we can get timely feedback to you. If you cannot make a deadline, please 
-    send me an email/Slack DM (in advance!) and let me know how much time you need.
+## Upcoming Deadlines {.unnumbered .smaller}
+
+- CP4: 
+  - due 10 minutes before our next class
+  - covers one R code video
+- HW1: 
+  - due next Tuesday at 11:59 pm
+  - start today if you haven't already!
+  - review the homework and late work/extension policies on Moodle/Syllabus
+  - universal flexibility: pass/revise grading (as long as your original submission meets certain criteria including on-time submission), late work grace period  
+  - deadline is so we can get timely feedback to you; if you cannot make a deadline, please 
+    send me an email/Slack DM (in advance!) and let me know how much time you need
 
 
    

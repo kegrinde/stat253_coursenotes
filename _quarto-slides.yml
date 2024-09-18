@@ -1,5 +1,7 @@
 project:
-  output-dir: Slides
+  output-dir: slides
+  render: 
+    - "L*.qmd"
 
 format: 
   revealjs:
