@@ -10,9 +10,17 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 
 # Settling In {.unnumbered .smaller}
 
-- Sit in the randomly assigned groups from last class.
-- Check in with each other as humans.
+- Sit with the same group* as last class
+- Introduce yourselves/check-in with each other, then discuss: 
+  - What has/hasn't worked well for you in the past when it comes to working on 
+  in-class exercises in small groups? 
+  - What would you like to try, or avoid, with this group?
+- Prepare to take notes ([Schedule](schedule.html) > 9/19 > In Class > QMD) 
+- See the #announcements on [Slack](https://macstat253.slack.com) about upcoming events
 
+*I had to make a few changes for the 9:40 section
+
+<!--
 Announcements: 
 
 ::: incremental
@@ -25,9 +33,10 @@ Announcements:
     -   Locate the Rmd for today's *activity* in the Schedule of the course website (see bottom of slides for url).
     -   Save this Rmd in the "STAT 253 \> Notes" folder.
 :::
+-->
+
 
 # Learning Goals {.unnumbered}
-
 
 -   Accurately describe all steps of cross-validation to estimate the test/out-of-sample version of a model evaluation metric
 -   Explain what role CV has in a predictive modeling analysis and its connection to overfitting
@@ -36,13 +45,13 @@ Announcements:
 -   Using these tools and concepts to:
   - Inform and justify data analysis and modeling process and the resulting conclusions with clear, organized, logical, and compelling details that adapt to the background, values, and motivations of the audience and context in which communication occurs
 
-<br>
-
 
 
 # Notes: Cross-Validation {-}
 
-## CONTEXT {.unnumbered .smaller}
+## Context: Evaluating Regression Models {.unnumbered .smaller}
+
+A reminder of our current **CONTEXT:**
 
 <center>
 <img src="images/MLdiagram1.jpg"/>
@@ -59,13 +68,15 @@ Announcements:
     
     $$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \varepsilon$$
 
+<br>
 
-## GOAL: model evaluation {.unnumbered .smaller}
+
+**GOAL: model evaluation** 
 
 We want more **honest** metrics of prediction quality that 
 
 (1) assess how well our model predicts **new outcomes**; and 
-(2) help prevent **overfitting**.
+(2) help prevent [**overfitting**](L03-overfitting.html#overfitting).
     
 
 \
@@ -81,6 +92,12 @@ Not only can overfitting produce misleading models, it can have serious societal
 - [A former Amazon algorithm](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G) built to help sift through resumes was _overfit_ to its current employees in leadership positions (who weren't representative of the general population or candidate pool).
 
 - Facial recognition algorithms are often _overfit_ to the people who build them (who are not broadly representative of society). As one example, this has led to [disproportionate bias in policing](https://www.nytimes.com/2019/07/08/us/detroit-facial-recognition-cameras.html). For more on this topic, you might check out [Coded Bias](https://www.youtube.com/watch?v=jZl55PsfZJQ), a documentary by Shalini Kantayya which features MIT Media Lab researcher Joy Buolamwini.
+
+- Polygenic risk scores (PRSs), which aim to predict a person's risk of developing a particular disease/trait 
+based on their genetics, are often _overfit_ to the data on which they are built (which, historically, 
+has exclusively---or at least primarily---included individuals of European ancestry). 
+As a result, PRS predictions tend to be more accurate in European populations and their 
+[continued use in clinical settings could exacerbate health disparities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6563838/). 
 
 
 
@@ -168,9 +185,6 @@ e. In practice, $k = 10$ and $k=7$ are common choices for cross-validation.  Thi
 
 </details>
 
-
-
-. . .
 
 
 <!-- \ -->
@@ -268,7 +282,7 @@ e. In practice, $k = 10$ and $k=7$ are common choices for cross-validation.  Thi
 
 <br>
 
-
+. . .
 
 3. **R Code Preview**
 
@@ -397,10 +411,10 @@ model_cv %>%
 
 - Go to the [Course Schedule](schedule.html) and find the QMD template for today
 - Download, save (in your STAT 253 Notes folder, NOT your downloads!), and open that QMD
-- Work through the exercises implementing CV with the `humans` data
+- Work through the exercises implementing CV to compare two possible models predicting `height` 
 - Same directions as before: 
   - Be kind to yourself/each other
-  - Collaborate
+  - **Collaborate**
   - DON'T edit starter code (i.e., code with blanks `___`). Instead, copy-paste 
   into a new code chunk below and edit from there.
 - Ask me questions as I move around the room
@@ -411,7 +425,7 @@ model_cv %>%
 # Load packages and data
 library(tidyverse)
 library(tidymodels)
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat50.csv") %>% 
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat50.csv") %>% 
   filter(ankle < 30) %>% 
   rename(body_fat = fatSiri)
 ```
@@ -425,7 +439,7 @@ humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat50
 
 1. **Review: In-sample metrics**   
 
-    Use the `humans` data to build two separate models of `height`:
+Use the `humans` data to build two separate models of `height`:
 
 ```{r eval = FALSE}
 # STEP 1: model specification
@@ -442,7 +456,7 @@ model_2 <- ___ %>%
   ___(height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
 ```
     
-    Calculate the **in-sample** R-squared for both models:
+Calculate the **in-sample** R-squared for both models:
     
 ```{r eval = FALSE}
 # IN-SAMPLE R^2 for model_1 = ???
@@ -456,7 +470,7 @@ model_2 %>%
   ___()
 ```
     
-    Calculate the **in-sample** MAE for both models:
+Calculate the **in-sample** MAE for both models:
     
 ```{r eval = FALSE}
 # IN-SAMPLE MAE for model_1 = ???
@@ -601,12 +615,12 @@ b. Interpret the cross-validated MAE *and* $R^2$ for `model_1`.
 a.        
 ```{r}
 # model_1
-# CV MAE = 1.87, CV R-squared = 0.40
+# CV MAE = 1.87, CV R-squared = 0.41
 model_1_cv %>% 
   collect_metrics()
 
 # model_2
-# CV MAE = 2.47, CV R-squared = 0.52
+# CV MAE = 2.47, CV R-squared = 0.53
 model_2_cv %>% 
   collect_metrics()
 ```
@@ -621,14 +635,16 @@ b. We expect our first model to explain roughly 40% of variability in height amo
 5. **Details: fold-by-fold results**    
     `collect_metrics()` gave the final CV MAE, or the average MAE across all 10 test folds. `unnest(.metrics)` provides the MAE from *each* test fold.
     
-    a. Obtain the fold-by-fold results for the `model_1` cross-validation procedure using `unnest(.metrics)`.       
-        ```{r eval = FALSE}
-        # HINT
-        ___ %>% 
-          unnest(.metrics)
-        ```
-    b. Which fold had the worst average prediction error and what was it?
-    c. Recall that `collect_metrics()` reported a final CV MAE of 1.87 for `model_1`. Confirm this calculation by wrangling the fold-by-fold results from part a.
+a. Obtain the fold-by-fold results for the `model_1` cross-validation procedure using `unnest(.metrics)`. 
+    
+```{r eval = FALSE}
+# HINT
+___ %>% 
+  unnest(.metrics)
+```
+        
+b. Which fold had the worst average prediction error and what was it?
+c. Recall that `collect_metrics()` reported a final CV MAE of 1.87 for `model_1`. Confirm this calculation by wrangling the fold-by-fold results from part a.
     
     
     
@@ -676,10 +692,10 @@ model_1_cv %>%
 
     \
     
-    a. Based on the in-sample MAE alone, which model appears better?    
-    b. Based on the CV MAE alone, which model appears better?    
-    c. Based on all of these results, which model would you pick?
-    d. Do the in-sample and CV MAE suggest that `model_1` is overfit to our `humans` sample data? What about `model_2`?
+a. Based on the in-sample MAE alone, which model appears better?    
+b. Based on the CV MAE alone, which model appears better?    
+c. Based on all of these results, which model would you pick?
+d. Do the in-sample and CV MAE suggest that `model_1` is overfit to our `humans` sample data? What about `model_2`?
 
 
 <details>
@@ -720,7 +736,7 @@ model_1_loocv %>%
   collect_metrics()
 ```
         
-b. The LOOCV MAE (1.82) is very similar to the 10-fold CV MAE (1.96).
+b. The LOOCV MAE (1.82) is very similar to the 10-fold CV MAE (1.87).
 c. There's no randomness in the test folds. Each test fold is a single person.
   
 </details>
@@ -769,9 +785,9 @@ model_3 %>%
 
 
 9. **Reflection: Part 1**       
-    The "regular" exercises are over but class is not done! Your group should agree to either work on HW2 OR the remaining reflection questions. 
+    The "regular" exercises are over but class is not done! Your group should agree to either work on HW1 or the remaining reflection questions. 
     
-This is the end of Unit 1 on "Regression: Model Evaluation"! Let's reflect on the technical content of this unit:
+    This is the end of Unit 1 on "Regression: Model Evaluation"! Let's reflect on the technical content of this unit:
 
 - What was the main motivation / goal behind this unit?
 - What are the four main questions that were important to this unit?
@@ -782,17 +798,23 @@ This is the end of Unit 1 on "Regression: Model Evaluation"! Let's reflect on th
   - in-sample MAE
   - validation
   - cross-validation
-- In your own words, define the following: overfitting, algorithm, tuning parameter.
-- Review the new tidymodels syntax from this unit. Identify key themes and patterns.
+- In your own words, define the following: 
+  - overfitting
+  - algorithm
+  - tuning parameter
+- Review the new `tidymodels` syntax from this unit. Identify key themes and patterns.
 
+<!--
 I encourage you to make a copy of this [document](https://docs.google.com/presentation/d/1Kto9AzJTb6GB4VzmkTl1F1ICzRRaQ4Ib5EVtpjIiyUY/edit?usp=sharing) and add notes/thoughts after this Unit 1. 
+-->
 
 <br>
 
 
 
 10. **Reflection: Part 2**     
-    The reflection above addresses your **learning goals** in this course. Consider the other components that have helped you worked toward this learning throughout Unit 1.
+    The reflection above addresses your understanding of/progress toward our course **learning goals**. 
+    Consider the other components that have helped you worked toward this learning throughout Unit 1.
     
     a. With respect to **collaboration**, reflect upon your strengths and what you might change in the next unit:  
     
@@ -807,7 +829,7 @@ I encourage you to make a copy of this [document](https://docs.google.com/presen
         - Did you stay updated on Slack?
         - When you had questions, did you ask them on Slack or in OH?
     c. With respect to **preparation**, how many of checkpoints 1--3 did you complete and pass?
-    d. With respect to **exploration**, did you complete and pass HW1? Are you on track to complete and pass HW2?
+    d. With respect to **exploration**, did you complete and pass HW0? Are you on track to complete and pass HW1?
     
   
 
@@ -815,7 +837,7 @@ I encourage you to make a copy of this [document](https://docs.google.com/presen
 
  **Done!**  
  
- - Knit your notes.
+ - Knit/render your notes.
  - Check the solutions in the online manual.
  - Check out the wrap-up steps below.
  - If you finish all that during class, work on your homework!
@@ -990,23 +1012,19 @@ I encourage you to make a copy of this [document](https://docs.google.com/presen
 
 # Wrap-Up {.unnumbered .smaller}
 
-- **Finishing the activity**
-  - This is the end of Unit 1, so there are reflection questions at the bottom to help you organize the concepts in your mind. Use the concept map linked in Q9!
+- **Today's Material**
   - If you didn't finish the activity, no problem! Be sure to complete the activity outside of class, review the solutions in the course site, and ask any questions on Slack or in office hours.
-  - Re-organize and review your notes to help deepen your understanding, solidify your learning, and make homework go more smoothly!
-- An **R Tutorial Video,** posted under the materials for today's class on the [Schedule](schedule.html), talks through the new code. This video is OPTIONAL. Decide what's right for you.
-- Continue to check in on **Slack**.
-
-**Upcoming due dates**
-
-- CP4: due 10 minutes before our next class
-  - Covers one R code video
-- HW1: due next Tuesday at 11:59 pm
-  - Start today if you haven't already
-  - Using Slack, invite others to work on homework with you.
-  - Pass/fail, limited revisions,
-  - Deadline is so we can get timely feedback to you, let me know if you cannot 
-  make deadline (let me know what day you'll finish)
+  - This is the end of Unit 1, so there are **reflection questions** at the bottom to help you organize the concepts in your mind.
+  - An **R Tutorial Video** is posted under the materials for today's class on the [Schedule](schedule.html), talks through the new code. This video is OPTIONAL. Decide what's right for you.
+  
+- **Upcoming Deadlines**
+  - CP4: due 10 minutes before our next class (covers one R code video)
+  - HW1: due next Tuesday at 11:59 pm
+    - Start today if you haven't already!
+    - Review the homework and late work/extension policies on Moodle and the Syllabus
+      - Universal flexibility: pass/revise grading (as long as your original submission meets certain criteria including on-time submission), late work/extension policy  
+      - Deadline is so we can get timely feedback to you. If you cannot make a deadline, please 
+    send me an email/Slack DM (in advance!) and let me know how much time you need.
 
 
    
