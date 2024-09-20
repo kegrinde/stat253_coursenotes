@@ -394,6 +394,7 @@ lm_spec <- linear_reg() %>%
 ```
 
 ```{r}
+#| eval: false
 # STEP 2: model estimate (using all 12 predictors to start)
 # Pick apart this code and make it easier to identify the least "significant" predictor!!!
 lm_spec %>% 
@@ -405,6 +406,7 @@ lm_spec %>%
 ```
 
 ```{r}
+#| eval: false
 # 11 predictors (tweak the code)
 lm_spec %>% 
   fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
@@ -416,6 +418,7 @@ lm_spec %>%
 
 
 ```{r}
+#| eval: false
 # 10 predictors (tweak the code)
 lm_spec %>% 
   fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
@@ -558,6 +561,7 @@ b. Is this algorithm more or less **computationally expensive** than the best su
 c. The predictors `neck` and `wrist`, in that order, are the most strongly correlated with `height`. Where do these appear in the backward sequence and what does this mean?
 
 ```{r}
+#| eval: true
 cor(humans)[,'height'] %>% 
   sort()
 ```
@@ -613,6 +617,7 @@ data.frame(
 
 ```{r}
 #| eval: true
+#| code-fold: true
 data.frame(
     predictors = c(12:1), 
     mae = c(5.728, 5.523, 5.413, 5.368, 5.047, 5.013, 4.684, 4.460, 4.386, 4.091, 3.733, 3.658)) %>% 
@@ -792,6 +797,7 @@ This specifies the *structure* or general modeling algorithm we plan to use.
 It does *not* specify anything about the variables of interest or our data.
 
 ```{r}
+#| eval: false
 lm_spec <- linear_reg() %>%
   set_mode("regression") %>% 
   set_engine("lm")
@@ -813,6 +819,7 @@ Just as a cooking recipe specifies the *ingredients* and *how to prepare them*, 
 It does *not* specify anything about the model structure we'll use to explore this relationship.
 
 ```{r}
+#| eval: false
 # A simple recipe with NO pre-processing
 data_recipe <- recipe(height ~ wrist + ankle, data = humans)
 
@@ -828,6 +835,7 @@ data_recipe
 This specifies the general *workflow* of our modeling process, including our *model structure* and our *variable recipe*.
 
 ```{r}
+#| eval: false
 model_workflow <- workflow() %>%
   add_recipe(data_recipe) %>%
   add_model(lm_spec)
@@ -847,6 +855,7 @@ This step *estimates* or *fits* our model of interest using our entire sample da
 The model (`lm_spec`) and variable details (here just `height ~ wrist + ankle`) are specified in the workflow, so we do not need to give that information again!
 
 ```{r}
+#| eval: false
 my_model <- model_workflow %>% 
   fit(data = humans)
 ```
@@ -859,6 +868,7 @@ my_model <- model_workflow %>%
 To get in-sample metrics, use `my_model` like normal. 
 
 ```{r}
+#| eval: false
 # example: calculate of in-sample metrics
 my_model %>% 
   glance()
@@ -867,6 +877,7 @@ my_model %>%
 To get CV metrics, pass the workflow to `fit_resamples` along with information about how to randomly create folds.
 
 ```{r}
+#| eval: false
 set.seed(253)
 my_model_cv <- model_workflow %>% 
   fit_resamples(resamples = vfold_cv(humans, v = 10),
