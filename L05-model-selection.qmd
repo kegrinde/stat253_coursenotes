@@ -5,7 +5,7 @@ logo: "images/mac.png"
 
 ```{r L05-chunk-setup}
 #| include: false
-knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE, cache=TRUE)
 ```
 
 ```{r L05-data-setup}
@@ -77,9 +77,20 @@ lasso_workflow %>%
 
 # Settling In {.unnumbered .smaller}
 
-TBD
+- Sit with the same group as last class. 
+  - Come up with a team name that reflects the majors represented in your group 
+  WITHOUT including the names of those majors (e.g., "data rocks!" instead of 
+  "statistics geology")
+- See the #announcements on [Slack](https://macstat253.slack.com) about upcoming events.
+- Prepare to take notes: 
+  - Locate, download, save, and open the **Part 1** QMD for today's class. 
+  - You'll need the `reshape2` package today: install this if you haven't already. 
+  - **WAIT** to open Part 2 until later in class!
+  
 
-# Learning Goals {.unnumbered .smaller}
+# Learning Goals {-} 
+
+## Statistical Machine Learning Concepts {.unnumbered .smaller}
 
 - Gain intuition about different approaches to variable selection
 - Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms
@@ -88,22 +99,47 @@ TBD
 
 <br>
 
+## General Skills  {.unnumbered .smaller}
+
+![](images/learningobjectives_generalskills.png)
+
+[**Highlight: Collaborative Learning**]{style="background-color:lightgray;"}
+
+-   Understand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).
+-   Develop a common purpose and agreement on goals.
+-   Be able to contribute questions or concerns in a respectful way.
+-   Share and contribute to the group's learning in an equitable manner.
 
 
+# Reflection {-}
+
+## Collaborative Learning {.unnumbered .smaller}
+
+Take **5 minutes** to reflect upon your work throughout Unit 1, particularly 
+with respect to [**collaboration**]{style="background-color:lightgray;"}. 
+
+Reflect upon your strengths and what you might change in the next unit:  
+    
+- How actively did you contribute to group discussions?
+- How actively did you include ALL other group members in discussion?
+- In what ways did you (or did you not) help create a space where others feel comfortable making mistakes & sharing their ideas?
 
 
+## Unit 1 Reflection (continued) {.unnumbered}
+
+If you did not finish Exercises #9 and #10 from last class, please take time 
+after class today to do so. 
 
 
-# Notes: Inferential v. Predictive Models {-}
+# Notes: Model Selection {-}
 
 
+## Context {.unnumbered .smaller}
 
 <center>
 <img src="images/MLDiagram2.jpg"/>
 </center>
 
-
-**CONTEXT**
 
 - **world = supervised learning**       
     We want to model some output variable $y$ using a set of *potential* predictors ($x_1, x_2, ..., x_p$).
@@ -123,32 +159,37 @@ TBD
 
 
 
-**Inferential v. Predictive Models (Unit 2 motivation)**
+## Inferential v. Predictive Models {.unnumbered .smaller}
 
-In model building, the decision of which predictors to use depends upon our goal. 
+In model building, the decision of which predictors to use **depends upon our goal**. 
 
 **Inferential models**        
 
+::: incremental
 - Goal: Explore & test hypotheses about a specific relationship.
 - Predictors: Defined by the goal.
 - Example: An economist wants to understand how salaries ($y$) vary by age ($x_1$) while controlling for education level ($x_2$).
+:::
 
 
 **Predictive models**
 
+::: incremental
 - Goal: Produce the "best" possible predictions of $y$.
 - Predictors: Any combination of predictors that help us meet this goal.
 - Example: A mapping app wants to provide users with quality estimates of arrival time ($y$) utilizing any useful predictors (eg: time of day, distance, route, speed limit, weather, day of week, traffic radar...)
+:::
 
 
 
 
-
-**UNIT 2 GOAL**        
+## Model Selection Goals  {.unnumbered .smaller}
 
 **Model selection** algorithms can *help* us build a **predictive model** of $y$ using a set of potential predictors ($x_1, x_2, ..., x_p$).
+
 There are 3 general approaches to this task:   
 
+:::incremental
 1. **Variable selection (today)**    
     Identify a *subset* of predictors to use in our model of $y$.
 
@@ -157,15 +198,10 @@ There are 3 general approaches to this task:
 
 3. **Dimension reduction (later in the semester)**    
     *Combine* the predictors into a smaller set of new predictors.
+:::
 
 
 
-
-
-\
-\
-\
-\
 
 
 
@@ -173,11 +209,32 @@ There are 3 general approaches to this task:
 
 # Exercises: Part 1 {-}
 
+## Instructions {.unnumbered .smaller}
+
+Open the Part 1 QMD. Scroll down to the `# Exercises` section. 
+
+*As a group*, you'll design a **variable selection algorithm** to pick which 
+predictors to use in a predictive model of `height`. 
+Specifically, you will: 
+
+- 15 mins: come up with one algorithm, document it, and try it
+- 5 mins: try another group's algorithm
+
+NOTE: This will NOT be perfect! Our goals are to:
+
+- Have fun and work together!
+- Tap into your *intuition* for key questions and challenges in variable selection.
+- *Deepen* your understanding of "algorithms" and "tuning parameters" by designing and communicating your own.
+
+
+## Questions  {.unnumbered .smaller}
+
 Let's build a **predictive model** of `height` in inches using one or more of 12 possible predictors. Other than `age` and `weight`, these are circumferences measured in cm.
 
 ```{r}
 #| message: false
 #| warning: false
+#| eval: true
 # Load packages
 library(tidyverse)
 library(tidymodels)
@@ -190,6 +247,7 @@ names(humans)
 A **heat map** displays correlations for each pair of variables in our dataset. Not only is `height` correlated with multiple predictors, the predictors are correlated with one another (mulicollinear)! We don't need *all* of them in our model.
 
 ```{r fig.width = 6, fig.height = 6}
+#| eval: true
 # Get the correlation matrix
 library(reshape2)
 cor_matrix <- cor(humans)
@@ -212,25 +270,9 @@ ggplot(cor_matrix, aes(x = Var1, y = Var2, fill = correlation)) +
 ```
 
 
-
-
-
-
-*As a group*, you'll design a **variable selection algorithm** to pick which of the 12 predictors to use in a predictive model of `height`. 
-
-This will NOT be perfect!
-
-The goal is to:
-
-- Have fun and work together!
-- Tap into your *intuition* for key questions and challenges in variable selection.
-- *Deepen* your understanding of "algorithms" and "tuning parameters" by designing and communicating your own.
-
-
-
 1. **Design your own algorithm (15 minutes)**       
     - Do not use any materials from outside this class.
-    - Document your algorithm in words (not code) in this [google doc](https://docs.google.com/document/d/1nSqysACxHmSDNkLpoOy69nqLQnM5AbSBKiCHQ0qAiNQ/edit?usp=sharing).
+    - Document your algorithm in words (not code) in this [google doc](https://docs.google.com/document/d/1OD1Xv6SFp9pgxSDEB_PKuOzy83xEaFvJZHhLaYf2Nqc/edit?usp=sharing).
     - Your algorithm must:
         - be *clear* to other humans
         - be clear to a *machine* (cannot utilize context)
@@ -241,16 +283,16 @@ The goal is to:
 ```{r eval = FALSE}
 # STEP 1: model specification
 lm_spec <- linear_reg() %>% 
-set_mode("regression") %>% 
-set_engine("lm")
+  set_mode("regression") %>% 
+  set_engine("lm")
 
 # STEP 2: model estimation
 height_model_1 <- lm_spec %>% 
-fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
+  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
 
 # Check it out
 height_model_1 %>% 
-tidy()
+  tidy()
 
 # CV MAE
 set.seed(253)
@@ -274,10 +316,14 @@ lm_spec %>%
 
 <br>
 
+
+
 # Notes: Variable Selection {-}
 
+Open the **Part 2** QMD to take notes. 
 
-**GOAL**
+
+## Goal {.unnumbered .smaller}
 
 Let's consider three existing variable selection algorithms.
 
@@ -286,13 +332,15 @@ Heads up: these algorithms are important to building intuition for the questions
 <br>
 
 
-**EXAMPLE 1: Best Subset Selection Algorithm**
+## Example 1: Best Subset Selection Algorithm  {.unnumbered .smaller}
 
+::: incremental
 - Build *all* $2^p$ possible models that use any combination of the available predictors $(x_1, x_2,..., x_p)$.    
 - Identify the best model with respect to some chosen metric (eg: CV MAE) and context.
+:::
 
-
-Suppose we used this algorithm for our `height` model with 12 possible predictors. What's the main drawback? 
+Suppose we used this algorithm for our `height` model with 12 possible predictors. 
+What's the main drawback? 
 
 
 <details>
@@ -312,33 +360,44 @@ It's **computationally expensive**. For our humans example, we'd need to build 4
 
 
 
-**EXAMPLE 2: Backward Stepwise Selection Algorithm**
+## Example 2: Backward Stepwise Selection Algorithm  {.unnumbered .smaller}
 
+::: incremental
 - Build a model with *all* $p$ possible predictors, $(x_1, x_2,..., x_p)$.    
 - Repeat the following until only 1 predictor remains in the model:
     - Remove the 1 predictor with the biggest p-value.
     - Build a model with the remaining predictors.    
 - You now have $p$ competing models: one with all $p$ predictors, one with $p-1$ predictors, ..., and one with 1 predictor. Identify the "best" model with respect to some metric (eg: CV MAE) and context.
+:::
+
+
+
+. . . 
 
 Let's try out the first few steps!
+
+. . .
 
 ```{r}
 # Load packages and data
 library(tidyverse)
 library(tidymodels)
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat1.csv")
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv")
 ```
 
 ```{r}
+#| eval: true
+# STEP 1: model specifications
 lm_spec <- linear_reg() %>% 
   set_mode("regression") %>% 
   set_engine("lm")
+```
 
-# All 12 predictors
-# Pick apart this code and make it easier to identify
-# the least "significant" predictor!!!
+```{r}
+# STEP 2: model estimate (using all 12 predictors to start)
+# Pick apart this code and make it easier to identify the least "significant" predictor!!!
 lm_spec %>% 
-  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
+  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, 
       data = humans) %>% 
   tidy() %>% 
   filter(term != "(Intercept)") %>% 
@@ -364,28 +423,34 @@ lm_spec %>%
   tidy() %>% 
   filter(term != "(Intercept)") %>% 
   mutate(p.value = round(p.value, 4))
-
 ```
 
 
 
+<details>
+<summary>Solution</summary>
 
+```{r implement-example2}
+#| echo: false
+#| eval: false
 
-
-
-
-```{r echo = FALSE, eval = FALSE}
-kick_out <- rep(0, 12)
-cvs <- rep(0, 12)
+# setup
 predictors <- c("age", "weight", "neck", "chest", "abdomen", "hip", "thigh", "knee", "ankle", "biceps", "forearm", "wrist")
+p <- length(predictors)
+kick_out <- rep(0, p)
+cvs <- rep(0, p)
+
+# loop through predictors
 for(i in 1:12){
+  # fit model
   my_model <- lm_spec %>% 
-    fit(as.formula(paste("height ~ ", paste(predictors, collapse = "+")))
-, data = humans) %>% 
+    fit(as.formula(paste("height ~ ", paste(predictors, collapse = "+"))), 
+        data = humans) %>% 
     tidy() %>% 
     filter(term != "(Intercept)") %>% 
     arrange(desc(p.value))
   
+  # use 10-fold CV to get MAE for model
   set.seed(253)
   cv_process <- lm_spec %>% 
       fit_resamples(
@@ -395,9 +460,14 @@ for(i in 1:12){
       ) %>% 
       collect_metrics()
   
+  # get name of worst variable (biggest p-value)
   worst <- as.data.frame(my_model)[1,1]
   kick_out[i] <- worst
+  
+  # get rid of worst variable from predictor list
   predictors <- predictors[predictors != worst]
+  
+  # save CV MAE for this model
   cvs[i] <- as.data.frame(cv_process)$mean
 }
 
@@ -405,24 +475,21 @@ kick_out
 cvs
 ```
 
-
-
-<details>
-<summary>Solution</summary>
-
 ```{r}
+#| eval: true
 # All 12 predictors
 lm_spec %>% 
   fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
       data = humans) %>% 
-  tidy() %>% 
-  filter(term != "(Intercept)") %>% 
-  mutate(p.value = round(p.value, 4)) %>% 
-  arrange(desc(p.value))
+  tidy() %>%  # use tidy to get p-values for each coefficient
+  filter(term != "(Intercept)") %>% # exclude the intercept
+  mutate(p.value = round(p.value, 4)) %>% # round the p-values for easier viewing
+  arrange(desc(p.value)) # added this line to arrange from largest to smallest p-value
 ```
 
 ```{r}
-# 12 predictors (got rid of biceps)
+#| eval: true
+# 11 predictors (got rid of biceps)
 lm_spec %>% 
   fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + forearm + wrist,
       data = humans) %>% 
@@ -434,7 +501,8 @@ lm_spec %>%
 
 
 ```{r}
-# 11 predictors (got rid of neck)
+#| eval: true
+# 10 predictors (got rid of neck)
 lm_spec %>% 
   fit(height ~ age + weight  + chest + abdomen + hip + thigh + knee + ankle + forearm + wrist,
       data = humans) %>% 
@@ -451,7 +519,16 @@ lm_spec %>%
 
 
     
-**EXAMPLE 3: Backward Stepwise Selection Step-by-Step Results**
+## Example 3: Backward Stepwise Selection Step-by-Step Results {.unnumbered .smaller}
+
+```{r}
+#| eval: false
+#| echo: false
+
+# answers from above
+kick_out
+round(cvs,3)
+```
 
 Below is the complete model sequence along with 10-fold CV MAE for each model (using `set.seed(253)`).
 
@@ -466,22 +543,22 @@ Below is the complete model sequence along with 10-fold CV MAE for each model (u
     7    5.013 weight, hip, forearm, thigh, chest, abdomen, age
     6    4.684 weight, hip, forearm, thigh, chest, abdomen
     5    4.460 weight, hip, forearm, thigh, chest
-    4    4.385 weight, hip, forearm, thigh
+    4    4.386 weight, hip, forearm, thigh
     3    4.091 weight, hip, forearm
-    2    3.732 weight, hip
+    2    3.733 weight, hip
     1    3.658 weight
 
 
+**DISCUSS:**
 
-a. REVIEW: Interpret the CV MAE for the model of `height` by `weight` alone.
-
+a. (Review) Interpret the CV MAE for the model of `height` by `weight` alone.
 
 b. Is this algorithm more or less **computationally expensive** than the best subset algorithm?
 
 c. The predictors `neck` and `wrist`, in that order, are the most strongly correlated with `height`. Where do these appear in the backward sequence and what does this mean?
 
 ```{r}
-cor(humans)[,13] %>% 
+cor(humans)[,'height'] %>% 
   sort()
 ```
 
@@ -489,13 +566,12 @@ d. We deleted predictors one at a time. Why is this better than deleting a colle
 
 
 
-
 <details>
 <summary>Solution</summary>
 a. Using a linear model with only weight to predict height, our prediction error would be on average 3.58 inches off from the truth on new data.
 b. Less. We only have to build 12 models.
-c. wrist is kicked out early! the 1-predictor model produced by this algorithm isn't necessarily the *best* 1-predictor model (same for any number of predictors).
-d. The value of the coefficient (and thus the p-value is dependent on the other variables in the model as we are accounting for or conditioning on them).
+c. Both neck and wrist are kicked out early! The 1-predictor model produced by this algorithm isn't necessarily the *best* 1-predictor model (same for any number of predictors).
+d. The value of the coefficient (and thus the p-value) is dependent on the other variables in the model as we are accounting for or conditioning on them.
 
 </details>
 <br>
@@ -503,8 +579,9 @@ d. The value of the coefficient (and thus the p-value is dependent on the other 
 
 
 
-**EXAMPLE 4: Backward Stepwise Selection Final Model**
+## Example 4: Backward Stepwise Selection Final Model {.unnumbered .smaller}
 
+<!-- skip this during class time? -->
 
 We have to pick just **1** of the 12 models as our final model.
 
@@ -512,7 +589,19 @@ That is, we have to pick a value for our **tuning parameter**, the number of pre
 
 It helps to plot the CV MAE for each model in the sequence. 
 
+**Here's what we saw above:**
+
 ```{r}
+#| eval: false
+#| echo: false
+
+# reminder of cvs from above
+round(cvs, 3)
+```
+
+```{r old-code}
+#| echo: false
+#| eval: false
 data.frame(
     predictors = c(12:1), 
     mae = c(5.762, 5.642, 5.383, 5.326, 5.281, 4.968, 4.599, 4.455, 4.086, 4.547, 4.712, 3.571)) %>% 
@@ -521,6 +610,23 @@ data.frame(
     geom_line() + 
     scale_x_continuous(breaks = c(1:12))
 ```
+
+```{r}
+#| eval: true
+data.frame(
+    predictors = c(12:1), 
+    mae = c(5.728, 5.523, 5.413, 5.368, 5.047, 5.013, 4.684, 4.460, 4.386, 4.091, 3.733, 3.658)) %>% 
+  ggplot(aes(x = predictors, y = mae)) + 
+    geom_point() + 
+    geom_line() + 
+    scale_x_continuous(breaks = c(1:12))
+```
+
+
+**Here's another example from a different subset of these data:**
+
+![](images/L05-goldilocks.png)
+
 
 a. In the odd ["Goldilocks" fairy tale](https://www.youtube.com/watch?v=qOJ_A5tgBKM), a kid comes upon a bear den -- the first bear's bed is too hard, the second bear's is too soft, and the third bear's is just right. Our plot illustrates a **goldilocks problem** in tuning the number of predictors in our backward stepwise model. Explain.
 
@@ -538,8 +644,11 @@ b. Which model do you pick?!?
 <summary>Solution</summary>
 
 
-a. too few predictors: model is too simple. too many predictors: model is too overfit.
-b. I think models with 1 and 4 predictors are reasonable.
+a. Too few predictors: model is too simple. too many predictors: model is too overfit.
+b. Based on our data, I think the model with 1 predictor seems pretty reasonable! 
+If I were looking at the other MAE plot, though, I might gravitate pick a model 
+with 1 (the simplest), 2 (still simple, but better MAE than 1 predictor), or 5 
+predictors (the model with the best CV MAE).
 
 </details>
 <br>
@@ -549,7 +658,10 @@ b. I think models with 1 and 4 predictors are reasonable.
 
 
 
-**EXAMPLE 5: machine learning vs human learning**    
+## Example 5: machine learning vs human learning {.unnumbered .smaller}    
+
+<!-- skip this during class time? -->
+
 
 When *tuning* or finalizing a model building algorithm, we (humans!) have our own choices to make.
 For one, we need to decide what we prefer:
@@ -591,7 +703,10 @@ b. 2
 
     
 
-**EXAMPLE 6: Forward Stepwise Selection Algorithm**
+## Example 6: Forward Stepwise Selection Algorithm {.unnumbered .smaller}
+
+<!-- skip this during class time? -->
+
 
 - How do you think this works?
 - Is it more or less computationally expensive than backward stepwise?
@@ -617,6 +732,8 @@ b. 2
 
 
 ## WARNING {-}
+
+<!-- skip this during class time? -->
 
 Variable selection algorithms are a nice, intuitive place to start our discussion of model selection techniques.
 
@@ -653,6 +770,14 @@ Why?
 
 
 # Exercises: Part 2 {-}
+
+## Instructions {-}
+
+- Scroll down to the `# Exercises` section in the Part 2 QMD.
+- Goal: become familiar with new code structures (recipes and workflows)
+- Ask me questions as I move around the room. 
+
+## Questions {.unnumbered .smaller}
 
 The video for today introduced the concepts of **recipes** and **workflows** in the **tidymodels** framework. These concepts will become important to our new modeling algorithms. Though they aren't *necessary* to linear regression models, let's explore them in this familiar setting. 
 
@@ -726,18 +851,38 @@ my_model <- model_workflow %>%
   fit(data = humans)
 ```
 
+
+
+
 **STEPS 5: Model evaluation**
 
-To get in-sample metrics, use `my_model` like normal.
+To get in-sample metrics, use `my_model` like normal. 
+
+```{r}
+# example: calculate of in-sample metrics
+my_model %>% 
+  glance()
+```
 
 To get CV metrics, pass the workflow to `fit_resamples` along with information about how to randomly create folds.
 
 ```{r}
 set.seed(253)
 my_model_cv <- model_workflow %>% 
-  fit_resamples(resamples = vfold_cv(humans, v = 10))
+  fit_resamples(resamples = vfold_cv(humans, v = 10),
+                metrics = metric_set(rsq))
 ```
 
 
+Then, proceed as usual... (`my_model_cv %>% collect_metrics()`, etc. )
 
 
+# Wrap-Up {-}
+
+- **Today's Material** 
+  - If you didn't finish the exercises, be sure to finish outside of class, check 
+  your solutions, and bring questions to office hours (or post on Slack)!
+- **Upcoming Due Dates**
+  - [TODAY by 11:59 pm]{style="background-color:orange;"}: HW1
+  - Before our next class: CP5
+  - Next week: HW2 (start today!)

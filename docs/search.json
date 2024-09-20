@@ -14,7 +14,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "The schedule below is a tentative outline of our plans for the semester.\nBefore each class period, please watch the indicated videos and check on your understanding by actively reviewing the associated Learning Goals.\nReadings refer to chapters/sections in the Introduction to Statistical Learning (ISLR) textbook (available online here). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.\n\n\n\n\n\nWeek 1\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/3\nCANCELED\n\n\n\n\n\n\n9/5\nCANCELED\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/10\nUnit 0: Introductions & Overview\nBackground Survey\nISLR Reading: Chap 1 & Section 2.1 (Skip 2.1.2, 2.1.3 for now)\nIntroductions\n\nComplete CP1 (before next class)\nStart HW0 (9/13)\n\n\n\n9/12\nUnit 1: Model Evaluation\nConcept Video (script)\nCheckpoint 1\nR Tutorial Video (code)\nISLR: Section 2.2 (skip 2.2.3 for now.), Section 3.1\nEvaluating Regression Models\n(QMD)\nComplete CP2\nFinish HW0\nConcept Video: Evaluating Regression Models\nR Tutorial Video: Introduction to TidyModels\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/17\nUnit 1: Overfitting\nCheckpoint 2\nR Tutorial Video (code)\nISLR: Section 2.1.2, 5.1\nOverfitting\n(Part 1 QMD) (Part 2 QMD)\nComplete CP3\nStart HW1\nContent Video: Overfitting\n\n\n9/19\nUnit 1: Cross Validation\nConcept Video 1 (script)\nConcept Video 2 (script)\nCheckpoint 3\nR Tutorial Video (code)\nISLR: 5.1\nCross-Validation\n(QMD)\nComplete CP4\nContinue HW1\nConcept Video: Cross-Validation\nR Tutorial: Training, Testing and Cross-Validation\n\n\n\nNote: this page is currently under construction! More dates and links coming soon.",
+    "text": "The schedule below is a tentative outline of our plans for the semester.\nBefore each class period, please watch the indicated videos and check on your understanding by actively reviewing the associated Learning Goals.\nReadings refer to chapters/sections in the Introduction to Statistical Learning (ISLR) textbook (available online here). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.\n\n\n\n\n\nWeek 1\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/3\nCANCELED\n\n\n\n\n\n\n9/5\nCANCELED\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/10\nUnit 0: Introductions & Overview\nBackground Survey\nISLR Reading: Chap 1 & Section 2.1 (Skip 2.1.2, 2.1.3 for now)\nIntroductions\n\nComplete CP1 (before next class)\nStart HW0 (9/13)\n\n\n\n9/12\nUnit 1: Model Evaluation\nConcept Video (script)\nCheckpoint 1\nR Tutorial Video (code)\nISLR: Section 2.2 (skip 2.2.3 for now.), Section 3.1\nEvaluating Regression Models\n(QMD)\nComplete CP2\nFinish HW0\nConcept Video: Evaluating Regression Models\nR Tutorial Video: Introduction to TidyModels\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/17\nUnit 1: Overfitting\nCheckpoint 2\nR Tutorial Video (code)\nISLR: Section 2.1.2, 5.1\nOverfitting\n(Part 1 QMD) (Part 2 QMD)\nComplete CP3\nStart HW1\nContent Video: Overfitting\n\n\n9/19\nUnit 1: Cross Validation\nConcept Video 1 (script)\nConcept Video 2 (script)\nCheckpoint 3\nR Tutorial Video (code)\nISLR: 5.1\nCross-Validation\n(QMD)\nComplete CP4\nContinue HW1\nConcept Video: Cross-Validation\nR Tutorial: Training, Testing and Cross-Validation\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 4\n\n\n\n\nDate\nTopic\nBefore Class: Videos/Readings\nIn Class: Slides/Notes\nAfter Class: Assignments\nAdditional Resources (Optional)\n\n\n9/24\nUnit 2: Model Selection\nVideo (script)\nCheckpoint #\nTopic\n(QMD)\nComplete CP#\nStart/Continue/Finish HW#\nISLR: Section #\nVideo: Topic\n\n\n9/26\nUnit 2: LASSO (Shrinkage/Regularization)\nVideo (script)\nCheckpoint #\nTopic\n(QMD)\nComplete CP#\nStart/Continue/Finish HW#\nISLR: Section #\nVideo: Topic\n\n\n\n \n\n--&gt;\nNote: this page is currently under construction! More dates and links coming soon.",
     "crumbs": [
       "Overview",
       "Schedule"
@@ -678,6 +678,281 @@
     "crumbs": [
       "Appendices",
       "STAT 155 Review"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html",
+    "href": "L05-model-selection.html",
+    "title": "5  Model Selection",
+    "section": "",
+    "text": "Settling In",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#warning",
+    "href": "L05-model-selection.html#warning",
+    "title": "5  Model Selection",
+    "section": "WARNING",
+    "text": "WARNING\n\nVariable selection algorithms are a nice, intuitive place to start our discussion of model selection techniques.\nBUT we will not use them.\nThey are frowned upon in the broader ML community, so much so that tidymodels doesn’t even implement them! Why?\n\nBest subset selection is computationally expensive.\n\nBackward stepwise selection:\n\nis greedy – it makes locally optimal decisions, thus often misses the globally optimal model\noverestimates the significance of remaining predictors, thus shouldn’t be used for inference\n\nForward stepwise selection:\n\nis computationally expensive\ncan produce odd combinations of predictors (eg: a new predictor may render previously included predictors non-significant).",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#context",
+    "href": "L05-model-selection.html#context",
+    "title": "5  Model Selection",
+    "section": "Context",
+    "text": "Context\n\n\n\n\nworld = supervised learning\nWe want to model some output variable \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)).\ntask = regression\n\\(y\\) is quantitative\nmodel = linear regression\nWe’ll assume that the relationship between \\(y\\) and (\\(x_1, x_2, ..., x_p\\)) can be represented by\n\\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + ... + \\beta_p x_p + \\varepsilon\\]",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#inferential-v.-predictive-models-unit-2-motivation",
+    "href": "L05-model-selection.html#inferential-v.-predictive-models-unit-2-motivation",
+    "title": "5  Model Selection",
+    "section": "Inferential v. Predictive Models (Unit 2 Motivation)",
+    "text": "Inferential v. Predictive Models (Unit 2 Motivation)\nIn model building, the decision of which predictors to use depends upon our goal.\nInferential models\n\n\nGoal: Explore & test hypotheses about a specific relationship.\nPredictors: Defined by the goal.\nExample: An economist wants to understand how salaries (\\(y\\)) vary by age (\\(x_1\\)) while controlling for education level (\\(x_2\\)).\n\n\nPredictive models\n\nGoal: Produce the “best” possible predictions of \\(y\\).\nPredictors: Any combination of predictors that help us meet this goal.\nExample: A mapping app wants to provide users with quality estimates of arrival time (\\(y\\)) utilizing any useful predictors (eg: time of day, distance, route, speed limit, weather, day of week, traffic radar…)",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#unit-2-goal",
+    "href": "L05-model-selection.html#unit-2-goal",
+    "title": "5  Model Selection",
+    "section": "Unit 2 Goal",
+    "text": "Unit 2 Goal\nModel selection algorithms can help us build a predictive model of \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)). There are 3 general approaches to this task:\n\nVariable selection (today)\nIdentify a subset of predictors to use in our model of \\(y\\).\nShrinkage / regularization (next class)\nShrink / regularize the coefficients of all predictors toward or to 0.\nDimension reduction (later in the semester)\nCombine the predictors into a smaller set of new predictors.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#context-1",
+    "href": "L05-model-selection.html#context-1",
+    "title": "5  Model Selection",
+    "section": "Context",
+    "text": "Context\nLet’s build a predictive model of height in inches using one or more of 12 possible predictors. Other than age and weight, these are circumferences measured in cm.\n\n# Load packages\nlibrary(tidyverse)\nlibrary(tidymodels)\n\n# Load data\nhumans &lt;- read.csv(\"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv\")\nnames(humans)\n\n [1] \"age\"     \"weight\"  \"neck\"    \"chest\"   \"abdomen\" \"hip\"     \"thigh\"  \n [8] \"knee\"    \"ankle\"   \"biceps\"  \"forearm\" \"wrist\"   \"height\" \n\n\nA heat map displays correlations for each pair of variables in our dataset. Not only is height correlated with multiple predictors, the predictors are correlated with one another (mulicollinear)! We don’t need all of them in our model.\n\n# Get the correlation matrix\nlibrary(reshape2)\ncor_matrix &lt;- cor(humans)\ncor_matrix[lower.tri(cor_matrix)] &lt;- NA\ncor_matrix &lt;- cor_matrix %&gt;% \n  melt() %&gt;% \n  na.omit() %&gt;% \n  rename(correlation = value)\n\n# Visualize the correlation for each pair of variables\nggplot(cor_matrix, aes(x = Var1, y = Var2, fill = correlation)) +\n  geom_tile(color = \"white\") +\n  scale_fill_gradient2(\n    low = \"blue\", high = \"red\", mid = \"white\", \n    midpoint = 0, limit = c(-1,1)) +\n  labs(x = \"\", y = \"\") +\n  theme_minimal() + \n  theme(axis.text.x = element_text(angle = 60, hjust = 1)) + \n  coord_fixed()",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#directions",
+    "href": "L05-model-selection.html#directions",
+    "title": "5  Model Selection",
+    "section": "Directions",
+    "text": "Directions\nOpen the Part 1 QMD. Scroll down to Exercises: Part 1.\nAs a group, you’ll design a variable selection algorithm to pick which of the 12 predictors to use in a predictive model of height.\nThis will NOT be perfect!\nThe goal is to:\n\nHave fun and work together!\nTap into your intuition for key questions and challenges in variable selection.\nDeepen your understanding of “algorithms” and “tuning parameters” by designing and communicating your own.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#questions",
+    "href": "L05-model-selection.html#questions",
+    "title": "5  Model Selection",
+    "section": "Questions",
+    "text": "Questions\nLet’s build a predictive model of height in inches using one or more of 12 possible predictors. Other than age and weight, these are circumferences measured in cm.\n\n# Load packages\nlibrary(tidyverse)\nlibrary(tidymodels)\n\n# Load data\nhumans &lt;- read.csv(\"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv\")\nnames(humans)\n\n [1] \"age\"     \"weight\"  \"neck\"    \"chest\"   \"abdomen\" \"hip\"     \"thigh\"  \n [8] \"knee\"    \"ankle\"   \"biceps\"  \"forearm\" \"wrist\"   \"height\" \n\n\nA heat map displays correlations for each pair of variables in our dataset. Not only is height correlated with multiple predictors, the predictors are correlated with one another (mulicollinear)! We don’t need all of them in our model.\n\n# Get the correlation matrix\nlibrary(reshape2)\ncor_matrix &lt;- cor(humans)\ncor_matrix[lower.tri(cor_matrix)] &lt;- NA\ncor_matrix &lt;- cor_matrix %&gt;% \n  melt() %&gt;% \n  na.omit() %&gt;% \n  rename(correlation = value)\n\n# Visualize the correlation for each pair of variables\nggplot(cor_matrix, aes(x = Var1, y = Var2, fill = correlation)) +\n  geom_tile(color = \"white\") +\n  scale_fill_gradient2(\n    low = \"blue\", high = \"red\", mid = \"white\", \n    midpoint = 0, limit = c(-1,1)) +\n  labs(x = \"\", y = \"\") +\n  theme_minimal() + \n  theme(axis.text.x = element_text(angle = 60, hjust = 1)) + \n  coord_fixed()\n\n\n\n\n\n\n\n\n\nDesign your own algorithm (15 minutes)\n\nDo not use any materials from outside this class.\nDocument your algorithm in words (not code) in this google doc.\nYour algorithm must:\n\nbe clear to other humans\nbe clear to a machine (cannot utilize context)\nlead to a single model that uses 0-12 of our predictors\ndefine and provide directions for selecting any tuning parameters\n\nImplement as many steps of your algorithm as possible in the time allotted. You can modify the code below to build and evaluate the models in your algorithm:\n\n\n\n# STEP 1: model specification\nlm_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\")\n\n# STEP 2: model estimation\nheight_model_1 &lt;- lm_spec %&gt;% \n  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)\n\n# Check it out\nheight_model_1 %&gt;% \n  tidy()\n\n# CV MAE\nset.seed(253)\nlm_spec %&gt;% \n  fit_resamples(\n    height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,\n    resamples = vfold_cv(humans, v = 10), \n    metrics = metric_set(mae)\n  ) %&gt;% \n  collect_metrics()\n\n\n\nTest another group’s algorithm (5 minutes)\nTry to implement the next algorithm below yours (or the first algorithm if your group’s is last). Think: Are the steps clear? What are the drawbacks to the algorithm?",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#goal",
+    "href": "L05-model-selection.html#goal",
+    "title": "5  Model Selection",
+    "section": "Goal",
+    "text": "Goal\nLet’s consider three existing variable selection algorithms.\nHeads up: these algorithms are important to building intuition for the questions and challenges in model selection, BUT have major drawbacks.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#example-1-best-subset-selection-algorithm",
+    "href": "L05-model-selection.html#example-1-best-subset-selection-algorithm",
+    "title": "5  Model Selection",
+    "section": "Example 1: Best Subset Selection Algorithm",
+    "text": "Example 1: Best Subset Selection Algorithm\n\n\nBuild all \\(2^p\\) possible models that use any combination of the available predictors \\((x_1, x_2,..., x_p)\\).\n\nIdentify the best model with respect to some chosen metric (eg: CV MAE) and context.\n\n\nSuppose we used this algorithm for our height model with 12 possible predictors. What’s the main drawback?\n\n\nSolution\n\nIt’s computationally expensive. For our humans example, we’d need to build 4096 models:\n\n2^12\n\n[1] 4096",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#example-2-backward-stepwise-selection-algorithm",
+    "href": "L05-model-selection.html#example-2-backward-stepwise-selection-algorithm",
+    "title": "5  Model Selection",
+    "section": "Example 2: Backward Stepwise Selection Algorithm",
+    "text": "Example 2: Backward Stepwise Selection Algorithm\n\n\nBuild a model with all \\(p\\) possible predictors, \\((x_1, x_2,..., x_p)\\).\n\nRepeat the following until only 1 predictor remains in the model:\n\nRemove the 1 predictor with the biggest p-value.\nBuild a model with the remaining predictors.\n\n\nYou now have \\(p\\) competing models: one with all \\(p\\) predictors, one with \\(p-1\\) predictors, …, and one with 1 predictor. Identify the “best” model with respect to some metric (eg: CV MAE) and context.\n\n\n. . .\nLet’s try out the first few steps!\n. . .\n\n# Load packages and data\nlibrary(tidyverse)\nlibrary(tidymodels)\nhumans &lt;- read.csv(\"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv\")\n\n\n# STEP 1: model specifications\nlm_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\")\n\n\n# STEP 2: model estimate (using all 12 predictors to start)\n# Pick apart this code and make it easier to identify the least \"significant\" predictor!!!\nlm_spec %&gt;% \n  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, \n      data = humans) %&gt;% \n  tidy() %&gt;% \n  filter(term != \"(Intercept)\") %&gt;% \n  mutate(p.value = round(p.value, 4))\n\n# A tibble: 12 × 5\n   term    estimate std.error statistic p.value\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1 age      -0.112      0.132    -0.847  0.405 \n 2 weight    0.379      0.213     1.78   0.0864\n 3 neck      0.139      1.17      0.119  0.906 \n 4 chest    -0.459      0.473    -0.971  0.340 \n 5 abdomen   0.283      0.354     0.798  0.432 \n 6 hip      -0.921      0.510    -1.81   0.0822\n 7 thigh    -1.24       0.646    -1.92   0.066 \n 8 knee      0.151      0.941     0.160  0.874 \n 9 ankle    -0.888      1.28     -0.693  0.494 \n10 biceps   -0.0808     0.746    -0.108  0.915 \n11 forearm   2.25       1.80      1.25   0.223 \n12 wrist     0.836      2.32      0.361  0.721 \n\n\n\n# 11 predictors (tweak the code)\nlm_spec %&gt;% \n  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,\n      data = humans) %&gt;% \n  tidy() %&gt;% \n  filter(term != \"(Intercept)\") %&gt;% \n  mutate(p.value = round(p.value, 4))\n\n# A tibble: 12 × 5\n   term    estimate std.error statistic p.value\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1 age      -0.112      0.132    -0.847  0.405 \n 2 weight    0.379      0.213     1.78   0.0864\n 3 neck      0.139      1.17      0.119  0.906 \n 4 chest    -0.459      0.473    -0.971  0.340 \n 5 abdomen   0.283      0.354     0.798  0.432 \n 6 hip      -0.921      0.510    -1.81   0.0822\n 7 thigh    -1.24       0.646    -1.92   0.066 \n 8 knee      0.151      0.941     0.160  0.874 \n 9 ankle    -0.888      1.28     -0.693  0.494 \n10 biceps   -0.0808     0.746    -0.108  0.915 \n11 forearm   2.25       1.80      1.25   0.223 \n12 wrist     0.836      2.32      0.361  0.721 \n\n\n\n# 10 predictors (tweak the code)\nlm_spec %&gt;% \n  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,\n      data = humans) %&gt;% \n  tidy() %&gt;% \n  filter(term != \"(Intercept)\") %&gt;% \n  mutate(p.value = round(p.value, 4))\n\n# A tibble: 12 × 5\n   term    estimate std.error statistic p.value\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1 age      -0.112      0.132    -0.847  0.405 \n 2 weight    0.379      0.213     1.78   0.0864\n 3 neck      0.139      1.17      0.119  0.906 \n 4 chest    -0.459      0.473    -0.971  0.340 \n 5 abdomen   0.283      0.354     0.798  0.432 \n 6 hip      -0.921      0.510    -1.81   0.0822\n 7 thigh    -1.24       0.646    -1.92   0.066 \n 8 knee      0.151      0.941     0.160  0.874 \n 9 ankle    -0.888      1.28     -0.693  0.494 \n10 biceps   -0.0808     0.746    -0.108  0.915 \n11 forearm   2.25       1.80      1.25   0.223 \n12 wrist     0.836      2.32      0.361  0.721 \n\n\n\n\nSolution\n\n\n# All 12 predictors\nlm_spec %&gt;% \n  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,\n      data = humans) %&gt;% \n  tidy() %&gt;%  # use tidy to get p-values for each coefficient\n  filter(term != \"(Intercept)\") %&gt;% # exclude the intercept\n  mutate(p.value = round(p.value, 4)) %&gt;% # round the p-values for easier viewing\n  arrange(desc(p.value)) # added this line to arrange from largest to smallest p-value\n\n# A tibble: 12 × 5\n   term    estimate std.error statistic p.value\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1 biceps   -0.0808     0.746    -0.108  0.915 \n 2 neck      0.139      1.17      0.119  0.906 \n 3 knee      0.151      0.941     0.160  0.874 \n 4 wrist     0.836      2.32      0.361  0.721 \n 5 ankle    -0.888      1.28     -0.693  0.494 \n 6 abdomen   0.283      0.354     0.798  0.432 \n 7 age      -0.112      0.132    -0.847  0.405 \n 8 chest    -0.459      0.473    -0.971  0.340 \n 9 forearm   2.25       1.80      1.25   0.223 \n10 weight    0.379      0.213     1.78   0.0864\n11 hip      -0.921      0.510    -1.81   0.0822\n12 thigh    -1.24       0.646    -1.92   0.066 \n\n\n\n# 11 predictors (got rid of biceps)\nlm_spec %&gt;% \n  fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + forearm + wrist,\n      data = humans) %&gt;% \n  tidy() %&gt;% \n  filter(term != \"(Intercept)\") %&gt;% \n  mutate(p.value = round(p.value, 4)) %&gt;% \n  arrange(desc(p.value))\n\n# A tibble: 11 × 5\n   term    estimate std.error statistic p.value\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1 neck       0.161     1.14      0.142  0.888 \n 2 knee       0.180     0.886     0.203  0.841 \n 3 wrist      0.907     2.18      0.416  0.681 \n 4 ankle     -0.878     1.26     -0.699  0.490 \n 5 abdomen    0.281     0.348     0.809  0.425 \n 6 age       -0.111     0.130    -0.858  0.398 \n 7 chest     -0.453     0.461    -0.982  0.334 \n 8 forearm    2.17      1.62      1.34   0.192 \n 9 hip       -0.902     0.470    -1.92   0.0652\n10 weight     0.369     0.190     1.94   0.0623\n11 thigh     -1.26      0.602    -2.09   0.0454\n\n\n\n# 10 predictors (got rid of neck)\nlm_spec %&gt;% \n  fit(height ~ age + weight  + chest + abdomen + hip + thigh + knee + ankle + forearm + wrist,\n      data = humans) %&gt;% \n  tidy() %&gt;% \n  filter(term != \"(Intercept)\") %&gt;% \n  mutate(p.value = round(p.value, 4)) %&gt;% \n  arrange(desc(p.value))\n\n# A tibble: 10 × 5\n   term    estimate std.error statistic p.value\n   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;\n 1 knee       0.166     0.866     0.191  0.850 \n 2 wrist      0.985     2.07      0.475  0.639 \n 3 ankle     -0.884     1.23     -0.716  0.480 \n 4 age       -0.111     0.127    -0.869  0.392 \n 5 abdomen    0.298     0.322     0.924  0.363 \n 6 chest     -0.460     0.451    -1.02   0.316 \n 7 forearm    2.29      1.37      1.66   0.107 \n 8 weight     0.377     0.179     2.11   0.0435\n 9 thigh     -1.26      0.591    -2.14   0.0409\n10 hip       -0.931     0.416    -2.24   0.0331",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#example-3-backward-stepwise-selection-step-by-step-results",
+    "href": "L05-model-selection.html#example-3-backward-stepwise-selection-step-by-step-results",
+    "title": "5  Model Selection",
+    "section": "Example 3: Backward Stepwise Selection Step-by-Step Results",
+    "text": "Example 3: Backward Stepwise Selection Step-by-Step Results\nBelow is the complete model sequence along with 10-fold CV MAE for each model (using set.seed(253)).\n\n\n\npred\nCV MAE\npredictor list\n\n\n\n\n12\n5.728\nweight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist, knee, neck, biceps\n\n\n11\n5.523\nweight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist, knee, neck\n\n\n10\n5.413\nweight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist, knee\n\n\n9\n5.368\nweight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist\n\n\n8\n5.047\nweight, hip, forearm, thigh, chest, abdomen, age, ankle\n\n\n7\n5.013\nweight, hip, forearm, thigh, chest, abdomen, age\n\n\n6\n4.684\nweight, hip, forearm, thigh, chest, abdomen\n\n\n5\n4.460\nweight, hip, forearm, thigh, chest\n\n\n4\n4.386\nweight, hip, forearm, thigh\n\n\n3\n4.091\nweight, hip, forearm\n\n\n2\n3.733\nweight, hip\n\n\n1\n3.658\nweight\n\n\n\nDISCUSS:\n\n(Review) Interpret the CV MAE for the model of height by weight alone.\nIs this algorithm more or less computationally expensive than the best subset algorithm?\nThe predictors neck and wrist, in that order, are the most strongly correlated with height. Where do these appear in the backward sequence and what does this mean?\n\n\ncor(humans)[,'height'] %&gt;% \n  sort()\n\n      thigh         hip         age     abdomen        knee       chest \n-0.11301249 -0.10648937 -0.05853538 -0.02173587  0.02345904  0.05838830 \n     biceps       ankle      weight     forearm       wrist        neck \n 0.07441696  0.07920867  0.11228791  0.16968040  0.28967468  0.29147610 \n     height \n 1.00000000 \n\n\n\nWe deleted predictors one at a time. Why is this better than deleting a collection of multiple predictors at the same time (eg: kicking out all predictors with p-value &gt; 0.1)?\n\n\n\nSolution\n\n\nUsing a linear model with only weight to predict height, our prediction error would be on average 3.58 inches off from the truth on new data.\nLess. We only have to build 12 models.\nBoth neck and wrist are kicked out early! The 1-predictor model produced by this algorithm isn’t necessarily the best 1-predictor model (same for any number of predictors).\nThe value of the coefficient (and thus the p-value) is dependent on the other variables in the model as we are accounting for or conditioning on them.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#example-4-backward-stepwise-selection-final-model",
+    "href": "L05-model-selection.html#example-4-backward-stepwise-selection-final-model",
+    "title": "5  Model Selection",
+    "section": "Example 4: Backward Stepwise Selection Final Model",
+    "text": "Example 4: Backward Stepwise Selection Final Model\n\nWe have to pick just 1 of the 12 models as our final model.\nThat is, we have to pick a value for our tuning parameter, the number of predictors.\nIt helps to plot the CV MAE for each model in the sequence.\nHere’s what we saw above:\n\ndata.frame(\n    predictors = c(12:1), \n    mae = c(5.728, 5.523, 5.413, 5.368, 5.047, 5.013, 4.684, 4.460, 4.386, 4.091, 3.733, 3.658)) %&gt;% \n  ggplot(aes(x = predictors, y = mae)) + \n    geom_point() + \n    geom_line() + \n    scale_x_continuous(breaks = c(1:12))\n\n\n\n\n\n\n\n\nHere’s another example from a different subset of these data:\n\n\nIn the odd “Goldilocks” fairy tale, a kid comes upon a bear den – the first bear’s bed is too hard, the second bear’s is too soft, and the third bear’s is just right. Our plot illustrates a goldilocks problem in tuning the number of predictors in our backward stepwise model. Explain.\n\n\nWhen the number of predictors is too small, the MAE increases because the model is too….\nWhen the number of predictors is too large, the MAE increases because the model is too….\n\n\nWhich model do you pick?!?\n\n\n\nSolution\n\n\nToo few predictors: model is too simple. too many predictors: model is too overfit.\nBased on our data, I think the model with 1 predictor seems pretty reasonable! If I were looking at the other MAE plot, though, I might gravitate pick a model with 1 (the simplest), 2 (still simple, but better MAE than 1 predictor), or 5 predictors (the model with the best CV MAE).",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#example-5-machine-learning-vs-human-learning",
+    "href": "L05-model-selection.html#example-5-machine-learning-vs-human-learning",
+    "title": "5  Model Selection",
+    "section": "Example 5: machine learning vs human learning",
+    "text": "Example 5: machine learning vs human learning\n\nWhen tuning or finalizing a model building algorithm, we (humans!) have our own choices to make. For one, we need to decide what we prefer:\n\na model with the lowest prediction errors; or\na more parsimonious model: one with slightly higher prediction errors but fewer predictors\n\nIn deciding, here are some human considerations:\n\ngoal: How will the model be used? Should it be easy for humans to interpret and apply?\ncost: How many resources (time, money, computer memory, etc) do the model and data needed require?\nimpact: What are the consequences of a bad prediction?\n\nFor each scenario below, which model would you pick: (1) the model with the lowest prediction errors; or (2) a parsimonious model with slightly worse predictions?\n\nGoogle asks us to re-build their search algorithm.\nA small non-profit hires us to help them build a predictive model of the donation dollars they’ll receive throughout the year.\n\n\n\nSolution\n\n\n1\n2",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#example-6-forward-stepwise-selection-algorithm",
+    "href": "L05-model-selection.html#example-6-forward-stepwise-selection-algorithm",
+    "title": "5  Model Selection",
+    "section": "Example 6: Forward Stepwise Selection Algorithm",
+    "text": "Example 6: Forward Stepwise Selection Algorithm\n\n\nHow do you think this works?\nIs it more or less computationally expensive than backward stepwise?\n\n\n\nSolution\n\n\nStart with 0 predictors. Add the predictor with the smallest p-value. To this model, add a second predictor with the smallest p-value. Continue until all predictors are in the model.\nmore. For 12 predictors, we’d have to build 12 models in step 1, 11 models in step 2, etc. Thus 12 + 11 + … + 1 = 78 models total.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#inferential-v.-predictive-models",
+    "href": "L05-model-selection.html#inferential-v.-predictive-models",
+    "title": "5  Model Selection",
+    "section": "Inferential v. Predictive Models",
+    "text": "Inferential v. Predictive Models\nIn model building, the decision of which predictors to use depends upon our goal.\nInferential models\n\n\nGoal: Explore & test hypotheses about a specific relationship.\nPredictors: Defined by the goal.\nExample: An economist wants to understand how salaries (\\(y\\)) vary by age (\\(x_1\\)) while controlling for education level (\\(x_2\\)).\n\n\nPredictive models\n\n\nGoal: Produce the “best” possible predictions of \\(y\\).\nPredictors: Any combination of predictors that help us meet this goal.\nExample: A mapping app wants to provide users with quality estimates of arrival time (\\(y\\)) utilizing any useful predictors (eg: time of day, distance, route, speed limit, weather, day of week, traffic radar…)",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#model-selection-goals",
+    "href": "L05-model-selection.html#model-selection-goals",
+    "title": "5  Model Selection",
+    "section": "Model Selection Goals",
+    "text": "Model Selection Goals\nModel selection algorithms can help us build a predictive model of \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)).\nThere are 3 general approaches to this task:\n\n\nVariable selection (today)\nIdentify a subset of predictors to use in our model of \\(y\\).\nShrinkage / regularization (next class)\nShrink / regularize the coefficients of all predictors toward or to 0.\nDimension reduction (later in the semester)\nCombine the predictors into a smaller set of new predictors.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#data-context",
+    "href": "L05-model-selection.html#data-context",
+    "title": "5  Model Selection",
+    "section": "Data Context",
+    "text": "Data Context\nLet’s build a predictive model of height in inches using one or more of 12 possible predictors. Other than age and weight, these are circumferences measured in cm.\n\n# Load packages\nlibrary(tidyverse)\nlibrary(tidymodels)\n\n# Load data\nhumans &lt;- read.csv(\"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv\")\nnames(humans)\n\n [1] \"age\"     \"weight\"  \"neck\"    \"chest\"   \"abdomen\" \"hip\"     \"thigh\"  \n [8] \"knee\"    \"ankle\"   \"biceps\"  \"forearm\" \"wrist\"   \"height\" \n\n\nA heat map displays correlations for each pair of variables in our dataset. Not only is height correlated with multiple predictors, the predictors are correlated with one another (mulicollinear)! We don’t need all of them in our model.\n\n# Get the correlation matrix\nlibrary(reshape2)\ncor_matrix &lt;- cor(humans)\ncor_matrix[lower.tri(cor_matrix)] &lt;- NA\ncor_matrix &lt;- cor_matrix %&gt;% \n  melt() %&gt;% \n  na.omit() %&gt;% \n  rename(correlation = value)\n\n# Visualize the correlation for each pair of variables\nggplot(cor_matrix, aes(x = Var1, y = Var2, fill = correlation)) +\n  geom_tile(color = \"white\") +\n  scale_fill_gradient2(\n    low = \"blue\", high = \"red\", mid = \"white\", \n    midpoint = 0, limit = c(-1,1)) +\n  labs(x = \"\", y = \"\") +\n  theme_minimal() + \n  theme(axis.text.x = element_text(angle = 60, hjust = 1)) + \n  coord_fixed()",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#instructions",
+    "href": "L05-model-selection.html#instructions",
+    "title": "5  Model Selection",
+    "section": "Instructions",
+    "text": "Instructions\nOpen the Part 1 QMD. Scroll down to the # Exercises section.\nAs a group, you’ll design a variable selection algorithm to pick which predictors to use in a predictive model of height. Specifically, you will:\n\n15 mins: come up with one algorithm, document it, and try it\n5 mins: try another group’s algorithm\n\nNOTE: This will NOT be perfect! Our goals are to:\n\nHave fun and work together!\nTap into your intuition for key questions and challenges in variable selection.\nDeepen your understanding of “algorithms” and “tuning parameters” by designing and communicating your own.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#instructions-1",
+    "href": "L05-model-selection.html#instructions-1",
+    "title": "5  Model Selection",
+    "section": "Instructions",
+    "text": "Instructions\n\nScroll down to the # Exercises section in the Part 2 QMD.\nGoal: become familiar with new code structures (recipes and workflows)\nAsk me questions as I move around the room.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#questions-1",
+    "href": "L05-model-selection.html#questions-1",
+    "title": "5  Model Selection",
+    "section": "Questions",
+    "text": "Questions\nThe video for today introduced the concepts of recipes and workflows in the tidymodels framework. These concepts will become important to our new modeling algorithms. Though they aren’t necessary to linear regression models, let’s explore them in this familiar setting.\nRun through the following discussion and code one step at a time. Take note of the general process, concepts, and questions you have.\nSTEP 1: model specification\nThis specifies the structure or general modeling algorithm we plan to use.\nIt does not specify anything about the variables of interest or our data.\n\nlm_spec &lt;- linear_reg() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\")\n\n# Check it out\nlm_spec\n\nLinear Regression Model Specification (regression)\n\nComputational engine: lm \n\n\nSTEP 2: recipe specification\nJust as a cooking recipe specifies the ingredients and how to prepare them, a tidymodels recipe specifies:\n\nthe variables in our relationship of interest (the ingredients)\nhow to pre-process or wrangle these variables (how to prepare the ingredients)\nthe data we’ll use to explore these variables (where to find the ingredients)\n\nIt does not specify anything about the model structure we’ll use to explore this relationship.\n\n# A simple recipe with NO pre-processing\ndata_recipe &lt;- recipe(height ~ wrist + ankle, data = humans)\n\n# Check it out\ndata_recipe\n\nSTEP 3: workflow creation (model + recipe)\nThis specifies the general workflow of our modeling process, including our model structure and our variable recipe.\n\nmodel_workflow &lt;- workflow() %&gt;%\n  add_recipe(data_recipe) %&gt;%\n  add_model(lm_spec)\n\n# Check it out\nmodel_workflow\n\n══ Workflow ════════════════════════════════════════════════════════════════════\nPreprocessor: Recipe\nModel: linear_reg()\n\n── Preprocessor ────────────────────────────────────────────────────────────────\n0 Recipe Steps\n\n── Model ───────────────────────────────────────────────────────────────────────\nLinear Regression Model Specification (regression)\n\nComputational engine: lm \n\n\nSTEP 4: Model estimation\nThis step estimates or fits our model of interest using our entire sample data.\nThe model (lm_spec) and variable details (here just height ~ wrist + ankle) are specified in the workflow, so we do not need to give that information again!\n\nmy_model &lt;- model_workflow %&gt;% \n  fit(data = humans)\n\nSTEPS 5: Model evaluation\nTo get in-sample metrics, use my_model like normal.\n\n# example: calculate of in-sample metrics\nmy_model %&gt;% \n  glance()\n\n# A tibble: 1 × 12\n  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC\n      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1     0.140        0.0932  6.85      3.00  0.0619     2  -132.  272.  279.\n# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;\n\n\nTo get CV metrics, pass the workflow to fit_resamples along with information about how to randomly create folds.\n\nset.seed(253)\nmy_model_cv &lt;- model_workflow %&gt;% \n  fit_resamples(resamples = vfold_cv(humans, v = 10),\n                metrics = metric_set(rsq))\n\nThen, proceed as usual… (my_model_cv %&gt;% collect_metrics(), etc. )",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#statistical-machine-learning-concepts",
+    "href": "L05-model-selection.html#statistical-machine-learning-concepts",
+    "title": "5  Model Selection",
+    "section": "Statistical Machine Learning Concepts",
+    "text": "Statistical Machine Learning Concepts\n\nGain intuition about different approaches to variable selection\nClearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms\nCompare best subset and stepwise algorithms in terms of optimality of output and computational time\nDescribe how selection algorithms can give a measure of variable importance",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#general-skills",
+    "href": "L05-model-selection.html#general-skills",
+    "title": "5  Model Selection",
+    "section": "General Skills",
+    "text": "General Skills\n\nHighlight: Collaborative Learning\n\nUnderstand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).\nDevelop a common purpose and agreement on goals.\nBe able to contribute questions or concerns in a respectful way.\nShare and contribute to the group’s learning in an equitable manner.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#collaborative-learning",
+    "href": "L05-model-selection.html#collaborative-learning",
+    "title": "5  Model Selection",
+    "section": "Collaborative Learning",
+    "text": "Collaborative Learning\nTake 5 minutes to reflect upon your work throughout Unit 1, particularly with respect to collaboration.\nReflect upon your strengths and what you might change in the next unit:\n\nHow actively did you contribute to group discussions?\nHow actively did you include ALL other group members in discussion?\nIn what ways did you (or did you not) help create a space where others feel comfortable making mistakes & sharing their ideas?",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
+    ]
+  },
+  {
+    "objectID": "L05-model-selection.html#unit-1-reflection-continued",
+    "href": "L05-model-selection.html#unit-1-reflection-continued",
+    "title": "5  Model Selection",
+    "section": "Unit 1 Reflection (continued)",
+    "text": "Unit 1 Reflection (continued)\nIf you did not finish Exercises #9 and #10 from last class, please take time after class today to do so.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Model Selection</span>"
     ]
   }
 ]
