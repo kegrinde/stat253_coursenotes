@@ -135,7 +135,7 @@ Algorithms and Tuning
 
 ## Prompts {.unnumbered .smaller}
 
-. . .
+
 
 1. **Algorithms**
 
@@ -153,10 +153,10 @@ b. $k$, the number of folds, is a tuning parameter. $k$ can be any integer from 
 <br>
 
 
-. . .
 
 
-2. **Tuning the k-fold Cross-Validation algorithm**
+
+2. **Tuning the k-fold Cross-Validation algorithm** 
 
 <!-- bring deck of cards -->
 <!-- 2/3 should be even cards and 1/3 should be odd -->
@@ -186,7 +186,6 @@ e. In practice, $k = 10$ and $k=7$ are common choices for cross-validation.  Thi
 - $k=n$ leave-one-out cross-validation (LOOCV) requires us to build $n$ training models, thus might be computationally expensive for larger sample sizes $n$. Further, with only one data point in each test set, the training sets have a lot of overlap.  This correlation among the training sets can make the ultimate corresponding estimate of prediction error less reliable. 
 
 </details>
-
 
 
 <!-- \ -->
@@ -284,7 +283,6 @@ e. In practice, $k = 10$ and $k=7$ are common choices for cross-validation.  Thi
 
 <br>
 
-. . .
 
 3. **R Code Preview**
 
