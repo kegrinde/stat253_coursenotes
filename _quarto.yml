@@ -6,6 +6,6 @@ execute:
   freeze: auto
 
 profile:
-  default: slides
+  default: book
   group:
   - [slides, book]
