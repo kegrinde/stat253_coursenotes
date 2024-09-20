@@ -46,7 +46,7 @@ Heads up: these algorithms are important to building intuition for the questions
 <br>
 
 
-**EXAMPLE 1: Best Subset Selection Algorithm**
+## EXAMPLE 1: Best Subset Selection Algorithm
 
 - Build *all* $2^p$ possible models that use any combination of the available predictors $(x_1, x_2,..., x_p)$.    
 - Identify the best model with respect to some chosen metric (eg: CV MAE) and context.
@@ -54,14 +54,14 @@ Heads up: these algorithms are important to building intuition for the questions
 
 Suppose we used this algorithm for our `height` model with 12 possible predictors. What's the main drawback? 
 
+> ANSWER
 
 
 
 
 
 
-
-**EXAMPLE 2: Backward Stepwise Selection Algorithm**
+## EXAMPLE 2: Backward Stepwise Selection Algorithm
 
 - Build a model with *all* $p$ possible predictors, $(x_1, x_2,..., x_p)$.    
 
@@ -77,17 +77,17 @@ Let's try out the first few steps!
 # Load packages and data
 library(tidyverse)
 library(tidymodels)
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat1.csv")
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv")
 ```
 
 ```{r}
+# STEP 1: model specifications
 lm_spec <- linear_reg() %>% 
   set_mode("regression") %>% 
   set_engine("lm")
 
-# All 12 predictors
-# Pick apart this code and make it easier to identify
-# the least "significant" predictor!!!
+# STEP 2: model estimate (using all 12 predictors to start)
+# Pick apart this code and make it easier to identify the least "significant" predictor!!!
 lm_spec %>% 
   fit(height ~ age + weight + neck + chest + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist,
       data = humans) %>% 
@@ -129,7 +129,7 @@ lm_spec %>%
 
 
     
-**EXAMPLE 3: Backward Stepwise Selection Step-by-Step Results**
+## EXAMPLE 3: Backward Stepwise Selection Step-by-Step Results
 
 Below is the complete model sequence along with 10-fold CV MAE for each model (using `set.seed(253)`).
 
@@ -144,9 +144,9 @@ Below is the complete model sequence along with 10-fold CV MAE for each model (u
     7    5.013 weight, hip, forearm, thigh, chest, abdomen, age
     6    4.684 weight, hip, forearm, thigh, chest, abdomen
     5    4.460 weight, hip, forearm, thigh, chest
-    4    4.385 weight, hip, forearm, thigh
+    4    4.386 weight, hip, forearm, thigh
     3    4.091 weight, hip, forearm
-    2    3.732 weight, hip
+    2    3.733 weight, hip
     1    3.658 weight
 
 
@@ -157,27 +157,29 @@ Below is the complete model sequence along with 10-fold CV MAE for each model (u
 
 a. REVIEW: Interpret the CV MAE for the model of `height` by `weight` alone.
 
-
+> ANSWER
 
 
 
 b. Is this algorithm more or less **computationally expensive** than the best subset algorithm?
 
-
+> ANSWER
 
 
 
 c. The predictors `neck` and `wrist`, in that order, are the most strongly correlated with `height`. Where do these appear in the backward sequence and what does this mean?
 
 ```{r}
-cor(humans)[,13] %>% 
+cor(humans)[,'height'] %>% 
   sort()
 ```
 
+> ANSWER
 
 
 d. We deleted predictors one at a time. Why is this better than deleting a collection of multiple predictors at the same time (eg: kicking out all predictors with p-value > 0.1)?
 
+> ANSWER
 
 
 
@@ -186,34 +188,42 @@ d. We deleted predictors one at a time. Why is this better than deleting a colle
 
 
 
-
-**EXAMPLE 4: Backward Stepwise Selection Final Model**
+## EXAMPLE 4: Backward Stepwise Selection Final Model
 
 
 We have to pick just **1** of the 12 models as our final model.
 That is, we have to pick a value for our **tuning parameter**, the number of predictors.
 It helps to plot the CV MAE for each model in the sequence. 
 
+**Here's what we saw above:**
+
 ```{r}
+#| code-fold: true
 data.frame(
     predictors = c(12:1), 
-    mae = c(5.762, 5.642, 5.383, 5.326, 5.281, 4.968, 4.599, 4.455, 4.086, 4.547, 4.712, 3.571)) %>% 
+    mae = c(5.728, 5.523, 5.413, 5.368, 5.047, 5.013, 4.684, 4.460, 4.386, 4.091, 3.733, 3.658)) %>% 
   ggplot(aes(x = predictors, y = mae)) + 
     geom_point() + 
     geom_line() + 
     scale_x_continuous(breaks = c(1:12))
 ```
 
+**Here's another example from a different subset of these data:**
+
+![](https://kegrinde.github.io/stat253_coursenotes/images/L05-goldilocks.png)
+
+
 a. In the odd ["Goldilocks" fairy tale](https://www.youtube.com/watch?v=qOJ_A5tgBKM), a kid comes upon a bear den -- the first bear's bed is too hard, the second bear's is too soft, and the third bear's is just right. Our plot illustrates a **goldilocks problem** in tuning the number of predictors in our backward stepwise model. Explain.
 
 
-
+> ANSWER
 
 
 
 b. Which model do you pick?!?
 
 
+> ANSWER
 
 
 
@@ -225,8 +235,7 @@ b. Which model do you pick?!?
 
 
 
-
-**EXAMPLE 5: machine learning vs human learning**    
+## EXAMPLE 5: machine learning vs human learning  
 
 When *tuning* or finalizing a model building algorithm, we (humans!) have our own choices to make.
 For one, we need to decide what we prefer:
@@ -244,12 +253,12 @@ For each scenario below, which model would you pick: (1) the model with the lowe
 
 a. Google asks us to re-build their search algorithm.
 
-
+> ANSWER
 
 
 b. A small non-profit hires us to help them build a predictive model of the donation dollars they'll receive throughout the year.
 
-
+> ANSWER
 
 
 
@@ -262,16 +271,16 @@ b. A small non-profit hires us to help them build a predictive model of the dona
 
     
 
-**EXAMPLE 6: Forward Stepwise Selection Algorithm**
+## EXAMPLE 6: Forward Stepwise Selection Algorithm
 
 - How do you think this works?
 
-
+> ANSWER
 
 
 - Is it more or less computationally expensive than backward stepwise?
 
-
+> ANSWER
 
 
 
