@@ -1,81 +1,5 @@
 # Motivating Question {.unnumbered}
 
-```{r U02-chunk-setup}
-#| include: false
-knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
-```
-
-```{r U02-data-setup}
-#| echo: false
-#| eval: false
-humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat174.csv") %>% 
-  select(-density, -fatBrozek, -fatSiri, -fatFreeWeight, -adiposity, -hipin) %>% 
-  filter(ankle < 30) %>% 
-  relocate(height, .after = last_col())
-humans[27,]$height = 75
-humans[15,]$height = 76
-write.csv(humans, "data/bodyfat1.csv", row.names = FALSE)
-```
-
-
-
-
-```{r}
-#| eval: false
-#| echo: false
-library(tidyverse)
-library(tidymodels)
-library(caret)
-k = 10
-set.seed(253)
-backstep_model <- train(
-  height ~ .,
-  data = humans,
-  method = "leapBackward",
-  tuneGrid = data.frame(nvmax = 1:ncol(humans)),
-  trControl = trainControl(method = "cv", number = k, selectionFunction = "oneSE"),
-  metric = "MAE",
-  na.action = na.omit
-)
-
-summary(backstep_model)
-
-plot(backstep_model)
-
-lasso_spec <- linear_reg() %>% 
-  set_mode("regression") %>% 
-  set_engine("glmnet") %>% 
-  set_args(mixture = 1, penalty = tune())
-
-variable_recipe <- recipe(height ~ ., data = humans) %>% 
-  step_dummy(all_nominal_predictors())
-
-lasso_workflow <- workflow() %>% 
-  add_recipe(variable_recipe) %>% 
-  add_model(lasso_spec)
-
-set.seed(253)
-lasso_models <- lasso_workflow %>% 
-  tune_grid(
-    grid = grid_regular(penalty(range = c(-5, -0.25)), levels = 50),
-    resamples = vfold_cv(humans, v = k),
-    metrics = metric_set(mae, rsq)
-  )
-autoplot(lasso_models) + 
-  scale_x_continuous()      # plot lambda on original scale
-best_penalty_1_se <- lasso_models %>% 
-  select_by_one_std_err(metric = "mae", desc(penalty))
-best_penalty_1_se
-lasso_workflow %>% 
-  finalize_workflow(parameters = best_penalty_1_se) %>% 
-  fit(data = humans) %>% 
-  tidy() %>% 
-  dplyr::filter(estimate != 0)
-```
-
-
-
-
 
 <center>
 <img src="images/MLDiagram2.jpg"/>
@@ -94,7 +18,7 @@ The field of machine learning is most often associated with the building of **pr
 \
 
 
-## Model selection methods {-}
+## Model Selection Methods {-}
 
 1. **Variable selection**
     Identify a *subset* of predictors to use in our model of $y$.

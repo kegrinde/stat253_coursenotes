@@ -549,6 +549,39 @@
     ]
   },
   {
+    "objectID": "U02-motivation.html",
+    "href": "U02-motivation.html",
+    "title": "Motivating Question",
+    "section": "",
+    "text": "Question\nThe field of machine learning is most often associated with the building of predictive models, not inferential models. Specifically, the goal is to build a model which produces good predictions of our response variable \\(y\\), not one that necessarily lends itself to testing specific hypotheses about \\(y\\). In this case:",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "Motivating Question"
+    ]
+  },
+  {
+    "objectID": "U02-motivation.html#question",
+    "href": "U02-motivation.html#question",
+    "title": "Motivating Question",
+    "section": "",
+    "text": "If we have access to a bunch of potential predictors \\(x\\), how can we decide which model to build?",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "Motivating Question"
+    ]
+  },
+  {
+    "objectID": "U02-motivation.html#model-selection-methods",
+    "href": "U02-motivation.html#model-selection-methods",
+    "title": "Motivating Question",
+    "section": "Model Selection Methods",
+    "text": "Model Selection Methods\n\nVariable selection Identify a subset of predictors to use in our model of \\(y\\). Methods: best subset selection, backward stepwise selection, forward stepwise selection\nShrinkage / regularization Shrink / regularize the coefficients of all predictors toward or to 0. Methods: LASSO, ridge regression, elastic net (a combination of LASSO & ridge)\nDimension reduction Combine the predictors into a smaller set of new predictors. Methods: principal components regression",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "Motivating Question"
+    ]
+  },
+  {
     "objectID": "r_rstudio.html",
     "href": "r_rstudio.html",
     "title": "R and RStudio Setup",
@@ -645,39 +678,6 @@
     "crumbs": [
       "Appendices",
       "STAT 155 Review"
-    ]
-  },
-  {
-    "objectID": "U02-motivation.html",
-    "href": "U02-motivation.html",
-    "title": "Motivating Question",
-    "section": "",
-    "text": "Question\nThe field of machine learning is most often associated with the building of predictive models, not inferential models. Specifically, the goal is to build a model which produces good predictions of our response variable \\(y\\), not one that necessarily lends itself to testing specific hypotheses about \\(y\\). In this case:",
-    "crumbs": [
-      "Regression: Model Selection (Unit 2)",
-      "Motivating Question"
-    ]
-  },
-  {
-    "objectID": "U02-motivation.html#question",
-    "href": "U02-motivation.html#question",
-    "title": "Motivating Question",
-    "section": "",
-    "text": "If we have access to a bunch of potential predictors \\(x\\), how can we decide which model to build?",
-    "crumbs": [
-      "Regression: Model Selection (Unit 2)",
-      "Motivating Question"
-    ]
-  },
-  {
-    "objectID": "U02-motivation.html#model-selection-methods",
-    "href": "U02-motivation.html#model-selection-methods",
-    "title": "Motivating Question",
-    "section": "Model selection methods",
-    "text": "Model selection methods\n\nVariable selection Identify a subset of predictors to use in our model of \\(y\\). Methods: best subset selection, backward stepwise selection, forward stepwise selection\nShrinkage / regularization Shrink / regularize the coefficients of all predictors toward or to 0. Methods: LASSO, ridge regression, elastic net (a combination of LASSO & ridge)\nDimension reduction Combine the predictors into a smaller set of new predictors. Methods: principal components regression",
-    "crumbs": [
-      "Regression: Model Selection (Unit 2)",
-      "Motivating Question"
     ]
   }
 ]

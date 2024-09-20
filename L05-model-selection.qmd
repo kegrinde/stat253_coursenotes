@@ -2,3 +2,22 @@
 title: "Model Selection"
 logo: "images/mac.png"
 ---
+
+```{r L05-chunk-setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+```{r L05-data-setup}
+#| echo: false
+#| eval: false
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat174.csv") %>% 
+  select(-density, -fatBrozek, -fatSiri, -fatFreeWeight, -adiposity, -hipin) %>% 
+  filter(ankle < 30) %>% 
+  relocate(height, .after = last_col())
+humans[27,]$height = 75
+humans[15,]$height = 76
+write.csv(humans, "data/bodyfat1.csv", row.names = FALSE)
+```
+
+
