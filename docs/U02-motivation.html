@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Dr.&nbsp;Kelsey Grinde">
 
-<title>STAT 253: Statistical Machine Learning</title>
+<title>STAT 253: Statistical Machine Learning - Motivating Question</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./schedule.html" rel="next">
+<link href="./L05-model-selection.html" rel="next">
+<link href="./L04-cross-validation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome!</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./U02-motivation.html">Motivating Question</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -114,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome!</span></a>
   </div>
 </li>
@@ -193,7 +222,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./U02-motivation.html" class="sidebar-item-text sidebar-link">
+  <a href="./U02-motivation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Motivating Question</span></a>
   </div>
 </li>
@@ -250,37 +279,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome!</a></li>
+  <li><a href="#question" id="toc-question" class="nav-link active" data-scroll-target="#question">Question</a></li>
+  <li><a href="#model-selection-methods" id="toc-model-selection-methods" class="nav-link" data-scroll-target="#model-selection-methods">Model selection methods</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/U02-motivation.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./U02-motivation.html">Motivating Question</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">STAT 253: Statistical Machine Learning</h1>
-<p class="subtitle lead">Fall 2024 Course Notes</p>
+<h1 class="title">Motivating Question</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Dr.&nbsp;Kelsey Grinde </p>
-          </div>
-  </div>
     
   
-    <div>
-    <div class="quarto-title-meta-heading">Modified</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date-modified">September 20, 2024</p>
-    </div>
-  </div>
     
   </div>
   
@@ -289,15 +306,25 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome" class="level1 unnumbered">
-<h1 class="unnumbered">Welcome!</h1>
-<p>This is the course website for Statistical Machine Learning (STAT 253) at Macalester College for the Fall 2024 semester.</p>
-<p>The site was built by <a href="https://kegrinde.github.io">Kelsey Grinde</a>. It draws heavily upon our course textbook, the 2nd edition of <a href="https://www.statlearning.com/">An Introduction to Statistical Learning with Applications in R</a>, as well as on materials prepared by fellow Macalester statistics faculty <a href="https://bcheggeseth.github.io">Brianna Heggeseth</a>, <a href="https://ajohns24.github.io">Alicia Johnson</a>, and <a href="https://lmyint.github.io">Leslie Myint</a>.</p>
-<p>The structure of this site was inspired by an <a href="https://www.causeweb.org/cause/ecots/ecots24">eCOTS 2024</a> workshop led by Devin Becker: see <a href="https://github.com/DB7-CourseNotes/QuorseNotes/tree/main">here</a> for materials.</p>
-<p><em>Note that this page will be under active construction throughout the semester. If you find any typos or other issues, please click the <code>Report an issue</code> button above and/or email <a href="mailto:kgrinde@macalester.edu">kgrinde@macalester.edu</a>.</em></p>
-<p><br> <br></p>
-<p><img src="images/cc_license_button.png" class="img-fluid"></p>
-<p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</p>
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<section id="question" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="question">Question</h2>
+<p>The field of machine learning is most often associated with the building of <strong>predictive models</strong>, not <em>inferential models</em>. Specifically, the goal is to build a model which produces good predictions of our response variable <span class="math inline">\(y\)</span>, not one that necessarily lends itself to testing specific hypotheses about <span class="math inline">\(y\)</span>. In this case:</p>
+<blockquote class="blockquote">
+<p>If we have access to a bunch of potential predictors <span class="math inline">\(x\)</span>, how can we decide which model to <em>build</em>?</p>
+</blockquote>
+<p><br>
+</p>
+</section>
+<section id="model-selection-methods" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="model-selection-methods">Model selection methods</h2>
+<ol type="1">
+<li><p><strong>Variable selection</strong> Identify a <em>subset</em> of predictors to use in our model of <span class="math inline">\(y\)</span>. <strong>Methods</strong>: best subset selection, backward stepwise selection, forward stepwise selection</p></li>
+<li><p><strong>Shrinkage / regularization</strong> <em>Shrink</em> / regularize the coefficients of all predictors toward or to 0. <strong>Methods</strong>: LASSO, ridge regression, elastic net (a combination of LASSO &amp; ridge)</p></li>
+<li><p><strong>Dimension reduction</strong> <em>Combine</em> the predictors into a smaller set of new predictors. <strong>Methods</strong>: principal components regression</p></li>
+</ol>
 
 
 </section>
@@ -858,10 +885,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./L04-cross-validation.html" class="pagination-link" aria-label="Cross-Validation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./schedule.html" class="pagination-link" aria-label="Schedule">
-        <span class="nav-page-text">Schedule</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./L05-model-selection.html" class="pagination-link" aria-label="Model Selection">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Selection</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -873,7 +903,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/U02-motivation.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
