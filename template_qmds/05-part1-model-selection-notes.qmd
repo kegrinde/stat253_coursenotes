@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 
 
 <center>
-<img src="images/MLDiagram2.jpg"/>
+<img src="https://kegrinde.github.io/stat253_coursenotes/images/MLDiagram2.jpg"/>
 </center>
 
 
@@ -108,7 +108,7 @@ library(tidyverse)
 library(tidymodels)
 
 # Load data
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat1.csv")
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv")
 names(humans)
 ```
 
@@ -162,7 +162,7 @@ The goal is to:
 
 - Do not use any materials from outside this class.
 
-- Document your algorithm in words (not code) in this [google doc](https://docs.google.com/document/d/1nSqysACxHmSDNkLpoOy69nqLQnM5AbSBKiCHQ0qAiNQ/edit?usp=sharing).
+- Document your algorithm in words (not code) in this [google doc](https://docs.google.com/document/d/1OD1Xv6SFp9pgxSDEB_PKuOzy83xEaFvJZHhLaYf2Nqc/edit?usp=sharing).
 
 - Your algorithm must:
     - be *clear* to other humans
@@ -202,4 +202,9 @@ lm_spec %>%
 ## Exercise 2: Test another group's algorithm (5 minutes)
 
 Try to implement the next algorithm below yours (or the first algorithm if your group's is last). Think: Are the steps clear? What are the drawbacks to the algorithm?
+
+```{r}
+
+```
+
 
