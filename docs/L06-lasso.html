@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 253: Statistical Machine Learning - 6&nbsp; LASSO: Shrinkage/Regularization</title>
+<title>STAT 253: Statistical Machine Learning - 6&nbsp; LASSO: Shrinkage / Regularization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -146,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./L06-lasso.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage/Regularization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./L06-lasso.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage / Regularization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -269,7 +269,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L06-lasso.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage/Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage / Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,7 +313,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a>
+  <ul class="collapse">
+  <li><a href="#announcements" id="toc-announcements" class="nav-link" data-scroll-target="#announcements">Announcements</a></li>
+  </ul></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#notes-lasso" id="toc-notes-lasso" class="nav-link" data-scroll-target="#notes-lasso">Notes: LASSO</a>
   <ul class="collapse">
@@ -350,9 +353,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./L06-lasso.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage/Regularization</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./L06-lasso.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage / Regularization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage/Regularization</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage / Regularization</span></h1>
 </div>
 
 
@@ -382,6 +385,10 @@ window.Quarto = {
 <li><a href="schedule.html">Locate</a>, download, save, and open the QMD for today’s class</li>
 <li>NOTE: I moved the R code notes to the <em>end</em> of the QMD, but kept the <code>eval = FALSE</code> chunks. If you don’t like these, you can do a find-and-replace to move them, but you won’t be able to render your document right away.</li>
 </ul></li>
+</ul>
+<section id="announcements" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="announcements">Announcements</h2>
+<ul>
 <li>See the #announcements channel on <a href="https://macstat253.slack.com">Slack</a> for upcoming events.</li>
 <li>Check out this Minnesota Public Radio (MPR) interview on <a href="https://www.mprnews.org/episode/2023/09/19/can-ai-replace-your-doctor">Can AI replace your doctor?</a>! It’s a discussion of AI / machine learning in medicine. NOTE: ML is a subset of AI. (image from Wiki)</li>
 </ul>
@@ -390,6 +397,7 @@ window.Quarto = {
 <li>Now that we’re on MPR, journalist <a href="http://dhmontgomery.com/portfolio/">David Montgomery</a> used R for data analysis and visualizations using this <a href="https://github.com/dhmontgomery/personal-work/tree/master/theme-mpr">custom ggtheme</a> to make visuals for MPR. To create a custom ggtheme, check out <a href="https://themockup.blog/posts/2020-12-26-creating-and-using-custom-ggplot2-themes/" class="uri">https://themockup.blog/posts/2020-12-26-creating-and-using-custom-ggplot2-themes/</a>.</li>
 <li>Interested in the intersection between statistics/data science and journalism? Consider applying for <a href="https://recruiting2.ultipro.com/STA1013/JobBoard/94aec289-5757-a8f0-d3bb-77f9cd846172/OpportunityDetail?opportunityId=bd90fff9-acf2-4e04-b8b6-497965cde9a7">this internship</a> with the Star Tribune! (<strong>Deadline: Friday, November 1</strong>)</li>
 </ul>
+</section>
 </section>
 <section id="learning-goals" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Learning Goals</h1>

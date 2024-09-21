@@ -1,5 +1,5 @@
 ---
-title: "LASSO: Shrinkage/Regularization"
+title: "LASSO: Shrinkage / Regularization"
 logo: "images/mac.png"
 ---
 
@@ -24,6 +24,9 @@ conflicts_prefer(dplyr::filter)
   - NOTE: I moved the R code notes to the *end* of the QMD, but kept the 
   `eval = FALSE` chunks. If you don't like these, you can do a find-and-replace 
   to move them, but you won't be able to render your document right away.
+  
+## Announcements {.unnumbered .smaller} 
+
 - See the #announcements channel on [Slack](https://macstat253.slack.com) for upcoming events.
 - Check out this Minnesota Public Radio (MPR) interview on [Can AI replace your doctor?](https://www.mprnews.org/episode/2023/09/19/can-ai-replace-your-doctor)! It's a discussion of AI / machine learning in medicine. NOTE: ML is a subset of AI. (image from Wiki)
 
