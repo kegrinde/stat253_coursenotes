@@ -43,7 +43,6 @@ conflicts_prefer(dplyr::filter)
 - Explain how the lambda tuning parameter affects model performance and how this is related to overfitting
 - Describe how output from LASSO models can give a measure of *variable importance*
 
-<!-- next time: add question that shows lasso not greedy. ex: ankle is in parsimonious model, but not "best" bigger model -->
 
 
 <!-- DETAILS FOR INSTRUCTOR: -->
@@ -215,11 +214,15 @@ In general, we have to use *trial-and-error* to identify a range that is...
 
 - Open the QMD fo today and scroll down to the *Exercises*
 - Work on implementing LASSO to familiar data 
-- Become familiar with the new code structures: 
+- Become familiar with the new code **structures**: 
   - instead of `fit_resamples` to run CV, we'll use `tune_grid` 
   to tune the algorithm with CV
   - new engine: `set_engine('glmnet')` 
-- Ask me questions as I move around the room.
+  - in general: focus on the concepts over the R code
+- As always: 
+  - Be kind to yourself/each other
+  - Collaborate
+  - Ask me questions as I move around the room
 
 ## Questions {.unnumbered .smaller}
 
@@ -245,4 +248,917 @@ identical(tmp1, tmp2)
 
 write.csv(tmp1, "data/bodyfat2.csv", row.names = FALSE)
 ```
+
+
+```{r 06-read-data}
+#| eval: true
+#| echo: true
+# Load packages
+library(tidyverse)
+library(tidymodels)
+
+# Resolves package conflicts by preferring tidymodels functions
+tidymodels_prefer()
+
+# Load data
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat2.csv")
+```
+
+
+\
+\
+
+
+Let's implement the LASSO. We'll pause to examine the code. The R code notes section, below, and R code tutorial provide more detail, so no need to take notes here.
+    
+```{r}
+#| eval: true
+#| echo: true
+# STEP 1: LASSO algorithm / model specification
+# NOTE: we're using a new engine now: glmnet instead of lm
+lasso_spec <- linear_reg() %>%             
+  set_mode("regression") %>% 
+  set_engine("glmnet") %>%                 
+  set_args(mixture = 1, penalty = tune())  
+```
+
+```{r}
+#| eval: true
+#| echo: true
+# STEP 2: variable recipe
+# NOTE: "y ~ ." is shorthand for "y as a function of all other variables"
+# NOTE: We'll discuss step_dummy() next class.
+variable_recipe <- recipe(height ~ ., data = humans) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+```{r}
+#| eval: true
+#| echo: true
+# STEP 3: workflow specification (model + recipe)
+lasso_workflow <- workflow() %>% 
+  add_recipe(variable_recipe) %>% 
+  add_model(lasso_spec)
+```
+
+```{r}
+#| eval: true
+#| echo: true
+# STEP 4: Estimate 50 LASSO models using
+# lambda values on a "grid" or range from 10^(-5) to 10^(-0.1).
+# Calculate the CV MAE for each of the 50 models.
+# NOTE: we use tune_grid instead of fit_resamples to run CV
+# NOTE: I usually start with a range from 10^(-5) to 10^1 and tweak through trial-and-error.
+set.seed(253)
+lasso_models <- lasso_workflow %>% 
+  tune_grid(
+    grid = grid_regular(penalty(range = c(-5, -0.1)), levels = 50),  
+    resamples = vfold_cv(humans, v = 10),   
+    metrics = metric_set(mae)
+  )
+```
+
+
+
+
+
+
+1. **Examining the impact of $\lambda$**    
+
+Let's compare the CV MAEs (y-axis) for our **50** LASSO models which used 50 different $\lambda$ values (x-axis):
+
+```{r}
+#| eval: false
+autoplot(lasso_models) + 
+  scale_x_continuous() + 
+  xlab(expression(lambda))
+```
+    
+a. We told R to use a range of $\lambda$ from -5 to -0.1 on the log10 scale. Calculate this range on the non-log scale and confirm that it matches the x-axis.
+
+```{r}
+#: eval: false
+10^(-5)
+10^(-0.1)
+```
+
+b. Explain why this plot displays the "Goldilocks" problem of tuning $\lambda$.
+    
+
+
+
+<details>
+<summary>Solution</summary>
+
+
+```{r}
+#| eval: true
+#| echo: true
+autoplot(lasso_models) + 
+  scale_x_continuous() + 
+  xlab(expression(lambda))
+```
+    
+a. Yep it matches.
+
+```{r}
+#| eval: true
+#| echo: true
+10^(-5)
+10^(-0.1)
+```
+
+b. CV MAE is large when $\lambda$ is either too small or too big.
+    
+</details>
+<br>
+
+
+
+2. **Picking a $\lambda$ value**        
+
+a. In the plot above, roughly which value of the $\lambda$ penalty parameter produces the *smallest* CV MAE? Check your approximation:
+
+```{r}
+#| eval: false
+best_penalty <- lasso_models %>% 
+  select_best(metric = "mae")
+
+best_penalty
+```
+
+b. Suppose we prefer a parsimonious model. The plot below adds error bars to the CV MAE *estimates* of prediction error (+/- one standard error). Any model with a CV MAE that falls within another model's error bars is not significantly better or worse at prediction:
+    
+```{r}
+#| eval: false
+# with error bars
+# NOTE: we start with the same code as above (lines 1--3), 
+# then add error bars (`geom_errorbar`)
+autoplot(lasso_models) + 
+  scale_x_continuous() + 
+  xlab(expression(lambda)) + 
+  geom_errorbar(data = collect_metrics(lasso_models),
+                aes(x = penalty, ymin = mean - std_err, ymax = mean + std_err), 
+                alpha = 0.5)
+```
+        
+Use this to approximate the largest $\lambda$, thus the most simple LASSO model, that produces a CV MAE that's within 1 standard error of the best model (thus is not significantly worse). Check your approximation:
+    
+```{r eval = FALSE}
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = "mae", desc(penalty))
+
+parsimonious_penalty
+```
+    
+c. Moving forward, we'll use the parsimonious LASSO model. Simply report the tuning parameter $\lambda$ here. Just as a radio show needs to tell its audience where to tune the radio dial, it's important to explicitly report $\lambda$ so that we and others can reproduce the model!
+
+
+
+
+<details>
+<summary>Solution</summary>
+
+a. $\lambda$ close to 0
+
+```{r}
+#| eval: true
+#| echo: true
+best_penalty <- lasso_models %>% 
+  select_best(metric = "mae")
+
+best_penalty
+```
+
+b. $\lambda$ around 0.2
+
+```{r}
+#| eval: true
+#| echo: true
+# With error bars
+autoplot(lasso_models) + 
+  scale_x_continuous() + 
+  xlab(expression(lambda)) + 
+  geom_errorbar(data = collect_metrics(lasso_models),
+                aes(x = penalty, ymin = mean - std_err, ymax = mean + std_err), 
+                alpha = 0.5)
+
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = "mae", desc(penalty))
+
+parsimonious_penalty
+```
+
+<!-- note to self: there seems to have been an update to the .print functionality for lasso_models %>% select. 
+we're not getting the same info as previously: https://bcheggeseth.github.io/253_spring_2024/lasso-shrinkageregularization.html
+-->
+
+    
+c. 0.2
+
+</details>
+<br>
+
+
+
+
+> **PAUSE:** Picking a range to try for $\lambda$
+> 
+> The range of values we tried for $\lambda$ had the following nice properties.
+> If it didn't, we should adjust our range (make it narrower or wider).
+> 
+> - Our range was wide enough.    
+>     We observed the goldilocks effect. Further, the "best" and "parsimonious" $\lambda$ values were *not* at the edges of the range, suggesting there aren't better $\lambda$ values outside our range.
+>
+> - Our range was narrow enough.    
+>     We didn't observe any loooooong flat lines in CV MAE, thus we narrowed in on the $\lambda$ values where the "action is happening", i.e. where changing $\lambda$ impacts the model.
+
+
+
+
+
+
+
+
+3. **Finalizing our LASSO model**    
+
+Let's *finalize* our parsimonious LASSO model:
+    
+```{r eval = FALSE}
+final_lasso <- lasso_workflow %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>% 
+  fit(data = humans)
+    
+final_lasso %>% 
+  tidy()
+```
+    
+a. How many and which predictors were *kept* in this model?
+
+b. How do these compare to the 5-predictor model we identify using the backward stepwise selection algorithm with this subset of data: weight, abdomen, thigh, neck, chest
+
+<!-- note to self: should this be weight, hip, forearm, thigh, chest instead? 
+are we using different data than L05? -->
+
+c. Through shrinkage, the LASSO coefficients lose some contextual meaning, so we typically shouldn't interpret them. Why don't we care?! THINK: What is the goal of LASSO modeling?
+
+d. The LASSO `tidy()` summary doesn't report p-values for testing the "significance" of our predictors. Why don't we care? (Name two reasons.)
+    
+    
+    
+
+
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+#| eval: true
+#| echo: true
+final_lasso <- lasso_workflow %>% 
+  finalize_workflow(parameters = parsimonious_penalty) %>% 
+  fit(data = humans)
+
+final_lasso %>% 
+  tidy() %>% 
+  filter(estimate != 0)
+```
+    
+a. 5: weight, abdomen, thigh, knee, ankle
+
+b. 3 of the predictors are the same. LASSO includes knee (which is the most highly correlated with height in this dataset)
+
+```{r}
+#| eval: true
+#| echo: true
+cor(humans)[,'height'] %>% sort()
+```
+
+c. We're using this model to give good predictions, not to explore / make inferences about relationships.
+
+d. The remaining predictors are those that have significant predictive power in this linear regression model (thus we get conclusions like a hypothesis test without doing a test). Also, our goal is to build a good predictive model, not to do inference.
+
+<!-- note to self: add something about post-selection inference? -->
+
+</details>
+<br>   
+
+
+4. **LASSO vs LASSO**       
+
+a. Our parsimonious LASSO selected only 5 of the 12 possible predictors. Out of curiosity, how many predictors would have remained if we had used the `best_penalty` value for $\lambda$?
+    
+```{r eval = FALSE}
+lasso_workflow %>% 
+  finalize_workflow(parameters = ___) %>% 
+  fit(data = humans) %>% 
+  tidy()
+```
+    
+b. Based on this example, do you think LASSO is a greedy algorithm? Are you "stuck" with your past locally optimal choices? Compare the predictors in this larger model with those in the smaller, parsimonious model.   
+    
+    
+
+
+<details>
+<summary>Solution</summary>
+
+     
+a. This would have 11 predictors.    
+
+```{r eval=TRUE, echo=TRUE}
+lasso_workflow %>% 
+  finalize_workflow(parameters = best_penalty) %>% 
+  fit(data = humans) %>% 
+  tidy() %>% 
+  filter(estimate != 0)
+```
+
+b. ankle is not in this larger model but it is in the more parsimonious model. Therefore, the algorithm can't be greedy. If it were greedy, then ankle would get removed for all smaller models. 
+ 
+ 
+</details>
+<br> 
+
+
+
+5. **LASSO vs least squares**    
+
+Let's compare our `final_lasso` model to the least squares model using all predictors:
+    
+```{r}
+#| eval: false
+# Build the least squares model using recipes and workflows
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+ls_workflow <- workflow() %>%
+  add_model(lm_spec) %>%
+  add_recipe(variable_recipe) 
+
+ls_model <- ls_workflow %>% 
+  fit(data = humans) 
+
+# examine coefficients
+ls_model %>% 
+  tidy()
+
+# get 10-fold CV MAE
+set.seed(253)
+ls_workflow %>% 
+  fit_resamples(
+    resamples = vfold_cv(humans,v = 10),
+    metrics = metric_set(mae)
+  ) %>% 
+  collect_metrics()
+```
+    
+a. Our `final_lasso` has 5 predictors and a CV MAE of 1.9 (calculated above). The `ls_model` has 12 predictors and a CV MAE of 1.8 (confirm). Comment.
+
+b. Use both `final_lasso` and `ls_model` to predict the height of the new patient below. How do these compare? Does this *add to* or *calm* any fears you might have had about shrinking coefficients?!
+
+```{r}
+#| eval: true
+new_patient <- data.frame(age = 50, weight = 200, neck = 40, chest = 115, abdomen = 105, hip = 100, thigh = 60, knee = 38, ankle = 23, biceps = 32, forearm = 29, wrist = 19) 
+```
+
+```{r}
+#| eval: false
+# LS prediction
+___ %>% 
+predict(new_data = ___)
+```       
+
+```{r}
+#| eval: false
+# LASSO prediction
+___ %>% 
+predict(new_data = ___)
+```       
+
+c. Which final model would you choose, the LASSO or least squares?
+ 
+
+
+
+<details>
+<summary>Solution</summary>
+
+```{r eval=TRUE, echo=TRUE}
+# Build the LS model
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# NOTE: we created variable_recipe above
+# here's what that looked like: 
+## variable_recipe <- recipe(height ~ ., data = humans) %>% 
+##   step_dummy(all_nominal_predictors())
+
+ls_workflow <- workflow() %>%
+  add_model(lm_spec) %>%
+  add_recipe(variable_recipe) 
+
+ls_model <- ls_workflow %>% 
+  fit(data = humans) 
+
+ls_model %>% 
+  tidy()
+
+set.seed(253)
+ls_workflow %>% 
+  fit_resamples(
+    resamples = vfold_cv(humans,v = 10),
+    metrics = metric_set(mae)
+  ) %>% 
+  collect_metrics()
+```
+    
+a. LASSO model is much simpler, and has only slightly worse predictions (on the scale of inches).
+b. They're very similar! Shrinking coefficients doesn't mean our predictions are odd.
+
+```{r eval=TRUE, echo=TRUE}
+new_patient <- data.frame(age = 50, weight = 200, neck = 40, chest = 115, abdomen = 105, hip = 100, thigh = 60, knee = 38, ankle = 23, biceps = 32, forearm = 29, wrist = 19) 
+
+# LS prediction
+ls_model %>% 
+  predict(new_data = new_patient)
+
+# LASSO prediction
+final_lasso %>% 
+  predict(new_data = new_patient)
+```       
+
+c. LASSO
+ 
+</details>
+<br> 
+
+
+
+
+
+**6. Visualizing LASSO shrinkage**    
+
+Finally, let's zoom back out and compare the coefficients for all 50 LASSO models:    
+    
+```{r}
+#| eval: true
+#| fig-width: 8
+#| fig-height: 6
+# Get output for each LASSO model
+all_lassos <- final_lasso %>% 
+  extract_fit_parsnip() %>%
+  pluck("fit")
+    
+# Plot coefficient paths as a function of lambda
+plot(all_lassos, xvar = "lambda", label = TRUE, col = rainbow(20))
+    
+# Codebook for which variables the numbers correspond to
+rownames(all_lassos$beta)
+```    
+    
+There's a *lot* of information in this plot!
+    
+  - **lines** = each line represents a different predictor. The small number to the left of each line indicates the predictor by its order in the `rownames()` list. Click "Zoom" to zoom in.
+  - **x-axis** = our range of $\lambda$ values, on the log scale
+  - **y-axis** = coefficient values at the corresponding $\lambda$   
+  - **numbers above the plot** = how many predictors remain in the model with the corresponding $\lambda$    
+    
+We'll process this information in the next 2 exercises.
+    
+
+If you're curious, here is some code to recreate that plot using `ggplot`: 
+
+```{r}
+#| eval: true
+#| code-fold: true
+lasso_coefs <- all_lassos$beta  %>% 
+  as.matrix() %>%  
+  t() %>% 
+  as.data.frame() %>% 
+  mutate(lambda = all_lassos$lambda ) %>%
+  pivot_longer(cols = -lambda, 
+               names_to = "term", 
+               values_to = "coef")
+
+lasso_coefs %>% filter(coef != 0, lambda > 1)
+
+lasso_coefs %>%
+  ggplot(aes(x = lambda, y = coef, color = term)) +
+  geom_line() +
+  geom_text(data = lasso_coefs %>% filter(lambda == min(lambda)), aes(x = 0.001, label = term), size = 2) + 
+  scale_x_log10(limits = c(-2, 2)) +
+  guides(color = FALSE)
+```
+
+
+
+7. **plot: examining specific predictors**    
+
+Answer the following questions for predictor 7.
+
+a. Which predictor is this?
+b. Approximate the coefficient in the LASSO with $log(\lambda) \approx -5$.
+c. At what $log(\lambda)$ does the coefficient start to significantly shrink?    
+d. At what $log(\lambda)$ does the predictor get dropped from the model?    
+
+
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| eval: false
+#| echo: false
+# Get output for each LASSO model
+all_lassos <- final_lasso %>% 
+  extract_fit_parsnip() %>%
+  pluck("fit")
+
+# Plot coefficient paths as a function of lambda
+plot(all_lassos, xvar = "lambda", label = TRUE, col = rainbow(20))
+
+# Codebook for which variables the numbers correspond to
+rownames(all_lassos$beta)
+```    
+    
+a. thigh
+b. very roughly -0.32
+c. roughly -3.5    
+d. roughly -1.8
+
+
+</details>
+<br> 
+
+
+8. **plot: big picture**  
+
+a. How does this plot reflect the LASSO shrinkage phenomenon?    
+b. What is one of the most "important" or "persistent" predictors?    
+c. What is one of the least persistent predictors?    
+d. Our parsimonious LASSO model had 5 predictors. How many predictors would remain if we had *minimized* the CV MAE using $\lambda \approx 0.0126$ ($log(\lambda) = -4.4$)?    
+
+
+<details>
+<summary>Solution</summary>
+  
+a. coefficients are shrinking toward or to 0 as $\lambda$ increases
+b. weight (variable 2), knee (variable 8)
+c. lots of options here. look for the lines that drop to 0 sooner.
+d. 11 
+
+</details>
+<br> 
+
+
+
+
+\
+\
+
+
+9. **REVIEW: Model evaluation**   
+
+Let's finalize our LASSO analysis. Just as in least squares, it's important to evaluate a LASSO model before applying it. We've already examined whether our LASSO model produces accurate predictions. Use a **residual plot** to determine if this model is *wrong*. NOTE: `augment()` gives predictions, but not residuals :/. You'll need to calculate them.
+
+```{r}
+#| eval: false
+# Note what augment() gives us
+final_lasso %>% 
+  augment(new_data = humans) %>% 
+  names()
+```
+    
+```{r}
+#| eval: false
+# Now calculate and plot the residuals
+final_lasso %>% 
+  augment(new_data = humans) %>% 
+  mutate(.resid = ___) %>% 
+  ggplot(aes(x = ___, y = ___)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0)
+```
+
+
+<details>
+<summary>Solution</summary>
+```{r}
+#| eval: true
+#| echo: true
+
+# use augment to get predictions (.pred)
+# NOTE: we don't get the residuals (.resid) automatically
+final_lasso %>% 
+  augment(new_data = humans) %>% 
+  names()
+
+# Now calculate and plot the residuals
+final_lasso %>% 
+  augment(new_data = humans) %>% 
+  mutate(.resid = height - .pred) %>% # resid = observed - predicted
+  ggplot(aes(x = .pred, y = .resid)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0) + 
+  geom_smooth(se = FALSE)
+``` 
+
+
+</details>
+<br> 
+
+
+10. **OPTIONAL: Practice on another dataset**.   
+
+The `Hitters` data in the `ISLR` package contains the salaries and performance measures for 322 Major League Baseball players. Use LASSO to determine the "best" predictive model of player `Salary`.  
+
+```{r}
+# Load the data
+library(ISLR)
+data(Hitters)
+Hitters <- Hitters %>% 
+  filter(!is.na(Salary))
+
+# IN THE CONSOLE (not in the QMD): Examine codebook
+#?Hitters  
+```
+    
+
+
+
+
+11. **Reflection**       
+    This is the end of the (short!) Unit 2 on "Regression: Model Selection"! Let's reflect on the technical content of this unit:
+    - What was the main motivation / goal behind this unit?
+    - For each of the following algorithms, describe the steps, pros, cons, and comparisons to least squares:
+        - best subset selection
+        - backward stepwise selection
+        - LASSO
+    - In your own words, define the following: parsimonious models, greedy algorithms, Goldilocks problem.
+    - Review the new tidymodels syntax from this unit. Identify key themes and patterns.
+
+
+# Wrap-Up {-}
+
+## Today's Material {.unnumbered}
+
+- Finish the activity, check the solutions, and reach out with questions. 
+- Review the R code reference section at the end of today's notes and 
+an optional R code tutorial video posted for today
+- If you're curious, there's an optional "deeper learning" section below that presents two other shrinkage algorithms we won't cover in this course
+
+## Upcoming Due Dates {.unnumbered}
+
+- No checkpoint for next class! 
+  - See the [schedule](schedule.html) for optional readings. 
+  - Your next checkpoint (CP6) will be due a week from today. It's up on Moodle already if you'd like to get a head start on it.
+- Due next Tuesday: HW2 
+  - You have everything you need to complete this assignment after today's class
+
+
+
+
+
+
+# Deeper learning (very optional) {-}
+
+If you're curious, consider how the LASSO connects to some other algorithms we won't cover in STAT 253.
+
+## Ridge Regression {.unnumbered .smaller}
+
+LASSO isn't the only shrinkage & regularization algorithm. An alternative is **ridge regression**. This algorithm also seeks to build a (predictive) linear regression model of $y$:
+
+$$y = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \cdots + \hat{\beta}_p x_p + \varepsilon$$
+
+It also does so by selecting coefficients which **minimize a penalized residual sum of squares**. HOWEVER, the ridge regression penalty is based upon the sum of *squared* coefficients instead of the sum of *absolute* coefficients:
+
+$$RSS + \lambda \sum_{j=1}^p \hat{\beta}_j^2$$
+
+This penalty regularizes / shrinks the coefficients. BUT, unlike the LASSO, ridge regression does NOT shrink coefficients to 0, thus cannot be used for variable selection. (Check out the ISLR text for a more rigorous, geometric explanation for why LASSO often shrinks coefficients to 0.)
+
+
+
+
+
+
+
+## Elastic Net {.unnumbered .smaller}
+
+The **elastic net** is yet another shrinkage & regularization algorithm. It *combines* the penalties used in LASSO and ridge regression. This algorithm seeks to build a (predictive) linear regression model of $y$:
+
+$$y = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \cdots + \hat{\beta}_p x_p + \varepsilon$$
+
+by selecting coefficients which minimize the following penalized residual sum of squares:
+
+$$RSS + \lambda_1 \sum_{j=1}^p \vert \hat{\beta}_j \vert + \lambda_2 \sum_{j=1}^p \hat{\beta}_j^2$$
+
+**NOTE:**
+
+- Elastic net depends upon **two** tuning parameters, $\lambda_1$ and $\lambda_2$, thus is more complicated than the LASSO.
+- In cases when we have a group of correlated predictors, LASSO tends to select only one of these predictors. The elastic net does not.
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Bayesian Connections {.unnumbered .smaller} 
+
+IF you have taken or will take *Bayesian statistics* (STAT 454), we can also write the LASSO as a Bayesian model. Specifically, LASSO estimates are equivalent to the posterior mode estimates of $\beta_j$.
+
+$$\begin{split}
+Y_i | \beta_0,...\beta_k & \sim N(\beta_0 + \beta_1X_1 + \cdots + \beta_p X_p, \sigma^2) \\
+\beta_j & \sim \text{ Laplace (double-exponential)}(0, f(\lambda)) \\
+\sigma^2 & \sim \text{ some prior} \\
+\end{split}$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Notes: R Code {-}
+
+Suppose we want to build a model of response variable `y` using *all* possible predictors in our `sample_data`.
+
+
+```{r eval = FALSE}
+# Load packages
+library(tidymodels)
+```
+
+
+\
+
+
+**Build the model for a range of tuning parameters**
+
+```{r eval = FALSE}
+# STEP 1: LASSO model specification
+lasso_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("glmnet") %>% 
+  set_args(mixture = 1, penalty = tune())
+```
+
+STEP 1 notes:
+
+- We use the `glmnet`, not `lm`, engine to build the LASSO.
+- The `glmnet` engine requires us to specify some arguments (`set_args`):       
+    - `mixture = 1` indicates LASSO. Changing this would run a different regularization algorithm.
+    - `penalty = tune()` indicates that we don't (yet) know an appropriate $\lambda$ penalty term. We need to tune it.
+    
+    
+```{r eval = FALSE}
+# STEP 2: variable recipe
+# (You can add pre-processing steps. We will discuss step_dummy() in the next class.)
+variable_recipe <- recipe(y ~ ., data = sample_data) %>% 
+  step_dummy(all_nominal_predictors())
+```
+
+```{r eval = FALSE}
+# STEP 3: workflow specification (model + recipe)
+lasso_workflow <- workflow() %>% 
+  add_recipe(variable_recipe) %>% 
+  add_model(lasso_spec)
+```
+
+```{r eval = FALSE}
+# STEP 4: Estimate multiple LASSO models using a range of possible lambda values
+set.seed(___)
+lasso_models <- lasso_workflow %>% 
+  tune_grid(
+    grid = grid_regular(penalty(range = c(___, ___)), levels = ___),
+    resamples = vfold_cv(sample_data, v = ___),
+    metrics = metric_set(mae)
+  )
+```
+
+STEP 4 notes:
+
+- Since the CV process is random, we need to `set.seed(___)`.
+- We use `tune_grid()` instead of `fit()` since we have to build multiple LASSO models, each using a different tuning parameter.
+- `grid` specifies the values of tuning parameter $\lambda$ that we want to try.        
+    - `penalty(range = c(___, ___))` specifies a range of $\lambda$ values we want to try, on the log10 scale. You might start with `c(-5, 1)`, hence $\lambda$ from 0.00001 ($10^(-5)$) to 10 ($10^1$), and adjust from there.
+    - `levels` is the *number* of $\lambda$ values to try in that range, thus how many LASSO models to build.
+- `resamples` and `metrics` indicate that we want to calculate a CV MAE for each LASSO model.
+
+
+
+\
+\
+
+
+**Tuning $\lambda$**
+
+```{r eval = FALSE}
+# Calculate CV MAE for each LASSO model
+lasso_models %>% 
+  collect_metrics()
+
+# Plot CV MAE (y-axis) for the LASSO model from each lambda (x-axis)
+autoplot(lasso_models) + 
+  scale_x_log10()           # plot lambda on log10 scale
+autoplot(lasso_models) + 
+  scale_x_continuous() +    # plot lambda on original scale
+  xlab(expression(lambda))
+
+# CV MAE plot with error bars (+/- 1 standard error)
+# With error bars
+autoplot(lasso_models) + 
+  scale_x_continuous() + 
+  xlab(expression(lambda)) + 
+  geom_errorbar(data = collect_metrics(lasso_models),
+                aes(x = penalty, ymin = mean - std_err, ymax = mean + std_err), alpha = 0.5)
+
+# Identify lambda which produced the lowest ("best") CV MAE
+best_penalty <- lasso_models %>% 
+  select_best(metric = "mae")
+best_penalty
+
+# Identify the largest lambda (hence simplest LASSO) for which the CV MAE is
+# larger but "roughly as good" (within one standard error of the lowest)
+parsimonious_penalty <- lasso_models %>% 
+  select_by_one_std_err(metric = "mae", desc(penalty))
+parsimonious_penalty
+```
+
+
+\
+
+
+
+
+**Finalizing the "best" LASSO model**    
+
+```{r eval = FALSE}
+# parameters = final lambda value (best_penalty or parsimonious_penalty)
+final_lasso_model <- lasso_workflow %>% 
+  finalize_workflow(parameters = ___) %>% 
+  fit(data = sample_data)
+
+# Check it out
+final_lasso_model %>% 
+  tidy()
+```
+
+
+\
+\
+
+
+**Using the final LASSO model to make predictions**
+
+```{r eval = FALSE}
+final_lasso_model %>% 
+  predict(new_data = SOME DATA FRAME W OBSERVATIONS ON EACH PREDICTOR)
+```
+
+
+\
+\
+
+
+**Visualizing shrinkage: comparing LASSO coefficients under each $\lambda$**
+
+
+```{r eval = FALSE}
+# Get output for each LASSO
+all_lassos <- final_lasso_model %>% 
+  extract_fit_parsnip() %>%
+  pluck("fit")
+
+# Plot coefficient paths as a function of lambda
+plot(all_lassos, xvar = "lambda", label = TRUE, col = rainbow(20))
+
+# Codebook for which variables the numbers correspond to
+rownames(all_lassos$beta)
+
+# e.g., What are variables 2 and 4?
+rownames(all_lassos$beta)[c(2,4)]
+```
+
+
+
+
 
