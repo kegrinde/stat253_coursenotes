@@ -33,10 +33,10 @@ knitr::opts_chunk$set(
 
 
 
-# Notes - LASSO
+# Notes: LASSO
 
 
-**CONTEXT**
+## Context
 
 - **world = supervised learning**       
     We want to model some output variable $y$ using a set of *potential* predictors ($x_1, x_2, ..., x_p$).
@@ -55,7 +55,7 @@ knitr::opts_chunk$set(
 <br><br>
 
 
-**LASSO: least absolute shrinkage and selection operator**
+## LASSO: least absolute shrinkage and selection operator
 
 **Goal**
 
@@ -201,7 +201,7 @@ library(tidymodels)
 tidymodels_prefer()
 
 # Load data
-humans <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bodyfat2.csv")
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat2.csv")
 ```
 
 
@@ -213,6 +213,7 @@ Let's implement the LASSO. We'll pause to examine the code. The R code section a
     
 ```{r}
 # STEP 1: LASSO algorithm / model specification
+# NOTE: we're using a new engine now: glmnet instead of lm
 lasso_spec <- linear_reg() %>%             
   set_mode("regression") %>% 
   set_engine("glmnet") %>%                 
@@ -222,6 +223,7 @@ lasso_spec <- linear_reg() %>%
 
 ```{r}
 # STEP 2: variable recipe
+# NOTE: "y ~ ." is shorthand for "y as a function of all other variables"
 # NOTE: We'll discuss step_dummy() next class.
 variable_recipe <- recipe(height ~ ., data = humans) %>% 
   step_dummy(all_nominal_predictors())
@@ -239,9 +241,10 @@ lasso_workflow <- workflow() %>%
 
 
 ```{r}
-# STEP 4: Estimate 50 LASSO models using different lambda values 
-# on a "grid" or range from 10^(-5) to 10^(-0.1).
+# STEP 4: Estimate 50 LASSO models using 
+# lambda values on a "grid" or range from 10^(-5) to 10^(-0.1).
 # Calculate the CV MAE for each of the 50 models.
+# NOTE: we use tune_grid instead of fit_resamples to run CV
 # NOTE: I usually start with a range from 10^(-5) to 10^1 and tweak through trial-and-error.
 set.seed(253)
 lasso_models <- lasso_workflow %>% 
@@ -329,7 +332,8 @@ c. Moving forward, we'll use the parsimonious LASSO model. Simply report the tun
 
 
 
-
+\
+\
 
 
 > **PAUSE:** Picking a range to try for $\lambda$
@@ -436,15 +440,21 @@ ls_workflow <- workflow() %>%
   add_model(lm_spec) %>%
   add_recipe(variable_recipe)
 
-ls_workflow %>% 
-  fit(data = humans) %>% 
+ls_model <- ls_workflow %>% 
+  fit(data = humans) 
+
+# examine coefficients
+ls_model %>% 
   tidy()
+
+# get 10-fold CV MAE
 set.seed(253)
 ls_workflow %>% 
   fit_resamples(
     resamples = vfold_cv(humans,v = 10),
     metrics = metric_set(mae)
-  ) %>% collect_metrics()
+  ) %>% 
+  collect_metrics()
 ```
 
 
@@ -497,7 +507,7 @@ c. Which final model would you choose, the LASSO or least squares?
 \
 \
 
-
+## EXERCISE 6: Visualizing LASSO shrinkage
 
 Finally, let's zoom back out and compare the coefficients for all 50 LASSO models:    
 
@@ -530,9 +540,19 @@ We'll process this information in the next 2 exercises.
 \
 \
 
+OPTIONAL: copy over the code from the webpage to reproduce the plot above using `ggplot`
+
+```{r}
+
+```
 
 
-## EXERCISE 6: plot -- examining specific predictors
+
+\
+\
+
+
+## EXERCISE 7: plot -- examining specific predictors
     
 Answer the following questions for predictor 7.
 
@@ -561,7 +581,7 @@ d. At what $log(\lambda)$ does the predictor get dropped from the model?
 \
 
 
-## EXERCISE 7: plot -- big picture    
+## EXERCISE 8: plot -- big picture    
 
 a. How does this plot reflect the LASSO shrinkage phenomenon?    
 
@@ -621,7 +641,7 @@ final_lasso %>%
 
 
 
-## EXERCISE 9: OPTIONAL -- Practice on another dataset
+## EXERCISE 10: OPTIONAL -- Practice on another dataset
 
 The `Hitters` data in the `ISLR` package contains the salaries and performance measures for 322 Major League Baseball players. Use LASSO to determine the "best" predictive model of player `Salary`.       
 ```{r}
@@ -639,7 +659,7 @@ data(Hitters)
 \
 
 
-## EXERCISE 10: Reflection
+## EXERCISE 11: Reflection
 
 This is the end of the (short!) Unit 2 on "Regression: Model Selection"! Let's reflect on the technical content of this unit:
 
@@ -758,7 +778,7 @@ Y_i | \beta_0,...\beta_k & \sim N(\beta_0 + \beta_1X_1 + \cdots + \beta_p X_p, \
 
 
 
-# Notes - R code
+# Notes: R code
 
 Suppose we want to build a model of response variable `y` using *all* possible predictors in our `sample_data`.
 
