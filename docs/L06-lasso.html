@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -246,7 +275,31 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#notes-lasso" id="toc-notes-lasso" class="nav-link" data-scroll-target="#notes-lasso">Notes: LASSO</a>
+  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
+  <li><a href="#least-absolute-shrinkage-and-selection-operator" id="toc-least-absolute-shrinkage-and-selection-operator" class="nav-link" data-scroll-target="#least-absolute-shrinkage-and-selection-operator">Least Absolute Shrinkage and Selection Operator</a></li>
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#idea" id="toc-idea" class="nav-link" data-scroll-target="#idea">Idea</a></li>
+  <li><a href="#algorithm-criterion" id="toc-algorithm-criterion" class="nav-link" data-scroll-target="#algorithm-criterion">Algorithm Criterion</a></li>
+  </ul></li>
+  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a>
+  <ul class="collapse">
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1">Questions</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L06-lasso.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -270,8 +323,172 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="settling-in" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Settling In</h1>
+<ul>
+<li>Sit with the same group as last class.
+<ul>
+<li>Last day with these groups!</li>
+<li>Fill out the Group 1 Feedback Survey on Moodle to help me pick new ones.</li>
+</ul></li>
+<li>Prepare to take notes.
+<ul>
+<li><a href="schedule.html">Locate</a>, download, save, and open the QMD for today’s class</li>
+<li>NOTE: I moved the R code notes to the <em>end</em> of the QMD, but kept the <code>eval = FALSE</code> chunks. If you don’t like these, you can do a find-and-replace to move them, but you won’t be able to render your document right away.</li>
+</ul></li>
+<li>See the #announcements channel on <a href="https://macstat253.slack.com">Slack</a> for upcoming events.</li>
+<li>Check out this Minnesota Public Radio (MPR) interview on <a href="https://www.mprnews.org/episode/2023/09/19/can-ai-replace-your-doctor">Can AI replace your doctor?</a>! It’s a discussion of AI / machine learning in medicine. NOTE: ML is a subset of AI. (image from Wiki)</li>
+</ul>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/AI-ML-DL.svg/440px-AI-ML-DL.svg.png" class="img-fluid" width="300"></p>
+<ul>
+<li>Now that we’re on MPR, journalist <a href="http://dhmontgomery.com/portfolio/">David Montgomery</a> used R for data analysis and visualizations using this <a href="https://github.com/dhmontgomery/personal-work/tree/master/theme-mpr">custom ggtheme</a> to make visuals for MPR. To create a custom ggtheme, check out <a href="https://themockup.blog/posts/2020-12-26-creating-and-using-custom-ggplot2-themes/" class="uri">https://themockup.blog/posts/2020-12-26-creating-and-using-custom-ggplot2-themes/</a>.</li>
+<li>Interested in the intersection between statistics/data science and journalism? Consider applying for <a href="https://recruiting2.ultipro.com/STA1013/JobBoard/94aec289-5757-a8f0-d3bb-77f9cd846172/OpportunityDetail?opportunityId=bd90fff9-acf2-4e04-b8b6-497965cde9a7">this internship</a> with the Star Tribune! (<strong>Deadline: Friday, November 1</strong>)</li>
+</ul>
+</section>
+<section id="learning-goals" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Learning Goals</h1>
+<ul>
+<li>Explain how ordinary and penalized least squares are similar and different with regard to (1) the form of the objective function and (2) the goal of variable selection</li>
+<li>Explain why variable scaling is important for the performance of shrinkage methods</li>
+<li>Explain how the lambda tuning parameter affects model performance and how this is related to overfitting</li>
+<li>Describe how output from LASSO models can give a measure of <em>variable importance</em></li>
+</ul>
+<!-- next time: add question that shows lasso not greedy. ex: ankle is in parsimonious model, but not "best" bigger model -->
+<!-- DETAILS FOR INSTRUCTOR: -->
+<!-- LASSO drawback: when large p / small n, (1) LASSO selects at most n predictors, (2) tends to only pick 1 of a group of correlated predictors -->
+<!-- Including the quadratic ridge penalty produces a unique minimum -->
+<!-- - Why does LASSO set coef to 0?  The idea is that the LASSO penalty constrains coefficients to be within a multidimensional diamond that has a large number of corners (at which coefficients are set to 0) whereas the ridge penalty constrains coefficients to be within a smooth boundary. -->
+</section>
+<section id="notes-lasso" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: LASSO</h1>
+<section id="context" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="context">Context</h2>
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of <em>potential</em> predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = regression</strong><br>
+<span class="math inline">\(y\)</span> is quantitative</p></li>
+<li><p><strong>model = linear regression</strong><br>
+We’ll assume that the relationship between <span class="math inline">\(y\)</span> and (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>) can be represented by</p>
+<p><span class="math display">\[y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \varepsilon\]</span></p></li>
+<li><p><span style="background-color:lightgray;"><strong>estimation algorithm = LASSO</strong></span> (instead of least squares)</p></li>
+</ul>
+<p><br><br></p>
+</section>
+<section id="least-absolute-shrinkage-and-selection-operator" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="least-absolute-shrinkage-and-selection-operator">Least Absolute Shrinkage and Selection Operator</h2>
+<p><strong>LASSO:</strong> <strong>L</strong>east <strong>A</strong>bsolute <strong>S</strong>hrinkage and <strong>S</strong>election <strong>O</strong>perator</p>
+<div class="incremental">
+<p>Dates back to 1996, proposed by Robert Tibshirani (one of the authors of ISLR)</p>
+<blockquote class="blockquote">
+<p>Robert Tibshirani, Regression Shrinkage and Selection Via the Lasso, Journal of the Royal Statistical Society: Series B (Methodological), Volume 58, Issue 1, January 1996, Pages 267–288, <a href="https://doi.org/10.1111/j.2517-6161.1996.tb02080.x">https://doi.org/10.1111/j.2517-6161.1996.tb02080.x</a></p>
+</blockquote>
+</div>
+</section>
+<section id="goal" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="goal">Goal</h2>
+<p><strong>GOAL: Model Selection</strong></p>
+<p>Use the LASSO algorithm to help us <em>regularize</em> and <em>select</em> the “best” predictors <span class="math inline">\(x\)</span> to use in a <strong>predictive</strong> linear regression model of <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[y = \hat{\beta}_0 + \hat{\beta}_1 x_1 + \cdots + \hat{\beta}_p x_p + \varepsilon\]</span></p>
+</section>
+<section id="idea" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="idea">Idea</h2>
+<ul>
+<li><em>Penalize</em> a predictor for adding complexity to the model (by penalizing its coefficient).</li>
+<li>Track whether the predictor’s <em>contribution</em> to the model (lowering RSS) is enough to offset this penalty.</li>
+</ul>
+</section>
+<section id="algorithm-criterion" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="algorithm-criterion">Algorithm Criterion</h2>
+<p>Identify the model coefficients <span class="math inline">\(\hat{\beta}_1, \hat{\beta}_2, ...  \hat{\beta}_p\)</span> that <em>minimize</em> the <strong>penalized residual sum of squares</strong>:</p>
+<p><span class="math display">\[RSS + \lambda \sum_{j=1}^p \vert \hat{\beta}_j\vert = \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^p \vert \hat{\beta}_j\vert\]</span></p>
+<p>where</p>
+<ul>
+<li>residual sum of squares (RSS) measures the overall model prediction error</li>
+<li>the penalty term measures the overall size of the model coefficients</li>
+<li><span class="math inline">\(\lambda \ge 0\)</span> (“lambda”) is a tuning parameter</li>
+</ul>
+</section>
+</section>
+<section id="small-group-discussion" class="level1 unnumbered">
+<h1 class="unnumbered">Small Group Discussion</h1>
+<p>Discuss basic understanding from the video to help each other clear up concepts.</p>
+<section id="questions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions">Questions</h2>
+<p><strong>1: LASSO vs other algorithms for building linear regression models</strong></p>
+<ol type="a">
+<li>LASSO vs least squares
+<ul>
+<li>What’s one advantage of LASSO vs least squares?</li>
+<li>Which algorithm(s) require us (or R) to <em>scale</em> the predictors?</li>
+</ul></li>
+<li>What is one advantage of LASSO vs backward stepwise selection?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>LASSO helps with model selection, i.e.&nbsp;kicks some predictors out of the model, and preventing overfitting.</li>
+<li>LASSO isn’t greedy and doesn’t overestimate the significance of the predictors it retains (its variable selection isn’t based on p-values).</li>
+</ol>
+</details>
+<p><br></p>
+<p><strong>2: LASSO tuning</strong></p>
+<p>We have to pick a <span class="math inline">\(\lambda\)</span> penalty tuning parameter for our LASSO model. What’s the impact of <span class="math inline">\(\lambda\)</span>?</p>
+<ol type="a">
+<li>When <span class="math inline">\(\lambda\)</span> is 0, …</li>
+<li>As <span class="math inline">\(\lambda\)</span> increases, the predictor coefficients ….</li>
+<li><strong>Goldilocks problem</strong>: If <span class="math inline">\(\lambda\)</span> is too big, …. If <span class="math inline">\(\lambda\)</span> is too small, …</li>
+<li>To decide between a LASSO that uses <span class="math inline">\(\lambda = 0.01\)</span> vs <span class="math inline">\(\lambda = 0.1\)</span> (for example), we can ….</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>LASSO is equivalent to least squares.</li>
+<li>shrink toward or to 0.</li>
+<li>too big: all predictors are kicked out of the model. too small: too few predictors are kicked out, hence the model is complicated and maybe overfit.</li>
+<li>compare CV MAE of the LASSOs with these <span class="math inline">\(\lambda\)</span></li>
+</ol>
+</details>
+<p><br></p>
+<p><strong>COMMENT: Picking <span class="math inline">\(\lambda\)</span></strong></p>
+<p>We <em>cannot</em> know the “best” value for <span class="math inline">\(\lambda\)</span> in advance. This varies from analysis to analysis.</p>
+<p>We must try a reasonable <em>range</em> of possible values for <span class="math inline">\(\lambda\)</span>. This also varies from analysis to analysis.</p>
+<p>In general, we have to use <em>trial-and-error</em> to identify a range that is…</p>
+<ul>
+<li>wide enough that it doesn’t miss the best values for <span class="math inline">\(\lambda\)</span></li>
+<li>narrow enough that it focuses on reasonable values for <span class="math inline">\(\lambda\)</span></li>
+</ul>
+</section>
+</section>
+<section id="exercises" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises</h1>
+<section id="instructions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="instructions">Instructions</h2>
+<ul>
+<li>Open the QMD fo today and scroll down to the <em>Exercises</em></li>
+<li>Work on implementing LASSO to familiar data</li>
+<li>Become familiar with the new code structures:
+<ul>
+<li>instead of <code>fit_resamples</code> to run CV, we’ll use <code>tune_grid</code> to tune the algorithm with CV</li>
+<li>new engine: <code>set_engine('glmnet')</code></li>
+</ul></li>
+<li>Ask me questions as I move around the room.</li>
+</ul>
+</section>
+<section id="questions-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions-1">Questions</h2>
+<p>We’ll use the LASSO algorithm to help us build a good <em>predictive</em> model of <code>height</code> using the collection of 12 possible predictors in the <code>humans</code> dataset:</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -847,7 +1064,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L06-lasso.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L06-lasso.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

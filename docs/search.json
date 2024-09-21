@@ -802,6 +802,105 @@
     ]
   },
   {
+    "objectID": "L06-lasso.html",
+    "href": "L06-lasso.html",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "",
+    "text": "Settling In",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#context",
+    "href": "L06-lasso.html#context",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Context",
+    "text": "Context\n\n\n\n\nworld = supervised learning\nWe want to model some output variable \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)).\ntask = regression\n\\(y\\) is quantitative\nmodel = linear regression\nWe’ll assume that the relationship between \\(y\\) and (\\(x_1, x_2, ..., x_p\\)) can be represented by\n\\[y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + ... + \\beta_p x_p + \\varepsilon\\]\nestimation algorithm = LASSO (instead of least squares)",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#least-absolute-shrinkage-and-selection-operator",
+    "href": "L06-lasso.html#least-absolute-shrinkage-and-selection-operator",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Least Absolute Shrinkage and Selection Operator",
+    "text": "Least Absolute Shrinkage and Selection Operator\nLASSO: Least Absolute Shrinkage and Selection Operator\n\nDates back to 1996, proposed by Robert Tibshirani (one of the authors of ISLR)\n\nRobert Tibshirani, Regression Shrinkage and Selection Via the Lasso, Journal of the Royal Statistical Society: Series B (Methodological), Volume 58, Issue 1, January 1996, Pages 267–288, https://doi.org/10.1111/j.2517-6161.1996.tb02080.x",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#goal",
+    "href": "L06-lasso.html#goal",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Goal",
+    "text": "Goal\nGOAL: Model Selection\nUse the LASSO algorithm to help us regularize and select the “best” predictors \\(x\\) to use in a predictive linear regression model of \\(y\\):\n\\[y = \\hat{\\beta}_0 + \\hat{\\beta}_1 x_1 + \\cdots + \\hat{\\beta}_p x_p + \\varepsilon\\]",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#idea",
+    "href": "L06-lasso.html#idea",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Idea",
+    "text": "Idea\n\nPenalize a predictor for adding complexity to the model (by penalizing its coefficient).\nTrack whether the predictor’s contribution to the model (lowering RSS) is enough to offset this penalty.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#algorithm-criterion",
+    "href": "L06-lasso.html#algorithm-criterion",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Algorithm Criterion",
+    "text": "Algorithm Criterion\nIdentify the model coefficients \\(\\hat{\\beta}_1, \\hat{\\beta}_2, ...  \\hat{\\beta}_p\\) that minimize the penalized residual sum of squares:\n\\[RSS + \\lambda \\sum_{j=1}^p \\vert \\hat{\\beta}_j\\vert = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2 + \\lambda \\sum_{j=1}^p \\vert \\hat{\\beta}_j\\vert\\]\nwhere\n\nresidual sum of squares (RSS) measures the overall model prediction error\nthe penalty term measures the overall size of the model coefficients\n\\(\\lambda \\ge 0\\) (“lambda”) is a tuning parameter",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#questions",
+    "href": "L06-lasso.html#questions",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Questions",
+    "text": "Questions\n1: LASSO vs other algorithms for building linear regression models\n\nLASSO vs least squares\n\nWhat’s one advantage of LASSO vs least squares?\nWhich algorithm(s) require us (or R) to scale the predictors?\n\nWhat is one advantage of LASSO vs backward stepwise selection?\n\n\n\nSolution\n\n\nLASSO helps with model selection, i.e. kicks some predictors out of the model, and preventing overfitting.\nLASSO isn’t greedy and doesn’t overestimate the significance of the predictors it retains (its variable selection isn’t based on p-values).\n\n\n\n2: LASSO tuning\nWe have to pick a \\(\\lambda\\) penalty tuning parameter for our LASSO model. What’s the impact of \\(\\lambda\\)?\n\nWhen \\(\\lambda\\) is 0, …\nAs \\(\\lambda\\) increases, the predictor coefficients ….\nGoldilocks problem: If \\(\\lambda\\) is too big, …. If \\(\\lambda\\) is too small, …\nTo decide between a LASSO that uses \\(\\lambda = 0.01\\) vs \\(\\lambda = 0.1\\) (for example), we can ….\n\n\n\nSolution\n\n\nLASSO is equivalent to least squares.\nshrink toward or to 0.\ntoo big: all predictors are kicked out of the model. too small: too few predictors are kicked out, hence the model is complicated and maybe overfit.\ncompare CV MAE of the LASSOs with these \\(\\lambda\\)\n\n\n\nCOMMENT: Picking \\(\\lambda\\)\nWe cannot know the “best” value for \\(\\lambda\\) in advance. This varies from analysis to analysis.\nWe must try a reasonable range of possible values for \\(\\lambda\\). This also varies from analysis to analysis.\nIn general, we have to use trial-and-error to identify a range that is…\n\nwide enough that it doesn’t miss the best values for \\(\\lambda\\)\nnarrow enough that it focuses on reasonable values for \\(\\lambda\\)",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#instructions",
+    "href": "L06-lasso.html#instructions",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Instructions",
+    "text": "Instructions\n\nOpen the QMD fo today and scroll down to the Exercises\nWork on implementing LASSO to familiar data\nBecome familiar with the new code structures:\n\ninstead of fit_resamples to run CV, we’ll use tune_grid to tune the algorithm with CV\nnew engine: set_engine('glmnet')\n\nAsk me questions as I move around the room.",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
+    "objectID": "L06-lasso.html#questions-1",
+    "href": "L06-lasso.html#questions-1",
+    "title": "6  LASSO: Shrinkage/Regularization",
+    "section": "Questions",
+    "text": "Questions\nWe’ll use the LASSO algorithm to help us build a good predictive model of height using the collection of 12 possible predictors in the humans dataset:",
+    "crumbs": [
+      "Regression: Model Selection (Unit 2)",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>LASSO: Shrinkage/Regularization</span>"
+    ]
+  },
+  {
     "objectID": "r_rstudio.html",
     "href": "r_rstudio.html",
     "title": "R and RStudio Setup",
