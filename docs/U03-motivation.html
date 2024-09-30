@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -235,19 +264,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L08-knn-bias-variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">KNN Regression &amp; Bias-Variance Tradeoff</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L09-loess-gams.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LOESS &amp; GAMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L10-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></span></a>
   </div>
 </li>
       </ul>
@@ -311,6 +340,46 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<!-- mention "nonlinearity" -->
+<!-- order of step_normalize and step_dummy changes preprocessing. Leslie keeps the dummies, not standardized dummies. so do many online. but the recommended order is to normalize AFTER: https://recipes.tidymodels.org/articles/Ordering.html. and julia silge does this as well: https://juliasilge.com/blog/tuition-resampling/ -->
+<!-- see recommended pre-processing steps here: https://www.tmwr.org/pre-proc-table.html -->
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<p><strong>GOAL</strong></p>
+<p>We have a <em>quantitative</em> response variable <span class="math inline">\(y\)</span> and want to build a <strong>predictive regression model</strong> of <span class="math inline">\(y\)</span> using a bunch of potential predictors <span class="math inline">\(x\)</span>.</p>
+<p><strong>BUT</strong></p>
+<p>The relationships between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> are complicated, thus our existing modeling tools (e.g.&nbsp;least squares algorithm, LASSO) are too rigid. How can we build a <strong>flexible</strong> predictive regression model?</p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+<p><strong>Parametric vs nonparametric models</strong></p>
+<p>The shared goal behind parametric and nonparametric regression models is to build a model of some quantitative response variable <span class="math inline">\(y\)</span> using predictors <span class="math inline">\((x_1, x_2, ..., x_p)\)</span>:</p>
+<p><span class="math display">\[y = f(x_1, x_2, ..., x_p) + \varepsilon\]</span></p>
+<ul>
+<li><p><strong>parametric models</strong><br>
+Parametric regression models assume a specific “parametric” form for <span class="math inline">\(f\)</span>. For example, a linear regression model assumes that <span class="math inline">\(y\)</span> is a linear combination of the predictors which is defined by <em>parameters</em> <span class="math inline">\(\beta_i\)</span>:<br>
+<span class="math display">\[y = f(x) + \varepsilon = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \varepsilon\]</span><br>
+BUT this assumption can be too <em>rigid</em> and <em>inflexible</em> to describe the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</p></li>
+<li><p><strong>nonparametric models</strong><br>
+<em>Nonparametric</em> models do NOT assume a parametric form for the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, <span class="math inline">\(f(x_1, x_2, ..., x_p)\)</span>. Thus they are more <em>flexible</em>.</p></li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Common flexible regression models</strong></p>
+<ol type="1">
+<li>K Nearest Neighbors (KNN)</li>
+<li>Local regression / locally weighted scatterplot smoothing (LOESS) &amp; generalized additive models (GAM)</li>
+<li>Smoothing splines</li>
+</ol>
+<p><br>
+<br>
+<br>
+<br>
+</p>
 
 
 

@@ -1108,5 +1108,16 @@
       "Regression: Flexible Models (Unit 3)",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
     ]
+  },
+  {
+    "objectID": "U03-motivation.html",
+    "href": "U03-motivation.html",
+    "title": "Motivating Question",
+    "section": "",
+    "text": "GOAL\nWe have a quantitative response variable \\(y\\) and want to build a predictive regression model of \\(y\\) using a bunch of potential predictors \\(x\\).\nBUT\nThe relationships between \\(y\\) and \\(x\\) are complicated, thus our existing modeling tools (e.g. least squares algorithm, LASSO) are too rigid. How can we build a flexible predictive regression model?\n\n\n\n\n\nParametric vs nonparametric models\nThe shared goal behind parametric and nonparametric regression models is to build a model of some quantitative response variable \\(y\\) using predictors \\((x_1, x_2, ..., x_p)\\):\n\\[y = f(x_1, x_2, ..., x_p) + \\varepsilon\\]\n\nparametric models\nParametric regression models assume a specific “parametric” form for \\(f\\). For example, a linear regression model assumes that \\(y\\) is a linear combination of the predictors which is defined by parameters \\(\\beta_i\\):\n\\[y = f(x) + \\varepsilon = \\beta_0 + \\beta_1x_1 + \\cdots + \\beta_p x_p + \\varepsilon\\]\nBUT this assumption can be too rigid and inflexible to describe the relationship between \\(y\\) and \\(x\\).\nnonparametric models\nNonparametric models do NOT assume a parametric form for the relationship between \\(y\\) and \\(x\\), \\(f(x_1, x_2, ..., x_p)\\). Thus they are more flexible.\n\n\n\n\nCommon flexible regression models\n\nK Nearest Neighbors (KNN)\nLocal regression / locally weighted scatterplot smoothing (LOESS) & generalized additive models (GAM)\nSmoothing splines",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "Motivating Question"
+    ]
   }
 ]
