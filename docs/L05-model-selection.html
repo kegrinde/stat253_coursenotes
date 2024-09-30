@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STAT 253: Statistical Machine Learning - 5&nbsp; Model Selection</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./L06-lasso.html" rel="next">
+<link href="./U02-motivation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./L05-model-selection.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Selection</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">STAT 253: Statistical Machine Learning</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/kegrinde/stat253_coursenotes" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Schedule</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./learning-objectives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning Goals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L01-introductions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introductions</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Regression: Model Evaluation (Unit 1)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./U01-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating Question</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L02-evaluating-regression-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model Evaluation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L03-overfitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Overfitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L04-cross-validation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Cross-Validation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Regression: Model Selection (Unit 2)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./U02-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating Question</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L05-model-selection.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L06-lasso.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage / Regularization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Regression: Flexible Models (Unit 3)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./U03-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Motivating Question</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L07-nonparametric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L08-knn-bias-variance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">KNN Regression &amp; Bias-Variance Tradeoff</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L09-loess-gams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LOESS &amp; GAMs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./L10-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R and RStudio Setup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r_resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">R Resources</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./stat155.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STAT 155 Review</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a>
+  <ul class="collapse">
+  <li><a href="#statistical-machine-learning-concepts" id="toc-statistical-machine-learning-concepts" class="nav-link" data-scroll-target="#statistical-machine-learning-concepts">Statistical Machine Learning Concepts</a></li>
+  <li><a href="#general-skills" id="toc-general-skills" class="nav-link" data-scroll-target="#general-skills">General Skills</a></li>
+  </ul></li>
+  <li><a href="#reflection" id="toc-reflection" class="nav-link" data-scroll-target="#reflection">Reflection</a>
+  <ul class="collapse">
+  <li><a href="#collaborative-learning" id="toc-collaborative-learning" class="nav-link" data-scroll-target="#collaborative-learning">Collaborative Learning</a></li>
+  <li><a href="#unit-1-reflection-continued" id="toc-unit-1-reflection-continued" class="nav-link" data-scroll-target="#unit-1-reflection-continued">Unit 1 Reflection (continued)</a></li>
+  </ul></li>
+  <li><a href="#notes-model-selection" id="toc-notes-model-selection" class="nav-link" data-scroll-target="#notes-model-selection">Notes: Model Selection</a>
+  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
+  <li><a href="#inferential-v.-predictive-models" id="toc-inferential-v.-predictive-models" class="nav-link" data-scroll-target="#inferential-v.-predictive-models">Inferential v. Predictive Models</a></li>
+  <li><a href="#model-selection-goals" id="toc-model-selection-goals" class="nav-link" data-scroll-target="#model-selection-goals">Model Selection Goals</a></li>
+  </ul></li>
+  <li><a href="#exercises-part-1" id="toc-exercises-part-1" class="nav-link" data-scroll-target="#exercises-part-1">Exercises: Part 1</a>
+  <ul class="collapse">
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  </ul></li>
+  <li><a href="#notes-variable-selection" id="toc-notes-variable-selection" class="nav-link" data-scroll-target="#notes-variable-selection">Notes: Variable Selection</a>
+  <ul class="collapse">
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#example-1-best-subset-selection-algorithm" id="toc-example-1-best-subset-selection-algorithm" class="nav-link" data-scroll-target="#example-1-best-subset-selection-algorithm">Example 1: Best Subset Selection Algorithm</a></li>
+  <li><a href="#example-2-backward-stepwise-selection-algorithm" id="toc-example-2-backward-stepwise-selection-algorithm" class="nav-link" data-scroll-target="#example-2-backward-stepwise-selection-algorithm">Example 2: Backward Stepwise Selection Algorithm</a></li>
+  <li><a href="#example-3-backward-stepwise-selection-step-by-step-results" id="toc-example-3-backward-stepwise-selection-step-by-step-results" class="nav-link" data-scroll-target="#example-3-backward-stepwise-selection-step-by-step-results">Example 3: Backward Stepwise Selection Step-by-Step Results</a></li>
+  <li><a href="#example-4-backward-stepwise-selection-final-model" id="toc-example-4-backward-stepwise-selection-final-model" class="nav-link" data-scroll-target="#example-4-backward-stepwise-selection-final-model">Example 4: Backward Stepwise Selection Final Model</a></li>
+  <li><a href="#example-5-machine-learning-vs-human-learning" id="toc-example-5-machine-learning-vs-human-learning" class="nav-link" data-scroll-target="#example-5-machine-learning-vs-human-learning">Example 5: machine learning vs human learning</a></li>
+  <li><a href="#example-6-forward-stepwise-selection-algorithm" id="toc-example-6-forward-stepwise-selection-algorithm" class="nav-link" data-scroll-target="#example-6-forward-stepwise-selection-algorithm">Example 6: Forward Stepwise Selection Algorithm</a></li>
+  <li><a href="#warning" id="toc-warning" class="nav-link" data-scroll-target="#warning">WARNING</a></li>
+  </ul></li>
+  <li><a href="#exercises-part-2" id="toc-exercises-part-2" class="nav-link" data-scroll-target="#exercises-part-2">Exercises: Part 2</a>
+  <ul class="collapse">
+  <li><a href="#instructions-1" id="toc-instructions-1" class="nav-link" data-scroll-target="#instructions-1">Instructions</a></li>
+  <li><a href="#questions-1" id="toc-questions-1" class="nav-link" data-scroll-target="#questions-1">Questions</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L05-model-selection.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U02-motivation.html">Regression: Model Selection (Unit 2)</a></li><li class="breadcrumb-item"><a href="./L05-model-selection.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Selection</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Model Selection</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="settling-in" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Settling In</h1>
+<ul>
+<li>Sit with the same group as last class.
+<ul>
+<li>Come up with a team name that reflects the majors represented in your group WITHOUT including the names of those majors (e.g., “data rocks!” instead of “statistics geology”)</li>
+</ul></li>
+<li>See the #announcements on <a href="https://macstat253.slack.com">Slack</a> about upcoming events.</li>
+<li>Prepare to take notes:
+<ul>
+<li>Locate, download, save, and open the <strong>Part 1</strong> QMD for today’s class.</li>
+<li>You’ll need the <code>reshape2</code> package today: install this if you haven’t already.</li>
+<li><strong>WAIT</strong> to open Part 2 until later in class!</li>
+</ul></li>
+</ul>
+</section>
+<section id="learning-goals" class="level1 unnumbered">
+<h1 class="unnumbered">Learning Goals</h1>
+<section id="statistical-machine-learning-concepts" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="statistical-machine-learning-concepts">Statistical Machine Learning Concepts</h2>
+<ul>
+<li>Gain intuition about different approaches to variable selection</li>
+<li>Clearly describe the forward and backward stepwise selection algorithm and why they are examples of greedy algorithms</li>
+<li>Compare best subset and stepwise algorithms in terms of optimality of output and computational time</li>
+<li>Describe how selection algorithms can give a measure of <em>variable importance</em></li>
+</ul>
+<p><br></p>
+</section>
+<section id="general-skills" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="general-skills">General Skills</h2>
+<p><img src="images/learningobjectives_generalskills.png" class="img-fluid"></p>
+<p><span style="background-color:lightgray;"><strong>Highlight: Collaborative Learning</strong></span></p>
+<ul>
+<li>Understand and demonstrate characteristics of effective collaboration (team roles, interpersonal communication, self-reflection, awareness of social dynamics, advocating for yourself and others).</li>
+<li>Develop a common purpose and agreement on goals.</li>
+<li>Be able to contribute questions or concerns in a respectful way.</li>
+<li>Share and contribute to the group’s learning in an equitable manner.</li>
+</ul>
+</section>
+</section>
+<section id="reflection" class="level1 unnumbered">
+<h1 class="unnumbered">Reflection</h1>
+<section id="collaborative-learning" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="collaborative-learning">Collaborative Learning</h2>
+<p>Take <strong>5 minutes</strong> to reflect upon your work throughout Unit 1, particularly with respect to <span style="background-color:lightgray;"><strong>collaboration</strong></span>.</p>
+<p>Reflect upon your strengths and what you might change in the next unit:</p>
+<ul>
+<li>How actively did you contribute to group discussions?</li>
+<li>How actively did you include ALL other group members in discussion?</li>
+<li>In what ways did you (or did you not) help create a space where others feel comfortable making mistakes &amp; sharing their ideas?</li>
+</ul>
+</section>
+<section id="unit-1-reflection-continued" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="unit-1-reflection-continued">Unit 1 Reflection (continued)</h2>
+<p>If you did not finish Exercises #9 and #10 from last class, please take time after class today to do so.</p>
+</section>
+</section>
+<section id="notes-model-selection" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: Model Selection</h1>
+<section id="context" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="context">Context</h2>
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of <em>potential</em> predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = regression</strong><br>
+<span class="math inline">\(y\)</span> is quantitative</p></li>
+<li><p><strong>model = linear regression</strong><br>
+We’ll assume that the relationship between <span class="math inline">\(y\)</span> and (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>) can be represented by</p>
+<p><span class="math display">\[y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \varepsilon\]</span></p></li>
+</ul>
+</section>
+<section id="inferential-v.-predictive-models" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="inferential-v.-predictive-models">Inferential v. Predictive Models</h2>
+<p>In model building, the decision of which predictors to use <strong>depends upon our goal</strong>.</p>
+<p><strong>Inferential models</strong></p>
+<div class="incremental">
+<ul class="incremental">
+<li>Goal: Explore &amp; test hypotheses about a specific relationship.</li>
+<li>Predictors: Defined by the goal.</li>
+<li>Example: An economist wants to understand how salaries (<span class="math inline">\(y\)</span>) vary by age (<span class="math inline">\(x_1\)</span>) while controlling for education level (<span class="math inline">\(x_2\)</span>).</li>
+</ul>
+</div>
+<p><strong>Predictive models</strong></p>
+<div class="incremental">
+<ul class="incremental">
+<li>Goal: Produce the “best” possible predictions of <span class="math inline">\(y\)</span>.</li>
+<li>Predictors: Any combination of predictors that help us meet this goal.</li>
+<li>Example: A mapping app wants to provide users with quality estimates of arrival time (<span class="math inline">\(y\)</span>) utilizing any useful predictors (eg: time of day, distance, route, speed limit, weather, day of week, traffic radar…)</li>
+</ul>
+</div>
+</section>
+<section id="model-selection-goals" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="model-selection-goals">Model Selection Goals</h2>
+<p><strong>Model selection</strong> algorithms can <em>help</em> us build a <strong>predictive model</strong> of <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p>
+<p>There are 3 general approaches to this task:</p>
+<div class="incremental">
+<ol class="incremental" type="1">
+<li><p><strong>Variable selection (today)</strong><br>
+Identify a <em>subset</em> of predictors to use in our model of <span class="math inline">\(y\)</span>.</p></li>
+<li><p><strong>Shrinkage / regularization (next class)</strong><br>
+<em>Shrink</em> / regularize the coefficients of all predictors toward or to 0.</p></li>
+<li><p><strong>Dimension reduction (later in the semester)</strong><br>
+<em>Combine</em> the predictors into a smaller set of new predictors.</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="exercises-part-1" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises: Part 1</h1>
+<section id="instructions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="instructions">Instructions</h2>
+<p>Open the Part 1 QMD. Scroll down to the <code># Exercises</code> section.</p>
+<p><em>As a group</em>, you’ll design a <strong>variable selection algorithm</strong> to pick which predictors to use in a predictive model of <code>height</code>. Specifically, you will:</p>
+<ul>
+<li>15 mins: come up with one algorithm, document it, and try it</li>
+<li>5 mins: try another group’s algorithm</li>
+</ul>
+<p>NOTE: This will NOT be perfect! Our goals are to:</p>
+<ul>
+<li>Have fun and work together!</li>
+<li>Tap into your <em>intuition</em> for key questions and challenges in variable selection.</li>
+<li><em>Deepen</em> your understanding of “algorithms” and “tuning parameters” by designing and communicating your own.</li>
+</ul>
+</section>
+<section id="questions" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions">Questions</h2>
+<p>Let’s build a <strong>predictive model</strong> of <code>height</code> in inches using one or more of 12 possible predictors. Other than <code>age</code> and <code>weight</code>, these are circumferences measured in cm.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(humans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "age"     "weight"  "neck"    "chest"   "abdomen" "hip"     "thigh"  
+ [8] "knee"    "ankle"   "biceps"  "forearm" "wrist"   "height" </code></pre>
+</div>
+</div>
+<p>A <strong>heat map</strong> displays correlations for each pair of variables in our dataset. Not only is <code>height</code> correlated with multiple predictors, the predictors are correlated with one another (mulicollinear)! We don’t need <em>all</em> of them in our model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the correlation matrix</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(humans)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cor_matrix[<span class="fu">lower.tri</span>(cor_matrix)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> cor_matrix <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">melt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">correlation =</span> value)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the correlation for each pair of variables</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cor_matrix, <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">fill =</span> correlation)) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>, </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">limit =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">60</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L05-model-selection_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li><strong>Design your own algorithm (15 minutes)</strong>
+<ul>
+<li>Do not use any materials from outside this class.</li>
+<li>Document your algorithm in words (not code) in this <a href="https://docs.google.com/document/d/1OD1Xv6SFp9pgxSDEB_PKuOzy83xEaFvJZHhLaYf2Nqc/edit?usp=sharing">google doc</a>.</li>
+<li>Your algorithm must:
+<ul>
+<li>be <em>clear</em> to other humans</li>
+<li>be clear to a <em>machine</em> (cannot utilize context)</li>
+<li>lead to a <em>single</em> model that uses 0-12 of our predictors</li>
+<li>define and provide directions for selecting any tuning parameters</li>
+</ul></li>
+<li>Implement as many steps of your algorithm as possible in the time allotted. You can modify the code below to build and evaluate the models in your algorithm:</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: model specification</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: model estimation</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>height_model_1 <span class="ot">&lt;-</span> lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist, <span class="at">data =</span> humans)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>height_model_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># CV MAE</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(humans, <span class="at">v =</span> <span class="dv">10</span>), </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>Test another group’s algorithm (5 minutes)</strong><br>
+Try to implement the next algorithm below yours (or the first algorithm if your group’s is last). Think: Are the steps clear? What are the drawbacks to the algorithm?</li>
+</ol>
+<p><br></p>
+</section>
+</section>
+<section id="notes-variable-selection" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: Variable Selection</h1>
+<p>Open the <strong>Part 2</strong> QMD to take notes.</p>
+<section id="goal" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="goal">Goal</h2>
+<p>Let’s consider three existing variable selection algorithms.</p>
+<p>Heads up: these algorithms are important to building intuition for the questions and challenges in model selection, BUT have major drawbacks.</p>
+<p><br></p>
+</section>
+<section id="example-1-best-subset-selection-algorithm" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-1-best-subset-selection-algorithm">Example 1: Best Subset Selection Algorithm</h2>
+<div class="incremental">
+<ul class="incremental">
+<li>Build <em>all</em> <span class="math inline">\(2^p\)</span> possible models that use any combination of the available predictors <span class="math inline">\((x_1, x_2,..., x_p)\)</span>.<br>
+</li>
+<li>Identify the best model with respect to some chosen metric (eg: CV MAE) and context.</li>
+</ul>
+</div>
+<p>Suppose we used this algorithm for our <code>height</code> model with 12 possible predictors. What’s the main drawback?</p>
+<details>
+<summary>
+Solution
+</summary>
+<p>It’s <strong>computationally expensive</strong>. For our humans example, we’d need to build 4096 models:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="dv">12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4096</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+</section>
+<section id="example-2-backward-stepwise-selection-algorithm" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-2-backward-stepwise-selection-algorithm">Example 2: Backward Stepwise Selection Algorithm</h2>
+<div class="incremental">
+<ul class="incremental">
+<li>Build a model with <em>all</em> <span class="math inline">\(p\)</span> possible predictors, <span class="math inline">\((x_1, x_2,..., x_p)\)</span>.<br>
+</li>
+<li>Repeat the following until only 1 predictor remains in the model:
+<ul class="incremental">
+<li>Remove the 1 predictor with the biggest p-value.</li>
+<li>Build a model with the remaining predictors.<br>
+</li>
+</ul></li>
+<li>You now have <span class="math inline">\(p\)</span> competing models: one with all <span class="math inline">\(p\)</span> predictors, one with <span class="math inline">\(p-1\)</span> predictors, …, and one with 1 predictor. Identify the “best” model with respect to some metric (eg: CV MAE) and context.</li>
+</ul>
+</div>
+<p>. . .</p>
+<p>Let’s try out the first few steps!</p>
+<p>. . .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages and data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>humans <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bodyfat1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: model specifications</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: model estimate (using all 12 predictors to start)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick apart this code and make it easier to identify the least "significant" predictor!!!</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value =</span> <span class="fu">round</span>(p.value, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 11 predictors (tweak the code)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value =</span> <span class="fu">round</span>(p.value, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10 predictors (tweak the code)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value =</span> <span class="fu">round</span>(p.value, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All 12 predictors</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> biceps <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span>  <span class="co"># use tidy to get p-values for each coefficient</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span> <span class="co"># exclude the intercept</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value =</span> <span class="fu">round</span>(p.value, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> <span class="co"># round the p-values for easier viewing</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(p.value)) <span class="co"># added this line to arrange from largest to smallest p-value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 5
+   term    estimate std.error statistic p.value
+   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 biceps   -0.0808     0.746    -0.108  0.915 
+ 2 neck      0.139      1.17      0.119  0.906 
+ 3 knee      0.151      0.941     0.160  0.874 
+ 4 wrist     0.836      2.32      0.361  0.721 
+ 5 ankle    -0.888      1.28     -0.693  0.494 
+ 6 abdomen   0.283      0.354     0.798  0.432 
+ 7 age      -0.112      0.132    -0.847  0.405 
+ 8 chest    -0.459      0.473    -0.971  0.340 
+ 9 forearm   2.25       1.80      1.25   0.223 
+10 weight    0.379      0.213     1.78   0.0864
+11 hip      -0.921      0.510    -1.81   0.0822
+12 thigh    -1.24       0.646    -1.92   0.066 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 11 predictors (got rid of biceps)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight <span class="sc">+</span> neck <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value =</span> <span class="fu">round</span>(p.value, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(p.value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 5
+   term    estimate std.error statistic p.value
+   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 neck       0.161     1.14      0.142  0.888 
+ 2 knee       0.180     0.886     0.203  0.841 
+ 3 wrist      0.907     2.18      0.416  0.681 
+ 4 ankle     -0.878     1.26     -0.699  0.490 
+ 5 abdomen    0.281     0.348     0.809  0.425 
+ 6 age       -0.111     0.130    -0.858  0.398 
+ 7 chest     -0.453     0.461    -0.982  0.334 
+ 8 forearm    2.17      1.62      1.34   0.192 
+ 9 hip       -0.902     0.470    -1.92   0.0652
+10 weight     0.369     0.190     1.94   0.0623
+11 thigh     -1.26      0.602    -2.09   0.0454</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 10 predictors (got rid of neck)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(height <span class="sc">~</span> age <span class="sc">+</span> weight  <span class="sc">+</span> chest <span class="sc">+</span> abdomen <span class="sc">+</span> hip <span class="sc">+</span> thigh <span class="sc">+</span> knee <span class="sc">+</span> ankle <span class="sc">+</span> forearm <span class="sc">+</span> wrist,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> humans) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value =</span> <span class="fu">round</span>(p.value, <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(p.value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   term    estimate std.error statistic p.value
+   &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 knee       0.166     0.866     0.191  0.850 
+ 2 wrist      0.985     2.07      0.475  0.639 
+ 3 ankle     -0.884     1.23     -0.716  0.480 
+ 4 age       -0.111     0.127    -0.869  0.392 
+ 5 abdomen    0.298     0.322     0.924  0.363 
+ 6 chest     -0.460     0.451    -1.02   0.316 
+ 7 forearm    2.29      1.37      1.66   0.107 
+ 8 weight     0.377     0.179     2.11   0.0435
+ 9 thigh     -1.26      0.591    -2.14   0.0409
+10 hip       -0.931     0.416    -2.24   0.0331</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+</section>
+<section id="example-3-backward-stepwise-selection-step-by-step-results" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-3-backward-stepwise-selection-step-by-step-results">Example 3: Backward Stepwise Selection Step-by-Step Results</h2>
+<p>Below is the complete model sequence along with 10-fold CV MAE for each model (using <code>set.seed(253)</code>).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">pred</th>
+<th style="text-align: right;">CV MAE</th>
+<th style="text-align: left;">predictor list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">5.728</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist, knee, neck, biceps</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">5.523</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist, knee, neck</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5.413</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist, knee</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5.368</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen, age, ankle, wrist</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5.047</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen, age, ankle</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5.013</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen, age</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4.684</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest, abdomen</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4.460</td>
+<td style="text-align: left;">weight, hip, forearm, thigh, chest</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4.386</td>
+<td style="text-align: left;">weight, hip, forearm, thigh</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4.091</td>
+<td style="text-align: left;">weight, hip, forearm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3.733</td>
+<td style="text-align: left;">weight, hip</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.658</td>
+<td style="text-align: left;">weight</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DISCUSS:</strong></p>
+<ol type="a">
+<li><p>(Review) Interpret the CV MAE for the model of <code>height</code> by <code>weight</code> alone.</p></li>
+<li><p>Is this algorithm more or less <strong>computationally expensive</strong> than the best subset algorithm?</p></li>
+<li><p>The predictors <code>neck</code> and <code>wrist</code>, in that order, are the most strongly correlated with <code>height</code>. Where do these appear in the backward sequence and what does this mean?</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(humans)[,<span class="st">'height'</span>] <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      thigh         hip         age     abdomen        knee       chest 
+-0.11301249 -0.10648937 -0.05853538 -0.02173587  0.02345904  0.05838830 
+     biceps       ankle      weight     forearm       wrist        neck 
+ 0.07441696  0.07920867  0.11228791  0.16968040  0.28967468  0.29147610 
+     height 
+ 1.00000000 </code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>We deleted predictors one at a time. Why is this better than deleting a collection of multiple predictors at the same time (eg: kicking out all predictors with p-value &gt; 0.1)?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>Using a linear model with only weight to predict height, our prediction error would be on average 3.58 inches off from the truth on new data.</li>
+<li>Less. We only have to build 12 models.</li>
+<li>Both neck and wrist are kicked out early! The 1-predictor model produced by this algorithm isn’t necessarily the <em>best</em> 1-predictor model (same for any number of predictors).</li>
+<li>The value of the coefficient (and thus the p-value) is dependent on the other variables in the model as we are accounting for or conditioning on them.</li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="example-4-backward-stepwise-selection-final-model" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-4-backward-stepwise-selection-final-model">Example 4: Backward Stepwise Selection Final Model</h2>
+<!-- skip this during class time? -->
+<p>We have to pick just <strong>1</strong> of the 12 models as our final model.</p>
+<p>That is, we have to pick a value for our <strong>tuning parameter</strong>, the number of predictors.</p>
+<p>It helps to plot the CV MAE for each model in the sequence.</p>
+<p><strong>Here’s what we saw above:</strong></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">predictors =</span> <span class="fu">c</span>(<span class="dv">12</span><span class="sc">:</span><span class="dv">1</span>), </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae =</span> <span class="fu">c</span>(<span class="fl">5.728</span>, <span class="fl">5.523</span>, <span class="fl">5.413</span>, <span class="fl">5.368</span>, <span class="fl">5.047</span>, <span class="fl">5.013</span>, <span class="fl">4.684</span>, <span class="fl">4.460</span>, <span class="fl">4.386</span>, <span class="fl">4.091</span>, <span class="fl">3.733</span>, <span class="fl">3.658</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> mae)) <span class="sc">+</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L05-model-selection_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Here’s another example from a different subset of these data:</strong></p>
+<p><img src="images/L05-goldilocks.png" class="img-fluid"></p>
+<ol type="a">
+<li>In the odd <a href="https://www.youtube.com/watch?v=qOJ_A5tgBKM">“Goldilocks” fairy tale</a>, a kid comes upon a bear den – the first bear’s bed is too hard, the second bear’s is too soft, and the third bear’s is just right. Our plot illustrates a <strong>goldilocks problem</strong> in tuning the number of predictors in our backward stepwise model. Explain.</li>
+</ol>
+<ul>
+<li>When the number of predictors is too <em>small</em>, the MAE increases because the model is too….</li>
+<li>When the number of predictors is too <em>large</em>, the MAE increases because the model is too….</li>
+</ul>
+<ol start="2" type="a">
+<li>Which model do you pick?!?</li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>Too few predictors: model is too simple. too many predictors: model is too overfit.</li>
+<li>Based on our data, I think the model with 1 predictor seems pretty reasonable! If I were looking at the other MAE plot, though, I might gravitate pick a model with 1 (the simplest), 2 (still simple, but better MAE than 1 predictor), or 5 predictors (the model with the best CV MAE).</li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="example-5-machine-learning-vs-human-learning" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-5-machine-learning-vs-human-learning">Example 5: machine learning vs human learning</h2>
+<!-- skip this during class time? -->
+<p>When <em>tuning</em> or finalizing a model building algorithm, we (humans!) have our own choices to make. For one, we need to decide what we prefer:</p>
+<ul>
+<li>a model with the lowest prediction errors; or</li>
+<li>a more <strong>parsimonious</strong> model: one with slightly <em>higher prediction errors</em> but <em>fewer predictors</em></li>
+</ul>
+<p>In deciding, here are some human considerations:</p>
+<ul>
+<li><strong>goal:</strong> How will the model be used? Should it be easy for humans to interpret and apply?</li>
+<li><strong>cost:</strong> How many resources (time, money, computer memory, etc) do the model and data needed require?</li>
+<li><strong>impact:</strong> What are the consequences of a bad prediction?</li>
+</ul>
+<p>For each scenario below, which model would you pick: (1) the model with the lowest prediction errors; or (2) a parsimonious model with slightly worse predictions?</p>
+<ol type="a">
+<li><p>Google asks us to re-build their search algorithm.</p></li>
+<li><p>A small non-profit hires us to help them build a predictive model of the donation dollars they’ll receive throughout the year.</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>1</li>
+<li>2</li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="example-6-forward-stepwise-selection-algorithm" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-6-forward-stepwise-selection-algorithm">Example 6: Forward Stepwise Selection Algorithm</h2>
+<!-- skip this during class time? -->
+<ul>
+<li>How do you think this works?</li>
+<li>Is it more or less computationally expensive than backward stepwise?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<ul>
+<li><p>Start with 0 predictors. Add the predictor with the smallest p-value. To this model, add a second predictor with the smallest p-value. Continue until all predictors are in the model.</p></li>
+<li><p>more. For 12 predictors, we’d have to build 12 models in step 1, 11 models in step 2, etc. Thus 12 + 11 + … + 1 = 78 models total.</p></li>
+</ul>
+</details>
+<p><br></p>
+</section>
+<section id="warning" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="warning">WARNING</h2>
+<!-- skip this during class time? -->
+<p>Variable selection algorithms are a nice, intuitive place to start our discussion of model selection techniques.</p>
+<p><strong>BUT we will not use them.</strong></p>
+<p>They are frowned upon in the broader ML community, so much so that <strong>tidymodels</strong> doesn’t even implement them! Why?</p>
+<ul>
+<li>Best subset selection is <strong>computationally expensive</strong>.<br>
+</li>
+<li>Backward stepwise selection:
+<ul>
+<li>is <strong>greedy</strong> – it makes <em>locally</em> optimal decisions, thus often misses the <em>globally</em> optimal model</li>
+<li>overestimates the significance of remaining predictors, thus shouldn’t be used for inference</li>
+</ul></li>
+<li>Forward stepwise selection:
+<ul>
+<li>is computationally expensive</li>
+<li>can produce odd combinations of predictors (eg: a new predictor may render previously included predictors non-significant).</li>
+</ul>
+<!-- - ignore transformation terms;     --> <!--  - are clunky with categorical predictors;     --> <!--  - take critical thinking out of the model building process; and     --></li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercises-part-2" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises: Part 2</h1>
+<section id="instructions-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="instructions-1">Instructions</h2>
+<ul>
+<li>Scroll down to the <code># Exercises</code> section in the Part 2 QMD.</li>
+<li>Goal: become familiar with new code structures (recipes and workflows)</li>
+<li>Ask me questions as I move around the room.</li>
+</ul>
+</section>
+<section id="questions-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="questions-1">Questions</h2>
+<p>The video for today introduced the concepts of <strong>recipes</strong> and <strong>workflows</strong> in the <strong>tidymodels</strong> framework. These concepts will become important to our new modeling algorithms. Though they aren’t <em>necessary</em> to linear regression models, let’s explore them in this familiar setting.</p>
+<p>Run through the following discussion and code one step at a time. Take note of the general process, concepts, and questions you have.</p>
+<p><strong>STEP 1: model specification</strong></p>
+<p>This specifies the <em>structure</em> or general modeling algorithm we plan to use.</p>
+<p>It does <em>not</em> specify anything about the variables of interest or our data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>lm_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>lm_spec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 2: recipe specification</strong></p>
+<p>Just as a cooking recipe specifies the <em>ingredients</em> and <em>how to prepare them</em>, a tidymodels recipe specifies:</p>
+<ul>
+<li>the <em>variables</em> in our relationship of interest (the ingredients)</li>
+<li>how to <em>pre-process</em> or wrangle these variables (how to prepare the ingredients)</li>
+<li>the <em>data</em> we’ll use to explore these variables (where to find the ingredients)</li>
+</ul>
+<p>It does <em>not</em> specify anything about the model structure we’ll use to explore this relationship.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple recipe with NO pre-processing</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(height <span class="sc">~</span> wrist <span class="sc">+</span> ankle, <span class="at">data =</span> humans)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>data_recipe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 3: workflow creation (model + recipe)</strong></p>
+<p>This specifies the general <em>workflow</em> of our modeling process, including our <em>model structure</em> and our <em>variable recipe</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(data_recipe) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(lm_spec)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>model_workflow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 4: Model estimation</strong></p>
+<p>This step <em>estimates</em> or <em>fits</em> our model of interest using our entire sample data.</p>
+<p>The model (<code>lm_spec</code>) and variable details (here just <code>height ~ wrist + ankle</code>) are specified in the workflow, so we do not need to give that information again!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_model <span class="ot">&lt;-</span> model_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> humans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEPS 5: Model evaluation</strong></p>
+<p>To get in-sample metrics, use <code>my_model</code> like normal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example: calculate of in-sample metrics</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>my_model <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glance</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To get CV metrics, pass the workflow to <code>fit_resamples</code> along with information about how to randomly create folds.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>my_model_cv <span class="ot">&lt;-</span> model_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> <span class="fu">vfold_cv</span>(humans, <span class="at">v =</span> <span class="dv">10</span>),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">metrics =</span> <span class="fu">metric_set</span>(rsq))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then, proceed as usual… (<code>my_model_cv %&gt;% collect_metrics()</code>, etc. )</p>
+</section>
+</section>
+<section id="wrap-up" class="level1 unnumbered">
+<h1 class="unnumbered">Wrap-Up</h1>
+<ul>
+<li><strong>Today’s Material</strong>
+<ul>
+<li>If you didn’t finish the exercises, be sure to finish outside of class, check your solutions, and bring questions to office hours (or post on Slack)!</li>
+</ul></li>
+<li><strong>Upcoming Due Dates</strong>
+<ul>
+<li><span style="background-color:orange;">TODAY by 11:59 pm</span>: HW1</li>
+<li>Before our next class: CP5</li>
+<li>Next week: HW2 (start today!)</li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./U02-motivation.html" class="pagination-link" aria-label="Motivating Question">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Motivating Question</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./L06-lasso.html" class="pagination-link" aria-label="LASSO: Shrinkage / Regularization">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">LASSO: Shrinkage / Regularization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright Kelsey Grinde, CC BY-NC-SA 4.0</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L05-model-selection.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
