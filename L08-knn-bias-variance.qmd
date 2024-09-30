@@ -1,0 +1,23 @@
+---
+title: "KNN Regression & Bias-Variance Tradeoff"
+logo: "images/mac.png"
+---
+
+```{r 08_setup}
+#| include: false
+#| cache: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(conflicted)
+conflicts_prefer(tidyr::expand)
+conflicts_prefer(dplyr::filter)
+```
+
+
+
+# Settling In {.unnumbered .smaller}
+
+# Learning Goals {.unnumbered .smaller}
+
+# Notes {.unnumbered .smaller}
+
+# Exercises {.unnumbered .smaller}

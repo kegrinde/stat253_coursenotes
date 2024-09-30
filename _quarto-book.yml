@@ -36,6 +36,13 @@ book:
         - U02-motivation.qmd
         - L05-model-selection.qmd
         - L06-lasso.qmd
+    - part: "Regression: Flexible Models (Unit 3)"
+      chapters: 
+        - U03-motivation.qmd
+        - L07-nonparametric.qmd
+        - L08-knn-bias-variance.qmd
+        - L09-loess-gams.qmd
+        - L10-review.qmd
   appendices:
     - r_rstudio.qmd
     - r_resources.qmd

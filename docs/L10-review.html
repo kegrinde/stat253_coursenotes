@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 253: Statistical Machine Learning - Schedule</title>
+<title>STAT 253: Statistical Machine Learning - 10&nbsp; Regression Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./learning-objectives.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./r_rstudio.html" rel="next">
+<link href="./L09-loess-gams.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./schedule.html">Overview</a></li><li class="breadcrumb-item"><a href="./schedule.html">Schedule</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U03-motivation.html">Regression: Flexible Models (Unit 3)</a></li><li class="breadcrumb-item"><a href="./L10-review.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -129,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./schedule.html" class="sidebar-item-text sidebar-link active">
+  <a href="./schedule.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Schedule</span></a>
   </div>
 </li>
@@ -246,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./L10-review.html" class="sidebar-item-text sidebar-link">
+  <a href="./L10-review.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></span></a>
   </div>
 </li>
@@ -287,14 +287,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L10-review.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./schedule.html">Overview</a></li><li class="breadcrumb-item"><a href="./schedule.html">Schedule</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./U03-motivation.html">Regression: Flexible Models (Unit 3)</a></li><li class="breadcrumb-item"><a href="./L10-review.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Schedule</h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></h1>
 </div>
 
 
@@ -311,424 +320,21 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The schedule below is a tentative outline of our plans for the semester.</p>
-<p>Before each class period, please watch the indicated videos and check on your understanding by actively reviewing the associated <a href="learning-objectives.html">Learning Goals</a>.</p>
-<p>Readings refer to chapters/sections in the Introduction to Statistical Learning (ISLR) textbook (available online <a href="https://www.statlearning.com/">here</a>). The ISLR readings are highly encouraged and serve as a nice complement to the videos and in-class activities.</p>
-<!-------------------------------- Week 1 -------------------------------->
-
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 1</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">9/3</td>
-<td class="tg-0pky">CANCELED</td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">9/5</td>
-<td class="tg-0pky">CANCELED</td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week 2 -------------------------------->
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 2</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">9/10</td>
-<td class="tg-0pky">Unit 0: Introductions &amp; Overview</td>
-<td class="tg-0pky"><a href="https://forms.gle/bJ6kRuCj4nX227qT9">Background Survey</a><br>
-<a href="https://www.statlearning.com/">ISLR Reading</a>: Chap 1 &amp; Section 2.1 (Skip 2.1.2, 2.1.3 for now)</td>
-<td class="tg-0pky"><a href="L01-introductions.html" target="_blank">Introductions</a><br>
-</td>
-<td class="tg-0pky">Complete CP1 (before next class)<br>
-Start HW0 (9/13)</td>
-<td class="tg-0pky"></td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">9/12</td>
-<td class="tg-0pky">Unit 1: Model Evaluation</td>
-<td class="tg-0pky"><a href="https://youtu.be/f6d6l7Aadcs">Concept Video</a> (<a href="https://drive.google.com/file/d/1QNEgchWXSo0Oae-gxDpgQd0jvRV_-4JU/view?usp=sharing">script</a>)<br>
-Checkpoint 1<br>
-<a href="https://youtu.be/wzizLKy21bc" target="_blank">R Tutorial Video</a> (<a href="https://drive.google.com/file/d/1rJgFL-QhnrT8qJqsYIhVdbRZ3BQJNZKT/view?usp=sharing">code</a>)<br>
-<a href="https://www.statlearning.com/">ISLR</a>: Section 2.2 (skip 2.2.3 for now.), Section 3.1</td>
-<td class="tg-0pky"><a href="L02-evaluating-regression-models.html" target="_blank">Evaluating Regression Models</a><br>
-(<a href="template_qmds/02-regression-model-evaluation-notes.qmd" target="_blank">QMD</a>)</td>
-<td class="tg-0pky">Complete CP2<br>
-Finish HW0</td>
-<td class="tg-0pky">Concept Video: <a href="https://youtu.be/eVivMkxlS6M" target="_blank">Evaluating Regression Models</a><br>
-R Tutorial Video: <a href="https://drive.google.com/drive/folders/1BoqsvW8MSifA1RJ-_5e8K88recqeQKd4?usp=sharing" target="_blank">Introduction to TidyModels</a></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week 3 -------------------------------->
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 3</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">9/17</td>
-<td class="tg-0pky">Unit 1: Overfitting</td>
-<td class="tg-0pky">Checkpoint 2<br>
-<a href="https://www.youtube.com/watch?v=PXh9PVTlv-E">R Tutorial Video</a> (<a href="https://drive.google.com/file/d/1xpwlsAnl4nDsfWVxOOPCcuhm43U0LKnP/view?usp=sharing">code</a>)<br>
-<a href="https://www.statlearning.com/">ISLR</a>: Section 2.1.2, 5.1</td>
-<td class="tg-0pky"><a href="L03-overfitting.html" target="_blank">Overfitting</a><br>
-(<a href="template_qmds/03-part1-model-evaluation-experiment-notes.qmd" target="_blank">Part 1 QMD</a>) (<a href="template_qmds/03-part2-overfitting-notes.qmd" target="_blank">Part 2 QMD</a>)</td>
-<td class="tg-0pky">Complete CP3<br>
-Start HW1</td>
-<td class="tg-0pky">Content Video: <a href="https://youtu.be/fLnnq0UXnRY" target="_blank">Overfitting</a></td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">9/19</td>
-<td class="tg-0pky">Unit 1: Cross Validation</td>
-<td class="td-0pky"><a href="https://youtu.be/8KlK244SnF0" target="_blank">Concept Video 1</a> (<a href="https://drive.google.com/file/d/1gJX_6-l7ZJLGS9nGwOWa8xyiFecFAB87/view?usp=sharing">script</a>)<br>
-<a href="https://youtu.be/enxpjVi4Lg8" target="_blank">Concept Video 2</a> (<a href="https://drive.google.com/file/d/1gNe-70R7ELOI9sjhxolWx06I8VbkxnQj/view?usp=sharing">script</a>)<br>
-Checkpoint 3<br>
-<a href="https://youtu.be/Sv2nbhch0Jo" target="_blank">R Tutorial Video</a> (<a href="https://drive.google.com/file/d/1xnQ2trzkrL-PnXhikE552GbMxBQoBQgq/view?usp=sharing">code</a>)<br>
-<a href="https://www.statlearning.com/">ISLR</a>: 5.1</td>
-<td class="tg-0pky"><a href="L04-cross-validation.html" target="_blank">Cross-Validation</a><br>
-(<a href="template_qmds/04-cv-notes.qmd" target="_blank">QMD</a>)</td>
-<td class="tg-0pky">Complete CP4<br>
-Continue HW1</td>
-<td class="tg-0pky">Concept Video: <a href="https://www.youtube.com/watch?v=9ABqT6QvQ48">Cross-Validation</a><br>
-R Tutorial: <a href="https://drive.google.com/drive/folders/18XaXcl1Hm7QzM7BVqd0oYuPY9ZDRk0re?usp=sharing" target="_blank">Training, Testing and Cross-Validation</a></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week 4 -------------------------------->
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 4</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">9/24</td>
-<td class="tg-0pky">Unit 2: Model Selection</td>
-<td class="tg-0pky"><a href="https://youtu.be/msPgElxx7gE" target="_blank">R Code Video</a> (<a href="https://drive.google.com/file/d/14Gyn0uu7Wzz2XuLCuwG3w4c3Ae13Hv9Q/view?usp=sharing" target="_blank">code</a>)<br>
-Checkpoint 4</td>
-<td class="tg-0pky"><a href="L05-model-selection.html" target="_blank">Model Selection</a><br>
-(<a href="template_qmds/05-part1-model-selection-notes.qmd" target="_blank">Part 1 QMD</a>)<br>
-(<a href="template_qmds/05-part2-model-selection-notes.qmd" target="_blank">Part 2 QMD</a>)</td>
-<td class="tg-0pky">- Complete CP5<br>
-- Submit HW1<br>
-- Start HW2</td>
-<td class="tg-0pky">- <a href="https://www.statlearning.com/">ISLR</a> 6.1<br>
-- Concept Video: <a href="https://youtu.be/QDhmwc-owAE" target="_blank">Model Building / Selection</a><br>
-- R Tutorial Video: <a href="https://drive.google.com/drive/folders/1yawBBUiH7VH-_oA21e-piApYn0F6a_21?usp=sharing" target="_blank">Preprocessing and Recipes</a><br>
-- R Tutorial Video: <a href="https://drive.google.com/drive/folders/1G0iSKKy2kQgkKaStqv_RTFrlVsi0MNU1?usp=sharing" target="_blank">Subset Selection</a></td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">9/26</td>
-<td class="tg-0pky">Unit 2: LASSO (Shrinkage/ Regularization)</td>
-<td class="tg-0pky"><a href="https://youtu.be/m9zFlS62yqs" target="_blank">Concept Video 1</a><br>
-<a href="https://youtu.be/W6GMOtiPsPo" target="_blank">Concept Video 2</a> (<a href="https://drive.google.com/file/d/1sU7mIrlzBMFigRRmTnpCRnWg5_JuydMt/view?usp=sharing">script</a>)<br>
-Checkpoint 5</td>
-<td class="tg-0pky"><a href="L06-lasso.html" target="_blank">LASSO</a><br>
-(<a href="template_qmds/06-lasso-notes.qmd" target="_blank">QMD</a>)</td>
-<td class="tg-0pky">Continue HW2</td>
-<td class="tg-0pky">- <a href="https://www.statlearning.com/">ISLR</a> 6.2<br>
-- R code tutorial <a href="https://youtu.be/WnvUd7AbmiU" target="_blank">part 1</a>&amp; <a href="https://youtu.be/SMr7svyLpbY" target="_blank">part 2</a> (<a href="https://drive.google.com/file/d/1-fsq5g9_ntOEeCtwDT1eV5OJOoYCj7FF/view?usp=sharing">code</a>)<br>
-- Concept Video: <a href="https://youtu.be/Ouw_AF_8mX0" target="_blank">LASSO (Shrinkage/Regularization)</a><br>
-- R Tutorial Video: <a href="https://drive.google.com/drive/folders/1zgEtkdOeyyYMtMCV0Hvi5DvS81rkAbSV?usp=sharing" target="_blank">Lasso and Regularization</a></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week 5 -------------------------------->
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 5</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">10/1</td>
-<td class="tg-0pky">Unit 3: Nonparametric Models</td>
-<td class="tg-0pky">(see optional resources)</td>
-<td class="tg-0pky"><a href="L07-nonparametric.html" target="_blank">Nonparametric Models</a><br>
-(<a href="template_qmds/07-nonparametric-notes.qmd" target="_blank">QMD</a>)</td>
-<td class="tg-0pky">- Finish HW2 (due tonight!)<br>
-- CP6<br>
-- Start HW3</td>
-<td class="tg-0pky"><a href="https://www.statlearning.com/">ISLR</a> 2.1.2, 3.5</td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">10/3</td>
-<td class="tg-0pky">Unit 3: KNN Regression and the Bias-Variance Tradeoff</td>
-<td class="tg-0pky"><a href="https://youtu.be/RG1_qLGa9Lk" target="_blank">Concept Video 1</a> (<a href="https://drive.google.com/file/d/1flh0SafHkt6HxcaOi5xbDfsrvaQbxggS/view?usp=sharing">script</a>)<br>
-<a href="https://youtu.be/T5ezwEgFvkU" target="_blank">Concept Video 2</a> (<a href="https://drive.google.com/file/d/1fu4M-M22Mg3TKjcY-kIiSxrOTJUAkYLF/view?usp=sharing">script</a>)<br>
-Checkpoint 6</td>
-<td class="tg-0pky"><a href="L08-knn-bias-variance.html" target="_blank">KNN Regression</a><br>
-(<a href="template_qmds/08-knn-bvt-notes.qmd" target="_blank">QMD</a>)</td>
-<td class="tg-0pky">- CP7<br>
-- Continue HW3</td>
-<td class="tg-0pky">- <a href="https://www.statlearning.com/">ISLR</a> 2.2.2 (bias-variance), 3.5 (KNN)<br>
-- <a href="https://youtu.be/5WQJRvFHpbM" target="_blank">R code tutorial</a> (<a href="https://drive.google.com/file/d/1s0HVsuYBmWGN2YsaDiDMFtWecUpGsZ5M/view?usp=sharing">code</a>)<br>
-- Concept Video: <a href="https://youtu.be/XClnbOTRQmA" target="_blank">KNN Regression and the Bias-Variance Tradeoff</a><br>
-- R Tutorial: <a href="https://drive.google.com/drive/folders/1d-dGNUVGjv_AkM6nv1btWOE0-Fx3w1G2?usp=sharing" target="_blank">KNN Regression</a></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week 6 -------------------------------->
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 6</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">10/8</td>
-<td class="tg-0pky">Unit 3: LOESS</td>
-<td class="tg-0pky"><a href="https://youtu.be/lzbAfbe75uo" target="_blank">Concept Video</a> (<a href="https://drive.google.com/file/d/1gI5g2orM_67a14qXcLz6oU6hSe4qT20h/view?usp=sharing">script</a>)<br>
-Checkpoint 7</td>
-<td class="tg-0pky"><a href="L09-loess-gams.html" target="_blank">LOESS</a><br>
-(<a href="template_qmds/09-loess-gam-notes.qmd" target="_blank">QMD</a>)</td>
-<td class="tg-0pky">- Continue HW3<br>
-- Study for Quiz 1<br>
-- Continue Group Assignment 1<br>
-- Start Midterm Learning Reflection</td>
-<td class="tg-0pky">- <a href="https://www.statlearning.com/">ISLR</a> 7.1-7.4, 7.6-7.7<br>
-- Concept Video: <a href="https://youtu.be/sYC3PuONUy8" target="_blank">GAM</a> (<a href="https://drive.google.com/file/d/1mAfOSmkJMiG9W6AAGbBsphikM7I8IFTJ/view?usp=sharing">script</a>)<br>
-- Concept Video: <a href="https://youtu.be/5xOnFZxFKiI" target="_blank">Local Regression and Generalized Additive Models</a><br>
-- R Tutorial Video: <a href="https://drive.google.com/drive/folders/1f0jQ01yrdJ9CPrmhx6ZqjFNPg7Pers7E?usp=sharing" target="_blank">Local Regression and GAM</a><br>
-- Concept Video: <a href="https://youtu.be/G7Gm3sZbM-4" target="_blank">Modeling Nonlinearity: Polynomial Regression and Splines</a><br>
-- R Tutorial Video: <a href="https://drive.google.com/drive/folders/1zXwxTUi2k5-fwgapHnfANyrKufoVkukd?usp=sharing" target="_blank">Nonlinearity: Polynomial Regression and Splines</a><br>
-</td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">10/10</td>
-<td class="tg-0pky">Units 1-3: Review</td>
-<td class="tg-0pky">(review/study Units 1-3)</td>
-<td class="tg-0pky"><a href="L10-review.html" target="_blank">Regression Review</a></td>
-<td class="tg-0pky">- Finish HW3<br>
-- Study for Quiz 1<br>
-- Continue GA1 and MLR</td>
-<td class="tg-0pky"></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week 7 -------------------------------->
-<table class="tg caption-top table" data-quarto-postprocess="true">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th colspan="6" class="tg-0pky" data-quarto-table-cell-role="th"><strong>Week 7</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td class="tg-0pky"><strong>Date</strong></td>
-<td class="tg-0pky"><strong>Topic</strong></td>
-<td class="tg-0pky"><strong>Before Class: Videos/Readings</strong></td>
-<td class="tg-0pky"><strong>In Class: Slides/Notes</strong></td>
-<td class="tg-0pky"><strong>After Class: Assignments</strong></td>
-<td class="tg-0pky"><strong>Additional Resources</strong> (Optional)</td>
-</tr>
-<tr class="even">
-<td class="tg-0pky">10/15</td>
-<td class="tg-0pky">Quiz 1</td>
-<td class="tg-0pky">(study!)</td>
-<td class="tg-0pky">Quiz 1</td>
-<td class="tg-0pky">- Finish Part 2 of Quiz<br>
-- Finish MLR<br>
-</td>
-<td class="tg-0pky"></td>
-</tr>
-<tr class="odd">
-<td class="tg-0pky">10/17</td>
-<td class="tg-0pky">FALL BREAK</td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky">(no class today!)</td>
-<td class="tg-0pky"></td>
-<td class="tg-0pky"></td>
-</tr>
-</tbody>
-</table>
-<!-------------------------------- Week TEMPLATE --------------------------------> <!--
-<table data-quarto-postprocess="true" class="tg">
-<thead>
-  <tr>
-    <td data-quarto-table-cell-role="th" class="tg-0pky" colspan="6"><b>Week #</b></td>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td class="tg-0pky"><b>Date</b></td>
-    <td class="tg-0pky"><b>Topic</b></td>
-    <td class="tg-0pky"><b>Before Class: Videos/Readings</b></td>
-    <td class="tg-0pky"><b>In Class: Slides/Notes</b></td>
-    <td class="tg-0pky"><b>After Class: Assignments</b></td>
-    <td class="tg-0pky"><b>Additional Resources</b> (Optional)</td>
-  </tr>
-  
-  <tr>
-    <td class="tg-0pky">MM/DD</td>
-    <td class="tg-0pky">Unit #: Daily Topic</td>
-    <td class="tg-0pky">
-          <a href="https://youtu.be/BLAHBLAHBLAH" target="_blank">Video</a> 
-          (<a href="https://drive.google.com/BLAHBLAHBLAH" target="_blank">script</a>) <br>
-          Checkpoint #
-    </td>
-    <td class="tg-0pky">
-          <a href="L00-topic.html" target="_blank">Topic</a><br>
-          (<a href="template_qmds/00-topic-notes.qmd" target="_blank">QMD</a>)
-    </td>
-    <td class="tg-0pky">
-          Complete CP#<br>
-          Start/Continue/Finish HW#
-    </td>
-    <td class="tg-0pky">
-          <a href='https://www.statlearning.com/'>ISLR</a>: Section #<br>
-          Video: <a href="https://youtu.be/BLAHBLAHBLAH" target="_blank">Topic</a>
-    </td>
-  </tr>
-  
-  <tr>
-    <td class="tg-0pky">MM/DD</td>
-    <td class="tg-0pky">Unit #: Daily Topic</td>
-    <td class="tg-0pky">
-          <a href="https://youtu.be/BLAHBLAHBLAH" target="_blank">Video</a> 
-          (<a href="https://drive.google.com/BLAHBLAHBLAH" target="_blank">script</a>) <br>
-          Checkpoint #
-    </td>
-    <td class="tg-0pky">
-          <a href="L00-topic.html" target="_blank">Topic</a><br>
-          (<a href="template_qmds/00-topic-notes.qmd" target="_blank">QMD</a>)
-    </td>
-    <td class="tg-0pky">
-          Complete CP#<br>
-          Start/Continue/Finish HW#
-    </td>
-    <td class="tg-0pky">
-          <a href='https://www.statlearning.com/'>ISLR</a>: Section #<br>
-          Video: <a href="https://youtu.be/BLAHBLAHBLAH" target="_blank">Topic</a>
-    </td>
-  </tr>
-
-</tbody>
-
-</table>-->
-
---&gt;
-<p><strong>Note: this page is currently under construction! More dates and links coming soon.</strong></p>
+<p>Coming soon!</p>
+<section id="settling-in" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Settling In</h1>
+</section>
+<section id="learning-goals" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Learning Goals</h1>
+</section>
+<section id="notes" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Notes</h1>
+</section>
+<section id="exercises" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Exercises</h1>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1286,13 +892,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome!">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome!</span>
+      <a href="./L09-loess-gams.html" class="pagination-link" aria-label="LOESS &amp; GAMs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LOESS &amp; GAMs</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./learning-objectives.html" class="pagination-link" aria-label="Learning Goals">
-        <span class="nav-page-text">Learning Goals</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./r_rstudio.html" class="pagination-link" aria-label="R and RStudio Setup">
+        <span class="nav-page-text">R and RStudio Setup</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1304,7 +910,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/schedule.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L10-review.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

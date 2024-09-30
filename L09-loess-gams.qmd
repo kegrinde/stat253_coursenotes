@@ -1,0 +1,23 @@
+---
+title: "LOESS & GAMs"
+logo: "images/mac.png"
+---
+
+```{r 09_setup}
+#| include: false
+#| cache: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(conflicted)
+conflicts_prefer(tidyr::expand)
+conflicts_prefer(dplyr::filter)
+```
+
+Coming soon!
+
+# Settling In {.unnumbered .smaller}
+
+# Learning Goals {.unnumbered .smaller}
+
+# Notes {.unnumbered .smaller}
+
+# Exercises {.unnumbered .smaller}
