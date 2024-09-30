@@ -3,16 +3,8 @@ title: "Nonparametric Models"
 logo: "images/mac.png"
 ---
 
-```{r 07_setup}
-#| include: false
-#| cache: false
-knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
-library(conflicted)
-library(tidyverse)
-library(gridExtra)
-conflicts_prefer(tidyr::expand)
-conflicts_prefer(dplyr::filter)
-```
+
+
 
 
 
@@ -82,51 +74,13 @@ $$\begin{array}{ll}
 \text{6th order polynomial:} & y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5 +  \beta_6 x^6 + \varepsilon \\
 \end{array}$$
 
-```{r}
-#| echo: false
-#| fig-width: 8
-#| fig-height: 5.5
-#| eval: true
-#| cache: false
-library(nlme)
-data(Glucose2)
-#data(Glucose)
-glu_data <- Glucose2 %>% 
-    group_by(Time) %>% 
-    summarize(glucose = mean(glucose)) %>% 
-    mutate(time = Time*10/60) %>% 
-    select(-Time)
-#write.csv(glu_data, "data/glucose_experiment.csv", row.names = FALSE)
 
-g <- ggplot(glu_data, aes(y = glucose, x = time)) + 
-    geom_point() +
-    labs(x = "time (hours)", y = "glucose (mg/dl)") + 
-    lims(y = c(3,7))
+::: {.cell}
+::: {.cell-output-display}
+![](L07-nonparametric_files/figure-html/unnamed-chunk-1-1.png){width=768}
+:::
+:::
 
-
-g0 <- g + 
-  labs(title = "raw data")
-
-g1 <- g + 
-  geom_smooth(method = "lm", se = FALSE) + 
-  labs(title = "linear")
-
-g2 <- g + 
-  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE) +
-  labs(title = "quadratic")
-
-g3 <- g + 
-  geom_smooth(method = "lm", formula = y ~ poly(x, 6), se = FALSE) +
-  labs(title = "6th order polynomial")
-
-#g3 <- ggplot(glu_data, aes(y=glucose, x=Time)) + 
-#    geom_smooth(method="loess") + 
-#    labs(title="nonparametric") + 
-#    lims(y=c(3,7))
-
-
-grid.arrange(g0,g1,g2,g3,ncol=2)
-```
 
 <!-- ![](https://ajohns24.github.io/images/stat253/glucose_3.png) -->
 
@@ -255,19 +209,17 @@ a. Calculate the Manhattan distance between the 2 students. And why do you think
         
 $$|a_1 - a_2| + |b_1 - b_2|$$
         
-```{r}
-        
-```
-        
-```{r}
-#| echo: false
-#| eval: true
-data.frame(a = c(8, 7), b = c(9, 11)) %>% 
-  ggplot(aes(x = a, y = b)) + 
-  geom_point() + 
-  geom_segment(aes(y = c(9, 9), yend = c(11, 9), x = c(7, 7), xend = c(7, 8)), linetype = "dashed") + 
-  lims(x = c(6, 9), y = c(8.5, 11.5))
-```
+
+::: {.cell}
+
+:::
+
+::: {.cell}
+::: {.cell-output-display}
+![](L07-nonparametric_files/figure-html/unnamed-chunk-3-1.png){width=672}
+:::
+:::
+
         
         
         
@@ -276,19 +228,17 @@ b. Calculate the Euclidean distance between the 2 students:
         
 $$\sqrt{(a_1 - a_2)^2 + (b_1 - b_2)^2}$$        
         
-```{r}
-        
-```
-        
-```{r}
-#| echo: false
-#| eval: true
-data.frame(a = c(8, 7), b = c(9, 11)) %>% 
-  ggplot(aes(x = a, y = b)) + 
-  geom_point() + 
-  geom_segment(aes(y = 11, yend = 9, x = 7, xend = 8), linetype = "dashed") + 
-  lims(x = c(6, 9), y = c(8.5, 11.5))
-```
+
+::: {.cell}
+
+:::
+
+::: {.cell}
+::: {.cell-output-display}
+![](L07-nonparametric_files/figure-html/unnamed-chunk-5-1.png){width=672}
+:::
+:::
+
         
         
       
@@ -298,13 +248,38 @@ data.frame(a = c(8, 7), b = c(9, 11)) %>%
 
 <details>
 <summary>Solution</summary>
-```{r eval=TRUE, echo=TRUE}
+
+::: {.cell}
+
+```{.r .cell-code}
 # a
 abs(8 - 7) + abs(9 - 11)
+```
 
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 3
+```
+
+
+:::
+
+```{.r .cell-code}
 # b
 sqrt((8 - 7)^2 + (9 - 11)^2)
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] 2.236068
+```
+
+
+:::
+:::
+
 </details>
 <br>
 
@@ -317,8 +292,10 @@ sqrt((8 - 7)^2 + (9 - 11)^2)
     
 Calculate how many days old you are:
     
-```{r}
-#| eval: false
+
+::: {.cell}
+
+```{.r .cell-code}
 # Record dates in year-month-day format
 today <- as.Date("2024-10-01")
 bday  <- as.Date("????-??-??")
@@ -326,6 +303,8 @@ bday  <- as.Date("????-??-??")
 # Calculate difference
 difftime(today, bday, units = "days")
 ```
+:::
+
     
 Then for each scenario, identify which of your group members is your nearest neighbor, as defined by Manhattan distance:
     
@@ -421,9 +400,10 @@ Let's explore this idea using the `bikes` data to model `rides` by `temp`, `seas
 
 
 
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell}
+
+```{.r .cell-code}
 # Load some packages
 library(tidyverse)
 library(tidymodels)
@@ -435,6 +415,8 @@ bikes <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bike_share
   mutate(breakdowns = sample(c(rep(0, 728), rep(1, 3)), 731, replace = FALSE)) %>% 
   select(temp, season, breakdowns, rides)
 ```
+:::
+
 
 
 
@@ -447,8 +429,10 @@ bikes <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bike_share
 9. **Standardizing quantitative predictors**   
     Let's **standardize** or **normalize** the 2 *quantitative* predictors, `temp` and `breakdowns`, *to the same scale*: centered at 0 with a standard deviation of 1. Run and reflect upon each chunk below:
     
-```{r}
-#| eval: false
+
+::: {.cell}
+
+```{.r .cell-code}
 # Recipe with 1 preprocessing step
 recipe_1 <- recipe(rides ~ ., data = bikes) %>% 
   step_normalize(all_numeric_predictors())
@@ -456,9 +440,11 @@ recipe_1 <- recipe(rides ~ ., data = bikes) %>%
 # Check it out
 recipe_1
 ```
-    
-```{r}
-#| eval: false
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Check out the first 3 rows of the pre-processed data
 # (Don't worry about the code. Normally we won't do this step.)
 recipe_1 %>% 
@@ -466,35 +452,43 @@ recipe_1 %>%
   bake(new_data = bikes) %>% 
   head(3)
 ```
-    
-```{r}
-#| eval: false
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Compare to first 3 rows of original data
 bikes %>% 
   head(3)
 ```
+:::
+
     
 **Follow-up questions & comments**
     
 - Take note of how the pre-processed data compares to the original.
 - The first day had a `temp` of 65 degrees and a *standardized* `temp` of -0.66, i.e. 65 degrees is 0.66 standard deviations below average. Confirm this standardized value "by hand" using the mean and standard deviation in `temp`:        
 
-```{r}
-#| eval: false
+
+::: {.cell}
+
+```{.r .cell-code}
 bikes %>% 
     summarize(mean(temp), sd(temp))
     
 # Standardized temp: (observed - mean) / sd
 (___ - ___) / ___
 ```
+:::
+
 
 <details>
 <summary>Solution</summary>
 
-```{r}
-#| eval: true
-#| echo: true
-#| message: true
+
+::: {.cell}
+
+```{.r .cell-code}
 # Recipe with 1 preprocessing step
 recipe_1 <- recipe(rides ~ ., data = bikes) %>% 
   step_normalize(all_numeric_predictors())
@@ -502,10 +496,93 @@ recipe_1 <- recipe(rides ~ ., data = bikes) %>%
 # Check it out
 recipe_1
 ```
-    
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell-output .cell-output-stderr}
+
+```
+
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+── Recipe ──────────────────────────────────────────────────────────────────────
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+── Inputs 
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Number of variables by role
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+outcome:   1
+predictor: 3
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+── Operations 
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+• Centering and scaling for: all_numeric_predictors()
+```
+
+
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Check out the first 3 rows of the pre-processed data
 # (Don't worry about the code. Normally we won't do this step.)
 recipe_1 %>% 
@@ -513,28 +590,81 @@ recipe_1 %>%
   bake(new_data = bikes) %>% 
   head(3)
 ```
-    
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 3 × 4
+    temp season breakdowns rides
+   <dbl> <fct>       <dbl> <int>
+1 -0.660 winter    -0.0642   654
+2 -0.728 winter    -0.0642   670
+3 -1.75  winter    -0.0642  1229
+```
+
+
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Compare to first 3 rows of original data
 bikes %>% 
   head(3)
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  temp season breakdowns rides
+1   65 winter          0   654
+2   64 winter          0   670
+3   49 winter          0  1229
+```
+
+
+:::
+:::
+
     
 **Follow-up questions**
     
 - The numeric predictors, but not rides, were standardized.
 -  See below.
 
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell}
+
+```{.r .cell-code}
 bikes %>% 
   summarize(mean(temp), sd(temp))
-        
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  mean(temp) sd(temp)
+1   74.69083 14.67838
+```
+
+
+:::
+
+```{.r .cell-code}
 (65 - 74.69083) / 14.67838
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+[1] -0.6602111
+```
+
+
+:::
+:::
+
 </details>
 <br>
 
@@ -545,13 +675,19 @@ bikes %>%
 10. **Creating "dummy" variables for categorical predictors**    
     Consider the *categorical* `season` predictor: fall, winter, spring, summer. Since we can't plug *words* into a mathematical formula, ML algorithms convert categorical predictors into "dummy variables", also known as indicator variables. (This is unfortunately the technical term, not something I'm making up.) Run and reflect upon each chunk below:
     
-```{r eval = FALSE}
+
+::: {.cell}
+
+```{.r .cell-code}
 # Recipe with 1 preprocessing step
 recipe_2 <- recipe(rides ~ ., data = bikes) %>% 
   step_dummy(all_nominal_predictors())
 ```
-    
-```{r eval = FALSE}
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Check out 3 specific rows of the pre-processed data
 # (Don't worry about the code.)
 recipe_2 %>% 
@@ -559,12 +695,17 @@ recipe_2 %>%
   bake(new_data = bikes) %>% 
   filter(rides %in% c(655, 674))
 ```
+:::
 
-```{r eval = FALSE}
+::: {.cell}
+
+```{.r .cell-code}
 # Compare to the same 3 rows in the original data
 bikes %>% 
   filter(rides %in% c(655, 674))
 ```
+:::
+
     
 **Follow-up questions & comments**
     
@@ -576,10 +717,10 @@ bikes %>%
 
 <details>
 <summary>Solution</summary>
-```{r}
-#| eval: true
-#| echo: true
-#| message: true
+
+::: {.cell}
+
+```{.r .cell-code}
 # Recipe with 1 preprocessing step
 recipe_2 <- recipe(rides ~ ., data = bikes) %>% 
   step_dummy(all_nominal_predictors())
@@ -588,9 +729,92 @@ recipe_2 <- recipe(rides ~ ., data = bikes) %>%
 recipe_2
 ```
 
-```{r}
-#| eval: true
-#| echo: true
+::: {.cell-output .cell-output-stderr}
+
+```
+
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+── Recipe ──────────────────────────────────────────────────────────────────────
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+── Inputs 
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Number of variables by role
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+outcome:   1
+predictor: 3
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+── Operations 
+```
+
+
+:::
+
+::: {.cell-output .cell-output-stderr}
+
+```
+• Dummy variables from: all_nominal_predictors()
+```
+
+
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Check out 3 specific rows of the pre-processed data
 # (Don't worry about the code.)
 recipe_2 %>% 
@@ -598,14 +822,43 @@ recipe_2 %>%
   bake(new_data = bikes) %>% 
   filter(rides %in% c(655, 674))
 ```
-    
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 3 × 6
+   temp breakdowns rides season_spring season_summer season_winter
+  <dbl>      <dbl> <int>         <dbl>         <dbl>         <dbl>
+1    53          0   674             0             0             1
+2    70          0   674             1             0             0
+3    68          0   655             0             0             0
+```
+
+
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Compare to the same 3 rows in the original data
 bikes %>% 
   filter(rides %in% c(655, 674))
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  temp season breakdowns rides
+1   53 winter          0   674
+2   70 spring          0   674
+3   68   fall          0   655
+```
+
+
+:::
+:::
+
 
 **Follow-up questions**
     
@@ -620,8 +873,10 @@ bikes %>%
     We can also do *multiple* pre-processing steps! In some cases, order matters. Compare the results of normalizing before creating dummy variables and vice versa:  
     
     
-```{r}
-#| eval: false
+
+::: {.cell}
+
+```{.r .cell-code}
 # step_normalize() before step_dummy()
 recipe(rides ~ ., data = bikes) %>% 
   step_normalize(all_numeric_predictors()) %>%
@@ -630,9 +885,11 @@ recipe(rides ~ ., data = bikes) %>%
   bake(new_data = bikes) %>% 
   filter(rides %in% c(655, 674))
 ```
-    
-```{r}
-#| eval: false
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # step_dummy() before step_normalize()
 recipe(rides ~ ., data = bikes) %>% 
   step_dummy(all_nominal_predictors()) %>% 
@@ -641,6 +898,8 @@ recipe(rides ~ ., data = bikes) %>%
   bake(new_data = bikes) %>% 
   filter(rides %in% c(655, 674))
 ```
+:::
+
     
 **Follow-up questions / comments**
     
@@ -651,9 +910,10 @@ recipe(rides ~ ., data = bikes) %>%
 
 <details>
 <summary>Solution</summary>
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell}
+
+```{.r .cell-code}
 # step_normalize() before step_dummy()
 recipe(rides ~ ., data = bikes) %>% 
   step_normalize(all_numeric_predictors()) %>% 
@@ -662,10 +922,25 @@ recipe(rides ~ ., data = bikes) %>%
   bake(new_data = bikes) %>% 
   filter(rides %in% c(655, 674))
 ```
-    
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 3 × 6
+    temp breakdowns rides season_spring season_summer season_winter
+   <dbl>      <dbl> <int>         <dbl>         <dbl>         <dbl>
+1 -1.48     -0.0642   674             0             0             1
+2 -0.320    -0.0642   674             1             0             0
+3 -0.456    -0.0642   655             0             0             0
+```
+
+
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # step_dummy() before step_normalize()
 recipe(rides ~ ., data = bikes) %>% 
   step_dummy(all_nominal_predictors()) %>% 
@@ -674,6 +949,22 @@ recipe(rides ~ ., data = bikes) %>%
   bake(new_data = bikes) %>% 
   filter(rides %in% c(655, 674))
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 3 × 6
+    temp breakdowns rides season_spring season_summer season_winter
+   <dbl>      <dbl> <int>         <dbl>         <dbl>         <dbl>
+1 -1.48     -0.0642   674        -0.580        -0.588         1.74 
+2 -0.320    -0.0642   674         1.72         -0.588        -0.573
+3 -0.456    -0.0642   655        -0.580        -0.588        -0.573
+```
+
+
+:::
+:::
+
     
 **Follow-up questions / comments**
     
@@ -711,24 +1002,33 @@ LASSO          standardizing        yes           yes
 12. **Less common: Removing variables with "near-zero variance"**    
     Notice that on *almost* every day in our sample, there were 0 bike station breakdowns. Thus there is *near-zero variability* (nzv) in the `breakdowns` predictor:
     
-```{r}
+
+::: {.cell}
+
+```{.r .cell-code}
 bikes %>% 
   count(breakdowns)
 ```
+:::
+
     
 This extreme predictor could bias our model results -- the rare days with 1 breakdown might seem more important than they are, thus have undue influence. To this end, we can use `step_nzv()`:
     
-```{r}
-#| eval: false
+
+::: {.cell}
+
+```{.r .cell-code}
 # Recipe with 3 preprocessing steps
 recipe_3 <- recipe(rides ~ ., data = bikes) %>% 
   step_nzv(all_predictors()) %>% 
   step_dummy(all_nominal_predictors()) %>% 
   step_normalize(all_numeric_predictors())
 ```
-    
-```{r}
-#| eval: false
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Check out the first 3 rows of the pre-processed data
 # (Don't worry about the code.)
 recipe_3 %>% 
@@ -736,13 +1036,17 @@ recipe_3 %>%
   bake(new_data = bikes) %>% 
   head(3)
 ```
-    
-```{r}
-#| eval: false
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Compare to this to the first 3 rows in the original data
 bikes %>% 
   head(3)
 ```
+:::
+
     
 **Follow-up questions**
     
@@ -753,9 +1057,10 @@ bikes %>%
 
 <details>
 <summary>Solution</summary>
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell}
+
+```{.r .cell-code}
 # Recipe with 3 preprocessing steps
 recipe_3 <- recipe(rides ~ ., data = bikes) %>% 
   step_nzv(all_predictors()) %>% 
@@ -769,14 +1074,43 @@ recipe_3 %>%
   bake(new_data = bikes) %>% 
   head(3)
 ```
-    
-```{r}
-#| eval: true
-#| echo: true
+
+::: {.cell-output .cell-output-stdout}
+
+```
+# A tibble: 3 × 5
+    temp rides season_spring season_summer season_winter
+   <dbl> <int>         <dbl>         <dbl>         <dbl>
+1 -0.660   654        -0.580        -0.588          1.74
+2 -0.728   670        -0.580        -0.588          1.74
+3 -1.75   1229        -0.580        -0.588          1.74
+```
+
+
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
 # Compare to this to the first 3 rows in the original data
 bikes %>% 
   head(3)
 ```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+  temp season breakdowns rides
+1   65 winter          0   654
+2   64 winter          0   670
+3   49 winter          0  1229
+```
+
+
+:::
+:::
+
     
 **Follow-up questions**
     
@@ -793,9 +1127,14 @@ bikes %>%
 
 The 3 pre-processing steps above are among the most common. Many others exist and can be handy in specific situations. Run the code below to get a list of possibilities:
     
-```{r}
+
+::: {.cell}
+
+```{.r .cell-code}
 ls("package:recipes")[startsWith(ls("package:recipes"), "step_")]
 ```
+:::
+
 
 
 
@@ -827,11 +1166,13 @@ Now that we have a sense of some themes (defining "local") and details (measurin
 NOTE: You might start by making predictions at each *observed* time point (eg: 0, 15 min, 30 min,...). Then think about what the predictions would be for times *in between* these observations (eg: 5 min).
 
 
-```{r}
-#| echo: false
-#| eval: true
-g0
-```
+
+::: {.cell}
+::: {.cell-output-display}
+![](L07-nonparametric_files/figure-html/unnamed-chunk-34-1.png){width=672}
+:::
+:::
+
     
 
 
@@ -869,5 +1210,6 @@ c. When K is too small, our model is too flexible / overfit. When K is too big, 
 - Render your notes.
 - Check the solutions on the course website.
 - If you finish all that during class, work on homework!
+
 
 

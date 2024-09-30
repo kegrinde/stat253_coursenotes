@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -71,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -235,19 +298,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L08-knn-bias-variance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">KNN Regression &amp; Bias-Variance Tradeoff</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L09-loess-gams.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">LOESS &amp; GAMs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L10-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Regression Review</span></span></a>
   </div>
 </li>
       </ul>
@@ -291,10 +354,23 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a>
+  <ul class="collapse">
+  <li><a href="#homework-feedback-and-revisions" id="toc-homework-feedback-and-revisions" class="nav-link" data-scroll-target="#homework-feedback-and-revisions">Homework Feedback and Revisions</a></li>
+  </ul></li>
+  <li><a href="#notes-nonparametric-v.-parametric" id="toc-notes-nonparametric-v.-parametric" class="nav-link" data-scroll-target="#notes-nonparametric-v.-parametric">Notes: Nonparametric v. Parametric</a>
+  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#motivating-example" id="toc-motivating-example" class="nav-link" data-scroll-target="#motivating-example">Motivating Example</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#part-1-intuition" id="toc-part-1-intuition" class="nav-link" data-scroll-target="#part-1-intuition">Part 1: Intuition</a></li>
+  <li><a href="#part-2-distance" id="toc-part-2-distance" class="nav-link" data-scroll-target="#part-2-distance">Part 2: Distance</a></li>
+  <li><a href="#part-3-pre-processing-predictors" id="toc-part-3-pre-processing-predictors" class="nav-link" data-scroll-target="#part-3-pre-processing-predictors">Part 3: Pre-processing predictors</a></li>
+  <li><a href="#part-4-optional" id="toc-part-4-optional" class="nav-link" data-scroll-target="#part-4-optional">Part 4: Optional</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L07-nonparametric.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -322,17 +398,868 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="settling-in" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Settling In</h1>
+<ul>
+<li>Sit with your NEW assigned group
+<ul>
+<li>Introduce yourselves!</li>
+</ul></li>
+<li>Prepare to take notes</li>
+<li>Check Slack for announcements about upcoming events</li>
+<li>Locate and familiarize yourself with your Individual Feedback Tracker</li>
+</ul>
+<section id="homework-feedback-and-revisions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="homework-feedback-and-revisions">Homework Feedback and Revisions</h2>
+<p>TBD</p>
+<!--
+# Learning Goals {.unnumbered .smaller}
+-->
 </section>
-<section id="learning-goals" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Learning Goals</h1>
 </section>
-<section id="notes" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Notes</h1>
+<section id="notes-nonparametric-v.-parametric" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Notes: Nonparametric v. Parametric</h1>
+<section id="context" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="context">Context</h2>
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = regression</strong><br>
+<span class="math inline">\(y\)</span> is quantitative</p></li>
+<li><p><strong>model = nonparametric regression???</strong></p></li>
+</ul>
 </section>
-<section id="exercises" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Exercises</h1>
+<section id="goal" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="goal">Goal</h2>
+<p>Just as in Unit 2, Unit 3 will focus on <em>model building</em>, but a different aspect:</p>
+<ul>
+<li>Unit 2: how do we handle / select predictors for our predictive model of <span class="math inline">\(y\)</span>?</li>
+<li>Unit 3: how do we handle situations in which linear regression models are too <em>rigid</em> to capture the relationship of <span class="math inline">\(y\)</span> vs <span class="math inline">\(x\)</span>?</li>
+</ul>
+</section>
+<section id="motivating-example" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="motivating-example">Motivating Example</h2>
+<p>Let’s build a <strong>predictive model</strong> of blood <code>glucose</code> level in mg/dl by <code>time</code> in hours (<span class="math inline">\(x\)</span>) since eating a high carbohydrate meal.</p>
+<p>Consider 3 <strong>linear regression models</strong> of <span class="math inline">\(y\)</span>, none of which appear to be very good:</p>
+<p><span class="math display">\[\begin{array}{ll}
+\text{linear:} &amp;  y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \varepsilon \\
+\text{quadratic:} &amp; y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon \\
+\text{6th order polynomial:} &amp; y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5 +  \beta_6 x^6 + \varepsilon \\
+\end{array}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L07-nonparametric_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ![](https://ajohns24.github.io/images/stat253/glucose_3.png) -->
+<p><br></p>
+<p><strong>Parametric vs Nonparametric</strong></p>
+<p>These <strong>parametric</strong> linear regression models assume (incorrectly) that we can represent glucose over time by the following formula for <span class="math inline">\(f(x)\)</span> that depends upon <em>parameters</em> <span class="math inline">\(\beta_i\)</span>:</p>
+<p><span class="math display">\[y = f(x) + \varepsilon = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \varepsilon\]</span></p>
+<p><strong>Nonparametric</strong> models do NOT assume a parametric form for the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, <span class="math inline">\(f(x)\)</span>. Thus they are more <em>flexible</em>.</p>
+<p><br></p>
+</section>
+</section>
+<section id="exercises" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises</h1>
+<!--## Directions {.unnumbered .smaller}-->
+<p>Be kind to yourself/each other and <strong>work as a group</strong>!</p>
+<section id="part-1-intuition" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="part-1-intuition">Part 1: Intuition</h2>
+<ol type="1">
+<li><strong>Make some nonparametric predictions</strong><br>
+Working as a <em>group</em>, thinking nonparametrically, and utilizing the plot and data on the sheet provided, predict glucose level after:
+<ul>
+<li>1.5 hours</li>
+<li>4.25 hours</li>
+<li><span class="math inline">\(x\)</span> hours (i.e.&nbsp;what’s your general prediction process at any time point <span class="math inline">\(x\)</span>?)</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>Build a nonparametric algorithm</strong><br>
+Working as a <em>group</em>:
+<ul>
+<li>Translate your prediction process into a formal <strong>algorithm</strong>, i.e.&nbsp;step-by-step procedure or recipe, to predict glucose at any time point <span class="math inline">\(x\)</span>. THINK:
+<ul>
+<li>Does this depend upon any <em>tuning parameters</em>? For example, did your prediction process use any assumed “thresholds” or quantities?</li>
+<li>If so, represent this tuning parameter as “t” and write your algorithm using t (not a tuned value for t).</li>
+</ul></li>
+<li>On the separate page provided, one person should summarize this algorithm and report the predictions you got using this algorithm.</li>
+</ul></li>
+</ol>
+<!-- ![](https://ajohns24.github.io/images/stat253/glucose_2.png) -->
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><strong>Test your algorithm</strong><br>
+Exchange algorithms with another group.
+<ul>
+<li>Is the other group’s algorithm similar to yours?</li>
+<li>Use their algorithm to predict glucose after 1.5 hours and 4.25 hours. Do your calculations match theirs? If not, what was unclear about their algorithm that led to the discrepancy?</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<!-- nudge toward thinking about windows -->
+<!-- how do we pick window size?   what are we doing within each window?     -->
+<ol start="4" type="1">
+<li><strong>Building an algorithm as a class</strong>
+<ol type="a">
+<li>On your sheet, sketch a predictive model of glucose by time that a “good” algorithm would produce.</li>
+<li>In general, how would such an algorithm work? What would be its <em>tuning parameter</em>?</li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>smooth curve that follows the general trend</li>
+<li><em>tuning parameter</em> = size of the windows or neighborhoods. in general, we’ll fit “models” within smaller windows</li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="part-2-distance" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="part-2-distance">Part 2: Distance</h2>
+<p>Central to nonparametric modeling is the concept of using data points within some local <em>window</em> or <em>neighborhood</em>. And defining a local window or neighborhood relies on the concept of <em>distance</em>.</p>
+<p>With only one predictor, this was straightforward in our glucose example: the closest neighbors at time <span class="math inline">\(x\)</span> are the data points observed at the <em>closest</em> time points.</p>
+<p><br>
+<br>
+</p>
+<p><strong>GOAL</strong></p>
+<p>Explore the idea of <em>distance</em> when we have more predictors, and the data-preprocessing steps we have to take in order to implement this idea in practice.</p>
+<p><br>
+<br>
+</p>
+<ol start="5" type="1">
+<li><strong>Two measures of distance</strong><br>
+Consider data on 2 predictors for 2 students:</li>
+</ol>
+<ul>
+<li>student 1: 8 hours sleep Monday (<span class="math inline">\(a_1\)</span>), 9 hours sleep Tuesday (<span class="math inline">\(b_1\)</span>)</li>
+<li>student 2: 7 hours sleep Monday (<span class="math inline">\(a_2\)</span>), 11 hours sleep Tuesday (<span class="math inline">\(b_2\)</span>)</li>
+</ul>
+<ol type="a">
+<li>Calculate the Manhattan distance between the 2 students. And why do you think this is called “Manhattan” distance?</li>
+</ol>
+<p><span class="math display">\[|a_1 - a_2| + |b_1 - b_2|\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L07-nonparametric_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Calculate the Euclidean distance between the 2 students:</li>
+</ol>
+<p><span class="math display">\[\sqrt{(a_1 - a_2)^2 + (b_1 - b_2)^2}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L07-nonparametric_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>NOTE:</strong> We’ll typically use Euclidean distance in our algorithms. But for the purposes of this activity, use Manhattan distance (just since it’s easier to calculate and gets at the same ideas).</p>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="dv">8</span> <span class="sc">-</span> <span class="dv">7</span>) <span class="sc">+</span> <span class="fu">abs</span>(<span class="dv">9</span> <span class="sc">-</span> <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># b</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>((<span class="dv">8</span> <span class="sc">-</span> <span class="dv">7</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">9</span> <span class="sc">-</span> <span class="dv">11</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.236068</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="6" type="1">
+<li><strong>Who are my neighbors?</strong><br>
+Consider two more possible predictors of some student outcome variable <span class="math inline">\(y\)</span>:</li>
+</ol>
+<ul>
+<li><span class="math inline">\(x_1\)</span> = number of days old</li>
+<li><span class="math inline">\(x_2\)</span> = major division (humanities, fine arts, social science, or natural science)</li>
+</ul>
+<p>Calculate how many days old you are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Record dates in year-month-day format</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>today <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2024-10-01"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>bday  <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"????-??-??"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate difference</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">difftime</span>(today, bday, <span class="at">units =</span> <span class="st">"days"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then for each scenario, identify which of your group members is your nearest neighbor, as defined by Manhattan distance:</p>
+<ol type="a">
+<li>Using only <span class="math inline">\(x_1\)</span>.</li>
+<li>Using only <span class="math inline">\(x_2\)</span>. And how are you measuring the distance between students’ major divisions (categories not quantities)?!</li>
+<li>Using <em>both</em> <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="7" type="1">
+<li><strong>Measuring distance: 2 quantitative predictors</strong><br>
+Consider 2 more measures on another 3 students: <!--    
+- student 1: 7300 days old, lives 0.1 hour from campus 
+- student 2: 7304 days old, lives 0.1 hour from campus 
+- student 3: 7300 days old, lives 3.1 hours from campus 
+--></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Days Old</th>
+<th style="text-align: right;">Distance from Campus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>student 1</td>
+<td style="text-align: right;">7300 days</td>
+<td style="text-align: right;">0.1 hour</td>
+</tr>
+<tr class="even">
+<td>student 2</td>
+<td style="text-align: right;">7304 days</td>
+<td style="text-align: right;">0.1 hour</td>
+</tr>
+<tr class="odd">
+<td>student 3</td>
+<td style="text-align: right;">7300 days</td>
+<td style="text-align: right;">3.1 hours</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<ol type="a">
+<li><p>Contextually, not mathematically, do you think student 1 is more similar to student 2 or student 3?</p></li>
+<li><p>Calculate the mathematical Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3.</p></li>
+<li><p>Do your contextual and mathematical assessments match? If not, what led to this discrepancy?</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>My opinion: student 2. Being 4 days apart is more “similar” than 2 students that live 3 hours apart.</li>
+<li>students 1 and 2: <span class="math inline">\(|7300 - 7304| + |0.1 - 0.1| = 4\)</span>, students 1 and 3: <span class="math inline">\(|7300 - 7300| + |0.1 - 3.1| = 3\)</span></li>
+<li>student 3. nope. the variables are on different scales.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="8" type="1">
+<li><strong>Measuring distance: quantitative &amp; categorical predictors</strong><br>
+Let’s repeat for another 3 students:<br>
+<!--
+    - student 1: STAT major, 7300 days old
+    - student 2: STAT major, 7302 days old
+    - student 3: GEOG major, 7300 days old
+--></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Major</th>
+<th style="text-align: center;">Days Old</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>student 1</td>
+<td style="text-align: center;">STAT</td>
+<td style="text-align: center;">7300 days</td>
+</tr>
+<tr class="even">
+<td>student 2</td>
+<td style="text-align: center;">STAT</td>
+<td style="text-align: center;">7302 days</td>
+</tr>
+<tr class="odd">
+<td>student 3</td>
+<td style="text-align: center;">GEOG</td>
+<td style="text-align: center;">7300 days</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<ol type="a">
+<li><p>Contextually, do you think student 1 is more similar to student 2 or student 3?</p></li>
+<li><p>Mathematically, calculate the Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3. NOTE: The distance between 2 different majors is 1.</p></li>
+<li><p>Do your contextual and mathematical assessments match? If not, what led to this discrepancy?</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>My opinion: student 2. Being 2 days apart is more “similar” than different majors.</li>
+<li>students 1 and 2: <span class="math inline">\(|1 - 1| + |7300 - 7302| = 2\)</span>, students 1 and 3: <span class="math inline">\(|1 - 0| + |7300 - 7300| = 1\)</span></li>
+<li><ol start="3" type="1">
+<li>nope. the variables are on different scales.</li>
+</ol></li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="part-3-pre-processing-predictors" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="part-3-pre-processing-predictors">Part 3: Pre-processing predictors</h2>
+<p>OK. In nonparametric modeling, we don’t want our definitions of “local windows” or “neighbors” to be skewed by the scales and structures of our predictors. It’s therefore important to create <strong>variable recipes</strong> which <strong>pre-process</strong> our predictors before feeding them into a nonparametric algorithm. Let’s explore this idea using the <code>bikes</code> data to model <code>rides</code> by <code>temp</code>, <code>season</code>, and <code>breakdowns</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some packages</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the bikes data and do a little data cleaning</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/bike_share.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">rides =</span> riders_registered, <span class="at">temp =</span> temp_feel) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">round</span>(temp)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">breakdowns =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">728</span>), <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">3</span>)), <span class="dv">731</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(temp, season, breakdowns, rides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<ol start="9" type="1">
+<li><strong>Standardizing quantitative predictors</strong><br>
+Let’s <strong>standardize</strong> or <strong>normalize</strong> the 2 <em>quantitative</em> predictors, <code>temp</code> and <code>breakdowns</code>, <em>to the same scale</em>: centered at 0 with a standard deviation of 1. Run and reflect upon each chunk below:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>recipe_1 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>recipe_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't worry about the code. Normally we won't do this step.)</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>recipe_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to first 3 rows of original data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions &amp; comments</strong></p>
+<ul>
+<li>Take note of how the pre-processed data compares to the original.</li>
+<li>The first day had a <code>temp</code> of 65 degrees and a <em>standardized</em> <code>temp</code> of -0.66, i.e.&nbsp;65 degrees is 0.66 standard deviations below average. Confirm this standardized value “by hand” using the mean and standard deviation in <code>temp</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>(temp), <span class="fu">sd</span>(temp))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardized temp: (observed - mean) / sd</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>(___ <span class="sc">-</span> ___) <span class="sc">/</span> ___</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>recipe_1 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>recipe_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Recipe ──────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Inputs </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Number of variables by role</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>outcome:   1
+predictor: 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Operations </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• Centering and scaling for: all_numeric_predictors()</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't worry about the code. Normally we won't do this step.)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>recipe_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+    temp season breakdowns rides
+   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt;
+1 -0.660 winter    -0.0642   654
+2 -0.728 winter    -0.0642   670
+3 -1.75  winter    -0.0642  1229</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to first 3 rows of original data</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp season breakdowns rides
+1   65 winter          0   654
+2   64 winter          0   670
+3   49 winter          0  1229</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>The numeric predictors, but not rides, were standardized.</li>
+<li>See below.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(temp), <span class="fu">sd</span>(temp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean(temp) sd(temp)
+1   74.69083 14.67838</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">65</span> <span class="sc">-</span> <span class="fl">74.69083</span>) <span class="sc">/</span> <span class="fl">14.67838</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.6602111</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="10" type="1">
+<li><strong>Creating “dummy” variables for categorical predictors</strong><br>
+Consider the <em>categorical</em> <code>season</code> predictor: fall, winter, spring, summer. Since we can’t plug <em>words</em> into a mathematical formula, ML algorithms convert categorical predictors into “dummy variables”, also known as indicator variables. (This is unfortunately the technical term, not something I’m making up.) Run and reflect upon each chunk below:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>recipe_2 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out 3 specific rows of the pre-processed data</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>recipe_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to the same 3 rows in the original data</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions &amp; comments</strong></p>
+<ul>
+<li>3 of the 4 seasons show up in the pre-processed data as “dummy variables” with 0/1 outcomes. Which season does <em>not</em> appear? This “reference” category is also the one that wouldn’t appear in a table of model coefficients.</li>
+<li>How is a <code>winter</code> day represented by the 3 dummy variables?</li>
+<li>How is a <code>fall</code> day represented by the 3 dummy variables?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>recipe_2 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>())</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>recipe_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Recipe ──────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Inputs </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Number of variables by role</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>outcome:   1
+predictor: 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Operations </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• Dummy variables from: all_nominal_predictors()</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out 3 specific rows of the pre-processed data</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>recipe_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+   temp breakdowns rides season_spring season_summer season_winter
+  &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1    53          0   674             0             0             1
+2    70          0   674             1             0             0
+3    68          0   655             0             0             0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to the same 3 rows in the original data</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp season breakdowns rides
+1   53 winter          0   674
+2   70 spring          0   674
+3   68   fall          0   655</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>fall</li>
+<li>0 for spring and summer, 1 for winter</li>
+<li>0 for spring, summer, and winter</li>
+</ul>
+</details>
+<p><br></p>
+<ol start="11" type="1">
+<li><strong>Combining pre-processing steps</strong><br>
+We can also do <em>multiple</em> pre-processing steps! In some cases, order matters. Compare the results of normalizing before creating dummy variables and vice versa:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step_normalize() before step_dummy()</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step_dummy() before step_normalize()</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions / comments</strong></p>
+<ul>
+<li>How did the order of our 2 pre-processing steps impact the outcome?</li>
+<li>The standardized dummy variables lose some contextual meaning. But, in general, negative values correspond to 0s (not that category), positive values correspond to 1s (in that category), and the further a value is from zero, the less common that category is. We’ll observe in the future how this is advantageous when defining “neighbors”.</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step_normalize() before step_dummy()</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+    temp breakdowns rides season_spring season_summer season_winter
+   &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1 -1.48     -0.0642   674             0             0             1
+2 -0.320    -0.0642   674             1             0             0
+3 -0.456    -0.0642   655             0             0             0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># step_dummy() before step_normalize()</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+    temp breakdowns rides season_spring season_summer season_winter
+   &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1 -1.48     -0.0642   674        -0.580        -0.588         1.74 
+2 -0.320    -0.0642   674         1.72         -0.588        -0.573
+3 -0.456    -0.0642   655        -0.580        -0.588        -0.573</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions / comments</strong></p>
+<ul>
+<li>when dummies are created second, they remain as 0s and 1s. when dummies are created first, these 0s and 1s are standardized</li>
+</ul>
+</details>
+<p><br></p>
+<p><strong>PAUSE</strong></p>
+<p>Though our current focus is on nonparametric modeling, the concepts of standardizing and dummy variables are also important in parametric modeling.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">algorithm</th>
+<th style="text-align: left;">pre-processing step</th>
+<th style="text-align: left;">necessary?</th>
+<th style="text-align: left;">done automatically behind the R code?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">least squares</td>
+<td style="text-align: left;">standardizing</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">no (because it’s not necessary!)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">dummy variables</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LASSO</td>
+<td style="text-align: left;">standardizing</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">dummy variables</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">no (we have to pre-process)</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+<ol start="12" type="1">
+<li><strong>Less common: Removing variables with “near-zero variance”</strong><br>
+Notice that on <em>almost</em> every day in our sample, there were 0 bike station breakdowns. Thus there is <em>near-zero variability</em> (nzv) in the <code>breakdowns</code> predictor:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(breakdowns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This extreme predictor could bias our model results – the rare days with 1 breakdown might seem more important than they are, thus have undue influence. To this end, we can use <code>step_nzv()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe with 3 preprocessing steps</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>recipe_3 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>recipe_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to this to the first 3 rows in the original data</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>What did <code>step_nzv()</code> do?!</li>
+<li>We <em>could</em> move <code>step_nzv()</code> to the last step in our recipe. But what advantage is there to putting it first?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recipe with 3 preprocessing steps</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>recipe_3 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>recipe_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+    temp rides season_spring season_summer season_winter
+   &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1 -0.660   654        -0.580        -0.588          1.74
+2 -0.728   670        -0.580        -0.588          1.74
+3 -1.75   1229        -0.580        -0.588          1.74</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to this to the first 3 rows in the original data</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp season breakdowns rides
+1   65 winter          0   654
+2   64 winter          0   670
+3   49 winter          0  1229</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>it removed <code>breakdowns</code> from the data set.</li>
+<li>more computationally efficient. don’t spend extra energy on pre-processing <code>breakdowns</code> since we don’t even want to keep it.</li>
+</ul>
+</details>
+<p><br></p>
+<ol start="13" type="1">
+<li><strong>There’s lots more!</strong></li>
+</ol>
+<p>The 3 pre-processing steps above are among the most common. Many others exist and can be handy in specific situations. Run the code below to get a list of possibilities:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>(<span class="st">"package:recipes"</span>)[<span class="fu">startsWith</span>(<span class="fu">ls</span>(<span class="st">"package:recipes"</span>), <span class="st">"step_"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+</section>
+<section id="part-4-optional" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="part-4-optional">Part 4: Optional</h2>
+<p><strong>NOTE</strong></p>
+<p>If you complete the above exercises in class, you should try the remaining exercises.</p>
+<p>Otherwise, you do not need to loop back – these concepts will be covered in the videos for the next class.</p>
+<p><br>
+<br>
+</p>
+<ol start="14" type="1">
+<li><strong>KNN</strong></li>
+</ol>
+<p>Now that we have a sense of some themes (defining “local”) and details (measuring “distance”) in nonparametric modeling, let’s explore a common nonparametric algorithm: K Nearest Neighbors (KNN). Let’s start with your <em>intuition</em> for how the KNN works, simply based on its name. On your paper, sketch what you <em>anticipate</em> the following models of the 14 glucose measurements to look like:</p>
+<ul>
+<li><span class="math inline">\(K = 1\)</span> nearest neighbors model<br>
+</li>
+<li><span class="math inline">\(K = 14\)</span> nearest neighbors model</li>
+</ul>
+<p>NOTE: You might start by making predictions at each <em>observed</em> time point (eg: 0, 15 min, 30 min,…). Then think about what the predictions would be for times <em>in between</em> these observations (eg: 5 min).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L07-nonparametric_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ![](https://ajohns24.github.io/images/stat253/glucose_2.png)  -->
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="15" type="1">
+<li><strong>Thinking like a machine learner</strong>
+<ol type="a">
+<li>Upon what <em>tuning parameter</em> does KNN depend?</li>
+<li>What’s the <em>smallest</em> value this tuning parameter can take? The <em>biggest</em>?</li>
+<li>Selecting a “good” tuning parameter is a goldilocks challenge:
+<ul>
+<li>What happens when the tuning parameter is too small?<br>
+</li>
+<li>Too big?</li>
+</ul></li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>number of neighbors “K”</li>
+<li>1, 2, …., n (sample size)</li>
+<li>When K is too small, our model is too flexible / overfit. When K is too big, our model is too rigid / simple.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="16" type="1">
+<li><strong>Done!</strong></li>
+</ol>
+<ul>
+<li>Render your notes.</li>
+<li>Check the solutions on the course website.</li>
+<li>If you finish all that during class, work on homework!</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -896,8 +1823,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./L08-knn-bias-variance.html" class="pagination-link" aria-label="Nonparametric Models">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./L08-knn-bias-variance.html" class="pagination-link" aria-label="KNN Regression &amp; Bias-Variance Tradeoff">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">KNN Regression &amp; Bias-Variance Tradeoff</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
