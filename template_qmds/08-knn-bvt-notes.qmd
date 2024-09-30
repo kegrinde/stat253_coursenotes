@@ -5,7 +5,7 @@ author: "Your Name"
 format:
   html:
     toc: true
-    toc-depth: 2
+    toc-depth: 3
     embed-resources: true
 ---
 
@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 
 
 
-# Notes - Nonparametric v. Parametric Models
+# Notes: Nonparametric v. Parametric Models
 
 
 
@@ -78,13 +78,17 @@ KNN does *not* produce a nice formula for $\hat{f}(x)$, but rather a set of rule
 
 **In pictures (from ISLR)**
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/KNN_ISLR.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/KNN_ISLR.png)
     
 
 
-**EXAMPLE 1: REVIEW**
 
-Let's review the KNN algorithm using a **shiny app**. Run the chunks below and ignore the syntax!!
+# Small Group Discussion
+
+## EXAMPLE 1: REVIEW
+
+Let's review the KNN algorithm using a **shiny app**. 
+Run the code below and ignore the syntax!!
 
 a. Click "Go!" *one time only* to collect a set of sample data.
 
@@ -101,8 +105,6 @@ d. Set K = 100 where 100 is the number of data points. Is this what you expected
     
 
 
-
-    
 ```{r}
 # Load packages and data
 library(shiny)
@@ -118,7 +120,8 @@ college_demo <- College %>%
 ```
 
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Define a KNN plotting function
 plot_knn <- function(k, plot_data){
   expend_seq <- sort(c(plot_data$Expend, seq(3000, 57000, length = 5000)))
@@ -212,7 +215,7 @@ $$\sum_{i=1}^K w_i y_i$$
 
 
 
-**EXAMPLE 2: BIAS-VARIANCE TRADEOFF**    
+## EXAMPLE 2: BIAS-VARIANCE TRADEOFF    
 
 *What would happen if we had gotten a different sample of data?!?*
 
@@ -261,7 +264,7 @@ c. To explore the properties of more "balanced" models, repeat part a for K = 25
 
 
 
-**EXAMPLE 3: BIAS-VARIANCE REFLECTION** 
+## EXAMPLE 3: BIAS-VARIANCE REFLECTION 
 
 In general...       
 
@@ -293,7 +296,7 @@ c. What is meant by the **bias-variance tradeoff**?
 
 
 
-**EXAMPLE 4: BIAS-VARIANCE TRADEOFF FOR PAST ALGORITHMS**
+## EXAMPLE 4: BIAS-VARIANCE TRADEOFF FOR PAST ALGORITHMS 
 
 a. The LASSO algorithm depends upon tuning parameter $\lambda$:       
     - When $\lambda$ is too small, the model might keep too many predictors, hence be overfit.
@@ -441,7 +444,7 @@ recipe_3_data <- recipe_fun(recipe_3)
 
 
 
-## Exercise 1: Feature space
+### Exercise 1: Feature space
 
 Check out the feature space of our 3 predictors and take note of which school is the closer neighbor of Mac: UMN or Luther.       
 
@@ -461,7 +464,7 @@ ggplot(college_sub, aes(x = Expend, y = Enroll, color = Private)) +
 
 
 
-## Exercise 2: What happens when we don't standardize the predictors?
+### Exercise 2: What happens when we don't standardize the predictors?
 
 Of course, KNN relies upon mathematical metrics (Euclidean distance), not visuals, to define neighborhoods. And these neighborhoods depend upon how we pre-process our predictors. Consider the pre-processing `recipe_1` which uses `step_dummy()` but not `step_normalize()`:       
 
@@ -501,7 +504,7 @@ c. By this metric, is Mac closer to Luther or UMN? So is this a reasonable metri
 
 
 
-## Exercise 3: What happens when we standardize then create dummy predictors?
+### Exercise 3: What happens when we standardize then create dummy predictors?
 
 The metric above was misleading because it treated enrollments (people) and expenditures ($) as if they were on the same scale. In contrast, `recipe_2` first uses `step_normalize()` and then `step_dummy()` to pre-process the predictors:
 
@@ -526,7 +529,7 @@ By this metric, is Mac closer to Luther or UMN? So is this a reasonable metric?
 
 
 
-## Exercise 4: What happens when we create dummy predictors then standardize?
+### Exercise 4: What happens when we create dummy predictors then standardize?
 
 Whereas `recipe_2` first uses `step_normalize()` and then `step_dummy()` to pre-process the predictors, `recipe_3` first uses `step_dummy()` and then `step_normalize()`:       
 
@@ -675,7 +678,7 @@ knn_models <- knn_workflow %>%
 ## Part 3: Finalize and apply the KNN
 
 
-## Exercise 5: Compare the KNN models
+### Exercise 5: Compare the KNN models
 
 Plot the CV MAE for each of the KNN models with different tuning parameters K. NOTE: This is the same function we used for the LASSO!
 
@@ -715,7 +718,7 @@ d. In KNN modeling, why won't we typically worry about "parsimony"?
 \
 
 
-## Exercise 6: Pick K
+### Exercise 6: Pick K
     
 a. Identify which value of K *minimizes* the CV MAE. Make sure this matches up with what you observe in the plot.       
 
@@ -755,7 +758,7 @@ knn_models %>%
 
 
 
-## Exercise 7: Final KNN model
+### Exercise 7: Final KNN model
 
 Build your "final" KNN model using the optimal value you found for K above. NOTE: We only looked at roughly every 4th possible value of K (K = 1, 5, 9, etc).
 If we wanted to be very thorough, we could re-run our algorithm using *each* value of K close to our optimal K.
@@ -787,7 +790,7 @@ final_knn %>%
 \
 
 
-## Exercise 8: Make some predictions
+### Exercise 8: Make some predictions
 
 Check out Mac and Luther. NOTE: This is old data. Mac's current graduation rate is one of the highest (roughly 90%)!    
 
@@ -829,7 +832,7 @@ b. Do you have any idea why Mac's KNN prediction is higher than Luther's? If so,
 
 
 
-## Exercise 9: KNN pros and cons
+### Exercise 9: KNN pros and cons
 
 a. What assumptions did the KNN model make about the relationship of `Grad.Rate` with `Expend`, `Enroll`, and `Private`? 
 
@@ -863,7 +866,7 @@ e. Consider another "con". Just as with parametric models, we could add more and
 
 
 
-## Exercise 10: Parametric or nonparametric
+### Exercise 10: Parametric or nonparametric
 
 a. Suppose we wanted to model the relationship of room and board costs vs out-of-state tuition. Would you use the parametric least squares algorithm or the nonparametric KNN algorithm? 
 
@@ -891,7 +894,7 @@ b. In general, in what situations would you use least squares instead of KNN? Wh
 
 
 
-## Exercise 11: R code reflection
+### Exercise 11: R code reflection
 
 Revisit all code in Parts 2 and 3 of the exercises. Comment upon each chunk:
     
@@ -905,7 +908,7 @@ Revisit all code in Parts 2 and 3 of the exercises. Comment upon each chunk:
 
 
 
-## Exercise 12: Data drill
+### Exercise 12: Data drill
 
 a. Calculate the mean `Enroll` for public vs private schools.
 
