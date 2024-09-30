@@ -19,14 +19,65 @@ conflicts_prefer(dplyr::filter)
 # Settling In {.unnumbered .smaller}
 
 - Sit with your NEW assigned group
-  - Introduce yourselves!
-- Prepare to take notes
+  - You will stay in these groups for Unit 3 and work on a group assignment together 
+  outside of class
+  - Introduce yourselves and learn a bit about each other!
+  - Decide how you will communicate about the assignment (email or Slack) and 
+  exchange the relevant information
+- Prepare to take notes (find today's QMD template on the Schedule page as usual!)
 - Check Slack for announcements about upcoming events
-- Locate and familiarize yourself with your Individual Feedback Tracker
+- Locate and review your STAT 253 Feedback spreadsheet
 
-## Homework Feedback and Revisions {-}
+## Homework Reminders {.unnumbered .smaller}
 
-TBD
+**Check your work!** 
+
+- Remember to submit an HTML (not a QMD) to Moodle for grading
+- Please **CHECK** that HTML before submitting! In particular, make sure: 
+  - your HTML includes your answers and not the original questions
+  - the formatting (headers, etc.) matches the provided template 
+  - all plots and other output appear as intended
+- Tip: `Render` as you go! This way you can catch issues early and won't be in a rush to debug right before the submission deadline.
+
+. . .
+
+**Late work:** 
+
+- To help us manage the large number of assignments we need to review, we will be implementing an **8 hour** automatic "grace period" for late submissions.
+- If you need additional beyond this, you must email me to request an extension.  
+
+. . . 
+
+**Extensions:**
+
+- For homework, I will grant **ALL** 1--3 day extension requests made in advance of the deadline. 
+- To request an extension, email me and tell me how much time you need. 
+  You do *not* need to give me a reason why you are requesting an extension. 
+- I cannot guarantee that I will be able to accommodate longer requests, or requests made after the deadline, so please plan accordingly. 
+
+. . .
+
+**Feedback:** 
+
+- You will receive individual feedback on (almost all) questions and an overall score of **PASS** / **REVISE** / **NO SUBMISSION** 
+- You will access this feedback via your STAT 253 Feedback spreadsheet
+- If your overall score is **PASS** this means: 
+  - all of your answers were *correct* or *almost* correct
+  - although you have **PASS**ed the assignment, there likely is still room for improvement! make sure you review your feedback and the solutions for *all* questions (even those marked as *correct*)
+- If your overall score is **REVISE** this means: 
+  - we noticed a few more areas for improvement in your work and think it could benefit from revision
+  - you will have one week to review your feedback, revise your responses, and resubmit
+
+. . .
+
+**Revision process:**
+
+- Assignments that are submitted **on time** (or with an approved extension) and **demonstrate effort** to complete most problems are eligible for revision
+- To prepare this revision, you should: 
+  - carefully review feedback received on your original submission
+  - you may also consult the posted solutions (although you may not simply copy said solutions) or stop by office hours to discuss
+  - submit your revised HTML via Moodle **within 1 week** of receiving feedback
+
 
 
 <!--
@@ -133,6 +184,7 @@ grid.arrange(g0,g1,g2,g3,ncol=2)
 
 <br>
 
+
 **Parametric vs Nonparametric**
 
 These **parametric** linear regression models assume (incorrectly) that we can represent glucose over time by the following formula for $f(x)$ that depends upon *parameters* $\beta_i$:
@@ -140,7 +192,7 @@ These **parametric** linear regression models assume (incorrectly) that we can r
 $$y = f(x) + \varepsilon = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \varepsilon$$
 
 **Nonparametric** models do NOT assume a parametric form for the relationship between $y$ and $x$, $f(x)$. Thus they are more *flexible*.
-    
+  
     
 <br>
 
@@ -151,11 +203,14 @@ $$y = f(x) + \varepsilon = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \vareps
 
 <!--## Directions {.unnumbered .smaller}-->
 
-Be kind to yourself/each other and **work as a group**!
+Be kind to yourself/each other and work **as a group**!
 
 
 ## Part 1: Intuition {.unnumbered .smaller}
 
+In Part 1, your task is to come up with a nonparametric algorithm to estimate $f(\text{time})$ in the equation $$\text{glucose} = f(\text{time}) + \epsilon$$
+
+<br>
 
 1.  **Make some nonparametric predictions**    
     Working as a *group*, thinking nonparametrically, and utilizing the plot and data on the sheet provided, predict glucose level after:
@@ -222,15 +277,15 @@ b. *tuning parameter* = size of the windows or neighborhoods. in general, we'll 
 
 
 
-## Part 2: Distance {-}
+## Part 2: Distance  {.unnumbered .smaller}
 
 Central to nonparametric modeling is the concept of using data points within some local *window* or *neighborhood*.
-And defining a local window or neighborhood relies on the concept of *distance*.
+
+Defining a local window or neighborhood relies on the concept of *distance*.
 
 With only one predictor, this was straightforward in our glucose example: the closest neighbors at time $x$ are the data points observed at the *closest* time points.
 
-\
-\
+<br>
 
 
 **GOAL**
@@ -412,10 +467,12 @@ c. 3. nope. the variables are on different scales.
 <br>
 
 
-## Part 3: Pre-processing predictors {-}
+## Part 3: Pre-processing predictors  {.unnumbered .smaller}
 
-OK. In nonparametric modeling, we don't want our definitions of "local windows" or "neighbors" to be skewed by the scales and structures of our predictors.
-It's therefore important to create **variable recipes** which **pre-process** our predictors before feeding them into a nonparametric algorithm.
+In nonparametric modeling, we don't want our definitions of "local windows" or "neighbors" to be skewed by the scales and structures of our predictors. 
+
+It's therefore important to create **variable recipes** which **pre-process** our predictors before feeding them into a nonparametric algorithm. 
+
 Let's explore this idea using the `bikes` data to model `rides` by `temp`, `season`, and `breakdowns`:
 
 
@@ -429,7 +486,7 @@ library(tidyverse)
 library(tidymodels)
 
 # Load the bikes data and do a little data cleaning
-bikes <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bike_share.csv") %>% 
+bikes <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bike_share.csv") %>% 
   rename(rides = riders_registered, temp = temp_feel) %>% 
   mutate(temp = round(temp)) %>% 
   mutate(breakdowns = sample(c(rep(0, 728), rep(1, 3)), 731, replace = FALSE)) %>% 
@@ -802,9 +859,7 @@ ls("package:recipes")[startsWith(ls("package:recipes"), "step_")]
 \
 \
 
-## Part 4: Optional {-}
-
-**NOTE**
+## Part 4: Optional  {.unnumbered .smaller}
 
 If you complete the above exercises in class, you should try the remaining exercises.
 
@@ -864,6 +919,7 @@ c. When K is too small, our model is too flexible / overfit. When K is too big, 
 <br>
 
 
+
 16. **Done!**        
 
 - Render your notes.
@@ -871,3 +927,22 @@ c. When K is too small, our model is too flexible / overfit. When K is too big, 
 - If you finish all that during class, work on homework!
 
 
+# Wrap-Up {-}
+
+## Main Points from Today {.unnumbered .smaller}
+
+- If the relationship between $x$ and $y$ is not a straight line or a polynomial (such as quadratic), we might need nonparametric methods.  
+- One needs to consider the scale of variables when calculating distance between observations with more than one predictor.
+- Pre-processing steps invoke important assumptions that impact your models and predictions.
+
+## After Class {.unnumbered .smaller}
+
+- Finish the activity, check the solutions, and reach out with questions!
+- Submit HW2 by 11:59 pm TONIGHT
+  - Note the 8-hour grace period / submission cut-off on Moodle 
+- Before our next class: 
+  - Complete CP6
+  - Install the `kknn` and `shiny` packages
+- Other things to get started on: 
+  - HW1 revisions (due within one week of receiving feedback)
+  - HW3 (due Thursday, Oct 10) will be posted soon!

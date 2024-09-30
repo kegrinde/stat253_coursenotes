@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="L07-nonparametric_files/libs/clipboard/clipboard.min.js"></script>
+<script src="L07-nonparametric_files/libs/quarto-html/tabby.min.js"></script>
+<script src="L07-nonparametric_files/libs/quarto-html/popper.min.js"></script>
+<script src="L07-nonparametric_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="L07-nonparametric_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="L07-nonparametric_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="L07-nonparametric_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="L07-nonparametric_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.555">
+
+  <title>Nonparametric Models</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="L07-nonparametric_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="L07-nonparametric_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="L07-nonparametric_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="L07-nonparametric_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="L07-nonparametric_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="L07-nonparametric_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="L07-nonparametric_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="L07-nonparametric_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="L07-nonparametric_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Nonparametric Models</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section>
+<section id="settling-in" class="title-slide slide level1 unnumbered smaller center">
+<h1>Settling In</h1>
+<ul>
+<li>Sit with your NEW assigned group
+<ul>
+<li>You will stay in these groups for Unit 3 and work on a group assignment together outside of class</li>
+<li>Introduce yourselves and learn a bit about each other!</li>
+<li>Decide how you will communicate about the assignment (email or Slack) and exchange the relevant information</li>
+</ul></li>
+<li>Prepare to take notes (find today’s QMD template on the Schedule page as usual!)</li>
+<li>Check Slack for announcements about upcoming events</li>
+<li>Locate and review your STAT 253 Feedback spreadsheet</li>
+</ul>
+</section>
+<section id="homework-reminders" class="slide level2 unnumbered smaller">
+<h2>Homework Reminders</h2>
+<p><strong>Check your work!</strong></p>
+<ul>
+<li>Remember to submit an HTML (not a QMD) to Moodle for grading</li>
+<li>Please <strong>CHECK</strong> that HTML before submitting! In particular, make sure:
+<ul>
+<li>your HTML includes your answers and not the original questions</li>
+<li>the formatting (headers, etc.) matches the provided template</li>
+<li>all plots and other output appear as intended</li>
+</ul></li>
+<li>Tip: <code>Render</code> as you go! This way you can catch issues early and won’t be in a rush to debug right before the submission deadline.</li>
+</ul>
+<div class="fragment">
+<p><strong>Late work:</strong></p>
+<ul>
+<li>To help us manage the large number of assignments we need to review, we will be implementing an <strong>8 hour</strong> automatic “grace period” for late submissions.</li>
+<li>If you need additional beyond this, you must email me to request an extension.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Extensions:</strong></p>
+<ul>
+<li>For homework, I will grant <strong>ALL</strong> 1–3 day extension requests made in advance of the deadline.</li>
+<li>To request an extension, email me and tell me how much time you need. You do <em>not</em> need to give me a reason why you are requesting an extension.</li>
+<li>I cannot guarantee that I will be able to accommodate longer requests, or requests made after the deadline, so please plan accordingly.</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Feedback:</strong></p>
+<ul>
+<li>You will receive individual feedback on (almost all) questions and an overall score of <strong>PASS</strong> / <strong>REVISE</strong> / <strong>NO SUBMISSION</strong></li>
+<li>You will access this feedback via your STAT 253 Feedback spreadsheet</li>
+<li>If your overall score is <strong>PASS</strong> this means:
+<ul>
+<li>all of your answers were <em>correct</em> or <em>almost</em> correct</li>
+<li>although you have <strong>PASS</strong>ed the assignment, there likely is still room for improvement! make sure you review your feedback and the solutions for <em>all</em> questions (even those marked as <em>correct</em>)</li>
+</ul></li>
+<li>If your overall score is <strong>REVISE</strong> this means:
+<ul>
+<li>we noticed a few more areas for improvement in your work and think it could benefit from revision</li>
+<li>you will have one week to review your feedback, revise your responses, and resubmit</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Revision process:</strong></p>
+<ul>
+<li>Assignments that are submitted <strong>on time</strong> (or with an approved extension) and <strong>demonstrate effort</strong> to complete most problems are eligible for revision</li>
+<li>To prepare this revision, you should:
+<ul>
+<li>carefully review feedback received on your original submission</li>
+<li>you may also consult the posted solutions (although you may not simply copy said solutions) or stop by office hours to discuss</li>
+<li>submit your revised HTML via Moodle <strong>within 1 week</strong> of receiving feedback</li>
+</ul></li>
+</ul>
+<!--
+# Learning Goals {.unnumbered .smaller}
+-->
+</div>
+</section></section>
+<section>
+<section id="notes-nonparametric-v.-parametric" class="title-slide slide level1 unnumbered smaller center">
+<h1>Notes: Nonparametric v. Parametric</h1>
+
+</section>
+<section id="context" class="slide level2 unnumbered smaller">
+<h2>Context</h2>
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = regression</strong><br>
+<span class="math inline">\(y\)</span> is quantitative</p></li>
+<li><p><strong>model = nonparametric regression???</strong></p></li>
+</ul>
+</section>
+<section id="goal" class="slide level2 unnumbered smaller">
+<h2>Goal</h2>
+<p>Just as in Unit 2, Unit 3 will focus on <em>model building</em>, but a different aspect:</p>
+<ul>
+<li>Unit 2: how do we handle / select predictors for our predictive model of <span class="math inline">\(y\)</span>?</li>
+<li>Unit 3: how do we handle situations in which linear regression models are too <em>rigid</em> to capture the relationship of <span class="math inline">\(y\)</span> vs <span class="math inline">\(x\)</span>?</li>
+</ul>
+</section>
+<section id="motivating-example" class="slide level2 unnumbered smaller">
+<h2>Motivating Example</h2>
+<p>Let’s build a <strong>predictive model</strong> of blood <code>glucose</code> level in mg/dl by <code>time</code> in hours (<span class="math inline">\(x\)</span>) since eating a high carbohydrate meal.</p>
+<p>Consider 3 <strong>linear regression models</strong> of <span class="math inline">\(y\)</span>, none of which appear to be very good:</p>
+<p><span class="math display">\[\begin{array}{ll}
+\text{linear:} &amp;  y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \varepsilon \\
+\text{quadratic:} &amp; y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon \\
+\text{6th order polynomial:} &amp; y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + \beta_4 x^4 + \beta_5 x^5 +  \beta_6 x^6 + \varepsilon \\
+\end{array}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L07-nonparametric_files/figure-revealjs/unnamed-chunk-1-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ![](https://ajohns24.github.io/images/stat253/glucose_3.png) -->
+<p><br></p>
+<p><strong>Parametric vs Nonparametric</strong></p>
+<p>These <strong>parametric</strong> linear regression models assume (incorrectly) that we can represent glucose over time by the following formula for <span class="math inline">\(f(x)\)</span> that depends upon <em>parameters</em> <span class="math inline">\(\beta_i\)</span>:</p>
+<p><span class="math display">\[y = f(x) + \varepsilon = \beta_0 + \beta_1x_1 + \cdots + \beta_p x_p + \varepsilon\]</span></p>
+<p><strong>Nonparametric</strong> models do NOT assume a parametric form for the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>, <span class="math inline">\(f(x)\)</span>. Thus they are more <em>flexible</em>.</p>
+<p><br></p>
+</section></section>
+<section>
+<section id="exercises" class="title-slide slide level1 unnumbered center">
+<h1>Exercises</h1>
+<!--## Directions {.unnumbered .smaller}-->
+<p>Be kind to yourself/each other and work <strong>as a group</strong>!</p>
+</section>
+<section id="part-1-intuition" class="slide level2 unnumbered smaller scrollable">
+<h2>Part 1: Intuition</h2>
+<p>In Part 1, your task is to come up with a nonparametric algorithm to estimate <span class="math inline">\(f(\text{time})\)</span> in the equation <span class="math display">\[\text{glucose} = f(\text{time}) + \epsilon\]</span></p>
+<p><br></p>
+<ol type="1">
+<li><strong>Make some nonparametric predictions</strong><br>
+Working as a <em>group</em>, thinking nonparametrically, and utilizing the plot and data on the sheet provided, predict glucose level after:
+<ul>
+<li>1.5 hours</li>
+<li>4.25 hours</li>
+<li><span class="math inline">\(x\)</span> hours (i.e.&nbsp;what’s your general prediction process at any time point <span class="math inline">\(x\)</span>?)</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>Build a nonparametric algorithm</strong><br>
+Working as a <em>group</em>:
+<ul>
+<li>Translate your prediction process into a formal <strong>algorithm</strong>, i.e.&nbsp;step-by-step procedure or recipe, to predict glucose at any time point <span class="math inline">\(x\)</span>. THINK:
+<ul>
+<li>Does this depend upon any <em>tuning parameters</em>? For example, did your prediction process use any assumed “thresholds” or quantities?</li>
+<li>If so, represent this tuning parameter as “t” and write your algorithm using t (not a tuned value for t).</li>
+</ul></li>
+<li>On the separate page provided, one person should summarize this algorithm and report the predictions you got using this algorithm.</li>
+</ul></li>
+</ol>
+<!-- ![](https://ajohns24.github.io/images/stat253/glucose_2.png) -->
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><strong>Test your algorithm</strong><br>
+Exchange algorithms with another group.
+<ul>
+<li>Is the other group’s algorithm similar to yours?</li>
+<li>Use their algorithm to predict glucose after 1.5 hours and 4.25 hours. Do your calculations match theirs? If not, what was unclear about their algorithm that led to the discrepancy?</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<!-- nudge toward thinking about windows -->
+<!-- how do we pick window size?   what are we doing within each window?     -->
+<ol start="4" type="1">
+<li><strong>Building an algorithm as a class</strong>
+<ol type="a">
+<li>On your sheet, sketch a predictive model of glucose by time that a “good” algorithm would produce.</li>
+<li>In general, how would such an algorithm work? What would be its <em>tuning parameter</em>?</li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>smooth curve that follows the general trend</li>
+<li><em>tuning parameter</em> = size of the windows or neighborhoods. in general, we’ll fit “models” within smaller windows</li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="part-2-distance" class="slide level2 unnumbered smaller scrollable">
+<h2>Part 2: Distance</h2>
+<p>Central to nonparametric modeling is the concept of using data points within some local <em>window</em> or <em>neighborhood</em>.</p>
+<p>Defining a local window or neighborhood relies on the concept of <em>distance</em>.</p>
+<p>With only one predictor, this was straightforward in our glucose example: the closest neighbors at time <span class="math inline">\(x\)</span> are the data points observed at the <em>closest</em> time points.</p>
+<p><br></p>
+<p><strong>GOAL</strong></p>
+<p>Explore the idea of <em>distance</em> when we have more predictors, and the data-preprocessing steps we have to take in order to implement this idea in practice.</p>
+<p><br>
+<br>
+</p>
+<ol start="5" type="1">
+<li><strong>Two measures of distance</strong><br>
+Consider data on 2 predictors for 2 students:</li>
+</ol>
+<ul>
+<li>student 1: 8 hours sleep Monday (<span class="math inline">\(a_1\)</span>), 9 hours sleep Tuesday (<span class="math inline">\(b_1\)</span>)</li>
+<li>student 2: 7 hours sleep Monday (<span class="math inline">\(a_2\)</span>), 11 hours sleep Tuesday (<span class="math inline">\(b_2\)</span>)</li>
+</ul>
+<ol type="a">
+<li>Calculate the Manhattan distance between the 2 students. And why do you think this is called “Manhattan” distance?</li>
+</ol>
+<p><span class="math display">\[|a_1 - a_2| + |b_1 - b_2|\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L07-nonparametric_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Calculate the Euclidean distance between the 2 students:</li>
+</ol>
+<p><span class="math display">\[\sqrt{(a_1 - a_2)^2 + (b_1 - b_2)^2}\]</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L07-nonparametric_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>NOTE:</strong> We’ll typically use Euclidean distance in our algorithms. But for the purposes of this activity, use Manhattan distance (just since it’s easier to calculate and gets at the same ideas).</p>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># a</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">abs</span>(<span class="dv">8</span> <span class="sc">-</span> <span class="dv">7</span>) <span class="sc">+</span> <span class="fu">abs</span>(<span class="dv">9</span> <span class="sc">-</span> <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># b</span></span>
+<span id="cb3-2"><a href=""></a><span class="fu">sqrt</span>((<span class="dv">8</span> <span class="sc">-</span> <span class="dv">7</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">9</span> <span class="sc">-</span> <span class="dv">11</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.236068</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="6" type="1">
+<li><strong>Who are my neighbors?</strong><br>
+Consider two more possible predictors of some student outcome variable <span class="math inline">\(y\)</span>:</li>
+</ol>
+<ul>
+<li><span class="math inline">\(x_1\)</span> = number of days old</li>
+<li><span class="math inline">\(x_2\)</span> = major division (humanities, fine arts, social science, or natural science)</li>
+</ul>
+<p>Calculate how many days old you are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Record dates in year-month-day format</span></span>
+<span id="cb5-2"><a href=""></a>today <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2024-10-01"</span>)</span>
+<span id="cb5-3"><a href=""></a>bday  <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"????-??-??"</span>)</span>
+<span id="cb5-4"><a href=""></a>    </span>
+<span id="cb5-5"><a href=""></a><span class="co"># Calculate difference</span></span>
+<span id="cb5-6"><a href=""></a><span class="fu">difftime</span>(today, bday, <span class="at">units =</span> <span class="st">"days"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then for each scenario, identify which of your group members is your nearest neighbor, as defined by Manhattan distance:</p>
+<ol type="a">
+<li>Using only <span class="math inline">\(x_1\)</span>.</li>
+<li>Using only <span class="math inline">\(x_2\)</span>. And how are you measuring the distance between students’ major divisions (categories not quantities)?!</li>
+<li>Using <em>both</em> <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="7" type="1">
+<li><strong>Measuring distance: 2 quantitative predictors</strong><br>
+Consider 2 more measures on another 3 students: <!--    
+- student 1: 7300 days old, lives 0.1 hour from campus 
+- student 2: 7304 days old, lives 0.1 hour from campus 
+- student 3: 7300 days old, lives 3.1 hours from campus 
+--></li>
+</ol>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Days Old</th>
+<th style="text-align: right;">Distance from Campus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>student 1</td>
+<td style="text-align: right;">7300 days</td>
+<td style="text-align: right;">0.1 hour</td>
+</tr>
+<tr class="even">
+<td>student 2</td>
+<td style="text-align: right;">7304 days</td>
+<td style="text-align: right;">0.1 hour</td>
+</tr>
+<tr class="odd">
+<td>student 3</td>
+<td style="text-align: right;">7300 days</td>
+<td style="text-align: right;">3.1 hours</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<ol type="a">
+<li><p>Contextually, not mathematically, do you think student 1 is more similar to student 2 or student 3?</p></li>
+<li><p>Calculate the mathematical Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3.</p></li>
+<li><p>Do your contextual and mathematical assessments match? If not, what led to this discrepancy?</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>My opinion: student 2. Being 4 days apart is more “similar” than 2 students that live 3 hours apart.</li>
+<li>students 1 and 2: <span class="math inline">\(|7300 - 7304| + |0.1 - 0.1| = 4\)</span>, students 1 and 3: <span class="math inline">\(|7300 - 7300| + |0.1 - 3.1| = 3\)</span></li>
+<li>student 3. nope. the variables are on different scales.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="8" type="1">
+<li><strong>Measuring distance: quantitative &amp; categorical predictors</strong><br>
+Let’s repeat for another 3 students:<br>
+<!--
+    - student 1: STAT major, 7300 days old
+    - student 2: STAT major, 7302 days old
+    - student 3: GEOG major, 7300 days old
+--></li>
+</ol>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Major</th>
+<th style="text-align: center;">Days Old</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>student 1</td>
+<td style="text-align: center;">STAT</td>
+<td style="text-align: center;">7300 days</td>
+</tr>
+<tr class="even">
+<td>student 2</td>
+<td style="text-align: center;">STAT</td>
+<td style="text-align: center;">7302 days</td>
+</tr>
+<tr class="odd">
+<td>student 3</td>
+<td style="text-align: center;">GEOG</td>
+<td style="text-align: center;">7300 days</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<ol type="a">
+<li><p>Contextually, do you think student 1 is more similar to student 2 or student 3?</p></li>
+<li><p>Mathematically, calculate the Manhattan distance between: (1) students 1 and 2; and (2) students 1 and 3. NOTE: The distance between 2 different majors is 1.</p></li>
+<li><p>Do your contextual and mathematical assessments match? If not, what led to this discrepancy?</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>My opinion: student 2. Being 2 days apart is more “similar” than different majors.</li>
+<li>students 1 and 2: <span class="math inline">\(|1 - 1| + |7300 - 7302| = 2\)</span>, students 1 and 3: <span class="math inline">\(|1 - 0| + |7300 - 7300| = 1\)</span></li>
+<li><ol start="3" type="1">
+<li>nope. the variables are on different scales.</li>
+</ol></li>
+</ol>
+</details>
+<p><br></p>
+</section>
+<section id="part-3-pre-processing-predictors" class="slide level2 unnumbered smaller scrollable">
+<h2>Part 3: Pre-processing predictors</h2>
+<p>In nonparametric modeling, we don’t want our definitions of “local windows” or “neighbors” to be skewed by the scales and structures of our predictors.</p>
+<p>It’s therefore important to create <strong>variable recipes</strong> which <strong>pre-process</strong> our predictors before feeding them into a nonparametric algorithm.</p>
+<p>Let’s explore this idea using the <code>bikes</code> data to model <code>rides</code> by <code>temp</code>, <code>season</code>, and <code>breakdowns</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># Load some packages</span></span>
+<span id="cb6-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb6-4"><a href=""></a></span>
+<span id="cb6-5"><a href=""></a><span class="co"># Load the bikes data and do a little data cleaning</span></span>
+<span id="cb6-6"><a href=""></a>bikes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/bike_share.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href=""></a>  <span class="fu">rename</span>(<span class="at">rides =</span> riders_registered, <span class="at">temp =</span> temp_feel) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">round</span>(temp)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">breakdowns =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">728</span>), <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">3</span>)), <span class="dv">731</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href=""></a>  <span class="fu">select</span>(temp, season, breakdowns, rides)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<ol start="9" type="1">
+<li><strong>Standardizing quantitative predictors</strong><br>
+Let’s <strong>standardize</strong> or <strong>normalize</strong> the 2 <em>quantitative</em> predictors, <code>temp</code> and <code>breakdowns</code>, <em>to the same scale</em>: centered at 0 with a standard deviation of 1. Run and reflect upon each chunk below:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb7-2"><a href=""></a>recipe_1 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb7-4"><a href=""></a>    </span>
+<span id="cb7-5"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb7-6"><a href=""></a>recipe_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb8-2"><a href=""></a><span class="co"># (Don't worry about the code. Normally we won't do this step.)</span></span>
+<span id="cb8-3"><a href=""></a>recipe_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Compare to first 3 rows of original data</span></span>
+<span id="cb9-2"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions &amp; comments</strong></p>
+<ul>
+<li>Take note of how the pre-processed data compares to the original.</li>
+<li>The first day had a <code>temp</code> of 65 degrees and a <em>standardized</em> <code>temp</code> of -0.66, i.e.&nbsp;65 degrees is 0.66 standard deviations below average. Confirm this standardized value “by hand” using the mean and standard deviation in <code>temp</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href=""></a>    <span class="fu">summarize</span>(<span class="fu">mean</span>(temp), <span class="fu">sd</span>(temp))</span>
+<span id="cb10-3"><a href=""></a>    </span>
+<span id="cb10-4"><a href=""></a><span class="co"># Standardized temp: (observed - mean) / sd</span></span>
+<span id="cb10-5"><a href=""></a>(___ <span class="sc">-</span> ___) <span class="sc">/</span> ___</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb11-2"><a href=""></a>recipe_1 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb11-4"><a href=""></a></span>
+<span id="cb11-5"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb11-6"><a href=""></a>recipe_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Recipe ──────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Inputs </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Number of variables by role</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>outcome:   1
+predictor: 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Operations </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• Centering and scaling for: all_numeric_predictors()</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb21-2"><a href=""></a><span class="co"># (Don't worry about the code. Normally we won't do this step.)</span></span>
+<span id="cb21-3"><a href=""></a>recipe_1 <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+    temp season breakdowns rides
+   &lt;dbl&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;int&gt;
+1 -0.660 winter    -0.0642   654
+2 -0.728 winter    -0.0642   670
+3 -1.75  winter    -0.0642  1229</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Compare to first 3 rows of original data</span></span>
+<span id="cb23-2"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp season breakdowns rides
+1   65 winter          0   654
+2   64 winter          0   670
+3   49 winter          0  1229</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>The numeric predictors, but not rides, were standardized.</li>
+<li>See below.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href=""></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(temp), <span class="fu">sd</span>(temp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mean(temp) sd(temp)
+1   74.69083 14.67838</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>(<span class="dv">65</span> <span class="sc">-</span> <span class="fl">74.69083</span>) <span class="sc">/</span> <span class="fl">14.67838</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.6602111</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+<ol start="10" type="1">
+<li><strong>Creating “dummy” variables for categorical predictors</strong><br>
+Consider the <em>categorical</em> <code>season</code> predictor: fall, winter, spring, summer. Since we can’t plug <em>words</em> into a mathematical formula, ML algorithms convert categorical predictors into “dummy variables”, also known as indicator variables. (This is unfortunately the technical term, not something I’m making up.) Run and reflect upon each chunk below:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb29-2"><a href=""></a>recipe_2 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="co"># Check out 3 specific rows of the pre-processed data</span></span>
+<span id="cb30-2"><a href=""></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb30-3"><a href=""></a>recipe_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb30-5"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-6"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="co"># Compare to the same 3 rows in the original data</span></span>
+<span id="cb31-2"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions &amp; comments</strong></p>
+<ul>
+<li>3 of the 4 seasons show up in the pre-processed data as “dummy variables” with 0/1 outcomes. Which season does <em>not</em> appear? This “reference” category is also the one that wouldn’t appear in a table of model coefficients.</li>
+<li>How is a <code>winter</code> day represented by the 3 dummy variables?</li>
+<li>How is a <code>fall</code> day represented by the 3 dummy variables?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="co"># Recipe with 1 preprocessing step</span></span>
+<span id="cb32-2"><a href=""></a>recipe_2 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>())</span>
+<span id="cb32-4"><a href=""></a></span>
+<span id="cb32-5"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb32-6"><a href=""></a>recipe_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Recipe ──────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Inputs </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Number of variables by role</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>outcome:   1
+predictor: 3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Operations </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>• Dummy variables from: all_nominal_predictors()</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="co"># Check out 3 specific rows of the pre-processed data</span></span>
+<span id="cb42-2"><a href=""></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb42-3"><a href=""></a>recipe_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-6"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+   temp breakdowns rides season_spring season_summer season_winter
+  &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1    53          0   674             0             0             1
+2    70          0   674             1             0             0
+3    68          0   655             0             0             0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="co"># Compare to the same 3 rows in the original data</span></span>
+<span id="cb44-2"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp season breakdowns rides
+1   53 winter          0   674
+2   70 spring          0   674
+3   68   fall          0   655</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>fall</li>
+<li>0 for spring and summer, 1 for winter</li>
+<li>0 for spring, summer, and winter</li>
+</ul>
+</details>
+<p><br></p>
+<ol start="11" type="1">
+<li><strong>Combining pre-processing steps</strong><br>
+We can also do <em>multiple</em> pre-processing steps! In some cases, order matters. Compare the results of normalizing before creating dummy variables and vice versa:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="co"># step_normalize() before step_dummy()</span></span>
+<span id="cb46-2"><a href=""></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb46-6"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-7"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># step_dummy() before step_normalize()</span></span>
+<span id="cb47-2"><a href=""></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-4"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-5"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb47-6"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-7"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions / comments</strong></p>
+<ul>
+<li>How did the order of our 2 pre-processing steps impact the outcome?</li>
+<li>The standardized dummy variables lose some contextual meaning. But, in general, negative values correspond to 0s (not that category), positive values correspond to 1s (in that category), and the further a value is from zero, the less common that category is. We’ll observe in the future how this is advantageous when defining “neighbors”.</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="co"># step_normalize() before step_dummy()</span></span>
+<span id="cb48-2"><a href=""></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-5"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb48-6"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-7"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+    temp breakdowns rides season_spring season_summer season_winter
+   &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1 -1.48     -0.0642   674             0             0             1
+2 -0.320    -0.0642   674             1             0             0
+3 -0.456    -0.0642   655             0             0             0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># step_dummy() before step_normalize()</span></span>
+<span id="cb50-2"><a href=""></a><span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-4"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-5"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb50-6"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-7"><a href=""></a>  <span class="fu">filter</span>(rides <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">655</span>, <span class="dv">674</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+    temp breakdowns rides season_spring season_summer season_winter
+   &lt;dbl&gt;      &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1 -1.48     -0.0642   674        -0.580        -0.588         1.74 
+2 -0.320    -0.0642   674         1.72         -0.588        -0.573
+3 -0.456    -0.0642   655        -0.580        -0.588        -0.573</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions / comments</strong></p>
+<ul>
+<li>when dummies are created second, they remain as 0s and 1s. when dummies are created first, these 0s and 1s are standardized</li>
+</ul>
+</details>
+<p><br></p>
+<p><strong>PAUSE</strong></p>
+<p>Though our current focus is on nonparametric modeling, the concepts of standardizing and dummy variables are also important in parametric modeling.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">algorithm</th>
+<th style="text-align: left;">pre-processing step</th>
+<th style="text-align: left;">necessary?</th>
+<th style="text-align: left;">done automatically behind the R code?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">least squares</td>
+<td style="text-align: left;">standardizing</td>
+<td style="text-align: left;">no</td>
+<td style="text-align: left;">no (because it’s not necessary!)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">dummy variables</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LASSO</td>
+<td style="text-align: left;">standardizing</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">dummy variables</td>
+<td style="text-align: left;">yes</td>
+<td style="text-align: left;">no (we have to pre-process)</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+<ol start="12" type="1">
+<li><strong>Less common: Removing variables with “near-zero variance”</strong><br>
+Notice that on <em>almost</em> every day in our sample, there were 0 bike station breakdowns. Thus there is <em>near-zero variability</em> (nzv) in the <code>breakdowns</code> predictor:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2"><a href=""></a>  <span class="fu">count</span>(breakdowns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This extreme predictor could bias our model results – the rare days with 1 breakdown might seem more important than they are, thus have undue influence. To this end, we can use <code>step_nzv()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="co"># Recipe with 3 preprocessing steps</span></span>
+<span id="cb53-2"><a href=""></a>recipe_3 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href=""></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-4"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-5"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb54-2"><a href=""></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb54-3"><a href=""></a>recipe_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-6"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="co"># Compare to this to the first 3 rows in the original data</span></span>
+<span id="cb55-2"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>What did <code>step_nzv()</code> do?!</li>
+<li>We <em>could</em> move <code>step_nzv()</code> to the last step in our recipe. But what advantage is there to putting it first?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="co"># Recipe with 3 preprocessing steps</span></span>
+<span id="cb56-2"><a href=""></a>recipe_3 <span class="ot">&lt;-</span> <span class="fu">recipe</span>(rides <span class="sc">~</span> ., <span class="at">data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href=""></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-4"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-5"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb56-6"><a href=""></a></span>
+<span id="cb56-7"><a href=""></a><span class="co"># Check out the first 3 rows of the pre-processed data</span></span>
+<span id="cb56-8"><a href=""></a><span class="co"># (Don't worry about the code.)</span></span>
+<span id="cb56-9"><a href=""></a>recipe_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb56-10"><a href=""></a>  <span class="fu">prep</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb56-11"><a href=""></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> bikes) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-12"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+    temp rides season_spring season_summer season_winter
+   &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1 -0.660   654        -0.580        -0.588          1.74
+2 -0.728   670        -0.580        -0.588          1.74
+3 -1.75   1229        -0.580        -0.588          1.74</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># Compare to this to the first 3 rows in the original data</span></span>
+<span id="cb58-2"><a href=""></a>bikes <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href=""></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp season breakdowns rides
+1   65 winter          0   654
+2   64 winter          0   670
+3   49 winter          0  1229</code></pre>
+</div>
+</div>
+<p><strong>Follow-up questions</strong></p>
+<ul>
+<li>it removed <code>breakdowns</code> from the data set.</li>
+<li>more computationally efficient. don’t spend extra energy on pre-processing <code>breakdowns</code> since we don’t even want to keep it.</li>
+</ul>
+</details>
+<p><br></p>
+<ol start="13" type="1">
+<li><strong>There’s lots more!</strong></li>
+</ol>
+<p>The 3 pre-processing steps above are among the most common. Many others exist and can be handy in specific situations. Run the code below to get a list of possibilities:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="fu">ls</span>(<span class="st">"package:recipes"</span>)[<span class="fu">startsWith</span>(<span class="fu">ls</span>(<span class="st">"package:recipes"</span>), <span class="st">"step_"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+</section>
+<section id="part-4-optional" class="slide level2 unnumbered smaller scrollable">
+<h2>Part 4: Optional</h2>
+<p>If you complete the above exercises in class, you should try the remaining exercises.</p>
+<p>Otherwise, you do not need to loop back – these concepts will be covered in the videos for the next class.</p>
+<p><br>
+<br>
+</p>
+<ol start="14" type="1">
+<li><strong>KNN</strong></li>
+</ol>
+<p>Now that we have a sense of some themes (defining “local”) and details (measuring “distance”) in nonparametric modeling, let’s explore a common nonparametric algorithm: K Nearest Neighbors (KNN). Let’s start with your <em>intuition</em> for how the KNN works, simply based on its name. On your paper, sketch what you <em>anticipate</em> the following models of the 14 glucose measurements to look like:</p>
+<ul>
+<li><span class="math inline">\(K = 1\)</span> nearest neighbors model<br>
+</li>
+<li><span class="math inline">\(K = 14\)</span> nearest neighbors model</li>
+</ul>
+<p>NOTE: You might start by making predictions at each <em>observed</em> time point (eg: 0, 15 min, 30 min,…). Then think about what the predictions would be for times <em>in between</em> these observations (eg: 5 min).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L07-nonparametric_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<!-- ![](https://ajohns24.github.io/images/stat253/glucose_2.png)  -->
+<details>
+<summary>
+Solution
+</summary>
+Will vary by group.
+</details>
+<p><br></p>
+<ol start="15" type="1">
+<li><strong>Thinking like a machine learner</strong>
+<ol type="a">
+<li>Upon what <em>tuning parameter</em> does KNN depend?</li>
+<li>What’s the <em>smallest</em> value this tuning parameter can take? The <em>biggest</em>?</li>
+<li>Selecting a “good” tuning parameter is a goldilocks challenge:
+<ul>
+<li>What happens when the tuning parameter is too small?<br>
+</li>
+<li>Too big?</li>
+</ul></li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>number of neighbors “K”</li>
+<li>1, 2, …., n (sample size)</li>
+<li>When K is too small, our model is too flexible / overfit. When K is too big, our model is too rigid / simple.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="16" type="1">
+<li><strong>Done!</strong></li>
+</ol>
+<ul>
+<li>Render your notes.</li>
+<li>Check the solutions on the course website.</li>
+<li>If you finish all that during class, work on homework!</li>
+</ul>
+</section></section>
+<section>
+<section id="wrap-up" class="title-slide slide level1 unnumbered center">
+<h1>Wrap-Up</h1>
+
+</section>
+<section id="main-points-from-today" class="slide level2 unnumbered smaller">
+<h2>Main Points from Today</h2>
+<ul>
+<li>If the relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is not a straight line or a polynomial (such as quadratic), we might need nonparametric methods.<br>
+</li>
+<li>One needs to consider the scale of variables when calculating distance between observations with more than one predictor.</li>
+<li>Pre-processing steps invoke important assumptions that impact your models and predictions.</li>
+</ul>
+</section>
+<section id="after-class" class="slide level2 unnumbered smaller">
+<h2>After Class</h2>
+<ul>
+<li>Finish the activity, check the solutions, and reach out with questions!</li>
+<li>Submit HW2 by 11:59 pm TONIGHT
+<ul>
+<li>Note the 8-hour grace period / submission cut-off on Moodle</li>
+</ul></li>
+<li>Before our next class:
+<ul>
+<li>Complete CP6</li>
+<li>Install the <code>kknn</code> and <code>shiny</code> packages</li>
+</ul></li>
+<li>Other things to get started on:
+<ul>
+<li>HW1 revisions (due within one week of receiving feedback)</li>
+<li>HW3 (due Thursday, Oct 10) will be posted soon!</li>
+</ul></li>
+</ul>
+<div class="quarto-auto-generated-content">
+<p><img src="images/mac.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="L07-nonparametric_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="L07-nonparametric_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'multiplex': {"secret":"17277118552861125969","id":"6311149c5e248e94","url":"https://reveal-multiplex.glitch.me/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

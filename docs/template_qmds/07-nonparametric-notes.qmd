@@ -33,7 +33,7 @@ knitr::opts_chunk$set(
 
 
 
-# Notes - Nonparametric v. Parametric Models
+# Notes: Nonparametric v. Parametric Models
 
 
 
@@ -65,7 +65,9 @@ Just as in Unit 2, Unit 3 will focus on *model building*, but a different aspect
 
 **MOTIVATING EXAMPLE**
 
-Let's build a **predictive model** of blood `glucose` level in mg/dl by `time` in hours ($x$) since eating a high carbohydrate meal. Consider 3 **linear regression models** of $y$, none of which appear to be very good:
+Let's build a **predictive model** of blood `glucose` level in mg/dl by `time` in hours ($x$) since eating a high carbohydrate meal. 
+
+Consider 3 **linear regression models** of $y$, none of which appear to be very good:
 
 $$\begin{array}{ll}
 \text{linear:} &  y = f(x) + \varepsilon = \beta_0 + \beta_1 x + \varepsilon \\
@@ -75,8 +77,8 @@ $$\begin{array}{ll}
 
 \
 
-
-![](https://bcheggeseth.github.io/253_spring_2024/images/glucose.png)
+<!--![](https://bcheggeseth.github.io/253_spring_2024/images/glucose.png)-->
+![](https://kegrinde.github.io/stat253_coursenotes/images/L07-glucose.png)
 
 
 
@@ -262,7 +264,8 @@ $$|a_1 - a_2| + |b_1 - b_2|$$
 
 ```
 
-```{r echo = FALSE}
+```{r}
+#| echo: false
 library(tidyverse)
 data.frame(a = c(8, 7), b = c(9, 11)) %>% 
   ggplot(aes(x = a, y = b)) + 
@@ -282,7 +285,8 @@ $$\sqrt{(a_1 - a_2)^2 + (b_1 - b_2)^2}$$
 
 ```
 
-```{r echo = FALSE}
+```{r}
+#| echo: false
 data.frame(a = c(8, 7), b = c(9, 11)) %>% 
   ggplot(aes(x = a, y = b)) + 
     geom_point() + 
@@ -318,9 +322,10 @@ Consider two more possible predictors of some student outcome variable $y$:
 
 Calculate how many days old you are:
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Record dates in year-month-day format
-today <- as.Date("2023-02-08")
+today <- as.Date("2024-10-01")
 bday  <- as.Date("????-??-??")
 
 # Calculate difference
@@ -430,10 +435,12 @@ Let's explore this idea using the `bikes` data to model `rides` by `temp`, `seas
 
 
 ```{r}
-# Load some packages and the bikes data
+# Load some packages
 library(tidyverse)
 library(tidymodels)
-bikes <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bike_share.csv") %>% 
+
+# Load the bikes data and do a little data cleaning
+bikes <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bike_share.csv") %>% 
   rename(rides = riders_registered, temp = temp_feel) %>% 
   mutate(temp = round(temp)) %>% 
   mutate(breakdowns = sample(c(rep(0, 728), rep(1, 3)), 731, replace = FALSE)) %>% 
@@ -453,6 +460,7 @@ bikes <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/bike_share
 Let's **standardize** or **normalize** the 2 *quantitative* predictors, `temp` and `breakdowns`, *to the same scale*: centered at 0 with a standard deviation of 1. Run and reflect upon each chunk below:
 
 ```{r}
+#| message: true
 # Recipe with 1 preprocessing step
 recipe_1 <- recipe(rides ~ ., data = bikes) %>% 
   step_normalize(all_numeric_predictors())
@@ -701,6 +709,8 @@ ls("package:recipes")[startsWith(ls("package:recipes"), "step_")]
 \
 
 
+# Exercises: Optional
+
 **NOTE**
 
 If you complete the above exercises in class, you should try the remaining exercises.
@@ -756,11 +766,11 @@ c. Selecting a "good" tuning parameter is a goldilocks challenge:
 
 
 
-Done!
+## Done!
 
-- Knit your notes.
-- Check the solutions in the course website.
-- If you finish all that during class, work on Homework 3!
+- Render your notes.
+- Check the solutions on the course website.
+- If you finish all that during class, work on homework!
 
 
 
