@@ -1242,6 +1242,160 @@
     ]
   },
   {
+    "objectID": "L09-loess-gams.html#announcements",
+    "href": "L09-loess-gams.html#announcements",
+    "title": "9  LOESS & GAMs",
+    "section": "Announcements",
+    "text": "Announcements\n\nQuiz 1 next Tuesday\n\nTopic: Regression (Units 1–3)\nPart 1 (on paper):\n\nclosed notes, closed collaboration\ndue by end of class\nmay have to interpret R output, but won’t have to produce code\n\nPart 2 (on computer):\n\nopen notes (current 253 course materials only), open collaboration (current 253 students only)\ndue within 24 hours, but designed to finish during class\n\n\nHW3 due Thursday\n\nSpecial instructions for this one – review the Important Notes before you begin!\nLimited extension opportunities to facilitate quick turnaround on feedback/sharing solutions (in time for Quiz 1)",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#learning-goals",
+    "href": "L09-loess-gams.html#learning-goals",
+    "title": "9  LOESS & GAMs",
+    "section": "Learning Goals",
+    "text": "Learning Goals\n\nClearly describe the local regression algorithm for making a prediction\nExplain how bandwidth (span) relate to the bias-variance tradeoff\nDescribe some different formulations for a GAM (how the arbitrary functions are represented)\nExplain how to make a prediction from a GAM\nInterpret the output from a GAM",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#context",
+    "href": "L09-loess-gams.html#context",
+    "title": "9  LOESS & GAMs",
+    "section": "Context",
+    "text": "Context\n\n\n\nCONTEXT\n\nworld = supervised learning\nWe want to model some output variable \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)).\ntask = regression\n\\(y\\) is quantitative\n(nonparametric) algorithm\n\n\n GOAL\nOur usual parametric models (eg: linear regression) are too rigid to represent the relationship between \\(y\\) and our predictors \\(x\\). Thus we need more flexible nonparametric models.",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#example-1-knn-review",
+    "href": "L09-loess-gams.html#example-1-knn-review",
+    "title": "9  LOESS & GAMs",
+    "section": "Example 1: KNN Review",
+    "text": "Example 1: KNN Review\nIn the previous activity, we modeled college Grad.Rate versus Expend, Enroll, and Private using data on 775 schools.\n\nWe chose the KNN with K = 33 because it minimized the CV MAE, i.e. the errors when predicting grad rate for schools outside our sample. We don’t typically worry about a more parsimonious KNN, i.e. a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?\nWhat assumptions did the KNN model make about the relationship of Grad.Rate with Expend, Enroll, and Private? Is this a pro or con?\nWhat did the KNN model tell us about the relationship of Grad.Rate with Expend, Enroll, and Private? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con?\n\n\n\nSolution\n\n\nThe output of the model is: one prediction for one observational unit. There is nothing to interpret (no plots, no coefficients, etc.). Also: there is no way to tune the model to use fewer predictors.\nThe only assumption we made was that the outcome values of \\(y\\) should be similar if the predictor values of \\(x\\) are similar. No other assumptions are made.\n\nThis is a pro if we want flexibility due to non-linear relationships and that assumption is true.\nThis is a con if relationships are actually linear or could be modeled with a parametric model.\n\nNothing.\n\nI’d say this is a con. There is nothing to interpret, so the model is more of a black box in terms of knowing why it gives you a particular prediction.\n\n\nFurther details are in solutions for previous activity.",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#example-2-nonparametric-vs-parametric",
+    "href": "L09-loess-gams.html#example-2-nonparametric-vs-parametric",
+    "title": "9  LOESS & GAMs",
+    "section": "Example 2: Nonparametric vs Parametric",
+    "text": "Example 2: Nonparametric vs Parametric\nNonparametric KNN vs parametric least squares and LASSO:\n\nWhen should we use a nonparametric algorithm like KNN?\nWhen shouldn’t we?\n\n\n\nSolution\n\n\nUse nonparametric methods when parametric model assumptions are too rigid. Forcing a parametric method in this situation can produce misleading conclusions.\nUse parametric methods when the model assumptions hold. In such cases, parametric models provide more contextual insight (eg: meaningful coefficients) and the ability to detect which predictors are beneficial to the model.",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#notes",
+    "href": "L09-loess-gams.html#notes",
+    "title": "9  LOESS & GAMs",
+    "section": "Notes",
+    "text": "Notes\nLocal Regression or Locally Estimated Scatterplot Smoothing (LOESS)\n. . .\nGoal:\nBuild a flexible regression model of \\(y\\) by one quantitative predictor \\(x\\),\n\\[y = f(x) + \\varepsilon\\]\n. . .\nIdea:\nFit regression models in small localized regions, where nearby data have greater influence than far data.\n. . .\nAlgorithm:\nDefine the span, aka bandwidth, tuning parameter \\(h\\) where \\(0 \\le h \\le 1\\). Take the following steps to estimate \\(f(x)\\) at each possible predictor value \\(x\\):\n\nIdentify a neighborhood consisting of the \\(100∗h\\)% of cases that are closest to \\(x\\).\n\nPutting more weight on the neighbors closest to \\(x\\) (ie. allowing them to have more influence), fit a linear model in this neighborhood.\n\nUse the local linear model to estimate f(x).\n\n. . .\nIn pictures:",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#discussion",
+    "href": "L09-loess-gams.html#discussion",
+    "title": "9  LOESS & GAMs",
+    "section": "Discussion",
+    "text": "Discussion\nOpen the QMD and find the LOESS discussion questions. Work on Examples 3 and 4 with your group.\n\n\nExample 3: LOESS in R\nWe can plot LOESS models using geom_smooth(). Play around with the span parameter below.\n\nWhat happens as we increase the span from roughly 0 to roughly 1?\nWhat is one “pro” of this nonparametric algorithm, relative to KNN?\nWhat questions do you have about this algorithm?\n\n\nlibrary(tidyverse)\nlibrary(ISLR)\ndata(College)\n\nggplot(College, aes(x = Expend, y = Grad.Rate)) + \n  geom_point() + \n  geom_smooth(method = \"loess\", span = 0.5)\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nas we increase span, the model becomes smoother and more simple\ncompare to KNN, LOESS is smoother, more like the shape of the relationship we’re trying to estimate\n\n\n\nNote: you’ll find that you can specify span greater than 1. Use your resources to figure out what that means in terms of the algorithm.\n\n\n\nExample 4: LOESS & the Bias-Variance Tradeoff\nRun the shiny app code, below. Explore the impact of the span tuning parameter h on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.\nFor what values of \\(h\\) (near 0, somewhere in the middle, near 1) do you get the following:\n\nhigh bias but low variance\nlow bias but high variance\nmoderate bias and low variance\n\n\n\nSolution\n\n\nh near 1\nh near 0\nh somewhere in the middle\n\n\n\n\n# Load packages & data\nlibrary(shiny)\nlibrary(tidyverse)\n\n# Define a LOESS plotting function\nplot_loess &lt;- function(h, plot_data){\n  ggplot(plot_data, aes(x = x, y = y)) + \n    geom_point() + \n    geom_smooth(span = h, se = FALSE) + \n    labs(title = paste(\"h = \", h)) +\n    lims(y = c(-5,12))\n}\n\n# BUILD THE SERVER\n# These are instructions for building the app - what plot to make, what quantities to calculate, etc\nserver_LOESS &lt;- function(input, output) {\n  new_data &lt;- eventReactive(input$do, {\n    x &lt;- c(runif(25, -6, -2.5), runif(50, -3, 3), runif(25, 2.5, 6))\n    y &lt;- 9 - x^2 + rnorm(100, sd = 0.75) \n    y[c(1:25, 76:100)] &lt;- rnorm(50, sd = 0.75)\n    data.frame(x, y)\n  })\n  output$loesspic &lt;- renderPlot({\n    plot_loess(h = input$hTune, plot_data = new_data())\n  })\n}\n\n\n# BUILD THE USER INTERFACE (UI)\n# The UI controls the layout, appearance, and widgets (eg: slide bars).\nui_LOESS &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      h4(\"Sample 100 observations:\"), \n      actionButton(\"do\", \"Go!\"),\n      h4(\"Tune the LOESS:\"), \n      sliderInput(\"hTune\", \"h\", min = 0.05, max = 1, value = 0.05)\n    ),\n    mainPanel(\n      h4(\"LOESS plot:\"), \n      plotOutput(\"loesspic\")\n    )\n  )\n)\n\n\n# RUN THE SHINY APP!\nshinyApp(ui = ui_LOESS, server = server_LOESS)",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#notes-1",
+    "href": "L09-loess-gams.html#notes-1",
+    "title": "9  LOESS & GAMs",
+    "section": "Notes",
+    "text": "Notes\nGeneralized Additive Models (GAM)\nGAMs are nonparametric nonlinear models that can handle more than one predictor. They incorporate each predictor \\(x_i\\) through some nonparametric, smooth function \\(f_i()\\):\n\\[y = \\beta_0 + f_1(x_1) + f_2(x_2) + \\cdots + f_p(x_p) + \\varepsilon\\]\n. . .\nBig ideas\n\nEach \\(f_j(x_j)\\) is a smooth model of \\(y\\) vs \\(x_j\\) when controlling for the other predictors. More specifically:\n\nEach \\(f_j(x_j)\\) models the behavior in \\(y\\) that’s not explained by the other predictors.\nThis “unexplained behavior” is represented by the residuals from the model of \\(y\\) versus all predictors.\n\nThe \\(f_j()\\) functions are estimated using some smoothing algorithm (e.g. LOESS, smoothing splines, etc).\n\n\n. . .\nTECHNICAL NOTE\nIn tidymodels():\n\nThe GAM f(x) components are estimated using smoothing splines, a nonparametric smoothing technique that’s more nuanced than LOESS.\nSmoothing splines depend upon a \\(\\lambda\\) penalty tuning parameter (labeled adjust_deg_free in tidymodels). As in the LASSO:\n\nthe bigger the \\(\\lambda\\), the more simple / less wiggly the estimate of f(x)\nif \\(\\lambda\\) is big enough, we might even kick a predictor out of the model\n\n\nMore optional details are included in the “Deeper learning” section.",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#discussion-1",
+    "href": "L09-loess-gams.html#discussion-1",
+    "title": "9  LOESS & GAMs",
+    "section": "Discussion",
+    "text": "Discussion\nFind the GAM discussion questions in your QMD. Discuss the following example with your group.\n\n\nExample 5: GAM\nInterpret the wage analysis in Chapter 7 of ISLR.\nwage = \\(\\beta_0\\) + f(year) + f(age) + f(education) + \\(\\varepsilon\\)\n\n\n\n\n\nSolution\n\nfor example: when controlling for education level and year, wages have a quadratic-ish relationship with age. Both younger and older workers tend to have lower wages.",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#getting-started",
+    "href": "L09-loess-gams.html#getting-started",
+    "title": "9  LOESS & GAMs",
+    "section": "Getting Started",
+    "text": "Getting Started\nGoals\n\nImplement and explore GAM in R.\n\nExplore how this algorithm compares to others, hence how it fits into our broader ML workflow.\n\nContext\nUsing the College data in the ISLR package, we’ll build a predictive model of Grad.Rate by 6 predictors: Private, PhD (percent of faculty with PhDs), Room.Board, Personal (estimated personal spending), Outstate (out-of-state tuition), perc.alumni (percent of alumni who donate)\n\n# Load packages\nlibrary(tidymodels)\nlibrary(tidyverse)\nlibrary(ISLR)\n\n# Load data\ndata(College)\n\n# Wrangle the data\ncollege_sub &lt;- College %&gt;% \n  filter(Grad.Rate &lt;= 100) %&gt;% \n  filter((Grad.Rate &gt; 50 | Expend &lt; 40000)) %&gt;% \n  select(Grad.Rate, Private, PhD, Room.Board, Personal, Outstate, perc.alumni)",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#part-1-building-a-gam",
+    "href": "L09-loess-gams.html#part-1-building-a-gam",
+    "title": "9  LOESS & GAMs",
+    "section": "Part 1: Building a GAM",
+    "text": "Part 1: Building a GAM\nLet’s build a GAM of Grad.Rate by all 6 predictors in college_sub:\n\\[\\text{Grad.Rate} = \\beta_0 + \\beta_1\\text{PrivateYes} + f_2(\\text{PhD})  + \\cdots + f_{6}(\\text{perc.alumni}) + \\varepsilon\\]\nYou’re given all code here. Be sure to scan and reflect upon what’s happening.\n\n\nSTEP 1: Specifying the GAM\nSpecify the GAM algorithm. Ask yourself the following about each line:\n\nHow, if at all, does this differ from the code for LASSO or KNN?\nWhat’s the point?\n\n\ngam_spec &lt;- gen_additive_mod() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"mgcv\") %&gt;% \n  set_args(adjust_deg_free = tune(), select_features = TRUE)\n\n\n\n\nSTEP 2: variable recipe\nNOTE: each \\(f_j(x_j)\\) uses only a single predictor \\(x_j\\), we don’t have to worry about predictor scales or pre-processing.\n\nvariable_recipe &lt;- recipe(Grad.Rate ~ ., data = college_sub)\n\n\n\n\n\n\nSTEP 3: workflow specification\nSet up our GAM workflow. Check out the formula required by add_model:\n\nHow did we include the categorical Private predictor?\nHow did we include the other quantitative predictors?\nThinking back to the technical note about the GAM in tidymodels, what do you think s() stands for?\n\n\ngam_workflow &lt;- workflow() %&gt;% \n  add_recipe(variable_recipe) %&gt;% \n  add_model(gam_spec,\n            formula = Grad.Rate ~ Private + s(PhD) + s(Room.Board) + s(Personal) + s(Outstate) + s(perc.alumni))\n\n\n\n\nSTEP 4: estimate multiple GAMs\nFinally, estimate the GAM using a range of values for adjust_deg_free(), the \\(\\lambda\\) tuning parameter.\n\nRecall: the bigger the parameter, the greater the penalty for overfit, wiggly behavior.\nWe’ll try 10 possible values for the penalty parameter, ranging from 0.25 to 4, and evaluate each model with respect to its 10-fold CV MAE.\n\nRunning this code will take some time (typically under 30 seconds). The more predictors we have, the longer it takes!\n\n\nset.seed(253)\ngam_models &lt;- gam_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(adjust_deg_free(range = c(0.25, 4)), \n                        levels = 10),\n    resamples = vfold_cv(college_sub, v = 10),\n    metrics = metric_set(mae)\n  )",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#part-2-identify-and-apply-a-final-gam",
+    "href": "L09-loess-gams.html#part-2-identify-and-apply-a-final-gam",
+    "title": "9  LOESS & GAMs",
+    "section": "Part 2: Identify and apply a “final” GAM",
+    "text": "Part 2: Identify and apply a “final” GAM\n\nComputational time\nWe only ran 10 different GAMs of Grad.Rate by our 6 predictors above. What is it about this algorithm that makes it take so long?\nNOTE: In general, the GAM is not great when we have lots of predictors. In that case, we might use a poorly fit LASSO to help pick predictors, and then use GAM with these predictors for our final model and predictions.\n\n\n\nSolution\n\nWithin any 1 model, we’re building many models within local windows.\n\n\n\nIdentify the best GAM\nUsing the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:\n\n\n# Use a plot to compare the predictive performance of our 10 GAM models\n    \n    \n# Pick the best value for the penalty tuning parameter\n# Name this `best_penalty`\n    \n    \n# Fit a final GAM using `best_penalty`\n# Name this `final_gam`\n\n\n\nSolution\n\n\n# Use a plot to compare the predictive performance of our 10 GAM models\ngam_models %&gt;% \n  autoplot()\n\n\n\n\n\n\n\n# Pick the best value for the penalty tuning parameter\n# Name this `best_penalty`\nbest_penalty &lt;- gam_models %&gt;% \n  select_best()\n\n# Fit a final GAM using `best_penalty`\n# Name this `final_gam`\nfinal_gam &lt;- gam_workflow %&gt;% \n  finalize_workflow(parameters = best_penalty) %&gt;%\n  fit(data = college_sub)\n\n\n\n\nExplore the final GAM\nPlot the smoothing functions for each predictor in our model. NOTE: The $ notation accesses nested objects (fit within fit within fit within final_gam).\n\n\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n\n\nIs there anything in these plots that justifies our use of the GAM instead of least squares?\nPick 1 or 2 of these plots and interpret your findings.\n\n\n\nSolution\n\n\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n\n\n\n\n\n\n\n\n\nkinda. Personal, Outstate, and perc.alumni seem to have complicated non-linear associations with Grad.Rate.\nwill vary\n\n\n\n\nPick an algorithm\nOur overall goal is to build a predictive model of Grad.Rate (\\(y\\)) by 6 predictors:\n\\[y = f(x_1,x_2,...,x_{6}) + \\varepsilon\\]\nThe table below summarizes the CV MAE for 3 possible algorithms: least squares, KNN, and GAM. After examining the results, explain which model you would choose and why. NOTE: There are no typos here! All models had the same CV MAE. Code is provided in the online manual if you’re curious.\n\n\n\nmethod\ntype\nassumption about \\(f(x_1,x_2,...,x_{6})\\)\nCV MAE\n\n\n\n\nleast squares\nparametric\n\\(\\beta_0 + \\beta_1x_1 + \\cdots + \\beta_{6} x_{6}\\)\n10.2\n\n\nKNN w/ \\(K = 33\\)\nnonparametric\naverage \\(y\\) among neighbors\n10.2\n\n\nGAM w/ penalty = 1.5\nnonparametric\n\\(\\beta_0 + f_1(x_1) + \\cdots + f_{6}(x_{6})\\)\n10.2\n\n\n\n\n\n\nSolution\n\nYou can argue a couple of ways.\n\nIf you noted the non-linear relationships in the plots above: GAM is more informative than KNN and less wrong than least squares.\nIf you didn’t think above that GAM was warranted, you should pick least squares. It’s definitely simpler and easier to interpret.\n\nCode\n\n# GAM MAE\ngam_models %&gt;% \n  collect_metrics() %&gt;% \n  filter(adjust_deg_free == 1.5)\n\n# A tibble: 1 × 7\n  adjust_deg_free .metric .estimator  mean     n std_err .config              \n            &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                \n1             1.5 mae     standard    10.2    10   0.350 Preprocessor1_Model04\n\n# Run the LS\nset.seed(253)\nls_model &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\") %&gt;% \n  fit_resamples(\n    Grad.Rate ~ .,\n    resamples = vfold_cv(college_sub, v = 10), \n    metrics = metric_set(mae)\n  )\nls_model %&gt;% \n  collect_metrics()\n\n# A tibble: 1 × 6\n  .metric .estimator  mean     n std_err .config             \n  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               \n1 mae     standard    10.2    10   0.365 Preprocessor1_Model1\n\n# Run the KNN\nknn_spec &lt;- nearest_neighbor() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"kknn\") %&gt;% \n  set_args(neighbors = tune())\nvariable_recipe &lt;- recipe(Grad.Rate ~ ., data = college_sub) %&gt;% \n  step_nzv(all_predictors()) %&gt;% \n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_normalize(all_numeric_predictors())\nknn_workflow &lt;- workflow() %&gt;% \n  add_model(knn_spec) %&gt;% \n  add_recipe(variable_recipe)\nset.seed(253)\nknn_models &lt;- knn_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(neighbors(range = c(1, 200)), levels = 50),\n    resamples = vfold_cv(college_sub, v = 10),\n    metrics = metric_set(mae)\n  )\nbest_K &lt;- select_best(knn_models, metric = \"mae\")\nbest_K\n\n# A tibble: 1 × 2\n  neighbors .config              \n      &lt;int&gt; &lt;chr&gt;                \n1        33 Preprocessor1_Model09\n\nknn_models %&gt;% \n  collect_metrics() %&gt;% \n  filter(neighbors == best_K$neighbors)\n\n# A tibble: 1 × 7\n  neighbors .metric .estimator  mean     n std_err .config              \n      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                \n1        33 mae     standard    10.2    10   0.337 Preprocessor1_Model09",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#part-3-reflection",
+    "href": "L09-loess-gams.html#part-3-reflection",
+    "title": "9  LOESS & GAMs",
+    "section": "Part 3: Reflection",
+    "text": "Part 3: Reflection\nIn these final exercises, you’ll reflect upon some algorithms we’ve learned thus far. This might feel bumpy if you haven’t reviewed the material recently, so be kind to yourself!\nSome of these exercises are similar to those on Homework 3. Thus solutions are not provided. The following directions are important to deepening your learning and growth.\n\nTyping the questions into ChatGPT does not require any reflection: You may NOT use ChatGPT or other online resources for these questions or on Homework 3.\nLocating is not learning: Challenge yourself to write out concepts in your own words. Do not rely on definitions in the activities, videos, or elsewhere.\n\n\n\n\n\nInterpretability & flexibility\nWhen picking between different model building algorithms, there are several considerations, including flexibility and interpretability. Consider the following graphic from ISLR:\n\n\n\n\n\nConvince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM make sense. (We’ll address the other algorithms later this semester.)\nWhere would you place KNN on this graphic?\n\n\n\nDifferences and similarities\nFor each pair of algorithms below: try to identify a key similarity, a key difference, and any scenario in which they’re “equivalent”.\n\nKNN vs LOESS\nLOESS vs GAM\nGAM vs least squares\nleast squares vs LASSO\n\n\n\n\nPros & cons (there’s a similar question on HW3)\nSummarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!\n\nleast squares\nLASSO\nKNN\nGAM\n\n\n\n\nLingo (there’s a similar question on HW3)\nIn your own words, describe what each of these “everyday” words means in the context of ML algorithms:\n\ngreedy\nbiased\nparsimonious\n(computationally) expensive\ngoldilocks problem",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
+    "objectID": "L09-loess-gams.html#whats-next",
+    "href": "L09-loess-gams.html#whats-next",
+    "title": "9  LOESS & GAMs",
+    "section": "What’s Next?",
+    "text": "What’s Next?\n\nOur next class:\n\nReview for Quiz 1\nYou will also get time to work on Group Assignment 1. If you must miss class, you’re expected to alert your group members and come up with a plan to contribute to the collaboration outside class.\n\nUpcoming due dates:\n\nHW1 revisions: due tomorrow\nHW3: due Thursday\n\nThis is important review for the quiz\nAs such, extension opportunities will be LIMITED. Please plan accordingly!\n\nQuiz 1: next Tuesday (during class)\nHW2 revisions: due next week",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
+    ]
+  },
+  {
     "objectID": "L10-review.html",
     "href": "L10-review.html",
     "title": "10  Regression Review",
@@ -1349,347 +1503,6 @@
     "crumbs": [
       "Appendices",
       "STAT 155 Review"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#small-group-discussion-recap",
-    "href": "L09-loess-gams.html#small-group-discussion-recap",
-    "title": "9  LOESS & GAMs",
-    "section": "Small Group Discussion: Recap",
-    "text": "Small Group Discussion: Recap\nEXAMPLE 1: KNN (Review)\nIn the previous activity, we modeled college Grad.Rate versus Expend, Enroll, and Private using data on 775 schools.\n\nWe chose the KNN with K = 33 because it minimized the CV MAE, i.e. the errors when predicting grad rate for schools outside our sample. We don’t typically worry about a more parsimonious KNN, i.e. a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?\nWhat assumptions did the KNN model make about the relationship of Grad.Rate with Expend, Enroll, and Private? Is this a pro or con?\nWhat did the KNN model tell us about the relationship of Grad.Rate with Expend, Enroll, and Private? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con?\n\n\n\nSolution\n\nSolutions are in exercises for previous activity.\n\n\nEXAMPLE 2: nonparametric KNN vs parametric least squares and LASSO\n\nWhen should we use a nonparametric algorithm like KNN?\nWhen shouldn’t we?\n\n\n\nSolution\n\n\nUse nonparametric methods when parametric model assumptions are too rigid. Forcing a parametric method in this situation can produce misleading conclusions.\nUse parametric methods when the model assumptions hold. In such cases, parametric models provide more contextual insight (eg: meaningful coefficients) and the ability to detect which predictors are beneficial to the model.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#notes-loess",
-    "href": "L09-loess-gams.html#notes-loess",
-    "title": "9  LOESS & GAMs",
-    "section": "Notes: LOESS",
-    "text": "Notes: LOESS\nLocal Regression or Locally Estimated Scatterplot Smoothing (LOESS)\nGoal:\nBuild a flexible regression model of \\(y\\) by one quantitative predictor \\(x\\),\n\\[y = f(x) + \\varepsilon\\]\nIdea:\nFit regression models in small localized regions, where nearby data have greater influence than far data.\nAlgorithm:\nDefine the span, aka bandwidth, tuning parameter \\(h\\) where \\(0 \\le h \\le 1\\). Take the following steps to estimate \\(f(x)\\) at each possible predictor value \\(x\\):\n\nIdentify a neighborhood consisting of the \\(100∗h\\)% of cases that are closest to \\(x\\).\n\nPutting more weight on the neighbors closest to \\(x\\) (ie. allowing them to have more influence), fit a linear model in this neighborhood. 3. Use the local linear model to estimate f(x).\n\nIn pictures:\n\n\n\n\n\n\n\n\n\nEXAMPLE 3: LOESS in R\nWe can plot LOESS models using geom_smooth(). Play around with the span parameter below.\n\nWhat happens as we increase the span from roughly 0 to roughly 1?\nWhat is one “pro” of this nonparametric algorithm, relative to KNN?\nWhat questions do you have about this algorithm?\n\n\nlibrary(tidyverse)\nlibrary(ISLR)\ndata(College)\n\nggplot(College, aes(x = Expend, y = Grad.Rate)) + \n  geom_point() + \n  geom_smooth(method = \"loess\", span = 0.5)\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nbecomes smoother and more simple\nit’s smoother, more like the shape of the relationship we’re trying to estimate\n\n\n\nEXAMPLE 4: LOESS & the Bias-Variance Tradeoff\nUse the below shiny app to explore the impact of the span tuning parameter h on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.\n\nhigh bias but low variance\n\nh near 0\nh somewhere in the middle\nh near 1\n\nlow bias but high variance\n\nh near 0\nh somewhere in the middle\nh near 1\n\nmoderate bias and low variance\n\nh near 0\nh somewhere in the middle\nh near 1\n\n\n\n\nSolution\n\n\nh near 1\nh near 0\nh somewhere in the middle\n\n\n\n\n# Load packages & data\nlibrary(shiny)\nlibrary(tidyverse)\n\n# Define a LOESS plotting function\nplot_loess &lt;- function(h, plot_data){\n  ggplot(plot_data, aes(x = x, y = y)) + \n    geom_point() + \n    geom_smooth(span = h, se = FALSE) + \n    labs(title = paste(\"h = \", h)) +\n    lims(y = c(-5,12))\n}\n\n# BUILD THE SERVER\n# These are instructions for building the app - what plot to make, what quantities to calculate, etc\nserver_LOESS &lt;- function(input, output) {\n  new_data &lt;- eventReactive(input$do, {\n    x &lt;- c(runif(25, -6, -2.5), runif(50, -3, 3), runif(25, 2.5, 6))\n    y &lt;- 9 - x^2 + rnorm(100, sd = 0.75) \n    y[c(1:25, 76:100)] &lt;- rnorm(50, sd = 0.75)\n    data.frame(x, y)\n  })\n  output$loesspic &lt;- renderPlot({\n    plot_loess(h = input$hTune, plot_data = new_data())\n  })\n}\n\n\n# BUILD THE USER INTERFACE (UI)\n# The UI controls the layout, appearance, and widgets (eg: slide bars).\nui_LOESS &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      h4(\"Sample 100 observations:\"), \n      actionButton(\"do\", \"Go!\"),\n      h4(\"Tune the LOESS:\"), \n      sliderInput(\"hTune\", \"h\", min = 0.05, max = 1, value = 0.05)\n    ),\n    mainPanel(\n      h4(\"LOESS plot:\"), \n      plotOutput(\"loesspic\")\n    )\n  )\n)\n\n\n# RUN THE SHINY APP!\nshinyApp(ui = ui_LOESS, server = server_LOESS)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#notes-gam",
-    "href": "L09-loess-gams.html#notes-gam",
-    "title": "9  LOESS & GAMs",
-    "section": "Notes: GAM",
-    "text": "Notes: GAM\nGeneralized Additive Models (GAM)\nGAMs are nonparametric nonlinear models that can handle more than one predictor. They incorporate each predictor \\(x_i\\) through some nonparametric, smooth function \\(f_i()\\):\n\\[y = \\beta_0 + f_1(x_1) + f_2(x_2) + \\cdots + f_p(x_p) + \\varepsilon\\]\nBig ideas\n\nEach \\(f_j(x_j)\\) is a smooth model of \\(y\\) vs \\(x_j\\) when controlling for the other predictors. More specifically:\n\nEach \\(f_j(x_j)\\) models the behavior in \\(y\\) that’s not explained by the other predictors.\nThis “unexplained behavior” is represented by the residuals from the model of \\(y\\) versus all predictors.\n\nThe \\(f_j()\\) functions are estimated using some smoothing algorithm (e.g. LOESS, smoothing splines, etc).\n\nNOTE: More optional details are included in the “Deeper learning” section.\n\n\n\n\n\n\n\nTECHNICAL NOTE\nIn tidymodels():\n\nThe GAM f(x) components are estimated using smoothing splines, a nonparametric smoothing technique that’s more nuanced than LOESS.\nSmoothing splines depend upon a \\(\\lambda\\) penalty tuning parameter (labeled adjust_deg_free in tidymodels). As in the LASSO:\n\nthe bigger the \\(\\lambda\\), the more simple / less wiggly the estimate of f(x)\nif \\(\\lambda\\) is big enough, we might even kick a predictor out of the model\n\n\nOptional details are in the “Deeper Learning” section.\n\n\n\n\n\n\n\nEXAMPLE 5: GAM\nInterpret the wage analysis in Chapter 7 of ISLR.\nwage = \\(\\beta_0\\) + f(year) + f(age) + f(education) + \\(\\varepsilon\\)\n\n\n\n\n\nSolution\n\nfor example: when controlling for education level and year, wages have a quadratic-ish relationship with age. Both younger and older workers tend to have lower wages.\n\n\nNOTE\nKNN, LOESS, and GAM aren’t the only algorithms for building more flexible models! Chapter 7 of the book also discusses:\n\npiecewise polynomials (parametric)\nregression splines (parametric)\nsmoothing splines (nonparametric)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#exercises",
-    "href": "L09-loess-gams.html#exercises",
-    "title": "9  LOESS & GAMs",
-    "section": "Exercises",
-    "text": "Exercises\nGoals\n\nImplement and explore GAM in R.\n\nExplore how this algorithm compares to others, hence how it fits into our broader ML workflow.\n\nContext\nUsing the College data in the ISLR package, we’ll build a predictive model of Grad.Rate by 6 predictors: Private, PhD (percent of faculty with PhDs), Room.Board, Personal (estimated personal spending), Outstate (out-of-state tuition), perc.alumni (percent of alumni who donate)\n\n# Load packages\nlibrary(tidymodels)\nlibrary(tidyverse)\nlibrary(ISLR)\n\n# Load data\ndata(College)\n\n# Wrangle the data\ncollege_sub &lt;- College %&gt;% \n  filter(Grad.Rate &lt;= 100) %&gt;% \n  filter((Grad.Rate &gt; 50 | Expend &lt; 40000)) %&gt;% \n  select(Grad.Rate, Private, PhD, Room.Board, Personal, Outstate, perc.alumni)\n\n\n\n\n\nPart 1: Building a GAM\nLet’s build a GAM of Grad.Rate by all 6 predictors in college_sub:\n\\[\\text{Grad.Rate} = \\beta_0 + \\beta_1\\text{PrivateYes} + f_2(\\text{PhD})  + \\cdots + f_{6}(\\text{perc.alumni}) + \\varepsilon\\]\nYou’re given all code here. Be sure to scan and reflect upon what’s happening.\n\n\nSTEP 1: Specifying the GAM\nSpecify the GAM algorithm. Ask yourself the following about each line:\n\nHow, if at all, does this differ from the code for LASSO or KNN?\nWhat’s the point?\n\n\ngam_spec &lt;- gen_additive_mod() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"mgcv\") %&gt;% \n  set_args(adjust_deg_free = tune(), select_features = TRUE)\n\n\n\n\nSTEP 2: variable recipe\nNOTE: each \\(f_j(x_j)\\) uses only a single predictor \\(x_j\\), we don’t have to worry about predictor scales or pre-processing.\n\nvariable_recipe &lt;- recipe(Grad.Rate ~ ., data = college_sub)\n\n\n\n\n\n\nSTEP 3: workflow specification\nSet up our GAM workflow. Check out the formula required by add_model:\n\nHow did we include the categorical Private predictor?\nHow did we include the other quantitative predictors?\nThinking back to the technical note about the GAM in tidymodels, what do you think s() stands for?\n\n\ngam_workflow &lt;- workflow() %&gt;% \n  add_recipe(variable_recipe) %&gt;% \n  add_model(gam_spec,\n            formula = Grad.Rate ~ Private + s(PhD) + s(Room.Board) + s(Personal) + s(Outstate) + s(perc.alumni))\n\n\n\n\nSTEP 4: estimate multiple GAMs\nFinally, estimate the GAM using a range of values for adjust_deg_free(), the \\(\\lambda\\) tuning parameter.\n\nRecall: the bigger the parameter, the greater the penalty for overfit, wiggly behavior.\nWe’ll try 10 possible values for the penalty parameter, ranging from 0.25 to 4, and evaluate each model with respect to its 10-fold CV MAE.\n\nRunning this code will take some time (typically under 30 seconds). The more predictors we have, the longer it takes!\n\n\nset.seed(253)\ngam_models &lt;- gam_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(adjust_deg_free(range = c(0.25, 4)), \n                        levels = 10),\n    resamples = vfold_cv(college_sub, v = 10),\n    metrics = metric_set(mae)\n  )\n\n\n\n\n\n\n\n\nPart 2: Identify and apply a “final” GAM\n\nComputational time\nWe only ran 10 different GAMs of Grad.Rate by our 6 predictors above. What is it about this algorithm that makes it take so long?\nNOTE: In general, the GAM is not great when we have lots of predictors. In that case, we might use a poorly fit LASSO to help pick predictors, and then use GAM with these predictors for our final model and predictions.\n\n\n\nSolution\n\nWithin any 1 model, we’re building many models within local windows.\n\n\n\nIdentify the best GAM\nUsing the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:\n::: {.cell}\n# Use a plot to compare the predictive performance of our 10 GAM models\n\n\n# Pick the best value for the penalty tuning parameter\n# Name this `best_penalty`\n\n\n# Fit a final GAM using `best_penalty`\n# Name this `final_gam`\n:::\n\n\n\nSolution\n\n\n# Use a plot to compare the predictive performance of our 10 GAM models\ngam_models %&gt;% \nautoplot()\n\n\n\n\n\n\n\n# Pick the best value for the penalty tuning parameter\n# Name this `best_penalty`\nbest_penalty &lt;- gam_models %&gt;% \nselect_best()\n\n# Fit a final GAM using `best_penalty`\n# Name this `final_gam`\nfinal_gam &lt;- gam_workflow %&gt;% \nfinalize_workflow(parameters = best_penalty) %&gt;% \nfit(data = college_sub)\n\n\n\n\nExplore the final GAM\nPlot the smoothing functions for each predictor in our model. NOTE: The $ notation accesses nested objects (fit within fit within fit within final_gam).\n::: {.cell}\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n:::\n\nIs there anything in these plots that justifies our use of the GAM instead of least squares?\nPick 1 or 2 of these plots and interpret your findings.\n\n\n\n\nSolution\n\n\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n\n\nkinda. Personal, Outstate, and perc.alumni seem to have complicated non-linear associations with Grad.Rate.\nwill vary\n\n\n\n\nPick an algorithm\nOur overall goal is to build a predictive model of Grad.Rate (\\(y\\)) by 6 predictors:\n\\[y = f(x_1,x_2,...,x_{6}) + \\varepsilon\\]\nThe table below summarizes the CV MAE for 3 possible algorithms: least squares, KNN, and GAM. After examining the results, explain which model you would choose and why. NOTE: There are no typos here! All models had the same CV MAE. Code is provided in the online manual if you’re curious.\n\n\n\nmethod\ntype\nassumption about \\(f(x_1,x_2,...,x_{6})\\)\nCV MAE\n\n\n\n\nleast squares\nparametric\n\\(\\beta_0 + \\beta_1x_1 + \\cdots + \\beta_{6} x_{6}\\)\n10.2\n\n\nKNN w/ \\(K = 33\\)\nnonparametric\naverage \\(y\\) among neighbors\n10.2\n\n\nGAM w/ penalty = 1.5\nnonparametric\n\\(\\beta_0 + f_1(x_1) + \\cdots + f_{6}(x_{6})\\)\n10.2\n\n\n\n\n\n\nSolution\n\nYou can argue a couple of ways.\n\nIf you noted the non-linear relationships in the plots above: GAM is more informative than KNN and less wrong than least squares.\nIf you didn’t think above that GAM was warranted, you should pick least squares. It’s definitely simpler and easier to interpret.\n\nCode\n\n# GAM MAE\ngam_models %&gt;% \n  collect_metrics() %&gt;% \n  filter(adjust_deg_free == 1.5)\n\n# A tibble: 1 × 7\n  adjust_deg_free .metric .estimator  mean     n std_err .config              \n            &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                \n1             1.5 mae     standard    10.2    10   0.350 Preprocessor1_Model04\n\n# Run the LS\nset.seed(253)\nls_model &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\") %&gt;% \n  fit_resamples(\n    Grad.Rate ~ .,\n    resamples = vfold_cv(college_sub, v = 10), \n    metrics = metric_set(mae)\n  )\nls_model %&gt;% \n  collect_metrics()\n\n# A tibble: 1 × 6\n  .metric .estimator  mean     n std_err .config             \n  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               \n1 mae     standard    10.2    10   0.365 Preprocessor1_Model1\n\n# Run the KNN\nknn_spec &lt;- nearest_neighbor() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"kknn\") %&gt;% \n  set_args(neighbors = tune())\nvariable_recipe &lt;- recipe(Grad.Rate ~ ., data = college_sub) %&gt;% \n  step_nzv(all_predictors()) %&gt;% \n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_normalize(all_numeric_predictors())\nknn_workflow &lt;- workflow() %&gt;% \n  add_model(knn_spec) %&gt;% \n  add_recipe(variable_recipe)\nset.seed(253)\nknn_models &lt;- knn_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(neighbors(range = c(1, 200)), levels = 50),\n    resamples = vfold_cv(college_sub, v = 10),\n    metrics = metric_set(mae)\n  )\nbest_K &lt;- select_best(knn_models, metric = \"mae\")\nbest_K\n\n# A tibble: 1 × 2\n  neighbors .config              \n      &lt;int&gt; &lt;chr&gt;                \n1        33 Preprocessor1_Model09\n\nknn_models %&gt;% \n  collect_metrics() %&gt;% \n  filter(neighbors == best_K$neighbors)\n\n# A tibble: 1 × 7\n  neighbors .metric .estimator  mean     n std_err .config              \n      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                \n1        33 mae     standard    10.2    10   0.337 Preprocessor1_Model09\n\n\n\n\n\n\nPart 3: Reflection\nIn these final exercises, you’ll reflect upon some algorithms we’ve learned thus far. This might feel bumpy if you haven’t reviewed the material recently, so be kind to yourself!\nSome of these exercises are similar to those on Homework 4. Thus solutions are not provided. The following directions are important to deepening your learning and growth.\n\nTyping the questions into ChatGPT does not require any reflection: You may NOT use ChatGPT or other online resources for these questions or on Homework 4.\nLocating is not learning: Challenge yourself to write out concepts in your own words. Do not rely on definitions in the activities, videos, or elsewhere.\n\n\n\n\n\nInterpretability & flexibility\nWhen picking between different model building algorithms, there are several considerations, including flexibility and interpretability. Consider the following graphic from ISLR:\n\n\n\n\n\nConvince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM make sense. (We’ll address the other algorithms later this semester.)\nWhere would you place KNN on this graphic?\n\n\nDifferences and similarities\nFor each pair of algorithms below: try to identify a key similarity, a key difference, and any scenario in which they’re “equivalent”.\n\nKNN vs LOESS\nLOESS vs GAM\nGAM vs least squares\nleast squares vs LASSO\n\nPros & cons (there’s a similar question on HW 4)\nSummarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!\n\nleast squares\nLASSO\nKNN\nGAM\n\nLingo (there’s a similar question on HW 4)\nIn your own words, describe what each of these “everyday” words means in the context of ML algorithms:\n\ngreedy\nbiased\nparsimonious\n(computationally) expensive\ngoldilocks problem",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#notes-deeper-learning-optional",
-    "href": "L09-loess-gams.html#notes-deeper-learning-optional",
-    "title": "9  LOESS & GAMs",
-    "section": "Notes: Deeper learning (OPTIONAL)",
-    "text": "Notes: Deeper learning (OPTIONAL)\nSPLINES\nKNN, LOESS, and GAM aren’t the only nonparametric regression algorithms! Other common tools include piecewise polynomials and smoothing splines. Read Chapter 7 of the book, and watch Prof Leslie Myint’s video on these topics to learn more:\nhttps://www.youtube.com/watch?v=G7Gm3sZbM-4\nChapter 7.5 specifically provides more information about smoothing splines. In general, these techniques estimate the GAM f(x) components by penalizing wiggly behavior where wiggliness is measured by the second derivative of f(x), i.e. the degree to which the slope changes. Specifically, f(x) is estimated to minimize:\n\\[\\sum_{i=1}^n (y_i - f(x_i))^2 + \\lambda \\int f''(t)^2 dt\\]\nThat is, we want f(x) to produce small squared residuals (\\(\\sum_{i=1}^n (y_i - f(x_i))^2\\)) and small total change in slope over the range of x (\\(\\int f''(t)^2 dt\\)).\n\n\n\nGAM ALGORITHM DETAILS\nThe \\(f_j()\\) functions are estimated using a backfitting procedure. The idea is this.\n\nFit a model of \\(y\\) vs all other \\(x\\) except \\(x_j\\). The residuals of this model reveal the information in \\(y\\) that’s unexplained by all other \\(x\\).\nUse smoothing splines to model the residuals by \\(x_j\\). This model reveals the relationship between \\(y\\) and \\(x_j\\) when controlling for all other \\(x\\).\nIterate between the above steps for all \\(x\\). Stop when there’s no longer improvement in the prediction error (as measured by the residual sum of squares).",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#notes-r-code",
-    "href": "L09-loess-gams.html#notes-r-code",
-    "title": "9  LOESS & GAMs",
-    "section": "Notes: R code",
-    "text": "Notes: R code\n\n\nSuppose we want to build a model of response variable y using predictors x1 and x2 in our sample_data.\n\n# Load packages\nlibrary(tidymodels)\n\n\n\nBuild the model\n\n# STEP 1: GAM model specification\ngam_spec &lt;- gen_additive_mod() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"mgcv\") %&gt;% \n  set_args(adjust_deg_free = tune(), select_features = TRUE)\n\nSTEP 1 notes:\n\nWe use the mgcv, not lm, engine to build GAMs.\nThe mgcv engine requires us to specify two argument (set_args):\n\nadjust_deg_free = tune() indicates that we don’t (yet) know an appropriate value for the penalty tuning parameter. We need to tune it.\nselect_features = TRUE allows the GAM to eliminate a predictor from the model (like LASSO!).\n\n\n\n# STEP 2: variable recipe\nvariable_recipe &lt;- recipe(y ~ ., data = sample_data)\n\nSTEP 2 notes: The GAM algorithm does not require any pre-processing of the predictors.\n\n# STEP 3: workflow specification\n# SUPPOSE x1 is CATEGORICAL and x2 is QUANTITATIVE\ngam_workflow &lt;- workflow() %&gt;% \n  add_recipe(variable_recipe) %&gt;% \n  add_model(gam_spec, formula = y ~ x1 + s(x2))\n\nSTEP 3 notes: In add_model:\n\nWe need to provide a formula.\nWe put a categorical predictor into our model as itself: x1.\nWe put a quantitative predictor into our model through a smoothing spline: s(x2).\n\n\n# STEP 4: Estimate multiple GAM models using a range of possible penalty parameters\n# Calculate the CV MAE for each\nset.seed(___)\ngam_models &lt;- gam_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(adjust_deg_free(range = c(___, ___)), \n                        levels = 10),\n    resamples = vfold_cv(sample_data, v = ___),\n    metrics = metric_set(mae)\n  )\n\nSTEP 4 notes:\n\nSince the CV process is random, we need to set.seed(___).\nWe use tune_grid() instead of fit() since we have to build multiple GAM models, each using a different penalty tuning parameters.\ngrid specifies the values we want to try for the penalty parameter adjust_deg_free().\n\nthe range specifies the lowest and highest numbers we want to try. This must be positive. I start with range = c(0.25, 4) and expand / contract the interval as necessary.\nlevels is the number of values to try in that range, thus how many GAMs to build.\n\nresamples and metrics indicate that we want to calculate a CV MAE for each GAM.\n\n\n\n\nTuning the GAM\n\n# Calculate CV MAE for each GAM\ngam_models %&gt;% \n  collect_metrics()\n\n# Plot CV MAE (y-axis) for the GAM from each penalty parameter (x-axis)\nautoplot(gam_models)\n\n# Identify penalty which produced the lowest (\"best\") CV MAE\nbest_penalty &lt;- select_best(gam_models, metric = \"mae\")\nbest_penalty\n\n\n\nFinalizing & plotting the “best” GAM\n\nfinal_gam &lt;- gam_workflow %&gt;% \n  finalize_workflow(parameters = best_penalty) %&gt;% \n  fit(data = sample_data)\n\n# Plot the smoothing functions\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n\n\n\nUse the GAM to make predictions\n\nfinal_gam %&gt;% \n  predict(new_data = ___)     # Put in a data.frame object with x1 and x2 values (at minimum)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-1-knn-review",
-    "href": "L09-loess-gams.html#example-1-knn-review",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 1: KNN Review",
-    "text": "Example 1: KNN Review\nIn the previous activity, we modeled college Grad.Rate versus Expend, Enroll, and Private using data on 775 schools.\n\nWe chose the KNN with K = 33 because it minimized the CV MAE, i.e. the errors when predicting grad rate for schools outside our sample. We don’t typically worry about a more parsimonious KNN, i.e. a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?\nWhat assumptions did the KNN model make about the relationship of Grad.Rate with Expend, Enroll, and Private? Is this a pro or con?\nWhat did the KNN model tell us about the relationship of Grad.Rate with Expend, Enroll, and Private? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con?\n\n\n\nSolution\n\n\nThe output of the model is: one prediction for one observational unit. There is nothing to interpret (no plots, no coefficients, etc.). Also: there is no way to tune the model to use fewer predictors.\nThe only assumption we made was that the outcome values of \\(y\\) should be similar if the predictor values of \\(x\\) are similar. No other assumptions are made.\n\nThis is a pro if we want flexibility due to non-linear relationships and that assumption is true.\nThis is a con if relationships are actually linear or could be modeled with a parametric model.\n\nNothing.\n\nI’d say this is a con. There is nothing to interpret, so the model is more of a black box in terms of knowing why it gives you a particular prediction.\n\n\nFurther details are in exercises for previous activity.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-1",
-    "href": "L09-loess-gams.html#example-1",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 1",
-    "text": "Example 1\nKNN (Review)\nIn the previous activity, we modeled college Grad.Rate versus Expend, Enroll, and Private using data on 775 schools.\n\nWe chose the KNN with K = 33 because it minimized the CV MAE, i.e. the errors when predicting grad rate for schools outside our sample. We don’t typically worry about a more parsimonious KNN, i.e. a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?\nWhat assumptions did the KNN model make about the relationship of Grad.Rate with Expend, Enroll, and Private? Is this a pro or con?\nWhat did the KNN model tell us about the relationship of Grad.Rate with Expend, Enroll, and Private? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con?\n\n\n\nSolution\n\nSolutions are in exercises for previous activity.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-2",
-    "href": "L09-loess-gams.html#example-2",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 2",
-    "text": "Example 2\nNonparametric KNN vs parametric least squares and LASSO\n\nWhen should we use a nonparametric algorithm like KNN?\nWhen shouldn’t we?\n\n\n\nSolution\n\n\nUse nonparametric methods when parametric model assumptions are too rigid. Forcing a parametric method in this situation can produce misleading conclusions.\nUse parametric methods when the model assumptions hold. In such cases, parametric models provide more contextual insight (eg: meaningful coefficients) and the ability to detect which predictors are beneficial to the model.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-2-nonparametric-vs-parametric",
-    "href": "L09-loess-gams.html#example-2-nonparametric-vs-parametric",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 2: Nonparametric vs Parametric",
-    "text": "Example 2: Nonparametric vs Parametric\nNonparametric KNN vs parametric least squares and LASSO:\n\nWhen should we use a nonparametric algorithm like KNN?\nWhen shouldn’t we?\n\n\n\nSolution\n\n\nUse nonparametric methods when parametric model assumptions are too rigid. Forcing a parametric method in this situation can produce misleading conclusions.\nUse parametric methods when the model assumptions hold. In such cases, parametric models provide more contextual insight (eg: meaningful coefficients) and the ability to detect which predictors are beneficial to the model.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#announcements",
-    "href": "L09-loess-gams.html#announcements",
-    "title": "9  LOESS & GAMs",
-    "section": "Announcements",
-    "text": "Announcements\n\nQuiz 1 next Tuesday\n\nTopic: Regression (Units 1–3)\nPart 1: TBD\nPart 2: TBD\n\nHW3 due Thursday\n\nSpecial instructions for this one – review the Important Notes before you begin!\nLimited extension opportunities to facilitate quick turnaround on feedback/sharing solutions (in time for Quiz 1)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-1-knn",
-    "href": "L09-loess-gams.html#example-1-knn",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 1: KNN",
-    "text": "Example 1: KNN\nIn the previous activity, we modeled college Grad.Rate versus Expend, Enroll, and Private using data on 775 schools.\n\nWe chose the KNN with K = 33 because it minimized the CV MAE, i.e. the errors when predicting grad rate for schools outside our sample. We don’t typically worry about a more parsimonious KNN, i.e. a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?\nWhat assumptions did the KNN model make about the relationship of Grad.Rate with Expend, Enroll, and Private? Is this a pro or con?\nWhat did the KNN model tell us about the relationship of Grad.Rate with Expend, Enroll, and Private? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con?\n\n\n\nSolution\n\nSolutions are in exercises for previous activity.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#local-regression-or-locally-estimated-scatterplot-smoothing-loess",
-    "href": "L09-loess-gams.html#local-regression-or-locally-estimated-scatterplot-smoothing-loess",
-    "title": "9  LOESS & GAMs",
-    "section": "Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)",
-    "text": "Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)\nGoal:\nBuild a flexible regression model of \\(y\\) by one quantitative predictor \\(x\\),\n\\[y = f(x) + \\varepsilon\\]\n. . .\nIdea:\nFit regression models in small localized regions, where nearby data have greater influence than far data.\n. . .\nAlgorithm:\nDefine the span, aka bandwidth, tuning parameter \\(h\\) where \\(0 \\le h \\le 1\\). Take the following steps to estimate \\(f(x)\\) at each possible predictor value \\(x\\):\n\nIdentify a neighborhood consisting of the \\(100∗h\\)% of cases that are closest to \\(x\\).\n\nPutting more weight on the neighbors closest to \\(x\\) (ie. allowing them to have more influence), fit a linear model in this neighborhood.\n\nUse the local linear model to estimate f(x).\n\n. . .\nIn pictures:",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-3-loess-in-r",
-    "href": "L09-loess-gams.html#example-3-loess-in-r",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 3: LOESS in R",
-    "text": "Example 3: LOESS in R\nWe can plot LOESS models using geom_smooth(). Play around with the span parameter below.\n\nWhat happens as we increase the span from roughly 0 to roughly 1?\nWhat is one “pro” of this nonparametric algorithm, relative to KNN?\nWhat questions do you have about this algorithm?\n\n\nlibrary(tidyverse)\nlibrary(ISLR)\ndata(College)\n\nggplot(College, aes(x = Expend, y = Grad.Rate)) + \n  geom_point() + \n  geom_smooth(method = \"loess\", span = 0.5)\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nas we increase span, the model becomes smoother and more simple\ncompare to KNN, LOESS is smoother, more like the shape of the relationship we’re trying to estimate\n\n\n\nNote: you’ll find that you can specify span greater than 1. Use your resources to figure out what that means in terms of the algorithm.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-4-loess-the-bias-variance-tradeoff",
-    "href": "L09-loess-gams.html#example-4-loess-the-bias-variance-tradeoff",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 4: LOESS & the Bias-Variance Tradeoff",
-    "text": "Example 4: LOESS & the Bias-Variance Tradeoff\nRun the shiny app code, below. Explore the impact of the span tuning parameter h on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.\nFor what values of \\(h\\) (near 0, somewhere in the middle, near 1) do you get the following:\n\nhigh bias but low variance\nlow bias but high variance\nmoderate bias and low variance\n\n\n\nSolution\n\n\nh near 1\nh near 0\nh somewhere in the middle\n\n\n\n\n# Load packages & data\nlibrary(shiny)\nlibrary(tidyverse)\n\n# Define a LOESS plotting function\nplot_loess &lt;- function(h, plot_data){\n  ggplot(plot_data, aes(x = x, y = y)) + \n    geom_point() + \n    geom_smooth(span = h, se = FALSE) + \n    labs(title = paste(\"h = \", h)) +\n    lims(y = c(-5,12))\n}\n\n# BUILD THE SERVER\n# These are instructions for building the app - what plot to make, what quantities to calculate, etc\nserver_LOESS &lt;- function(input, output) {\n  new_data &lt;- eventReactive(input$do, {\n    x &lt;- c(runif(25, -6, -2.5), runif(50, -3, 3), runif(25, 2.5, 6))\n    y &lt;- 9 - x^2 + rnorm(100, sd = 0.75) \n    y[c(1:25, 76:100)] &lt;- rnorm(50, sd = 0.75)\n    data.frame(x, y)\n  })\n  output$loesspic &lt;- renderPlot({\n    plot_loess(h = input$hTune, plot_data = new_data())\n  })\n}\n\n\n# BUILD THE USER INTERFACE (UI)\n# The UI controls the layout, appearance, and widgets (eg: slide bars).\nui_LOESS &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      h4(\"Sample 100 observations:\"), \n      actionButton(\"do\", \"Go!\"),\n      h4(\"Tune the LOESS:\"), \n      sliderInput(\"hTune\", \"h\", min = 0.05, max = 1, value = 0.05)\n    ),\n    mainPanel(\n      h4(\"LOESS plot:\"), \n      plotOutput(\"loesspic\")\n    )\n  )\n)\n\n\n# RUN THE SHINY APP!\nshinyApp(ui = ui_LOESS, server = server_LOESS)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#generalized-additive-models-gam",
-    "href": "L09-loess-gams.html#generalized-additive-models-gam",
-    "title": "9  LOESS & GAMs",
-    "section": "Generalized Additive Models (GAM)",
-    "text": "Generalized Additive Models (GAM)\nGAMs are nonparametric nonlinear models that can handle more than one predictor. They incorporate each predictor \\(x_i\\) through some nonparametric, smooth function \\(f_i()\\):\n\\[y = \\beta_0 + f_1(x_1) + f_2(x_2) + \\cdots + f_p(x_p) + \\varepsilon\\]\n. . .\nBig ideas\n\nEach \\(f_j(x_j)\\) is a smooth model of \\(y\\) vs \\(x_j\\) when controlling for the other predictors. More specifically:\n\nEach \\(f_j(x_j)\\) models the behavior in \\(y\\) that’s not explained by the other predictors.\nThis “unexplained behavior” is represented by the residuals from the model of \\(y\\) versus all predictors.\n\nThe \\(f_j()\\) functions are estimated using some smoothing algorithm (e.g. LOESS, smoothing splines, etc).\n\n\n. . .\nTECHNICAL NOTE\nIn tidymodels():\n\nThe GAM f(x) components are estimated using smoothing splines, a nonparametric smoothing technique that’s more nuanced than LOESS.\nSmoothing splines depend upon a \\(\\lambda\\) penalty tuning parameter (labeled adjust_deg_free in tidymodels). As in the LASSO:\n\nthe bigger the \\(\\lambda\\), the more simple / less wiggly the estimate of f(x)\nif \\(\\lambda\\) is big enough, we might even kick a predictor out of the model\n\n\nNOTE: More optional details are included in the “Deeper learning” section.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#example-5-gam",
-    "href": "L09-loess-gams.html#example-5-gam",
-    "title": "9  LOESS & GAMs",
-    "section": "Example 5: GAM",
-    "text": "Example 5: GAM\nInterpret the wage analysis in Chapter 7 of ISLR.\nwage = \\(\\beta_0\\) + f(year) + f(age) + f(education) + \\(\\varepsilon\\)\n\n\n\n\n\nSolution\n\nfor example: when controlling for education level and year, wages have a quadratic-ish relationship with age. Both younger and older workers tend to have lower wages.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#other-flexible-modles",
-    "href": "L09-loess-gams.html#other-flexible-modles",
-    "title": "9  LOESS & GAMs",
-    "section": "Other Flexible Modles",
-    "text": "Other Flexible Modles\nNOTE\nKNN, LOESS, and GAM aren’t the only algorithms for building more flexible models! Chapter 7 of the book also discusses:\n\npiecewise polynomials (parametric)\nregression splines (parametric)\nsmoothing splines (nonparametric)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#other-flexible-models",
-    "href": "L09-loess-gams.html#other-flexible-models",
-    "title": "9  LOESS & GAMs",
-    "section": "Other Flexible Models",
-    "text": "Other Flexible Models\n\nKNN, LOESS, and GAM aren’t the only algorithms for building more flexible models! Chapter 7 of the book also discusses:\n\npiecewise polynomials (parametric)\nregression splines (parametric)\nsmoothing splines (nonparametric)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#getting-started",
-    "href": "L09-loess-gams.html#getting-started",
-    "title": "9  LOESS & GAMs",
-    "section": "Getting Started",
-    "text": "Getting Started\nGoals\n\nImplement and explore GAM in R.\n\nExplore how this algorithm compares to others, hence how it fits into our broader ML workflow.\n\nContext\nUsing the College data in the ISLR package, we’ll build a predictive model of Grad.Rate by 6 predictors: Private, PhD (percent of faculty with PhDs), Room.Board, Personal (estimated personal spending), Outstate (out-of-state tuition), perc.alumni (percent of alumni who donate)\n\n# Load packages\nlibrary(tidymodels)\nlibrary(tidyverse)\nlibrary(ISLR)\n\n# Load data\ndata(College)\n\n# Wrangle the data\ncollege_sub &lt;- College %&gt;% \n  filter(Grad.Rate &lt;= 100) %&gt;% \n  filter((Grad.Rate &gt; 50 | Expend &lt; 40000)) %&gt;% \n  select(Grad.Rate, Private, PhD, Room.Board, Personal, Outstate, perc.alumni)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#part-1-building-a-gam",
-    "href": "L09-loess-gams.html#part-1-building-a-gam",
-    "title": "9  LOESS & GAMs",
-    "section": "Part 1: Building a GAM",
-    "text": "Part 1: Building a GAM\nLet’s build a GAM of Grad.Rate by all 6 predictors in college_sub:\n\\[\\text{Grad.Rate} = \\beta_0 + \\beta_1\\text{PrivateYes} + f_2(\\text{PhD})  + \\cdots + f_{6}(\\text{perc.alumni}) + \\varepsilon\\]\nYou’re given all code here. Be sure to scan and reflect upon what’s happening.\n\n\nSTEP 1: Specifying the GAM\nSpecify the GAM algorithm. Ask yourself the following about each line:\n\nHow, if at all, does this differ from the code for LASSO or KNN?\nWhat’s the point?\n\n\ngam_spec &lt;- gen_additive_mod() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"mgcv\") %&gt;% \n  set_args(adjust_deg_free = tune(), select_features = TRUE)\n\n\n\n\nSTEP 2: variable recipe\nNOTE: each \\(f_j(x_j)\\) uses only a single predictor \\(x_j\\), we don’t have to worry about predictor scales or pre-processing.\n\nvariable_recipe &lt;- recipe(Grad.Rate ~ ., data = college_sub)\n\n\n\n\n\n\nSTEP 3: workflow specification\nSet up our GAM workflow. Check out the formula required by add_model:\n\nHow did we include the categorical Private predictor?\nHow did we include the other quantitative predictors?\nThinking back to the technical note about the GAM in tidymodels, what do you think s() stands for?\n\n\ngam_workflow &lt;- workflow() %&gt;% \n  add_recipe(variable_recipe) %&gt;% \n  add_model(gam_spec,\n            formula = Grad.Rate ~ Private + s(PhD) + s(Room.Board) + s(Personal) + s(Outstate) + s(perc.alumni))\n\n\n\n\nSTEP 4: estimate multiple GAMs\nFinally, estimate the GAM using a range of values for adjust_deg_free(), the \\(\\lambda\\) tuning parameter.\n\nRecall: the bigger the parameter, the greater the penalty for overfit, wiggly behavior.\nWe’ll try 10 possible values for the penalty parameter, ranging from 0.25 to 4, and evaluate each model with respect to its 10-fold CV MAE.\n\nRunning this code will take some time (typically under 30 seconds). The more predictors we have, the longer it takes!\n\n\nset.seed(253)\ngam_models &lt;- gam_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(adjust_deg_free(range = c(0.25, 4)), \n                        levels = 10),\n    resamples = vfold_cv(college_sub, v = 10),\n    metrics = metric_set(mae)\n  )",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#part-2-identify-and-apply-a-final-gam",
-    "href": "L09-loess-gams.html#part-2-identify-and-apply-a-final-gam",
-    "title": "9  LOESS & GAMs",
-    "section": "Part 2: Identify and apply a “final” GAM",
-    "text": "Part 2: Identify and apply a “final” GAM\n\nComputational time\nWe only ran 10 different GAMs of Grad.Rate by our 6 predictors above. What is it about this algorithm that makes it take so long?\nNOTE: In general, the GAM is not great when we have lots of predictors. In that case, we might use a poorly fit LASSO to help pick predictors, and then use GAM with these predictors for our final model and predictions.\n\n\n\nSolution\n\nWithin any 1 model, we’re building many models within local windows.\n\n\n\nIdentify the best GAM\nUsing the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:\n\n\n# Use a plot to compare the predictive performance of our 10 GAM models\n    \n    \n# Pick the best value for the penalty tuning parameter\n# Name this `best_penalty`\n    \n    \n# Fit a final GAM using `best_penalty`\n# Name this `final_gam`\n\n\n\nSolution\n\n\n# Use a plot to compare the predictive performance of our 10 GAM models\ngam_models %&gt;% \n  autoplot()\n\n\n\n\n\n\n\n# Pick the best value for the penalty tuning parameter\n# Name this `best_penalty`\nbest_penalty &lt;- gam_models %&gt;% \n  select_best()\n\n# Fit a final GAM using `best_penalty`\n# Name this `final_gam`\nfinal_gam &lt;- gam_workflow %&gt;% \n  finalize_workflow(parameters = best_penalty) %&gt;%\n  fit(data = college_sub)\n\n\n\n\nExplore the final GAM\nPlot the smoothing functions for each predictor in our model. NOTE: The $ notation accesses nested objects (fit within fit within fit within final_gam).\n\n\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n\n\nIs there anything in these plots that justifies our use of the GAM instead of least squares?\nPick 1 or 2 of these plots and interpret your findings.\n\n\n\nSolution\n\n\nfinal_gam$fit$fit$fit %&gt;% \n  plot(all.terms = TRUE, pages = 1)\n\n\n\n\n\n\n\n\n\nkinda. Personal, Outstate, and perc.alumni seem to have complicated non-linear associations with Grad.Rate.\nwill vary\n\n\n\n\nPick an algorithm\nOur overall goal is to build a predictive model of Grad.Rate (\\(y\\)) by 6 predictors:\n\\[y = f(x_1,x_2,...,x_{6}) + \\varepsilon\\]\nThe table below summarizes the CV MAE for 3 possible algorithms: least squares, KNN, and GAM. After examining the results, explain which model you would choose and why. NOTE: There are no typos here! All models had the same CV MAE. Code is provided in the online manual if you’re curious.\n\n\n\nmethod\ntype\nassumption about \\(f(x_1,x_2,...,x_{6})\\)\nCV MAE\n\n\n\n\nleast squares\nparametric\n\\(\\beta_0 + \\beta_1x_1 + \\cdots + \\beta_{6} x_{6}\\)\n10.2\n\n\nKNN w/ \\(K = 33\\)\nnonparametric\naverage \\(y\\) among neighbors\n10.2\n\n\nGAM w/ penalty = 1.5\nnonparametric\n\\(\\beta_0 + f_1(x_1) + \\cdots + f_{6}(x_{6})\\)\n10.2\n\n\n\n\n\n\nSolution\n\nYou can argue a couple of ways.\n\nIf you noted the non-linear relationships in the plots above: GAM is more informative than KNN and less wrong than least squares.\nIf you didn’t think above that GAM was warranted, you should pick least squares. It’s definitely simpler and easier to interpret.\n\nCode\n\n# GAM MAE\ngam_models %&gt;% \n  collect_metrics() %&gt;% \n  filter(adjust_deg_free == 1.5)\n\n# A tibble: 1 × 7\n  adjust_deg_free .metric .estimator  mean     n std_err .config              \n            &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                \n1             1.5 mae     standard    10.2    10   0.350 Preprocessor1_Model04\n\n# Run the LS\nset.seed(253)\nls_model &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\") %&gt;% \n  fit_resamples(\n    Grad.Rate ~ .,\n    resamples = vfold_cv(college_sub, v = 10), \n    metrics = metric_set(mae)\n  )\nls_model %&gt;% \n  collect_metrics()\n\n# A tibble: 1 × 6\n  .metric .estimator  mean     n std_err .config             \n  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               \n1 mae     standard    10.2    10   0.365 Preprocessor1_Model1\n\n# Run the KNN\nknn_spec &lt;- nearest_neighbor() %&gt;%\n  set_mode(\"regression\") %&gt;% \n  set_engine(engine = \"kknn\") %&gt;% \n  set_args(neighbors = tune())\nvariable_recipe &lt;- recipe(Grad.Rate ~ ., data = college_sub) %&gt;% \n  step_nzv(all_predictors()) %&gt;% \n  step_dummy(all_nominal_predictors()) %&gt;%\n  step_normalize(all_numeric_predictors())\nknn_workflow &lt;- workflow() %&gt;% \n  add_model(knn_spec) %&gt;% \n  add_recipe(variable_recipe)\nset.seed(253)\nknn_models &lt;- knn_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(neighbors(range = c(1, 200)), levels = 50),\n    resamples = vfold_cv(college_sub, v = 10),\n    metrics = metric_set(mae)\n  )\nbest_K &lt;- select_best(knn_models, metric = \"mae\")\nbest_K\n\n# A tibble: 1 × 2\n  neighbors .config              \n      &lt;int&gt; &lt;chr&gt;                \n1        33 Preprocessor1_Model09\n\nknn_models %&gt;% \n  collect_metrics() %&gt;% \n  filter(neighbors == best_K$neighbors)\n\n# A tibble: 1 × 7\n  neighbors .metric .estimator  mean     n std_err .config              \n      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                \n1        33 mae     standard    10.2    10   0.337 Preprocessor1_Model09",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#part-3-reflection",
-    "href": "L09-loess-gams.html#part-3-reflection",
-    "title": "9  LOESS & GAMs",
-    "section": "Part 3: Reflection",
-    "text": "Part 3: Reflection\nIn these final exercises, you’ll reflect upon some algorithms we’ve learned thus far. This might feel bumpy if you haven’t reviewed the material recently, so be kind to yourself!\nSome of these exercises are similar to those on Homework 3. Thus solutions are not provided. The following directions are important to deepening your learning and growth.\n\nTyping the questions into ChatGPT does not require any reflection: You may NOT use ChatGPT or other online resources for these questions or on Homework 3.\nLocating is not learning: Challenge yourself to write out concepts in your own words. Do not rely on definitions in the activities, videos, or elsewhere.\n\n\n\n\n\nInterpretability & flexibility\nWhen picking between different model building algorithms, there are several considerations, including flexibility and interpretability. Consider the following graphic from ISLR:\n\n\n\n\n\nConvince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM make sense. (We’ll address the other algorithms later this semester.)\nWhere would you place KNN on this graphic?\n\n\n\nDifferences and similarities\nFor each pair of algorithms below: try to identify a key similarity, a key difference, and any scenario in which they’re “equivalent”.\n\nKNN vs LOESS\nLOESS vs GAM\nGAM vs least squares\nleast squares vs LASSO\n\n\n\n\nPros & cons (there’s a similar question on HW3)\nSummarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!\n\nleast squares\nLASSO\nKNN\nGAM\n\n\n\n\nLingo (there’s a similar question on HW3)\nIn your own words, describe what each of these “everyday” words means in the context of ML algorithms:\n\ngreedy\nbiased\nparsimonious\n(computationally) expensive\ngoldilocks problem",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#loess-details",
-    "href": "L09-loess-gams.html#loess-details",
-    "title": "9  LOESS & GAMs",
-    "section": "LOESS Details",
-    "text": "LOESS Details\nLocal Regression or Locally Estimated Scatterplot Smoothing (LOESS)\nGoal:\nBuild a flexible regression model of \\(y\\) by one quantitative predictor \\(x\\),\n\\[y = f(x) + \\varepsilon\\]\nIdea:\nFit regression models in small localized regions, where nearby data have greater influence than far data.\nAlgorithm:\nDefine the span, aka bandwidth, tuning parameter \\(h\\) where \\(0 \\le h \\le 1\\). Take the following steps to estimate \\(f(x)\\) at each possible predictor value \\(x\\):\n\nIdentify a neighborhood consisting of the \\(100∗h\\)% of cases that are closest to \\(x\\).\n\nPutting more weight on the neighbors closest to \\(x\\) (ie. allowing them to have more influence), fit a linear model in this neighborhood.\n\nUse the local linear model to estimate f(x).\n\nIn pictures:",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#details",
-    "href": "L09-loess-gams.html#details",
-    "title": "9  LOESS & GAMs",
-    "section": "Details",
-    "text": "Details\nLocal Regression or Locally Estimated Scatterplot Smoothing (LOESS)\n. . .\nGoal:\nBuild a flexible regression model of \\(y\\) by one quantitative predictor \\(x\\),\n\\[y = f(x) + \\varepsilon\\]\n. . .\nIdea:\nFit regression models in small localized regions, where nearby data have greater influence than far data.\n. . .\nAlgorithm:\nDefine the span, aka bandwidth, tuning parameter \\(h\\) where \\(0 \\le h \\le 1\\). Take the following steps to estimate \\(f(x)\\) at each possible predictor value \\(x\\):\n\nIdentify a neighborhood consisting of the \\(100∗h\\)% of cases that are closest to \\(x\\).\n\nPutting more weight on the neighbors closest to \\(x\\) (ie. allowing them to have more influence), fit a linear model in this neighborhood.\n\nUse the local linear model to estimate f(x).\n\n. . .\nIn pictures:",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#notes",
-    "href": "L09-loess-gams.html#notes",
-    "title": "9  LOESS & GAMs",
-    "section": "Notes",
-    "text": "Notes\nLocal Regression or Locally Estimated Scatterplot Smoothing (LOESS)\n. . .\nGoal:\nBuild a flexible regression model of \\(y\\) by one quantitative predictor \\(x\\),\n\\[y = f(x) + \\varepsilon\\]\n. . .\nIdea:\nFit regression models in small localized regions, where nearby data have greater influence than far data.\n. . .\nAlgorithm:\nDefine the span, aka bandwidth, tuning parameter \\(h\\) where \\(0 \\le h \\le 1\\). Take the following steps to estimate \\(f(x)\\) at each possible predictor value \\(x\\):\n\nIdentify a neighborhood consisting of the \\(100∗h\\)% of cases that are closest to \\(x\\).\n\nPutting more weight on the neighbors closest to \\(x\\) (ie. allowing them to have more influence), fit a linear model in this neighborhood.\n\nUse the local linear model to estimate f(x).\n\n. . .\nIn pictures:",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#discussion",
-    "href": "L09-loess-gams.html#discussion",
-    "title": "9  LOESS & GAMs",
-    "section": "Discussion",
-    "text": "Discussion\nOpen the QMD and find the LOESS discussion questions.\n\nExample 3: LOESS in R\nWe can plot LOESS models using geom_smooth(). Play around with the span parameter below.\n\nWhat happens as we increase the span from roughly 0 to roughly 1?\nWhat is one “pro” of this nonparametric algorithm, relative to KNN?\nWhat questions do you have about this algorithm?\n\n\nlibrary(tidyverse)\nlibrary(ISLR)\ndata(College)\n\nggplot(College, aes(x = Expend, y = Grad.Rate)) + \n  geom_point() + \n  geom_smooth(method = \"loess\", span = 0.5)\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\nas we increase span, the model becomes smoother and more simple\ncompare to KNN, LOESS is smoother, more like the shape of the relationship we’re trying to estimate\n\n\n\nNote: you’ll find that you can specify span greater than 1. Use your resources to figure out what that means in terms of the algorithm.\n\n\nExample 4: LOESS & the Bias-Variance Tradeoff\nRun the shiny app code, below. Explore the impact of the span tuning parameter h on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.\nFor what values of \\(h\\) (near 0, somewhere in the middle, near 1) do you get the following:\n\nhigh bias but low variance\nlow bias but high variance\nmoderate bias and low variance\n\n\n\nSolution\n\n\nh near 1\nh near 0\nh somewhere in the middle\n\n\n\n\n# Load packages & data\nlibrary(shiny)\nlibrary(tidyverse)\n\n# Define a LOESS plotting function\nplot_loess &lt;- function(h, plot_data){\n  ggplot(plot_data, aes(x = x, y = y)) + \n    geom_point() + \n    geom_smooth(span = h, se = FALSE) + \n    labs(title = paste(\"h = \", h)) +\n    lims(y = c(-5,12))\n}\n\n# BUILD THE SERVER\n# These are instructions for building the app - what plot to make, what quantities to calculate, etc\nserver_LOESS &lt;- function(input, output) {\n  new_data &lt;- eventReactive(input$do, {\n    x &lt;- c(runif(25, -6, -2.5), runif(50, -3, 3), runif(25, 2.5, 6))\n    y &lt;- 9 - x^2 + rnorm(100, sd = 0.75) \n    y[c(1:25, 76:100)] &lt;- rnorm(50, sd = 0.75)\n    data.frame(x, y)\n  })\n  output$loesspic &lt;- renderPlot({\n    plot_loess(h = input$hTune, plot_data = new_data())\n  })\n}\n\n\n# BUILD THE USER INTERFACE (UI)\n# The UI controls the layout, appearance, and widgets (eg: slide bars).\nui_LOESS &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      h4(\"Sample 100 observations:\"), \n      actionButton(\"do\", \"Go!\"),\n      h4(\"Tune the LOESS:\"), \n      sliderInput(\"hTune\", \"h\", min = 0.05, max = 1, value = 0.05)\n    ),\n    mainPanel(\n      h4(\"LOESS plot:\"), \n      plotOutput(\"loesspic\")\n    )\n  )\n)\n\n\n# RUN THE SHINY APP!\nshinyApp(ui = ui_LOESS, server = server_LOESS)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#notes-1",
-    "href": "L09-loess-gams.html#notes-1",
-    "title": "9  LOESS & GAMs",
-    "section": "Notes",
-    "text": "Notes\nGeneralized Additive Models (GAM)\nGAMs are nonparametric nonlinear models that can handle more than one predictor. They incorporate each predictor \\(x_i\\) through some nonparametric, smooth function \\(f_i()\\):\n\\[y = \\beta_0 + f_1(x_1) + f_2(x_2) + \\cdots + f_p(x_p) + \\varepsilon\\]\n. . .\nBig ideas\n\nEach \\(f_j(x_j)\\) is a smooth model of \\(y\\) vs \\(x_j\\) when controlling for the other predictors. More specifically:\n\nEach \\(f_j(x_j)\\) models the behavior in \\(y\\) that’s not explained by the other predictors.\nThis “unexplained behavior” is represented by the residuals from the model of \\(y\\) versus all predictors.\n\nThe \\(f_j()\\) functions are estimated using some smoothing algorithm (e.g. LOESS, smoothing splines, etc).\n\n\n. . .\nTECHNICAL NOTE\nIn tidymodels():\n\nThe GAM f(x) components are estimated using smoothing splines, a nonparametric smoothing technique that’s more nuanced than LOESS.\nSmoothing splines depend upon a \\(\\lambda\\) penalty tuning parameter (labeled adjust_deg_free in tidymodels). As in the LASSO:\n\nthe bigger the \\(\\lambda\\), the more simple / less wiggly the estimate of f(x)\nif \\(\\lambda\\) is big enough, we might even kick a predictor out of the model\n\n\nMore optional details are included in the “Deeper learning” section.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#discussion-1",
-    "href": "L09-loess-gams.html#discussion-1",
-    "title": "9  LOESS & GAMs",
-    "section": "Discussion",
-    "text": "Discussion\nDiscuss the following example with your group.\n\nExample 5: GAM\nInterpret the wage analysis in Chapter 7 of ISLR.\nwage = \\(\\beta_0\\) + f(year) + f(age) + f(education) + \\(\\varepsilon\\)\n\n\n\n\n\nSolution\n\nfor example: when controlling for education level and year, wages have a quadratic-ish relationship with age. Both younger and older workers tend to have lower wages.",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#todays-material",
-    "href": "L09-loess-gams.html#todays-material",
-    "title": "9  LOESS & GAMs",
-    "section": "Today’s Material",
-    "text": "Today’s Material\n\nFinish the activity, check the solutions, watch the optional videos, and reach out with questions",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
-    ]
-  },
-  {
-    "objectID": "L09-loess-gams.html#whats-next",
-    "href": "L09-loess-gams.html#whats-next",
-    "title": "9  LOESS & GAMs",
-    "section": "What’s Next?",
-    "text": "What’s Next?\n\nOur next class:\n\nReview for Quiz 1\nYou will also get time to work on Group Assignment 1. If you must miss class, you’re expected to alert your group members and come up with a plan to contribute to the collaboration outside class.\n\nUpcoming due dates:\n\nHW1 revisions: due tomorrow\nHW2 revisions: due in one week\nHW3: due Thursday\n\nThis is important review for the quiz\nAs such, extension opportunities will be LIMITED. Please plan accordingly!\n\nQuiz 1: next Tuesday (during class)",
-    "crumbs": [
-      "Regression: Flexible Models (Unit 3)",
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
     ]
   }
 ]
