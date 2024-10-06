@@ -15,7 +15,7 @@ conflicts_prefer(dplyr::filter)
 
 # Settling In {.unnumbered .smaller}
 
-- Join the #events channel on Slack and check-out my recent announcement about upcoming events 
+- Join the #events channel on Slack and read my recent announcement about upcoming MSCS events 
 - Review the "Important Notes" at the top of HW3
 - Prepare to take notes (find today's QMD in the usual spot)
 
@@ -23,14 +23,19 @@ conflicts_prefer(dplyr::filter)
 
 - Quiz 1 next Tuesday 
   - Topic: Regression (Units 1--3)
-  - Part 1: TBD
-  - Part 2: TBD
+  - Part 1 (on paper): 
+    - closed notes, closed collaboration
+    - due by end of class
+    - may have to interpret R output, but won't have to produce code
+  - Part 2 (on computer): 
+    - open notes (current 253 course materials only), open collaboration (current 253 students only)
+    - due within 24 hours, but designed to finish during class
 - HW3 due Thursday 
   - Special instructions for this one -- review the **Important Notes** before you begin!
   - Limited extension opportunities to facilitate quick turnaround on feedback/sharing solutions (in time for Quiz 1)
 
 
-# Learning Goals {.unnumbered .smaller}
+## Learning Goals {.unnumbered .smaller}
 
 - Clearly describe the local regression algorithm for making a prediction
 - Explain how bandwidth (span) relate to the bias-variance tradeoff
@@ -40,7 +45,7 @@ conflicts_prefer(dplyr::filter)
 
 <br>
 
-# Context {.unnumbered .smaller}
+## Context {.unnumbered .smaller}
 
 <center>
 <img src="images/MLDiagram2.jpg"/>
@@ -98,7 +103,7 @@ b. The only assumption we made was that the outcome values of $y$ should be simi
 c. Nothing.
     - I'd say this is a con. There is nothing to interpret, so the model is more of a black box in terms of knowing why it gives you a particular prediction.
 
-Further details are in exercises for previous activity.
+Further details are in solutions for previous activity.
 
 </details>
 <br>
@@ -193,7 +198,10 @@ plot_data %>%
 
 ## Discussion {.unnumbered .smaller}
 
-Open the QMD and find the LOESS discussion questions.
+Open the QMD and find the LOESS discussion questions. 
+Work on Examples 3 and 4 with your group.
+
+<br>
 
 ### Example 3: LOESS in R {.unnumbered .smaller}
 
@@ -230,6 +238,7 @@ ggplot(College, aes(x = Expend, y = Grad.Rate)) +
 Note: you'll find that you can specify `span` greater than 1. 
 Use your resources to figure out what that means in terms of the algorithm.
 
+<br>
 
 ### Example 4: LOESS & the Bias-Variance Tradeoff {.unnumbered .smaller}
 
@@ -365,9 +374,12 @@ More optional details are included in the "Deeper learning" section.
 -->
 
 
-## Discussion {-}
+## Discussion {.unnumbered .smaller}
 
+Find the GAM discussion questions in your QMD. 
 Discuss the following example with your group.
+
+<br>
 
 ### Example 5: GAM {.unnumbered .smaller}
 
@@ -477,7 +489,7 @@ college_sub <- College %>%
 
 
 
-## Part 1: Building a GAM {-}
+## Part 1: Building a GAM {.unnumbered .smaller}
 
 Let's build a GAM of `Grad.Rate` by all 6 predictors in `college_sub`: 
     
@@ -582,7 +594,7 @@ gam_models <- gam_workflow %>%
 \
 
 
-## Part 2: Identify and apply a "final" GAM {-}
+## Part 2: Identify and apply a "final" GAM {.unnumbered .smaller}
 
 1. **Computational time**    
     We only ran 10 different GAMs of `Grad.Rate` by our 6 predictors above. What is it about this algorithm that makes it take so long?
@@ -753,7 +765,7 @@ knn_models %>%
 
 
  
-## Part 3: Reflection {-}
+## Part 3: Reflection {.unnumbered .smaller}
 
 In these final exercises, you'll reflect upon some algorithms we've learned thus far. This might feel bumpy if you haven't reviewed the material recently, so be kind to yourself!
 
@@ -840,21 +852,22 @@ Some of these exercises are similar to those on Homework 3. Thus solutions are n
 - Work on HW3 (due Thursday)
 - Review the instructions for Group Assignment 1
 
-## What's Next? {-}
+## What's Next? {.unnumbered .smaller}
 
 - Our next class: 
   - Review for Quiz 1
   - You will also get time to work on Group Assignment 1. If you must miss class, you're expected to alert your group members and come up with a plan to contribute to the collaboration outside class.
 - Upcoming due dates:
   - HW1 revisions: due tomorrow
-  - HW2 revisions: due in one week
   - HW3: due Thursday 
     - This is important review for the quiz
     - As such, extension opportunities will be **LIMITED**. Please plan accordingly!
   - Quiz 1: next Tuesday (during class)
+  - HW2 revisions: due next week
 
 
-# Notes: Deeper learning (OPTIONAL) {-}
+
+# Notes: Deeper Learning (OPTIONAL) {-}
 
 
 **SPLINES**
