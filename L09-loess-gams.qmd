@@ -15,8 +15,9 @@ conflicts_prefer(dplyr::filter)
 
 # Settling In {.unnumbered .smaller}
 
-- Join the #events channel on Slack
+- Join the #events channel on Slack and check-out my recent announcement about upcoming events 
 - Review the "Important Notes" at the top of HW3
+- Prepare to take notes (find today's QMD in the usual spot)
 
 ## Announcements {.unnumbered .smaller}
 
@@ -39,7 +40,7 @@ conflicts_prefer(dplyr::filter)
 
 <br>
 
-# Notes: Context {.unnumbered .smaller}
+# Context {.unnumbered .smaller}
 
 <center>
 <img src="images/MLDiagram2.jpg"/>
@@ -70,12 +71,12 @@ Our usual *parametric* models (eg: linear regression) are too rigid to represent
 
 
 
-# Recap {-}
+# KNN Recap {-}
 
 Discuss the following questions with your group to review key concepts from recent activities.
 
 
-## Example 1: KNN {.unnumbered .smaller}
+## Example 1: KNN Review {.unnumbered .smaller}
 
 In the previous activity, we modeled college `Grad.Rate` versus `Expend`, `Enroll`, and `Private` using data on 775 schools.
 
@@ -90,7 +91,14 @@ c. What did the KNN model tell us about the *relationship* of `Grad.Rate` with `
 
 <details>
 <summary>Solution</summary>
-Solutions are in exercises for previous activity.
+a. The output of the model is: one prediction for one observational unit. There is nothing to interpret (no plots, no coefficients, etc.). Also: there is no way to tune the model to use fewer predictors.
+b. The only assumption we made was that the outcome values of $y$ should be similar if the predictor values of $x$ are similar. No other assumptions are made. 
+    - This is a pro if we want flexibility due to non-linear relationships and that assumption is true. 
+    - This is a con if relationships are actually linear or could be modeled with a parametric model.
+c. Nothing.
+    - I'd say this is a con. There is nothing to interpret, so the model is more of a black box in terms of knowing why it gives you a particular prediction.
+
+Further details are in exercises for previous activity.
 
 </details>
 <br>
@@ -121,18 +129,26 @@ Nonparametric KNN vs parametric least squares and LASSO:
 
 
 
-# Notes: LOESS {-}
+# LOESS {-}
 
-## Local Regression or Locally Estimated Scatterplot Smoothing (LOESS) {.unnumbered .smaller}
+## Notes {.unnumbered .smaller}
+
+**Local Regression** or **Locally Estimated Scatterplot Smoothing (LOESS)**
+
+. . .
 
 **Goal:**    
 Build a **flexible** regression model of $y$ by *one* quantitative predictor $x$,   
 
 $$y = f(x) + \varepsilon$$    
 
+. . .
+
 **Idea:**    
 
 Fit regression models in small localized regions, where nearby data have greater influence than far data.
+
+. . .
 
 **Algorithm:**    
 
@@ -141,6 +157,8 @@ Define the *span*, aka bandwidth, tuning parameter $h$ where $0 \le h \le 1$. Ta
 1. Identify a neighborhood consisting of the $100∗h$% of cases that are closest to $x$.    
 2. Putting more weight on the neighbors closest to $x$ (ie. allowing them to have more influence), fit a linear model in this neighborhood.  
 3. Use the local linear model to estimate f(x).
+
+. . .
 
 **In pictures:**    
 
@@ -162,15 +180,22 @@ ggplot(plot_data, aes(x = time, y = glucose)) +
   geom_segment(data = dashed_lines, aes(x = x, xend = xend, y = y, yend = yend), linetype = "dashed")
 ```
 
+```{r echo = FALSE, eval=TRUE}
+plot_data %>%
+  ggplot() + 
+  geom_point(aes(x = time, y = glucose)) + geom_smooth(aes(x = time, y = glucose), se=FALSE) 
+```
 
 
 
 
 
 
+## Discussion {.unnumbered .smaller}
 
+Open the QMD and find the LOESS discussion questions.
 
-## Example 3: LOESS in R {.unnumbered .smaller}
+### Example 3: LOESS in R {.unnumbered .smaller}
 
 We can plot LOESS models using `geom_smooth()`. Play around with the `span` parameter below.
 
@@ -202,25 +227,19 @@ ggplot(College, aes(x = Expend, y = Grad.Rate)) +
 <br>
 
 
+Note: you'll find that you can specify `span` greater than 1. 
+Use your resources to figure out what that means in terms of the algorithm.
 
-## Example 4: LOESS & the Bias-Variance Tradeoff {.unnumbered .smaller}
 
-Use the below **shiny app** to explore the impact of the *span tuning parameter h* on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.
+### Example 4: LOESS & the Bias-Variance Tradeoff {.unnumbered .smaller}
+
+Run the **shiny app** code, below. Explore the impact of the *span tuning parameter h* on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets. 
+
+For what values of $h$ (near 0, somewhere in the middle, near 1) do you get the following:
 
 a. *high bias* but *low variance*
-    - h near 0
-    - h somewhere in the middle
-    - h near 1
-
 b. *low bias* but *high variance*
-    - h near 0
-    - h somewhere in the middle
-    - h near 1
-
 c. *moderate bias* and *low variance*       
-    - h near 0
-    - h somewhere in the middle
-    - h near 1
 
 
 
@@ -232,7 +251,8 @@ c. h somewhere in the middle
 </details>
 <br>
     
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Load packages & data
 library(shiny)
 library(tidyverse)
@@ -290,15 +310,17 @@ shinyApp(ui = ui_LOESS, server = server_LOESS)
 
 
 
-## Notes: GAM {-}
+# GAM {-}
 
+## Notes {.unnumbered .smaller}   
 
-
-**Generalized Additive Models (GAM)**    
+**Generalized Additive Models (GAM)**
 
 GAMs are **nonparametric** nonlinear models that can handle more than one predictor. They incorporate each predictor $x_i$ through some nonparametric, smooth function $f_i()$:    
 
 $$y = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p) + \varepsilon$$    
+
+. . .
 
 **Big ideas**    
 
@@ -309,22 +331,16 @@ $$y = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p) + \varepsilon$$
 - The $f_j()$ functions are estimated using some *smoothing algorithm* (e.g. LOESS, smoothing splines, etc). 
 
 
-NOTE: More optional details are included in the "Deeper learning" section.
-
-
-
-
-
-
-
-
+<!--
 \
 \
 \
 \
 \
 \
+-->
 
+. . .
 
 **TECHNICAL NOTE**
 
@@ -336,21 +352,24 @@ In `tidymodels()`:
     - the bigger the $\lambda$, the more simple / less wiggly the estimate of f(x)
     - if $\lambda$ is big enough, we might even kick a predictor out of the model
       
-Optional details are in the "Deeper Learning" section.
+More optional details are included in the "Deeper learning" section.
 
 
-
+<!--
 \
 \
 \
 \
 \
 \
+-->
 
 
+## Discussion {-}
 
+Discuss the following example with your group.
 
-**EXAMPLE 5: GAM**
+### Example 5: GAM {.unnumbered .smaller}
 
 Interpret the wage analysis in Chapter 7 of ISLR.
 
@@ -377,7 +396,9 @@ for example: when controlling for education level and year, wages have a quadrat
 
 
 
-**NOTE**
+# Other Flexible Models {.unnumbered .smaller}
+
+<!--**NOTE**-->
 
 KNN, LOESS, and GAM aren't the only algorithms for building more flexible models! Chapter 7 of the book also discusses:
 
@@ -414,8 +435,9 @@ KNN, LOESS, and GAM aren't the only algorithms for building more flexible models
 
 
 
-## Exercises {-}
+# Exercises {-}
 
+## Getting Started {.unnumbered .smaller}
 
 **Goals**    
 
@@ -429,7 +451,9 @@ KNN, LOESS, and GAM aren't the only algorithms for building more flexible models
 Using the `College` data in the `ISLR` package, we'll build a predictive model of `Grad.Rate` by 6 predictors: `Private`, `PhD` (percent of faculty with PhDs), `Room.Board`, `Personal` (estimated personal spending), `Outstate` (out-of-state tuition), `perc.alumni` (percent of alumni who donate)
 
 
-```{r echo=TRUE, eval=TRUE}
+```{r}
+#| echo: true
+#| eval: true
 # Load packages
 library(tidymodels)
 library(tidyverse)
@@ -453,7 +477,7 @@ college_sub <- College %>%
 
 
 
-### Part 1: Building a GAM {-}
+## Part 1: Building a GAM {-}
 
 Let's build a GAM of `Grad.Rate` by all 6 predictors in `college_sub`: 
     
@@ -558,7 +582,7 @@ gam_models <- gam_workflow %>%
 \
 
 
-### Part 2: Identify and apply a "final" GAM {-}
+## Part 2: Identify and apply a "final" GAM {-}
 
 1. **Computational time**    
     We only ran 10 different GAMs of `Grad.Rate` by our 6 predictors above. What is it about this algorithm that makes it take so long?
@@ -577,19 +601,18 @@ Within any 1 model, we're building many models within local windows.
 2. **Identify the best GAM**    
     Using the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:
     
-    ```{r}
-    # Use a plot to compare the predictive performance of our 10 GAM models
+```{r}
+# Use a plot to compare the predictive performance of our 10 GAM models
     
     
-    # Pick the best value for the penalty tuning parameter
-    # Name this `best_penalty`
+# Pick the best value for the penalty tuning parameter
+# Name this `best_penalty`
     
     
-    # Fit a final GAM using `best_penalty`
-    # Name this `final_gam`
+# Fit a final GAM using `best_penalty`
+# Name this `final_gam`
     
-    
-    ```
+```
 
 
 
@@ -600,18 +623,18 @@ Within any 1 model, we're building many models within local windows.
 ```{r echo=TRUE, eval=TRUE}
 # Use a plot to compare the predictive performance of our 10 GAM models
 gam_models %>% 
-autoplot()
+  autoplot()
 
 # Pick the best value for the penalty tuning parameter
 # Name this `best_penalty`
 best_penalty <- gam_models %>% 
-select_best()
+  select_best()
 
 # Fit a final GAM using `best_penalty`
 # Name this `final_gam`
 final_gam <- gam_workflow %>% 
-finalize_workflow(parameters = best_penalty) %>% 
-fit(data = college_sub)
+  finalize_workflow(parameters = best_penalty) %>%
+  fit(data = college_sub)
 ```
 </details>
 <br>
@@ -619,14 +642,14 @@ fit(data = college_sub)
 3. **Explore the final GAM**    
     Plot the smoothing functions for each predictor in our model. NOTE: The `$` notation accesses nested objects (`fit` within `fit` within `fit` within `final_gam`).
     
-    ```{r eval = FALSE, fig.width = 8, fig.height = 8}
-    final_gam$fit$fit$fit %>% 
-      plot(all.terms = TRUE, pages = 1)
-    ```
+```{r eval = FALSE, fig.width = 8, fig.height = 8}
+final_gam$fit$fit$fit %>% 
+  plot(all.terms = TRUE, pages = 1)
+```
 
     
-    a. Is there anything in these plots that justifies our use of the GAM instead of least squares?
-    b. Pick 1 or 2 of these plots and interpret your findings.
+  a. Is there anything in these plots that justifies our use of the GAM instead of least squares?
+  b. Pick 1 or 2 of these plots and interpret your findings.
 
 
 
@@ -634,6 +657,7 @@ fit(data = college_sub)
 <details>
 <summary>Solution</summary>
 ```{r fig.width = 8, fig.height = 8}
+#| eval: true
 final_gam$fit$fit$fit %>% 
   plot(all.terms = TRUE, pages = 1)
 ```
@@ -647,7 +671,7 @@ b. will vary
 
 
 
-3. **Pick an algorithm**        
+4. **Pick an algorithm**        
     Our overall goal is to build a predictive model of `Grad.Rate` ($y$) by 6 predictors:    
     
     $$y = f(x_1,x_2,...,x_{6}) + \varepsilon$$
@@ -729,14 +753,14 @@ knn_models %>%
 
 
  
-### Part 3: Reflection {-}
+## Part 3: Reflection {-}
 
 In these final exercises, you'll reflect upon some algorithms we've learned thus far. This might feel bumpy if you haven't reviewed the material recently, so be kind to yourself!
 
 
-Some of these exercises are similar to those on Homework 4. Thus solutions are not provided. The following directions are important to deepening your learning and growth.      
+Some of these exercises are similar to those on Homework 3. Thus solutions are not provided. The following directions are important to deepening your learning and growth.      
 
-- Typing the questions into ChatGPT does not require any reflection: **You may NOT use ChatGPT or other online resources for these questions or on Homework 4.**
+- Typing the questions into ChatGPT does not require any reflection: **You may NOT use ChatGPT or other online resources for these questions or on Homework 3.**
 - Locating is not learning: Challenge yourself to write out concepts in *your own words*. Do not rely on definitions in the activities, videos, or elsewhere.
 
   
@@ -749,7 +773,7 @@ Some of these exercises are similar to those on Homework 4. Thus solutions are n
 
 
 
-4. **Interpretability & flexibility**       
+5. **Interpretability & flexibility**       
     When picking between different model building algorithms, there are several considerations, including *flexibility* and *interpretability*. Consider the following graphic from ISLR:    
     
 <center>
@@ -757,14 +781,14 @@ Some of these exercises are similar to those on Homework 4. Thus solutions are n
 </center> 
 
 
-a. Convince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM make sense. (We'll address the other algorithms later this semester.)
+  a. Convince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM make sense. (We'll address the other algorithms later this semester.)
 
-b. Where would you place KNN on this graphic?    
-
-
+  b. Where would you place KNN on this graphic?    
 
 
-5. **Differences and similarities**    
+<br>
+
+6. **Differences and similarities**    
     For each pair of algorithms below: try to identify a key *similarity*, a key *difference*, and any scenario in which they're "equivalent".
     a. KNN vs LOESS
     b. LOESS vs GAM
@@ -772,9 +796,9 @@ b. Where would you place KNN on this graphic?
     d. least squares vs LASSO
 
 
+<br>
 
-
-6. **Pros & cons (there's a similar question on HW 4)**    
+7. **Pros & cons (there's a similar question on HW3)**    
     Summarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!
     a. least squares
     b. LASSO
@@ -785,9 +809,9 @@ b. Where would you place KNN on this graphic?
 
 
 
+<br>
 
-
-7. **Lingo (there's a similar question on HW 4)**        
+8. **Lingo (there's a similar question on HW3)**        
     In your own words, describe what each of these "everyday" words means in the context of ML algorithms:
     - greedy
     - biased
@@ -810,9 +834,27 @@ b. Where would you place KNN on this graphic?
 \
 \
 
+# Wrap-Up {-}
+
+- Finish the activity, check the solutions, watch the optional videos, and reach out with questions
+- Work on HW3 (due Thursday)
+- Review the instructions for Group Assignment 1
+
+## What's Next? {-}
+
+- Our next class: 
+  - Review for Quiz 1
+  - You will also get time to work on Group Assignment 1. If you must miss class, you're expected to alert your group members and come up with a plan to contribute to the collaboration outside class.
+- Upcoming due dates:
+  - HW1 revisions: due tomorrow
+  - HW2 revisions: due in one week
+  - HW3: due Thursday 
+    - This is important review for the quiz
+    - As such, extension opportunities will be **LIMITED**. Please plan accordingly!
+  - Quiz 1: next Tuesday (during class)
 
 
-## Notes: Deeper learning (OPTIONAL) {-}
+# Notes: Deeper learning (OPTIONAL) {-}
 
 
 **SPLINES**
@@ -856,7 +898,7 @@ The $f_j()$ functions are estimated using a [**backfitting procedure**](https://
 
 
 
-## Notes: R code {-}
+# Notes: R code {-}
 
 
 \

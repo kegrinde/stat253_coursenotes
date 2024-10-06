@@ -359,27 +359,43 @@ window.Quarto = {
   <li><a href="#announcements" id="toc-announcements" class="nav-link" data-scroll-target="#announcements">Announcements</a></li>
   </ul></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#notes-context" id="toc-notes-context" class="nav-link" data-scroll-target="#notes-context">Notes: Context</a></li>
-  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a>
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
+  <li><a href="#knn-recap" id="toc-knn-recap" class="nav-link" data-scroll-target="#knn-recap">KNN Recap</a>
   <ul class="collapse">
-  <li><a href="#example-1-knn" id="toc-example-1-knn" class="nav-link" data-scroll-target="#example-1-knn">Example 1: KNN</a></li>
+  <li><a href="#example-1-knn-review" id="toc-example-1-knn-review" class="nav-link" data-scroll-target="#example-1-knn-review">Example 1: KNN Review</a></li>
   <li><a href="#example-2-nonparametric-vs-parametric" id="toc-example-2-nonparametric-vs-parametric" class="nav-link" data-scroll-target="#example-2-nonparametric-vs-parametric">Example 2: Nonparametric vs Parametric</a></li>
   </ul></li>
-  <li><a href="#notes-loess" id="toc-notes-loess" class="nav-link" data-scroll-target="#notes-loess">Notes: LOESS</a>
+  <li><a href="#loess" id="toc-loess" class="nav-link" data-scroll-target="#loess">LOESS</a>
   <ul class="collapse">
-  <li><a href="#local-regression-or-locally-estimated-scatterplot-smoothing-loess" id="toc-local-regression-or-locally-estimated-scatterplot-smoothing-loess" class="nav-link" data-scroll-target="#local-regression-or-locally-estimated-scatterplot-smoothing-loess">Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)</a></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a>
+  <ul class="collapse">
   <li><a href="#example-3-loess-in-r" id="toc-example-3-loess-in-r" class="nav-link" data-scroll-target="#example-3-loess-in-r">Example 3: LOESS in R</a></li>
   <li><a href="#example-4-loess-the-bias-variance-tradeoff" id="toc-example-4-loess-the-bias-variance-tradeoff" class="nav-link" data-scroll-target="#example-4-loess-the-bias-variance-tradeoff">Example 4: LOESS &amp; the Bias-Variance Tradeoff</a></li>
-  <li><a href="#notes-gam" id="toc-notes-gam" class="nav-link" data-scroll-target="#notes-gam">Notes: GAM</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#gam" id="toc-gam" class="nav-link" data-scroll-target="#gam">GAM</a>
+  <ul class="collapse">
+  <li><a href="#notes-1" id="toc-notes-1" class="nav-link" data-scroll-target="#notes-1">Notes</a></li>
+  <li><a href="#discussion-1" id="toc-discussion-1" class="nav-link" data-scroll-target="#discussion-1">Discussion</a>
+  <ul class="collapse">
+  <li><a href="#example-5-gam" id="toc-example-5-gam" class="nav-link" data-scroll-target="#example-5-gam">Example 5: GAM</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#other-flexible-models" id="toc-other-flexible-models" class="nav-link" data-scroll-target="#other-flexible-models">Other Flexible Models</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
   <ul class="collapse">
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
   <li><a href="#part-1-building-a-gam" id="toc-part-1-building-a-gam" class="nav-link" data-scroll-target="#part-1-building-a-gam">Part 1: Building a GAM</a></li>
   <li><a href="#part-2-identify-and-apply-a-final-gam" id="toc-part-2-identify-and-apply-a-final-gam" class="nav-link" data-scroll-target="#part-2-identify-and-apply-a-final-gam">Part 2: Identify and apply a “final” GAM</a></li>
   <li><a href="#part-3-reflection" id="toc-part-3-reflection" class="nav-link" data-scroll-target="#part-3-reflection">Part 3: Reflection</a></li>
   </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up">Wrap-Up</a>
+  <ul class="collapse">
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next?</a></li>
+  </ul></li>
   <li><a href="#notes-deeper-learning-optional" id="toc-notes-deeper-learning-optional" class="nav-link" data-scroll-target="#notes-deeper-learning-optional">Notes: Deeper learning (OPTIONAL)</a></li>
   <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L09-loess-gams.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -408,8 +424,9 @@ window.Quarto = {
 <section id="settling-in" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Settling In</h1>
 <ul>
-<li>Join the #events channel on Slack</li>
+<li>Join the #events channel on Slack and check-out my recent announcement about upcoming events</li>
 <li>Review the “Important Notes” at the top of HW3</li>
+<li>Prepare to take notes (find today’s QMD in the usual spot)</li>
 </ul>
 <section id="announcements" class="level2 unnumbered smaller">
 <h2 class="unnumbered smaller anchored" data-anchor-id="announcements">Announcements</h2>
@@ -439,8 +456,8 @@ window.Quarto = {
 </ul>
 <p><br></p>
 </section>
-<section id="notes-context" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Notes: Context</h1>
+<section id="context" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Context</h1>
 <center>
 <img src="images/MLDiagram2.jpg">
 </center>
@@ -461,11 +478,11 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <p><br> <strong>GOAL</strong></p>
 <p>Our usual <em>parametric</em> models (eg: linear regression) are too rigid to represent the relationship between <span class="math inline">\(y\)</span> and our predictors <span class="math inline">\(x\)</span>. Thus we need more <em>flexible</em> <strong>nonparametric models</strong>.</p>
 </section>
-<section id="recap" class="level1 unnumbered">
-<h1 class="unnumbered">Recap</h1>
+<section id="knn-recap" class="level1 unnumbered">
+<h1 class="unnumbered">KNN Recap</h1>
 <p>Discuss the following questions with your group to review key concepts from recent activities.</p>
-<section id="example-1-knn" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="example-1-knn">Example 1: KNN</h2>
+<section id="example-1-knn-review" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-1-knn-review">Example 1: KNN Review</h2>
 <p>In the previous activity, we modeled college <code>Grad.Rate</code> versus <code>Expend</code>, <code>Enroll</code>, and <code>Private</code> using data on 775 schools.</p>
 <ol type="a">
 <li><p>We chose the KNN with K = 33 because it <em>minimized</em> the CV MAE, i.e.&nbsp;the errors when predicting grad rate for schools <em>outside</em> our sample. We don’t typically worry about a more <em>parsimonious</em> KNN, i.e.&nbsp;a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?</p></li>
@@ -476,7 +493,19 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <summary>
 Solution
 </summary>
-<p>Solutions are in exercises for previous activity.</p>
+<ol type="a">
+<li>The output of the model is: one prediction for one observational unit. There is nothing to interpret (no plots, no coefficients, etc.). Also: there is no way to tune the model to use fewer predictors.</li>
+<li>The only assumption we made was that the outcome values of <span class="math inline">\(y\)</span> should be similar if the predictor values of <span class="math inline">\(x\)</span> are similar. No other assumptions are made.
+<ul>
+<li>This is a pro if we want flexibility due to non-linear relationships and that assumption is true.</li>
+<li>This is a con if relationships are actually linear or could be modeled with a parametric model.</li>
+</ul></li>
+<li>Nothing.
+<ul>
+<li>I’d say this is a con. There is nothing to interpret, so the model is more of a black box in terms of knowing why it gives you a particular prediction.</li>
+</ul></li>
+</ol>
+<p>Further details are in exercises for previous activity.</p>
 </details>
 <p><br></p>
 </section>
@@ -499,15 +528,19 @@ Solution
 <p><br></p>
 </section>
 </section>
-<section id="notes-loess" class="level1 unnumbered">
-<h1 class="unnumbered">Notes: LOESS</h1>
-<section id="local-regression-or-locally-estimated-scatterplot-smoothing-loess" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="local-regression-or-locally-estimated-scatterplot-smoothing-loess">Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)</h2>
+<section id="loess" class="level1 unnumbered">
+<h1 class="unnumbered">LOESS</h1>
+<section id="notes" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="notes">Notes</h2>
+<p><strong>Local Regression</strong> or <strong>Locally Estimated Scatterplot Smoothing (LOESS)</strong></p>
+<p>. . .</p>
 <p><strong>Goal:</strong><br>
 Build a <strong>flexible</strong> regression model of <span class="math inline">\(y\)</span> by <em>one</em> quantitative predictor <span class="math inline">\(x\)</span>,</p>
 <p><span class="math display">\[y = f(x) + \varepsilon\]</span></p>
+<p>. . .</p>
 <p><strong>Idea:</strong></p>
 <p>Fit regression models in small localized regions, where nearby data have greater influence than far data.</p>
+<p>. . .</p>
 <p><strong>Algorithm:</strong></p>
 <p>Define the <em>span</em>, aka bandwidth, tuning parameter <span class="math inline">\(h\)</span> where <span class="math inline">\(0 \le h \le 1\)</span>. Take the following steps to estimate <span class="math inline">\(f(x)\)</span> at each possible predictor value <span class="math inline">\(x\)</span>:</p>
 <ol type="1">
@@ -517,6 +550,7 @@ Build a <strong>flexible</strong> regression model of <span class="math inline">
 </li>
 <li>Use the local linear model to estimate f(x).</li>
 </ol>
+<p>. . .</p>
 <p><strong>In pictures:</strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -527,9 +561,21 @@ Build a <strong>flexible</strong> regression model of <span class="math inline">
 </div>
 </div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="example-3-loess-in-r" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="example-3-loess-in-r">Example 3: LOESS in R</h2>
+<section id="discussion" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="discussion">Discussion</h2>
+<p>Open the QMD and find the LOESS discussion questions.</p>
+<section id="example-3-loess-in-r" class="level3 unnumbered smaller">
+<h3 class="unnumbered smaller anchored" data-anchor-id="example-3-loess-in-r">Example 3: LOESS in R</h3>
 <p>We can plot LOESS models using <code>geom_smooth()</code>. Play around with the <code>span</code> parameter below.</p>
 <ul>
 <li>What happens as we increase the span from roughly 0 to roughly 1?</li>
@@ -547,7 +593,7 @@ Build a <strong>flexible</strong> regression model of <span class="math inline">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -562,29 +608,16 @@ Solution
 </ul>
 </details>
 <p><br></p>
+<p>Note: you’ll find that you can specify <code>span</code> greater than 1. Use your resources to figure out what that means in terms of the algorithm.</p>
 </section>
-<section id="example-4-loess-the-bias-variance-tradeoff" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="example-4-loess-the-bias-variance-tradeoff">Example 4: LOESS &amp; the Bias-Variance Tradeoff</h2>
-<p>Use the below <strong>shiny app</strong> to explore the impact of the <em>span tuning parameter h</em> on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.</p>
+<section id="example-4-loess-the-bias-variance-tradeoff" class="level3 unnumbered smaller">
+<h3 class="unnumbered smaller anchored" data-anchor-id="example-4-loess-the-bias-variance-tradeoff">Example 4: LOESS &amp; the Bias-Variance Tradeoff</h3>
+<p>Run the <strong>shiny app</strong> code, below. Explore the impact of the <em>span tuning parameter h</em> on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.</p>
+<p>For what values of <span class="math inline">\(h\)</span> (near 0, somewhere in the middle, near 1) do you get the following:</p>
 <ol type="a">
-<li><em>high bias</em> but <em>low variance</em>
-<ul>
-<li>h near 0</li>
-<li>h somewhere in the middle</li>
-<li>h near 1</li>
-</ul></li>
-<li><em>low bias</em> but <em>high variance</em>
-<ul>
-<li>h near 0</li>
-<li>h somewhere in the middle</li>
-<li>h near 1</li>
-</ul></li>
-<li><em>moderate bias</em> and <em>low variance</em>
-<ul>
-<li>h near 0</li>
-<li>h somewhere in the middle</li>
-<li>h near 1</li>
-</ul></li>
+<li><em>high bias</em> but <em>low variance</em></li>
+<li><em>low bias</em> but <em>high variance</em></li>
+<li><em>moderate bias</em> and <em>low variance</em></li>
 </ol>
 <details>
 <summary>
@@ -648,11 +681,16 @@ Solution
 <span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_LOESS, <span class="at">server =</span> server_LOESS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="notes-gam" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="notes-gam">Notes: GAM</h2>
+</section>
+</section>
+<section id="gam" class="level1 unnumbered">
+<h1 class="unnumbered">GAM</h1>
+<section id="notes-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="notes-1">Notes</h2>
 <p><strong>Generalized Additive Models (GAM)</strong></p>
 <p>GAMs are <strong>nonparametric</strong> nonlinear models that can handle more than one predictor. They incorporate each predictor <span class="math inline">\(x_i\)</span> through some nonparametric, smooth function <span class="math inline">\(f_i()\)</span>:</p>
 <p><span class="math display">\[y = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p) + \varepsilon\]</span></p>
+<p>. . .</p>
 <p><strong>Big ideas</strong></p>
 <ul>
 <li>Each <span class="math inline">\(f_j(x_j)\)</span> is a smooth model of <span class="math inline">\(y\)</span> vs <span class="math inline">\(x_j\)</span> <em>when controlling for the other predictors</em>. More specifically:
@@ -662,14 +700,15 @@ Solution
 </ul></li>
 <li>The <span class="math inline">\(f_j()\)</span> functions are estimated using some <em>smoothing algorithm</em> (e.g.&nbsp;LOESS, smoothing splines, etc).</li>
 </ul>
-<p>NOTE: More optional details are included in the “Deeper learning” section.</p>
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-</p>
+<!--
+\
+\
+\
+\
+\
+\
+-->
+<p>. . .</p>
 <p><strong>TECHNICAL NOTE</strong></p>
 <p>In <code>tidymodels()</code>:</p>
 <ul>
@@ -680,15 +719,21 @@ Solution
 <li>if <span class="math inline">\(\lambda\)</span> is big enough, we might even kick a predictor out of the model</li>
 </ul></li>
 </ul>
-<p>Optional details are in the “Deeper Learning” section.</p>
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-</p>
-<p><strong>EXAMPLE 5: GAM</strong></p>
+<p>More optional details are included in the “Deeper learning” section.</p>
+<!--
+\
+\
+\
+\
+\
+\
+-->
+</section>
+<section id="discussion-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="discussion-1">Discussion</h2>
+<p>Discuss the following example with your group.</p>
+<section id="example-5-gam" class="level3 unnumbered smaller">
+<h3 class="unnumbered smaller anchored" data-anchor-id="example-5-gam">Example 5: GAM</h3>
 <p>Interpret the wage analysis in Chapter 7 of ISLR.</p>
 <p>wage = <span class="math inline">\(\beta_0\)</span> + f(year) + f(age) + f(education) + <span class="math inline">\(\varepsilon\)</span></p>
 <center>
@@ -701,7 +746,12 @@ Solution
 for example: when controlling for education level and year, wages have a quadratic-ish relationship with age. Both younger and older workers tend to have lower wages.
 </details>
 <p><br></p>
-<p><strong>NOTE</strong></p>
+</section>
+</section>
+</section>
+<section id="other-flexible-models" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Other Flexible Models</h1>
+<!--**NOTE**-->
 <p>KNN, LOESS, and GAM aren’t the only algorithms for building more flexible models! Chapter 7 of the book also discusses:</p>
 <ul>
 <li>piecewise polynomials (parametric)</li>
@@ -709,8 +759,10 @@ for example: when controlling for education level and year, wages have a quadrat
 <li>smoothing splines (nonparametric)</li>
 </ul>
 </section>
-<section id="exercises" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercises" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises</h1>
+<section id="getting-started" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="getting-started">Getting Started</h2>
 <p><strong>Goals</strong></p>
 <ul>
 <li>Implement and explore GAM in R.<br>
@@ -737,8 +789,9 @@ for example: when controlling for education level and year, wages have a quadrat
 <p><br>
 <br>
 </p>
-<section id="part-1-building-a-gam" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="part-1-building-a-gam">Part 1: Building a GAM</h3>
+</section>
+<section id="part-1-building-a-gam" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="part-1-building-a-gam">Part 1: Building a GAM</h2>
 <p>Let’s build a GAM of <code>Grad.Rate</code> by all 6 predictors in <code>college_sub</code>:</p>
 <p><span class="math display">\[\text{Grad.Rate} = \beta_0 + \beta_1\text{PrivateYes} + f_2(\text{PhD})  + \cdots + f_{6}(\text{perc.alumni}) + \varepsilon\]</span></p>
 <p>You’re given all code here. Be sure to scan and reflect upon what’s happening.</p>
@@ -809,8 +862,8 @@ for example: when controlling for education level and year, wages have a quadrat
 <br>
 </p>
 </section>
-<section id="part-2-identify-and-apply-a-final-gam" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="part-2-identify-and-apply-a-final-gam">Part 2: Identify and apply a “final” GAM</h3>
+<section id="part-2-identify-and-apply-a-final-gam" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="part-2-identify-and-apply-a-final-gam">Part 2: Identify and apply a “final” GAM</h2>
 <ol type="1">
 <li><p><strong>Computational time</strong><br>
 We only ran 10 different GAMs of <code>Grad.Rate</code> by our 6 predictors above. What is it about this algorithm that makes it take so long?</p>
@@ -824,20 +877,20 @@ Within any 1 model, we’re building many models within local windows.
 </details>
 <p><br></p>
 <ol start="2" type="1">
-<li><p><strong>Identify the best GAM</strong><br>
-Using the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:</p>
-<p>::: {.cell}</p>
+<li><strong>Identify the best GAM</strong><br>
+Using the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:</li>
+</ol>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a plot to compare the predictive performance of our 10 GAM models</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick the best value for the penalty tuning parameter</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `best_penalty`</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a final GAM using `best_penalty`</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `final_gam`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p></li>
-</ol>
+</div>
 <details>
 <summary>
 Solution
@@ -845,38 +898,38 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a plot to compare the predictive performance of our 10 GAM models</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gam_models <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick the best value for the penalty tuning parameter</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `best_penalty`</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>best_penalty <span class="ot">&lt;-</span> gam_models <span class="sc">%&gt;%</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">select_best</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_best</span>()</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a final GAM using `best_penalty`</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `final_gam`</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>final_gam <span class="ot">&lt;-</span> gam_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> best_penalty) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">fit</span>(<span class="at">data =</span> college_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> best_penalty) <span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> college_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <p><br></p>
 <ol start="3" type="1">
-<li><p><strong>Explore the final GAM</strong><br>
-Plot the smoothing functions for each predictor in our model. NOTE: The <code>$</code> notation accesses nested objects (<code>fit</code> within <code>fit</code> within <code>fit</code> within <code>final_gam</code>).</p>
-<p>::: {.cell}</p>
+<li><strong>Explore the final GAM</strong><br>
+Plot the smoothing functions for each predictor in our model. NOTE: The <code>$</code> notation accesses nested objects (<code>fit</code> within <code>fit</code> within <code>fit</code> within <code>final_gam</code>).</li>
+</ol>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>final_gam<span class="sc">$</span>fit<span class="sc">$</span>fit<span class="sc">$</span>fit <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">all.terms =</span> <span class="cn">TRUE</span>, <span class="at">pages =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p>
+</div>
 <ol type="a">
 <li>Is there anything in these plots that justifies our use of the GAM instead of least squares?</li>
 <li>Pick 1 or 2 of these plots and interpret your findings.</li>
-</ol></li>
 </ol>
 <details>
 <summary>
@@ -885,6 +938,13 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>final_gam<span class="sc">$</span>fit<span class="sc">$</span>fit<span class="sc">$</span>fit <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">all.terms =</span> <span class="cn">TRUE</span>, <span class="at">pages =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
 </div>
 <ol type="a">
 <li>kinda. <code>Personal</code>, <code>Outstate</code>, and <code>perc.alumni</code> seem to have complicated non-linear associations with <code>Grad.Rate</code>.</li>
@@ -892,7 +952,7 @@ Solution
 </ol>
 </details>
 <p><br></p>
-<ol start="3" type="1">
+<ol start="4" type="1">
 <li><p><strong>Pick an algorithm</strong><br>
 Our overall goal is to build a predictive model of <code>Grad.Rate</code> (<span class="math inline">\(y\)</span>) by 6 predictors:</p>
 <p><span class="math display">\[y = f(x_1,x_2,...,x_{6}) + \varepsilon\]</span></p>
@@ -1007,18 +1067,18 @@ Solution
 </details>
 <p><br></p>
 </section>
-<section id="part-3-reflection" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="part-3-reflection">Part 3: Reflection</h3>
+<section id="part-3-reflection" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="part-3-reflection">Part 3: Reflection</h2>
 <p>In these final exercises, you’ll reflect upon some algorithms we’ve learned thus far. This might feel bumpy if you haven’t reviewed the material recently, so be kind to yourself!</p>
-<p>Some of these exercises are similar to those on Homework 4. Thus solutions are not provided. The following directions are important to deepening your learning and growth.</p>
+<p>Some of these exercises are similar to those on Homework 3. Thus solutions are not provided. The following directions are important to deepening your learning and growth.</p>
 <ul>
-<li>Typing the questions into ChatGPT does not require any reflection: <strong>You may NOT use ChatGPT or other online resources for these questions or on Homework 4.</strong></li>
+<li>Typing the questions into ChatGPT does not require any reflection: <strong>You may NOT use ChatGPT or other online resources for these questions or on Homework 3.</strong></li>
 <li>Locating is not learning: Challenge yourself to write out concepts in <em>your own words</em>. Do not rely on definitions in the activities, videos, or elsewhere.</li>
 </ul>
 <p><br>
 <br>
 </p>
-<ol start="4" type="1">
+<ol start="5" type="1">
 <li><strong>Interpretability &amp; flexibility</strong><br>
 When picking between different model building algorithms, there are several considerations, including <em>flexibility</em> and <em>interpretability</em>. Consider the following graphic from ISLR:</li>
 </ol>
@@ -1029,7 +1089,8 @@ When picking between different model building algorithms, there are several cons
 <li><p>Convince yourself that the placement of Subset Selection (e.g.&nbsp;backward stepwise), LASSO, Least Squares, and GAM make sense. (We’ll address the other algorithms later this semester.)</p></li>
 <li><p>Where would you place KNN on this graphic?</p></li>
 </ol>
-<ol start="5" type="1">
+<p><br></p>
+<ol start="6" type="1">
 <li><strong>Differences and similarities</strong><br>
 For each pair of algorithms below: try to identify a key <em>similarity</em>, a key <em>difference</em>, and any scenario in which they’re “equivalent”.
 <ol type="a">
@@ -1038,7 +1099,10 @@ For each pair of algorithms below: try to identify a key <em>similarity</em>, a 
 <li>GAM vs least squares</li>
 <li>least squares vs LASSO</li>
 </ol></li>
-<li><strong>Pros &amp; cons (there’s a similar question on HW 4)</strong><br>
+</ol>
+<p><br></p>
+<ol start="7" type="1">
+<li><strong>Pros &amp; cons (there’s a similar question on HW3)</strong><br>
 Summarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!
 <ol type="a">
 <li>least squares</li>
@@ -1046,7 +1110,10 @@ Summarize at least 1 pro and 1 con about each model building algorithm. You cann
 <li>KNN</li>
 <li>GAM</li>
 </ol></li>
-<li><strong>Lingo (there’s a similar question on HW 4)</strong><br>
+</ol>
+<p><br></p>
+<ol start="8" type="1">
+<li><strong>Lingo (there’s a similar question on HW3)</strong><br>
 In your own words, describe what each of these “everyday” words means in the context of ML algorithms:
 <ul>
 <li>greedy</li>
@@ -1065,8 +1132,37 @@ In your own words, describe what each of these “everyday” words means in the
 </p>
 </section>
 </section>
-<section id="notes-deeper-learning-optional" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="notes-deeper-learning-optional">Notes: Deeper learning (OPTIONAL)</h2>
+<section id="wrap-up" class="level1 unnumbered">
+<h1 class="unnumbered">Wrap-Up</h1>
+<ul>
+<li>Finish the activity, check the solutions, watch the optional videos, and reach out with questions</li>
+<li>Work on HW3 (due Thursday)</li>
+<li>Review the instructions for Group Assignment 1</li>
+</ul>
+<section id="whats-next" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="whats-next">What’s Next?</h2>
+<ul>
+<li>Our next class:
+<ul>
+<li>Review for Quiz 1</li>
+<li>You will also get time to work on Group Assignment 1. If you must miss class, you’re expected to alert your group members and come up with a plan to contribute to the collaboration outside class.</li>
+</ul></li>
+<li>Upcoming due dates:
+<ul>
+<li>HW1 revisions: due tomorrow</li>
+<li>HW2 revisions: due in one week</li>
+<li>HW3: due Thursday
+<ul>
+<li>This is important review for the quiz</li>
+<li>As such, extension opportunities will be <strong>LIMITED</strong>. Please plan accordingly!</li>
+</ul></li>
+<li>Quiz 1: next Tuesday (during class)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="notes-deeper-learning-optional" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: Deeper learning (OPTIONAL)</h1>
 <p><strong>SPLINES</strong></p>
 <p>KNN, LOESS, and GAM aren’t the only nonparametric regression algorithms! Other common tools include <strong>piecewise polynomials</strong> and <strong>smoothing splines</strong>. Read Chapter 7 of the book, and watch Prof Leslie Myint’s video on these topics to learn more:</p>
 <p><a href="https://www.youtube.com/watch?v=G7Gm3sZbM-4">https://www.youtube.com/watch?v=G7Gm3sZbM-4</a></p>
@@ -1091,8 +1187,8 @@ In your own words, describe what each of these “everyday” words means in the
 <br>
 </p>
 </section>
-<section id="notes-r-code" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="notes-r-code">Notes: R code</h2>
+<section id="notes-r-code" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: R code</h1>
 <p><br>
 </p>
 <p>Suppose we want to build a model of response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
@@ -1197,7 +1293,6 @@ In your own words, describe what each of these “everyday” words means in the
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
