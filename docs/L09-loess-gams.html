@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -71,6 +105,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -291,10 +354,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a>
+  <ul class="collapse">
+  <li><a href="#announcements" id="toc-announcements" class="nav-link" data-scroll-target="#announcements">Announcements</a></li>
+  </ul></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#notes-context" id="toc-notes-context" class="nav-link" data-scroll-target="#notes-context">Notes: Context</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a>
+  <ul class="collapse">
+  <li><a href="#example-1-knn" id="toc-example-1-knn" class="nav-link" data-scroll-target="#example-1-knn">Example 1: KNN</a></li>
+  <li><a href="#example-2-nonparametric-vs-parametric" id="toc-example-2-nonparametric-vs-parametric" class="nav-link" data-scroll-target="#example-2-nonparametric-vs-parametric">Example 2: Nonparametric vs Parametric</a></li>
+  </ul></li>
+  <li><a href="#notes-loess" id="toc-notes-loess" class="nav-link" data-scroll-target="#notes-loess">Notes: LOESS</a>
+  <ul class="collapse">
+  <li><a href="#local-regression-or-locally-estimated-scatterplot-smoothing-loess" id="toc-local-regression-or-locally-estimated-scatterplot-smoothing-loess" class="nav-link" data-scroll-target="#local-regression-or-locally-estimated-scatterplot-smoothing-loess">Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)</a></li>
+  <li><a href="#example-3-loess-in-r" id="toc-example-3-loess-in-r" class="nav-link" data-scroll-target="#example-3-loess-in-r">Example 3: LOESS in R</a></li>
+  <li><a href="#example-4-loess-the-bias-variance-tradeoff" id="toc-example-4-loess-the-bias-variance-tradeoff" class="nav-link" data-scroll-target="#example-4-loess-the-bias-variance-tradeoff">Example 4: LOESS &amp; the Bias-Variance Tradeoff</a></li>
+  <li><a href="#notes-gam" id="toc-notes-gam" class="nav-link" data-scroll-target="#notes-gam">Notes: GAM</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#part-1-building-a-gam" id="toc-part-1-building-a-gam" class="nav-link" data-scroll-target="#part-1-building-a-gam">Part 1: Building a GAM</a></li>
+  <li><a href="#part-2-identify-and-apply-a-final-gam" id="toc-part-2-identify-and-apply-a-final-gam" class="nav-link" data-scroll-target="#part-2-identify-and-apply-a-final-gam">Part 2: Identify and apply a “final” GAM</a></li>
+  <li><a href="#part-3-reflection" id="toc-part-3-reflection" class="nav-link" data-scroll-target="#part-3-reflection">Part 3: Reflection</a></li>
+  </ul></li>
+  <li><a href="#notes-deeper-learning-optional" id="toc-notes-deeper-learning-optional" class="nav-link" data-scroll-target="#notes-deeper-learning-optional">Notes: Deeper learning (OPTIONAL)</a></li>
+  <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L09-loess-gams.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -320,20 +405,799 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Coming soon!</p>
 <section id="settling-in" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Settling In</h1>
+<ul>
+<li>Join the #events channel on Slack</li>
+<li>Review the “Important Notes” at the top of HW3</li>
+</ul>
+<section id="announcements" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="announcements">Announcements</h2>
+<ul>
+<li>Quiz 1 next Tuesday
+<ul>
+<li>Topic: Regression (Units 1–3)</li>
+<li>Part 1: TBD</li>
+<li>Part 2: TBD</li>
+</ul></li>
+<li>HW3 due Thursday
+<ul>
+<li>Special instructions for this one – review the <strong>Important Notes</strong> before you begin!</li>
+<li>Limited extension opportunities to facilitate quick turnaround on feedback/sharing solutions (in time for Quiz 1)</li>
+</ul></li>
+</ul>
+</section>
 </section>
 <section id="learning-goals" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Learning Goals</h1>
+<ul>
+<li>Clearly describe the local regression algorithm for making a prediction</li>
+<li>Explain how bandwidth (span) relate to the bias-variance tradeoff</li>
+<li>Describe some different formulations for a GAM (how the arbitrary functions are represented)</li>
+<li>Explain how to make a prediction from a GAM</li>
+<li>Interpret the output from a GAM</li>
+</ul>
+<p><br></p>
 </section>
-<section id="notes" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Notes</h1>
+<section id="notes-context" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Notes: Context</h1>
+<center>
+<img src="images/MLDiagram2.jpg">
+</center>
+<p><strong>CONTEXT</strong></p>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = regression</strong><br>
+<span class="math inline">\(y\)</span> is quantitative</p></li>
+<li><p><strong>(nonparametric) algorithm</strong></p></li>
+</ul>
+<!--
+\
+\
+\
+\
+-->
+<p><br> <strong>GOAL</strong></p>
+<p>Our usual <em>parametric</em> models (eg: linear regression) are too rigid to represent the relationship between <span class="math inline">\(y\)</span> and our predictors <span class="math inline">\(x\)</span>. Thus we need more <em>flexible</em> <strong>nonparametric models</strong>.</p>
 </section>
-<section id="exercises" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Exercises</h1>
+<section id="recap" class="level1 unnumbered">
+<h1 class="unnumbered">Recap</h1>
+<p>Discuss the following questions with your group to review key concepts from recent activities.</p>
+<section id="example-1-knn" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-1-knn">Example 1: KNN</h2>
+<p>In the previous activity, we modeled college <code>Grad.Rate</code> versus <code>Expend</code>, <code>Enroll</code>, and <code>Private</code> using data on 775 schools.</p>
+<ol type="a">
+<li><p>We chose the KNN with K = 33 because it <em>minimized</em> the CV MAE, i.e.&nbsp;the errors when predicting grad rate for schools <em>outside</em> our sample. We don’t typically worry about a more <em>parsimonious</em> KNN, i.e.&nbsp;a model that has slightly higher prediction errors but is easier to interpret, apply, etc. Why?</p></li>
+<li><p>What <em>assumptions</em> did the KNN model make about the relationship of <code>Grad.Rate</code> with <code>Expend</code>, <code>Enroll</code>, and <code>Private</code>? Is this a pro or con?</p></li>
+<li><p>What did the KNN model tell us about the <em>relationship</em> of <code>Grad.Rate</code> with <code>Expend</code>, <code>Enroll</code>, and <code>Private</code>? For example, did it give you a sense of whether grad rates are higher at private or public institutions? At institutions with higher or lower enrollments? Is this a pro or con?</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<p>Solutions are in exercises for previous activity.</p>
+</details>
+<p><br></p>
+</section>
+<section id="example-2-nonparametric-vs-parametric" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-2-nonparametric-vs-parametric">Example 2: Nonparametric vs Parametric</h2>
+<p>Nonparametric KNN vs parametric least squares and LASSO:</p>
+<ul>
+<li>When <em>should</em> we use a nonparametric algorithm like KNN?</li>
+<li>When <em>shouldn’t</em> we?</li>
+</ul>
+<details>
+<summary>
+Solution
+</summary>
+<ul>
+<li><p>Use nonparametric methods when parametric model assumptions are too rigid. Forcing a parametric method in this situation can produce misleading conclusions.</p></li>
+<li><p>Use parametric methods when the model assumptions hold. In such cases, parametric models provide more contextual insight (eg: meaningful coefficients) and the ability to detect which predictors are beneficial to the model.</p></li>
+</ul>
+</details>
+<p><br></p>
+</section>
+</section>
+<section id="notes-loess" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: LOESS</h1>
+<section id="local-regression-or-locally-estimated-scatterplot-smoothing-loess" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="local-regression-or-locally-estimated-scatterplot-smoothing-loess">Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)</h2>
+<p><strong>Goal:</strong><br>
+Build a <strong>flexible</strong> regression model of <span class="math inline">\(y\)</span> by <em>one</em> quantitative predictor <span class="math inline">\(x\)</span>,</p>
+<p><span class="math display">\[y = f(x) + \varepsilon\]</span></p>
+<p><strong>Idea:</strong></p>
+<p>Fit regression models in small localized regions, where nearby data have greater influence than far data.</p>
+<p><strong>Algorithm:</strong></p>
+<p>Define the <em>span</em>, aka bandwidth, tuning parameter <span class="math inline">\(h\)</span> where <span class="math inline">\(0 \le h \le 1\)</span>. Take the following steps to estimate <span class="math inline">\(f(x)\)</span> at each possible predictor value <span class="math inline">\(x\)</span>:</p>
+<ol type="1">
+<li>Identify a neighborhood consisting of the <span class="math inline">\(100∗h\)</span>% of cases that are closest to <span class="math inline">\(x\)</span>.<br>
+</li>
+<li>Putting more weight on the neighbors closest to <span class="math inline">\(x\)</span> (ie. allowing them to have more influence), fit a linear model in this neighborhood.<br>
+</li>
+<li>Use the local linear model to estimate f(x).</li>
+</ol>
+<p><strong>In pictures:</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-3-loess-in-r" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-3-loess-in-r">Example 3: LOESS in R</h2>
+<p>We can plot LOESS models using <code>geom_smooth()</code>. Play around with the <code>span</code> parameter below.</p>
+<ul>
+<li>What happens as we increase the span from roughly 0 to roughly 1?</li>
+<li>What is one “pro” of this nonparametric algorithm, relative to KNN?</li>
+<li>What questions do you have about this algorithm?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(College)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(College, <span class="fu">aes</span>(<span class="at">x =</span> Expend, <span class="at">y =</span> Grad.Rate)) <span class="sc">+</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<ul>
+<li>as we increase span, the model becomes smoother and more simple</li>
+<li>compare to KNN, LOESS is smoother, more like the shape of the relationship we’re trying to estimate</li>
+</ul>
+</details>
+<p><br></p>
+</section>
+<section id="example-4-loess-the-bias-variance-tradeoff" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-4-loess-the-bias-variance-tradeoff">Example 4: LOESS &amp; the Bias-Variance Tradeoff</h2>
+<p>Use the below <strong>shiny app</strong> to explore the impact of the <em>span tuning parameter h</em> on the LOESS performance across different datasets. Continue to click the Go! button to get different datasets.</p>
+<ol type="a">
+<li><em>high bias</em> but <em>low variance</em>
+<ul>
+<li>h near 0</li>
+<li>h somewhere in the middle</li>
+<li>h near 1</li>
+</ul></li>
+<li><em>low bias</em> but <em>high variance</em>
+<ul>
+<li>h near 0</li>
+<li>h somewhere in the middle</li>
+<li>h near 1</li>
+</ul></li>
+<li><em>moderate bias</em> and <em>low variance</em>
+<ul>
+<li>h near 0</li>
+<li>h somewhere in the middle</li>
+<li>h near 1</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<ol type="a">
+<li>h near 1</li>
+<li>h near 0</li>
+<li>h somewhere in the middle</li>
+</ol>
+</details>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages &amp; data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a LOESS plotting function</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>plot_loess <span class="ot">&lt;-</span> <span class="cf">function</span>(h, plot_data){</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">span =</span> h, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"h = "</span>, h)) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">12</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># BUILD THE SERVER</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># These are instructions for building the app - what plot to make, what quantities to calculate, etc</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>server_LOESS <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  new_data <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>do, {</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="dv">25</span>, <span class="sc">-</span><span class="dv">6</span>, <span class="sc">-</span><span class="fl">2.5</span>), <span class="fu">runif</span>(<span class="dv">50</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="fu">runif</span>(<span class="dv">25</span>, <span class="fl">2.5</span>, <span class="dv">6</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="dv">9</span> <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="fl">0.75</span>) </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    y[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="dv">76</span><span class="sc">:</span><span class="dv">100</span>)] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="at">sd =</span> <span class="fl">0.75</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data.frame</span>(x, y)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>loesspic <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot_loess</span>(<span class="at">h =</span> input<span class="sc">$</span>hTune, <span class="at">plot_data =</span> <span class="fu">new_data</span>())</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># BUILD THE USER INTERFACE (UI)</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co"># The UI controls the layout, appearance, and widgets (eg: slide bars).</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ui_LOESS <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"Sample 100 observations:"</span>), </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">actionButton</span>(<span class="st">"do"</span>, <span class="st">"Go!"</span>),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"Tune the LOESS:"</span>), </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"hTune"</span>, <span class="st">"h"</span>, <span class="at">min =</span> <span class="fl">0.05</span>, <span class="at">max =</span> <span class="dv">1</span>, <span class="at">value =</span> <span class="fl">0.05</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"LOESS plot:"</span>), </span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"loesspic"</span>)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co"># RUN THE SHINY APP!</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_LOESS, <span class="at">server =</span> server_LOESS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="notes-gam" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="notes-gam">Notes: GAM</h2>
+<p><strong>Generalized Additive Models (GAM)</strong></p>
+<p>GAMs are <strong>nonparametric</strong> nonlinear models that can handle more than one predictor. They incorporate each predictor <span class="math inline">\(x_i\)</span> through some nonparametric, smooth function <span class="math inline">\(f_i()\)</span>:</p>
+<p><span class="math display">\[y = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p) + \varepsilon\]</span></p>
+<p><strong>Big ideas</strong></p>
+<ul>
+<li>Each <span class="math inline">\(f_j(x_j)\)</span> is a smooth model of <span class="math inline">\(y\)</span> vs <span class="math inline">\(x_j\)</span> <em>when controlling for the other predictors</em>. More specifically:
+<ul>
+<li>Each <span class="math inline">\(f_j(x_j)\)</span> models the behavior in <span class="math inline">\(y\)</span> that’s <em>not</em> explained by the other predictors.</li>
+<li>This “unexplained behavior” is represented by the <em>residuals</em> from the model of <span class="math inline">\(y\)</span> versus all predictors.</li>
+</ul></li>
+<li>The <span class="math inline">\(f_j()\)</span> functions are estimated using some <em>smoothing algorithm</em> (e.g.&nbsp;LOESS, smoothing splines, etc).</li>
+</ul>
+<p>NOTE: More optional details are included in the “Deeper learning” section.</p>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+<p><strong>TECHNICAL NOTE</strong></p>
+<p>In <code>tidymodels()</code>:</p>
+<ul>
+<li><p>The GAM f(x) components are estimated using <strong>smoothing splines</strong>, a nonparametric smoothing technique that’s more nuanced than LOESS.</p></li>
+<li><p>Smoothing splines depend upon a <span class="math inline">\(\lambda\)</span> <em>penalty</em> tuning parameter (labeled <code>adjust_deg_free</code> in <code>tidymodels</code>). As in the LASSO:</p>
+<ul>
+<li>the bigger the <span class="math inline">\(\lambda\)</span>, the more simple / less wiggly the estimate of f(x)</li>
+<li>if <span class="math inline">\(\lambda\)</span> is big enough, we might even kick a predictor out of the model</li>
+</ul></li>
+</ul>
+<p>Optional details are in the “Deeper Learning” section.</p>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+<p><strong>EXAMPLE 5: GAM</strong></p>
+<p>Interpret the wage analysis in Chapter 7 of ISLR.</p>
+<p>wage = <span class="math inline">\(\beta_0\)</span> + f(year) + f(age) + f(education) + <span class="math inline">\(\varepsilon\)</span></p>
+<center>
+<img src="images/islr_gam.png">
+</center>
+<details>
+<summary>
+Solution
+</summary>
+for example: when controlling for education level and year, wages have a quadratic-ish relationship with age. Both younger and older workers tend to have lower wages.
+</details>
+<p><br></p>
+<p><strong>NOTE</strong></p>
+<p>KNN, LOESS, and GAM aren’t the only algorithms for building more flexible models! Chapter 7 of the book also discusses:</p>
+<ul>
+<li>piecewise polynomials (parametric)</li>
+<li>regression splines (parametric)</li>
+<li>smoothing splines (nonparametric)</li>
+</ul>
+</section>
+<section id="exercises" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<p><strong>Goals</strong></p>
+<ul>
+<li>Implement and explore GAM in R.<br>
+</li>
+<li>Explore how this algorithm compares to others, hence how it fits into our broader ML workflow.</li>
+</ul>
+<p><strong>Context</strong></p>
+<p>Using the <code>College</code> data in the <code>ISLR</code> package, we’ll build a predictive model of <code>Grad.Rate</code> by 6 predictors: <code>Private</code>, <code>PhD</code> (percent of faculty with PhDs), <code>Room.Board</code>, <code>Personal</code> (estimated personal spending), <code>Outstate</code> (out-of-state tuition), <code>perc.alumni</code> (percent of alumni who donate)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(College)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrangle the data</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>college_sub <span class="ot">&lt;-</span> College <span class="sc">%&gt;%</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Grad.Rate <span class="sc">&lt;=</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>((Grad.Rate <span class="sc">&gt;</span> <span class="dv">50</span> <span class="sc">|</span> Expend <span class="sc">&lt;</span> <span class="dv">40000</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Grad.Rate, Private, PhD, Room.Board, Personal, Outstate, perc.alumni)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<section id="part-1-building-a-gam" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-1-building-a-gam">Part 1: Building a GAM</h3>
+<p>Let’s build a GAM of <code>Grad.Rate</code> by all 6 predictors in <code>college_sub</code>:</p>
+<p><span class="math display">\[\text{Grad.Rate} = \beta_0 + \beta_1\text{PrivateYes} + f_2(\text{PhD})  + \cdots + f_{6}(\text{perc.alumni}) + \varepsilon\]</span></p>
+<p>You’re given all code here. Be sure to scan and reflect upon what’s happening.</p>
+<p><br>
+</p>
+<p><strong>STEP 1: Specifying the GAM</strong></p>
+<p>Specify the GAM algorithm. Ask yourself the following about each line:</p>
+<ul>
+<li>How, if at all, does this differ from the code for LASSO or KNN?</li>
+<li>What’s the point?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gam_spec <span class="ot">&lt;-</span> <span class="fu">gen_additive_mod</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"mgcv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_args</span>(<span class="at">adjust_deg_free =</span> <span class="fu">tune</span>(), <span class="at">select_features =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<p><strong>STEP 2: variable recipe</strong></p>
+<p>NOTE: each <span class="math inline">\(f_j(x_j)\)</span> uses only a single predictor <span class="math inline">\(x_j\)</span>, we don’t have to worry about predictor scales or pre-processing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Grad.Rate <span class="sc">~</span> ., <span class="at">data =</span> college_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+<p><strong>STEP 3: workflow specification</strong></p>
+<p>Set up our GAM workflow. Check out the <code>formula</code> required by <code>add_model</code>:</p>
+<ul>
+<li>How did we include the <em>categorical</em> <code>Private</code> predictor?</li>
+<li>How did we include the other <em>quantitative</em> predictors?</li>
+<li>Thinking back to the technical note about the GAM in <code>tidymodels</code>, what do you think <code>s()</code> stands for?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gam_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(gam_spec,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">formula =</span> Grad.Rate <span class="sc">~</span> Private <span class="sc">+</span> <span class="fu">s</span>(PhD) <span class="sc">+</span> <span class="fu">s</span>(Room.Board) <span class="sc">+</span> <span class="fu">s</span>(Personal) <span class="sc">+</span> <span class="fu">s</span>(Outstate) <span class="sc">+</span> <span class="fu">s</span>(perc.alumni))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+</p>
+<p><strong>STEP 4: estimate multiple GAMs</strong></p>
+<p>Finally, estimate the GAM using a range of values for <code>adjust_deg_free()</code>, the <span class="math inline">\(\lambda\)</span> tuning parameter.</p>
+<ul>
+<li>Recall: the bigger the parameter, the greater the <em>penalty</em> for overfit, wiggly behavior.</li>
+<li>We’ll try <strong>10</strong> possible values for the penalty parameter, ranging from <strong>0.25 to 4</strong>, and evaluate each model with respect to its <strong>10-fold</strong> CV MAE.<br>
+</li>
+<li>Running this code will take some time (typically under 30 seconds). The more predictors we have, the longer it takes!</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>gam_models <span class="ot">&lt;-</span> gam_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">adjust_deg_free</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">4</span>)), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">10</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(college_sub, <span class="at">v =</span> <span class="dv">10</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="part-2-identify-and-apply-a-final-gam" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-2-identify-and-apply-a-final-gam">Part 2: Identify and apply a “final” GAM</h3>
+<ol type="1">
+<li><p><strong>Computational time</strong><br>
+We only ran 10 different GAMs of <code>Grad.Rate</code> by our 6 predictors above. What is it about this algorithm that makes it take so long?</p>
+<p>NOTE: In general, the GAM is not great when we have lots of predictors. In that case, we might use a poorly fit LASSO to help pick predictors, and then use GAM with these predictors for our final model and predictions.</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+Within any 1 model, we’re building many models within local windows.
+</details>
+<p><br></p>
+<ol start="2" type="1">
+<li><p><strong>Identify the best GAM</strong><br>
+Using the same concepts (and code!) as when we tuned the LASSO and KNN algorithms:</p>
+<p>::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a plot to compare the predictive performance of our 10 GAM models</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick the best value for the penalty tuning parameter</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `best_penalty`</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a final GAM using `best_penalty`</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `final_gam`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>:::</p></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a plot to compare the predictive performance of our 10 GAM models</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gam_models <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick the best value for the penalty tuning parameter</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `best_penalty`</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>best_penalty <span class="ot">&lt;-</span> gam_models <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">select_best</span>()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a final GAM using `best_penalty`</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Name this `final_gam`</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>final_gam <span class="ot">&lt;-</span> gam_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> best_penalty) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">fit</span>(<span class="at">data =</span> college_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><p><strong>Explore the final GAM</strong><br>
+Plot the smoothing functions for each predictor in our model. NOTE: The <code>$</code> notation accesses nested objects (<code>fit</code> within <code>fit</code> within <code>fit</code> within <code>final_gam</code>).</p>
+<p>::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>final_gam<span class="sc">$</span>fit<span class="sc">$</span>fit<span class="sc">$</span>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">all.terms =</span> <span class="cn">TRUE</span>, <span class="at">pages =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>:::</p>
+<ol type="a">
+<li>Is there anything in these plots that justifies our use of the GAM instead of least squares?</li>
+<li>Pick 1 or 2 of these plots and interpret your findings.</li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>final_gam<span class="sc">$</span>fit<span class="sc">$</span>fit<span class="sc">$</span>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">all.terms =</span> <span class="cn">TRUE</span>, <span class="at">pages =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="a">
+<li>kinda. <code>Personal</code>, <code>Outstate</code>, and <code>perc.alumni</code> seem to have complicated non-linear associations with <code>Grad.Rate</code>.</li>
+<li>will vary</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><p><strong>Pick an algorithm</strong><br>
+Our overall goal is to build a predictive model of <code>Grad.Rate</code> (<span class="math inline">\(y\)</span>) by 6 predictors:</p>
+<p><span class="math display">\[y = f(x_1,x_2,...,x_{6}) + \varepsilon\]</span></p>
+<p>The table below summarizes the CV MAE for 3 possible algorithms: least squares, KNN, and GAM. After examining the results, explain which model you would choose and <em>why</em>. NOTE: There are no typos here! All models had the same CV MAE. Code is provided in the online manual if you’re curious.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">method</th>
+<th style="text-align: left;">type</th>
+<th style="text-align: left;">assumption about <span class="math inline">\(f(x_1,x_2,...,x_{6})\)</span></th>
+<th style="text-align: left;">CV MAE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">least squares</td>
+<td style="text-align: left;">parametric</td>
+<td style="text-align: left;"><span class="math inline">\(\beta_0 + \beta_1x_1 + \cdots + \beta_{6} x_{6}\)</span></td>
+<td style="text-align: left;">10.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KNN w/ <span class="math inline">\(K = 33\)</span></td>
+<td style="text-align: left;">nonparametric</td>
+<td style="text-align: left;">average <span class="math inline">\(y\)</span> among neighbors</td>
+<td style="text-align: left;">10.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GAM w/ penalty = 1.5</td>
+<td style="text-align: left;">nonparametric</td>
+<td style="text-align: left;"><span class="math inline">\(\beta_0 + f_1(x_1) + \cdots + f_{6}(x_{6})\)</span></td>
+<td style="text-align: left;">10.2</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<details>
+<summary>
+Solution
+</summary>
+<p>You can argue a couple of ways.</p>
+<ul>
+<li><p>If you noted the non-linear relationships in the plots above: GAM is more informative than KNN and less wrong than least squares.</p></li>
+<li><p>If you didn’t think above that GAM was warranted, you should pick least squares. It’s definitely simpler and easier to interpret.</p></li>
+</ul>
+<p><strong>Code</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GAM MAE</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>gam_models <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(adjust_deg_free <span class="sc">==</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  adjust_deg_free .metric .estimator  mean     n std_err .config              
+            &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+1             1.5 mae     standard    10.2    10   0.350 Preprocessor1_Model04</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the LS</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ls_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    Grad.Rate <span class="sc">~</span> .,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(college_sub, <span class="at">v =</span> <span class="dv">10</span>), </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>ls_model <span class="sc">%&gt;%</span> </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  .metric .estimator  mean     n std_err .config             
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 mae     standard    10.2    10   0.365 Preprocessor1_Model1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the KNN</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>knn_spec <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_args</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>())</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Grad.Rate <span class="sc">~</span> ., <span class="at">data =</span> college_sub) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>knn_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(knn_spec) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(variable_recipe)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>knn_models <span class="ot">&lt;-</span> knn_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">200</span>)), <span class="at">levels =</span> <span class="dv">50</span>),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(college_sub, <span class="at">v =</span> <span class="dv">10</span>),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>best_K <span class="ot">&lt;-</span> <span class="fu">select_best</span>(knn_models, <span class="at">metric =</span> <span class="st">"mae"</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>best_K</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  neighbors .config              
+      &lt;int&gt; &lt;chr&gt;                
+1        33 Preprocessor1_Model09</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>knn_models <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(neighbors <span class="sc">==</span> best_K<span class="sc">$</span>neighbors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  neighbors .metric .estimator  mean     n std_err .config              
+      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+1        33 mae     standard    10.2    10   0.337 Preprocessor1_Model09</code></pre>
+</div>
+</div>
+</details>
+<p><br></p>
+</section>
+<section id="part-3-reflection" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-3-reflection">Part 3: Reflection</h3>
+<p>In these final exercises, you’ll reflect upon some algorithms we’ve learned thus far. This might feel bumpy if you haven’t reviewed the material recently, so be kind to yourself!</p>
+<p>Some of these exercises are similar to those on Homework 4. Thus solutions are not provided. The following directions are important to deepening your learning and growth.</p>
+<ul>
+<li>Typing the questions into ChatGPT does not require any reflection: <strong>You may NOT use ChatGPT or other online resources for these questions or on Homework 4.</strong></li>
+<li>Locating is not learning: Challenge yourself to write out concepts in <em>your own words</em>. Do not rely on definitions in the activities, videos, or elsewhere.</li>
+</ul>
+<p><br>
+<br>
+</p>
+<ol start="4" type="1">
+<li><strong>Interpretability &amp; flexibility</strong><br>
+When picking between different model building algorithms, there are several considerations, including <em>flexibility</em> and <em>interpretability</em>. Consider the following graphic from ISLR:</li>
+</ol>
+<center>
+<img src="images/flex_interp_ISLR.png">
+</center>
+<ol type="a">
+<li><p>Convince yourself that the placement of Subset Selection (e.g.&nbsp;backward stepwise), LASSO, Least Squares, and GAM make sense. (We’ll address the other algorithms later this semester.)</p></li>
+<li><p>Where would you place KNN on this graphic?</p></li>
+</ol>
+<ol start="5" type="1">
+<li><strong>Differences and similarities</strong><br>
+For each pair of algorithms below: try to identify a key <em>similarity</em>, a key <em>difference</em>, and any scenario in which they’re “equivalent”.
+<ol type="a">
+<li>KNN vs LOESS</li>
+<li>LOESS vs GAM</li>
+<li>GAM vs least squares</li>
+<li>least squares vs LASSO</li>
+</ol></li>
+<li><strong>Pros &amp; cons (there’s a similar question on HW 4)</strong><br>
+Summarize at least 1 pro and 1 con about each model building algorithm. You cannot use the same pro or con more than once!
+<ol type="a">
+<li>least squares</li>
+<li>LASSO</li>
+<li>KNN</li>
+<li>GAM</li>
+</ol></li>
+<li><strong>Lingo (there’s a similar question on HW 4)</strong><br>
+In your own words, describe what each of these “everyday” words means in the context of ML algorithms:
+<ul>
+<li>greedy</li>
+<li>biased</li>
+<li>parsimonious</li>
+<li>(computationally) expensive</li>
+<li>goldilocks problem</li>
+</ul></li>
+</ol>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="notes-deeper-learning-optional" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="notes-deeper-learning-optional">Notes: Deeper learning (OPTIONAL)</h2>
+<p><strong>SPLINES</strong></p>
+<p>KNN, LOESS, and GAM aren’t the only nonparametric regression algorithms! Other common tools include <strong>piecewise polynomials</strong> and <strong>smoothing splines</strong>. Read Chapter 7 of the book, and watch Prof Leslie Myint’s video on these topics to learn more:</p>
+<p><a href="https://www.youtube.com/watch?v=G7Gm3sZbM-4">https://www.youtube.com/watch?v=G7Gm3sZbM-4</a></p>
+<p>Chapter 7.5 specifically provides more information about smoothing splines. In general, these techniques estimate the GAM f(x) components by <em>penalizing</em> wiggly behavior where wiggliness is measured by the second derivative of f(x), i.e.&nbsp;the degree to which the slope changes. Specifically, f(x) is estimated to minimize:</p>
+<p><span class="math display">\[\sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int f''(t)^2 dt\]</span></p>
+<p>That is, we want f(x) to produce small squared residuals (<span class="math inline">\(\sum_{i=1}^n (y_i - f(x_i))^2\)</span>) and small total change in slope over the range of x (<span class="math inline">\(\int f''(t)^2 dt\)</span>).</p>
+<p><br>
+<br>
+</p>
+<p><strong>GAM ALGORITHM DETAILS</strong></p>
+<p>The <span class="math inline">\(f_j()\)</span> functions are estimated using a <a href="https://en.wikipedia.org/wiki/Backfitting_algorithm"><strong>backfitting procedure</strong></a>. The idea is this.</p>
+<ul>
+<li>Fit a model of <span class="math inline">\(y\)</span> vs all other <span class="math inline">\(x\)</span> <em>except</em> <span class="math inline">\(x_j\)</span>. The residuals of this model reveal the information in <span class="math inline">\(y\)</span> that’s unexplained by all other <span class="math inline">\(x\)</span>.</li>
+<li>Use smoothing splines to model the <em>residuals</em> by <span class="math inline">\(x_j\)</span>. This model reveals the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x_j\)</span> when controlling for all other <span class="math inline">\(x\)</span>.</li>
+<li><em>Iterate between the above steps for all <span class="math inline">\(x\)</span>. Stop when there’s no longer improvement in the prediction error (as measured by the residual sum of squares).</em></li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="notes-r-code" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="notes-r-code">Notes: R code</h2>
+<p><br>
+</p>
+<p>Suppose we want to build a model of response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p><strong>Build the model</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 1: GAM model specification</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>gam_spec <span class="ot">&lt;-</span> <span class="fu">gen_additive_mod</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"mgcv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_args</span>(<span class="at">adjust_deg_free =</span> <span class="fu">tune</span>(), <span class="at">select_features =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>STEP 1 notes:</p>
+<ul>
+<li>We use the <code>mgcv</code>, not <code>lm</code>, engine to build GAMs.</li>
+<li>The <code>mgcv</code> engine requires us to specify two argument (<code>set_args</code>):
+<ul>
+<li><code>adjust_deg_free = tune()</code> indicates that we don’t (yet) know an appropriate value for the penalty tuning parameter. We need to tune it.</li>
+<li><code>select_features = TRUE</code> allows the GAM to eliminate a predictor from the model (like LASSO!).</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 2: variable recipe</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> ., <span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>STEP 2 notes: The GAM algorithm does <em>not</em> require any pre-processing of the predictors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 3: workflow specification</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># SUPPOSE x1 is CATEGORICAL and x2 is QUANTITATIVE</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>gam_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_model</span>(gam_spec, <span class="at">formula =</span> y <span class="sc">~</span> x1 <span class="sc">+</span> <span class="fu">s</span>(x2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>STEP 3 notes: In <code>add_model</code>:</p>
+<ul>
+<li>We need to provide a <code>formula</code>.</li>
+<li>We put a <em>categorical</em> predictor into our model as itself: <code>x1</code>.</li>
+<li>We put a <em>quantitative</em> predictor into our model through a <em>smoothing spline</em>: <code>s(x2)</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># STEP 4: Estimate multiple GAM models using a range of possible penalty parameters</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the CV MAE for each</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>gam_models <span class="ot">&lt;-</span> gam_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">adjust_deg_free</span>(<span class="at">range =</span> <span class="fu">c</span>(___, ___)), </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">10</span>),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>STEP 4 notes:</p>
+<ul>
+<li>Since the CV process is random, we need to <code>set.seed(___)</code>.</li>
+<li>We use <code>tune_grid()</code> instead of <code>fit()</code> since we have to build multiple GAM models, each using a different penalty tuning parameters.</li>
+<li><code>grid</code> specifies the values we want to try for the penalty parameter <code>adjust_deg_free()</code>.
+<ul>
+<li>the <code>range</code> specifies the lowest and highest numbers we want to try. This must be positive. I start with <code>range = c(0.25, 4)</code> and expand / contract the interval as necessary.</li>
+<li><code>levels</code> is the <em>number</em> of values to try in that range, thus how many GAMs to build.</li>
+</ul></li>
+<li><code>resamples</code> and <code>metrics</code> indicate that we want to calculate a CV MAE for each GAM.</li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Tuning the GAM</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate CV MAE for each GAM</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>gam_models <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot CV MAE (y-axis) for the GAM from each penalty parameter (x-axis)</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(gam_models)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify penalty which produced the lowest ("best") CV MAE</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>best_penalty <span class="ot">&lt;-</span> <span class="fu">select_best</span>(gam_models, <span class="at">metric =</span> <span class="st">"mae"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>best_penalty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p><strong>Finalizing &amp; plotting the “best” GAM</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>final_gam <span class="ot">&lt;-</span> gam_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> best_penalty) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(<span class="at">data =</span> sample_data)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the smoothing functions</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>final_gam<span class="sc">$</span>fit<span class="sc">$</span>fit<span class="sc">$</span>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">all.terms =</span> <span class="cn">TRUE</span>, <span class="at">pages =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br>
+</p>
+<p><strong>Use the GAM to make predictions</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>final_gam <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)     <span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
