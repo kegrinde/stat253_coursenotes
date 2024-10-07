@@ -1,7 +1,5 @@
 # Learning Goals {.unnumbered}
 
-**Note: this page is currently under construction!**
-
 The goal of this course is for you to further develop general skills necessary for statistics and data science and gain a working understanding of set of machine learning algorithms.
 
 Specific course topics and general skills are listed below. Use these to guide your synthesis of course material for your concept quizzes and group mini projects throughout the entire semester.
@@ -38,6 +36,13 @@ Specific course topics and general skills are listed below. Use these to guide y
 -   Develop a common purpose and agreement on goals.
 -   Be able to contribute questions or concerns in a respectful way.
 -   Share and contribute to the group's learning in an equitable manner.
+
+**Reflection**
+
+- Regularly reflect on your learning to make note of and celebrate your progress, identify opportunities for continued growth, and set goals
+
+<!-- need to add specific items!-->
+
 
 ## Course Topics {.unnumbered}
 
