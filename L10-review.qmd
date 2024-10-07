@@ -12,12 +12,270 @@ conflicts_prefer(tidyr::expand)
 conflicts_prefer(dplyr::filter)
 ```
 
-Coming soon!
+
 
 # Settling In {.unnumbered .smaller}
 
-# Learning Goals {.unnumbered .smaller}
+- Sit with your assigned group
+- Catch up on any posts you've missed on Slack
+- Open Group Assignment 1
 
-# Notes {.unnumbered .smaller}
+\
 
-# Exercises {.unnumbered .smaller}
+
+## Quiz 1 Reminders {.unnumbered .smaller}
+
+Content: 
+
+- Regression (Units 1--3)
+- Questions will range in style: multiple choice, fill in the blank, short response, 
+matching, etc.
+
+Part 1: 
+
+- on paper
+- closed people, closed notes
+- due by the end of class
+- you might be asked to interpret some R output, but I won't ask you to produce any code
+
+Part 2: 
+
+- on computers
+- you can chat with any current STAT 253 student, but nobody else (including preceptors)
+- you can DM or email me clarifying questions and if there is something that could 
+benefit from broader clarification I'll share my answer (on Slack) with the entire class
+  - note: I do not check email/Slack ~ 5pm--7am
+- you can use any materials from this STAT 253 course (videos, course website, 
+textbook, homework solutions, etc.), but you may not use any other resources (internet, 
+chatGPT, etc.)
+- this is designed to finish during class, but you can hand it in any time within 
+24 hours of your class end time (eg 11:10am the next day for the 9:40am section)
+
+\
+\
+
+# Notes {-}
+
+## Context {.unnumbered .smaller}
+
+<center>
+<img src="images/MLDiagram.jpg"/>
+</center>
+
+**What have we covered so far?**
+
+For the Regression task: 
+
+- Unit 1: Model evaluation
+- Unit 2: Building models / selecting predictors
+- Unit 3: Building flexible (nonparametric, nonlinear) models
+
+General concepts that translate to other ML tasks:
+
+- Overfitting
+- Cross validation
+- Bias-variance tradeoff
+- Algorithms and tuning parameters
+- Preprocessing steps
+- Parametric vs nonparametric models
+
+## Review & Reflection {.unnumbered .smaller}
+
+STAT 253 is a survey course of statistical machine learning techniques and concepts. It's important to continuously reflect on these and how they fit together. <!--Though you won't hand anything in, or work on this in class today, **you're strongly encouraged to complete this activity**.--> The material for class today is designed to help you reflect upon:
+
+- ML concepts
+    - enduring, big picture concepts
+    - technical concepts
+    - `tidymodels` code
+- Your progress toward...        
+    - engagement
+    - collaboration
+    - preparation (checkpoints)
+    - exploration (homework)
+
+Find and make a copy of the following 2 resources. You'll be given some relevant prompts below, but you should use these materials in *whatever way suits you*! Take notes, add more content, rearrange, etc. 
+
+- [STAT 253 concept maps](https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing)
+- [tidymodels code comparison](https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing)
+
+\
+\
+
+# Exercises {-}
+
+## Part 1: Group Assignment 1 {.unnumbered .smaller}
+
+Instructions coming soon!
+
+<!--
+goals: 
+
+- structured work time for getting started on GA1 
+- setting group norms, expectations, dividing up work load, etc. (ie write a "contract") 
+- sharing initial insight from data
+-->
+
+
+<!-- from brianna: 
+
+10 minutes: 
+
+- each person take a turn summarizing what you learned about the data and your ability to predict arrival delays
+- share the best CV MAE you got
+- share your code (share QMDs via Slack/email)
+
+5 minutes: 
+
+- decide, as a group, what tools you want to use to build a predictive regression model (and in what order)
+
+20--30 minutes: 
+
+- open the template QMD from Moodle
+- copy code from individual QMDs into the appropriate sections
+- (you'll need to refine and adjust code as you go)
+- decide how you will share code moving forward
+
+5 minutes: 
+
+- decide who is going to "lead" each section of the template (this person will write the first draft of text)
+- decide who is going to "review" each section (this person will review/edit/improve)
+- sections: 
+  - data (can be paired with research question): 
+      - who, what, where, when, why, how
+      - give insight into the outcome and summary of available predictors (no list and no R variable names)
+  - model building: 
+      - describe the tools and the order in which tools are used to build the model
+      - justify all choices
+  - model evaluation: 
+      - answer the four questions in paragraph form
+      
+moving forward: 
+
+- work on sections and touch base with each other as needed
+-->
+
+\
+\
+
+## Part 2: Preparing for Quiz 1 {.unnumbered .smaller}
+
+### Concept Maps {.unnumbered .smaller}
+
+Mark up __slides 1--4__ of the [concept map](https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing) with respect to the prompts below.
+Much of this overlaps with HW3.
+
+\
+\
+
+**Enduring, big picture concepts**
+
+IMPORTANT to your learning: Respond in your own words. 
+
+- When do we perform a supervised vs unsupervised learning algorithm?
+- Within supervised learning, when do we use a regression vs a classification algorithm?
+- What is the importance of "model evaluation" and what questions does it address?
+- What is "overfitting" and why is it bad?
+- What is "cross-validation" and what problem is it trying to address?
+- What is the "bias-variance tradeoff"?
+
+
+
+\
+\
+
+**Technical concepts**
+
+On page 2, identify some general themes for each model algorithm listed in the lefthand table:
+
+- What's the goal?
+- Is the algorithm parametric or nonparametric?
+- Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a **goldilocks problem**?
+- What are the key pros & cons of the algorithm?
+
+For each algorithm, you should also reflect upon these **important technical concepts**:
+
+- Can you summarize the steps of this algorithm?
+- Is the algorithm parametric or nonparametric? (addressed above)
+- What is the bias-variance tradeoff when working with or tuning this algorithm?
+- Is it important to scale / pre-process our predictors before feeding them into this algorithm?
+- Is this algorithm "computationally expensive"?
+- Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?
+
+
+
+
+\
+\
+
+
+
+**Model evaluation**
+
+On page 2, do the following for each model evaluation question in the righthand table:
+
+- Identify what to check or measure in order to address the question, and how to interpret it.
+- Explain the steps of the CV algorithm.
+
+\
+\
+
+
+**Algorithm comparisons**
+
+- Use page 3 to make other observations about the Unit 1-3 modeling algorithms and their connections.
+- Use page 4 to address and compare the interpretability & flexibility of the Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM algorithms. Where would you place KNN on this graphic?    
+
+
+
+\
+\
+
+### Tidymodels Code Comparison {.unnumbered .smaller}
+
+Check out and reflect upon some [tidymodels code comparisons here](https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing). Copy, use, tweak, and add to this in whatever way suits you!
+
+\
+\
+
+
+## Part 3: Midterm Learning Reflection {.unnumbered .smaller}
+
+Instructions coming soon!
+
+<!-- instructions for MLR -->
+
+<!-- from Brianna:
+By the end of the week, take 10-20 minutes to write in your individual Reflection Google Doc (shared with you and your Professor). In this reflection, consider your preparation for each class, your engagement in the course in and out of class, your actions towards collaboration, and your exploration of the material through the homeworks with the ultimate goal of meeting my learning goals for you and your own learning goals. 
+-->
+
+<!-- from Alicia: 
+The reflections above address your understanding of the concepts in this course. Consider the other 4 core components that you’ve been working toward in Units 1–3. In addition to the below prompts, you’re encouraged to track your progress using the worksheet on page 10 (!) of the syllabus.
+
+- With respect to collaboration, reflect upon your strengths and what you might change:
+  - How actively did you contribute to group discussions?
+  - How actively did you include all other group members in discussion?
+  - In what ways did you (or did you not) help create a space where others feel comfortable making mistakes & sharing their ideas?
+
+- With respect to engagement, reflect upon your strengths and what you might change:
+  - Did you regularly attend, be on time for, & stay for the full class sessions?
+  - Have you not missed more than 3 in-person class sessions?
+  - Were you actively present during class (eg: not on your phone, not working on other courses, etc)?
+  - Did you stay updated on Slack?
+  - When you had questions, did you ask them on Slack or in OH?
+
+- With respect to preparation, how many of checkpoints 1–7 did you complete and pass?
+
+- With respect to exploration, how many of Homeworks 1–4 did you complete and pass?
+-->
+
+\
+\
+
+# Wrapping Up {.unnumbered .smaller}
+
+- finish HW3 (due TONIGHT)
+  - I'll post solutions within 3 days so you can review them while studying
+- continue working on Group Assignment 1
+  - before you leave today, make sure you have a clear idea of your next steps!
+- study for Quiz 1 
+- continue working on your Midterm Learning Reflection 

@@ -442,7 +442,7 @@ window.Quarto = {
 </ul></li>
 <li>Part 2 (on computer):
 <ul>
-<li>open notes (current 253 course materials only), open collaboration (current 253 students only)</li>
+<li>open* notes (current 253 course materials only), open* collaboration (current 253 students only)</li>
 <li>due within 24 hours, but designed to finish during class</li>
 </ul></li>
 </ul></li>
@@ -565,7 +565,7 @@ Build a <strong>flexible</strong> regression model of <span class="math inline">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-revealjs/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -574,7 +574,7 @@ Build a <strong>flexible</strong> regression model of <span class="math inline">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-revealjs/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -603,7 +603,7 @@ Build a <strong>flexible</strong> regression model of <span class="math inline">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-revealjs/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -914,7 +914,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-revealjs/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -953,7 +953,7 @@ Solution
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L09-loess-gams_files/figure-revealjs/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
+<p><img src="L09-loess-gams_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1308,44 +1308,6 @@ In your own words, describe what each of these “everyday” words means in the
 </section>
 
 </main> <!-- /main -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -291,10 +291,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a>
+  <ul class="collapse">
+  <li><a href="#quiz-1-reminders" id="toc-quiz-1-reminders" class="nav-link" data-scroll-target="#quiz-1-reminders">Quiz 1 Reminders</a></li>
+  </ul></li>
+  <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a>
+  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
+  <li><a href="#review-reflection" id="toc-review-reflection" class="nav-link" data-scroll-target="#review-reflection">Review &amp; Reflection</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#part-1-group-assignment-1" id="toc-part-1-group-assignment-1" class="nav-link" data-scroll-target="#part-1-group-assignment-1">Part 1: Group Assignment 1</a></li>
+  <li><a href="#part-2-preparing-for-quiz-1" id="toc-part-2-preparing-for-quiz-1" class="nav-link" data-scroll-target="#part-2-preparing-for-quiz-1">Part 2: Preparing for Quiz 1</a>
+  <ul class="collapse">
+  <li><a href="#concept-maps" id="toc-concept-maps" class="nav-link" data-scroll-target="#concept-maps">Concept Maps</a></li>
+  <li><a href="#tidymodels-code-comparison" id="toc-tidymodels-code-comparison" class="nav-link" data-scroll-target="#tidymodels-code-comparison">Tidymodels Code Comparison</a></li>
+  </ul></li>
+  <li><a href="#part-3-midterm-learning-reflection" id="toc-part-3-midterm-learning-reflection" class="nav-link" data-scroll-target="#part-3-midterm-learning-reflection">Part 3: Midterm Learning Reflection</a></li>
+  </ul></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L10-review.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -320,18 +336,262 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Coming soon!</p>
 <section id="settling-in" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Settling In</h1>
+<ul>
+<li>Sit with your assigned group</li>
+<li>Catch up on any posts you’ve missed on Slack</li>
+<li>Open Group Assignment 1</li>
+</ul>
+<p><br>
+</p>
+<section id="quiz-1-reminders" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="quiz-1-reminders">Quiz 1 Reminders</h2>
+<p>Content:</p>
+<ul>
+<li>Regression (Units 1–3)</li>
+<li>Questions will range in style: multiple choice, fill in the blank, short response, matching, etc.</li>
+</ul>
+<p>Part 1:</p>
+<ul>
+<li>on paper</li>
+<li>closed people, closed notes</li>
+<li>due by the end of class</li>
+<li>you might be asked to interpret some R output, but I won’t ask you to produce any code</li>
+</ul>
+<p>Part 2:</p>
+<ul>
+<li>on computers</li>
+<li>you can chat with any current STAT 253 student, but nobody else (including preceptors)</li>
+<li>you can DM or email me clarifying questions and if there is something that could benefit from broader clarification I’ll share my answer (on Slack) with the entire class
+<ul>
+<li>note: I do not check email/Slack ~ 5pm–7am</li>
+</ul></li>
+<li>you can use any materials from this STAT 253 course (videos, course website, textbook, homework solutions, etc.), but you may not use any other resources (internet, chatGPT, etc.)</li>
+<li>this is designed to finish during class, but you can hand it in any time within 24 hours of your class end time (eg 11:10am the next day for the 9:40am section)</li>
+</ul>
+<p><br>
+<br>
+</p>
 </section>
-<section id="learning-goals" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Learning Goals</h1>
 </section>
-<section id="notes" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Notes</h1>
+<section id="notes" class="level1 unnumbered">
+<h1 class="unnumbered">Notes</h1>
+<section id="context" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="context">Context</h2>
+<center>
+<img src="images/MLDiagram.jpg">
+</center>
+<p><strong>What have we covered so far?</strong></p>
+<p>For the Regression task:</p>
+<ul>
+<li>Unit 1: Model evaluation</li>
+<li>Unit 2: Building models / selecting predictors</li>
+<li>Unit 3: Building flexible (nonparametric, nonlinear) models</li>
+</ul>
+<p>General concepts that translate to other ML tasks:</p>
+<ul>
+<li>Overfitting</li>
+<li>Cross validation</li>
+<li>Bias-variance tradeoff</li>
+<li>Algorithms and tuning parameters</li>
+<li>Preprocessing steps</li>
+<li>Parametric vs nonparametric models</li>
+</ul>
 </section>
-<section id="exercises" class="level1 unnumbered smaller">
-<h1 class="unnumbered smaller">Exercises</h1>
+<section id="review-reflection" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="review-reflection">Review &amp; Reflection</h2>
+<p>STAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together. <!--Though you won't hand anything in, or work on this in class today, **you're strongly encouraged to complete this activity**.--> The material for class today is designed to help you reflect upon:</p>
+<ul>
+<li>ML concepts
+<ul>
+<li>enduring, big picture concepts</li>
+<li>technical concepts</li>
+<li><code>tidymodels</code> code</li>
+</ul></li>
+<li>Your progress toward…
+<ul>
+<li>engagement</li>
+<li>collaboration</li>
+<li>preparation (checkpoints)</li>
+<li>exploration (homework)</li>
+</ul></li>
+</ul>
+<p>Find and make a copy of the following 2 resources. You’ll be given some relevant prompts below, but you should use these materials in <em>whatever way suits you</em>! Take notes, add more content, rearrange, etc.</p>
+<ul>
+<li><a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 concept maps</a></li>
+<li><a href="https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing">tidymodels code comparison</a></li>
+</ul>
+<p><br>
+<br>
+</p>
+</section>
+</section>
+<section id="exercises" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises</h1>
+<section id="part-1-group-assignment-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="part-1-group-assignment-1">Part 1: Group Assignment 1</h2>
+<p>Instructions coming soon!</p>
+<!--
+goals: 
+
+- structured work time for getting started on GA1 
+- setting group norms, expectations, dividing up work load, etc. (ie write a "contract") 
+- sharing initial insight from data
+-->
+<!-- from brianna: 
+
+10 minutes: 
+
+- each person take a turn summarizing what you learned about the data and your ability to predict arrival delays
+- share the best CV MAE you got
+- share your code (share QMDs via Slack/email)
+
+5 minutes: 
+
+- decide, as a group, what tools you want to use to build a predictive regression model (and in what order)
+
+20--30 minutes: 
+
+- open the template QMD from Moodle
+- copy code from individual QMDs into the appropriate sections
+- (you'll need to refine and adjust code as you go)
+- decide how you will share code moving forward
+
+5 minutes: 
+
+- decide who is going to "lead" each section of the template (this person will write the first draft of text)
+- decide who is going to "review" each section (this person will review/edit/improve)
+- sections: 
+  - data (can be paired with research question): 
+      - who, what, where, when, why, how
+      - give insight into the outcome and summary of available predictors (no list and no R variable names)
+  - model building: 
+      - describe the tools and the order in which tools are used to build the model
+      - justify all choices
+  - model evaluation: 
+      - answer the four questions in paragraph form
+      
+moving forward: 
+
+- work on sections and touch base with each other as needed
+-->
+<p><br>
+<br>
+</p>
+</section>
+<section id="part-2-preparing-for-quiz-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="part-2-preparing-for-quiz-1">Part 2: Preparing for Quiz 1</h2>
+<section id="concept-maps" class="level3 unnumbered smaller">
+<h3 class="unnumbered smaller anchored" data-anchor-id="concept-maps">Concept Maps</h3>
+<p>Mark up <strong>slides 1–4</strong> of the <a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">concept map</a> with respect to the prompts below. Much of this overlaps with HW3.</p>
+<p><br>
+<br>
+</p>
+<p><strong>Enduring, big picture concepts</strong></p>
+<p>IMPORTANT to your learning: Respond in your own words.</p>
+<ul>
+<li>When do we perform a supervised vs unsupervised learning algorithm?</li>
+<li>Within supervised learning, when do we use a regression vs a classification algorithm?</li>
+<li>What is the importance of “model evaluation” and what questions does it address?</li>
+<li>What is “overfitting” and why is it bad?</li>
+<li>What is “cross-validation” and what problem is it trying to address?</li>
+<li>What is the “bias-variance tradeoff”?</li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Technical concepts</strong></p>
+<p>On page 2, identify some general themes for each model algorithm listed in the lefthand table:</p>
+<ul>
+<li>What’s the goal?</li>
+<li>Is the algorithm parametric or nonparametric?</li>
+<li>Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a <strong>goldilocks problem</strong>?</li>
+<li>What are the key pros &amp; cons of the algorithm?</li>
+</ul>
+<p>For each algorithm, you should also reflect upon these <strong>important technical concepts</strong>:</p>
+<ul>
+<li>Can you summarize the steps of this algorithm?</li>
+<li>Is the algorithm parametric or nonparametric? (addressed above)</li>
+<li>What is the bias-variance tradeoff when working with or tuning this algorithm?</li>
+<li>Is it important to scale / pre-process our predictors before feeding them into this algorithm?</li>
+<li>Is this algorithm “computationally expensive”?</li>
+<li>Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?</li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Model evaluation</strong></p>
+<p>On page 2, do the following for each model evaluation question in the righthand table:</p>
+<ul>
+<li>Identify what to check or measure in order to address the question, and how to interpret it.</li>
+<li>Explain the steps of the CV algorithm.</li>
+</ul>
+<p><br>
+<br>
+</p>
+<p><strong>Algorithm comparisons</strong></p>
+<ul>
+<li>Use page 3 to make other observations about the Unit 1-3 modeling algorithms and their connections.</li>
+<li>Use page 4 to address and compare the interpretability &amp; flexibility of the Subset Selection (e.g.&nbsp;backward stepwise), LASSO, Least Squares, and GAM algorithms. Where would you place KNN on this graphic?</li>
+</ul>
+<p><br>
+<br>
+</p>
+</section>
+<section id="tidymodels-code-comparison" class="level3 unnumbered smaller">
+<h3 class="unnumbered smaller anchored" data-anchor-id="tidymodels-code-comparison">Tidymodels Code Comparison</h3>
+<p>Check out and reflect upon some <a href="https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing">tidymodels code comparisons here</a>. Copy, use, tweak, and add to this in whatever way suits you!</p>
+<p><br>
+<br>
+</p>
+</section>
+</section>
+<section id="part-3-midterm-learning-reflection" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="part-3-midterm-learning-reflection">Part 3: Midterm Learning Reflection</h2>
+<p>Instructions coming soon!</p>
+<!-- instructions for MLR -->
+<!-- from Brianna:
+By the end of the week, take 10-20 minutes to write in your individual Reflection Google Doc (shared with you and your Professor). In this reflection, consider your preparation for each class, your engagement in the course in and out of class, your actions towards collaboration, and your exploration of the material through the homeworks with the ultimate goal of meeting my learning goals for you and your own learning goals. 
+-->
+<!-- from Alicia: 
+The reflections above address your understanding of the concepts in this course. Consider the other 4 core components that you’ve been working toward in Units 1–3. In addition to the below prompts, you’re encouraged to track your progress using the worksheet on page 10 (!) of the syllabus.
+
+- With respect to collaboration, reflect upon your strengths and what you might change:
+  - How actively did you contribute to group discussions?
+  - How actively did you include all other group members in discussion?
+  - In what ways did you (or did you not) help create a space where others feel comfortable making mistakes & sharing their ideas?
+
+- With respect to engagement, reflect upon your strengths and what you might change:
+  - Did you regularly attend, be on time for, & stay for the full class sessions?
+  - Have you not missed more than 3 in-person class sessions?
+  - Were you actively present during class (eg: not on your phone, not working on other courses, etc)?
+  - Did you stay updated on Slack?
+  - When you had questions, did you ask them on Slack or in OH?
+
+- With respect to preparation, how many of checkpoints 1–7 did you complete and pass?
+
+- With respect to exploration, how many of Homeworks 1–4 did you complete and pass?
+-->
+<p><br>
+<br>
+</p>
+</section>
+</section>
+<section id="wrapping-up" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Wrapping Up</h1>
+<ul>
+<li>finish HW3 (due TONIGHT)
+<ul>
+<li>I’ll post solutions within 3 days so you can review them while studying</li>
+</ul></li>
+<li>continue working on Group Assignment 1
+<ul>
+<li>before you leave today, make sure you have a clear idea of your next steps!</li>
+</ul></li>
+<li>study for Quiz 1</li>
+<li>continue working on your Midterm Learning Reflection</li>
+</ul>
 
 
 </section>

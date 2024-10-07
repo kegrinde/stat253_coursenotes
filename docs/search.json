@@ -1246,7 +1246,7 @@
     "href": "L09-loess-gams.html#announcements",
     "title": "9  LOESS & GAMs",
     "section": "Announcements",
-    "text": "Announcements\n\nQuiz 1 next Tuesday\n\nTopic: Regression (Units 1–3)\nPart 1 (on paper):\n\nclosed notes, closed collaboration\ndue by end of class\nmay have to interpret R output, but won’t have to produce code\n\nPart 2 (on computer):\n\nopen notes (current 253 course materials only), open collaboration (current 253 students only)\ndue within 24 hours, but designed to finish during class\n\n\nHW3 due Thursday\n\nSpecial instructions for this one – review the Important Notes before you begin!\nLimited extension opportunities to facilitate quick turnaround on feedback/sharing solutions (in time for Quiz 1)",
+    "text": "Announcements\n\nQuiz 1 next Tuesday\n\nTopic: Regression (Units 1–3)\nPart 1 (on paper):\n\nclosed notes, closed collaboration\ndue by end of class\nmay have to interpret R output, but won’t have to produce code\n\nPart 2 (on computer):\n\nopen* notes (current 253 course materials only), open* collaboration (current 253 students only)\ndue within 24 hours, but designed to finish during class\n\n\nHW3 due Thursday\n\nSpecial instructions for this one – review the Important Notes before you begin!\nLimited extension opportunities to facilitate quick turnaround on feedback/sharing solutions (in time for Quiz 1)",
     "crumbs": [
       "Regression: Flexible Models (Unit 3)",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>LOESS & GAMs</span>"
@@ -1400,7 +1400,7 @@
     "href": "L10-review.html",
     "title": "10  Regression Review",
     "section": "",
-    "text": "Coming soon!\n\nSettling In\n\n\nLearning Goals\n\n\nNotes\n\n\nExercises",
+    "text": "Settling In",
     "crumbs": [
       "Regression: Flexible Models (Unit 3)",
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
@@ -1503,6 +1503,149 @@
     "crumbs": [
       "Appendices",
       "STAT 155 Review"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#quiz-1",
+    "href": "L10-review.html#quiz-1",
+    "title": "10  Regression Review",
+    "section": "Quiz 1",
+    "text": "Quiz 1\nPart 1:\n\non paper\nclosed people, closed notes\ndue by the end of class\nyou might be asked to interpret some R output, but I won’t ask you to produce any code\n\nPart 2:\n\non computers\nyou can chat with any current STAT 253 student, but nobody else (including preceptors)\nyou can DM or email me clarifying questions and if there is something that could benefit from broader clarification I’ll share my answer (on Slack) with the entire class\n\nnote: I do not check email/Slack ~ 5pm–7am\n\nyou can use any materials from this STAT 253 course (videos, course website, textbook, homework solutions, etc.), but you may not use any other resources (internet, chatGPT, etc.)\nthis is designed to finish during class, but you can hand it in any time within 24 hours of your class end time (eg 11:10am the next day for the 9:40am section)\n\nContent: - Regression (Units 1–3) - Questions will range in style: multiple choice, fill in the blank, short response, matching, etc.",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#quiz-1-reminders",
+    "href": "L10-review.html#quiz-1-reminders",
+    "title": "10  Regression Review",
+    "section": "Quiz 1 Reminders",
+    "text": "Quiz 1 Reminders\nContent:\n\nRegression (Units 1–3)\nQuestions will range in style: multiple choice, fill in the blank, short response, matching, etc.\n\nPart 1:\n\non paper\nclosed people, closed notes\ndue by the end of class\nyou might be asked to interpret some R output, but I won’t ask you to produce any code\n\nPart 2:\n\non computers\nyou can chat with any current STAT 253 student, but nobody else (including preceptors)\nyou can DM or email me clarifying questions and if there is something that could benefit from broader clarification I’ll share my answer (on Slack) with the entire class\n\nnote: I do not check email/Slack ~ 5pm–7am\n\nyou can use any materials from this STAT 253 course (videos, course website, textbook, homework solutions, etc.), but you may not use any other resources (internet, chatGPT, etc.)\nthis is designed to finish during class, but you can hand it in any time within 24 hours of your class end time (eg 11:10am the next day for the 9:40am section)",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#context",
+    "href": "L10-review.html#context",
+    "title": "10  Regression Review",
+    "section": "Context",
+    "text": "Context\n\n\n\nWhat have we covered so far?\nFor the Regression task:\n\nUnit 1: Model evaluation\nUnit 2: Building models / selecting predictors\nUnit 3: Building flexible (nonparametric, nonlinear) models\n\nGeneral concepts that translate to other ML tasks:\n\nOverfitting\nCross validation\nBias-variance tradeoff\nAlgorithms and tuning parameters\nPreprocessing steps\nParametric vs nonparametric models",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#preparing-for-quiz-1",
+    "href": "L10-review.html#preparing-for-quiz-1",
+    "title": "10  Regression Review",
+    "section": "Preparing for Quiz 1",
+    "text": "Preparing for Quiz 1\n\nSTAT 253 concept maps\n\n\nTidymodels code comparison",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#group-assignment-1",
+    "href": "L10-review.html#group-assignment-1",
+    "title": "10  Regression Review",
+    "section": "Group Assignment 1",
+    "text": "Group Assignment 1",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-1-preparing-for-quiz-1",
+    "href": "L10-review.html#part-1-preparing-for-quiz-1",
+    "title": "10  Regression Review",
+    "section": "Part 1: Preparing for Quiz 1",
+    "text": "Part 1: Preparing for Quiz 1\n\nConcept Maps\nMark up slides 1–4 of the concept map with respect to the prompts below. Much of this overlaps with HW3.\n\n\n\nEnduring, big picture concepts\nIMPORTANT to your learning: Respond in your own words.\n\nWhen do we perform a supervised vs unsupervised learning algorithm?\nWithin supervised learning, when do we use a regression vs a classification algorithm?\nWhat is the importance of “model evaluation” and what questions does it address?\nWhat is “overfitting” and why is it bad?\nWhat is “cross-validation” and what problem is it trying to address?\nWhat is the “bias-variance tradeoff”?\n\n\n\n\nTechnical concepts\nOn page 2, identify some general themes for each model algorithm listed in the lefthand table:\n\nWhat’s the goal?\nIs the algorithm parametric or nonparametric?\nDoes the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a goldilocks problem?\nWhat are the key pros & cons of the algorithm?\n\nFor each algorithm, you should also reflect upon these important technical concepts:\n\nCan you summarize the steps of this algorithm?\nIs the algorithm parametric or nonparametric? (addressed above)\nWhat is the bias-variance tradeoff when working with or tuning this algorithm?\nIs it important to scale / pre-process our predictors before feeding them into this algorithm?\nIs this algorithm “computationally expensive”?\nCan you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?\n\n\n\n\nModel evaluation\nOn page 2, do the following for each model evaluation question in the righthand table:\n\nIdentify what to check or measure in order to address the question, and how to interpret it.\nExplain the steps of the CV algorithm.\n\n\n\n\nAlgorithm comparisons\n\nUse page 3 to make other observations about the Unit 1-3 modeling algorithms and their connections.\nUse page 4 to address and compare the interpretability & flexibility of the Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM algorithms. Where would you place KNN on this graphic?\n\n\n\n\n\n\nTidymodels Code Comparison\nCheck out and reflect upon some tidymodels code comparisons here. Copy, use, tweak, and add to this in whatever way suits you!",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-2-starting-group-assignment-1",
+    "href": "L10-review.html#part-2-starting-group-assignment-1",
+    "title": "10  Regression Review",
+    "section": "Part 2: Starting Group Assignment 1",
+    "text": "Part 2: Starting Group Assignment 1",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-3-learning-reflection",
+    "href": "L10-review.html#part-3-learning-reflection",
+    "title": "10  Regression Review",
+    "section": "Part 3: Learning Reflection",
+    "text": "Part 3: Learning Reflection\nLink coming soon!",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-2-group-assignment-1",
+    "href": "L10-review.html#part-2-group-assignment-1",
+    "title": "10  Regression Review",
+    "section": "Part 2: Group Assignment 1",
+    "text": "Part 2: Group Assignment 1",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#review-reflection",
+    "href": "L10-review.html#review-reflection",
+    "title": "10  Regression Review",
+    "section": "Review & Reflection",
+    "text": "Review & Reflection\nSTAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together.  The material for class today is designed to help you reflect upon:\n\nML concepts\n\nenduring, big picture concepts\ntechnical concepts\ntidymodels code\n\nYour progress toward…\n\nengagement\ncollaboration\npreparation (checkpoints)\nexploration (homework)\n\n\nFind and make a copy of the following 2 resources. You’ll be given some relevant prompts below, but you should use these materials in whatever way suits you! Take notes, add more content, rearrange, etc.\n\nSTAT 253 concept maps\ntidymodels code comparison",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-1-group-assignment-1",
+    "href": "L10-review.html#part-1-group-assignment-1",
+    "title": "10  Regression Review",
+    "section": "Part 1: Group Assignment 1",
+    "text": "Part 1: Group Assignment 1\nInstructions coming soon!",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-2-preparing-for-quiz-1",
+    "href": "L10-review.html#part-2-preparing-for-quiz-1",
+    "title": "10  Regression Review",
+    "section": "Part 2: Preparing for Quiz 1",
+    "text": "Part 2: Preparing for Quiz 1\n\nConcept Maps\nMark up slides 1–4 of the concept map with respect to the prompts below. Much of this overlaps with HW3.\n\n\n\nEnduring, big picture concepts\nIMPORTANT to your learning: Respond in your own words.\n\nWhen do we perform a supervised vs unsupervised learning algorithm?\nWithin supervised learning, when do we use a regression vs a classification algorithm?\nWhat is the importance of “model evaluation” and what questions does it address?\nWhat is “overfitting” and why is it bad?\nWhat is “cross-validation” and what problem is it trying to address?\nWhat is the “bias-variance tradeoff”?\n\n\n\n\nTechnical concepts\nOn page 2, identify some general themes for each model algorithm listed in the lefthand table:\n\nWhat’s the goal?\nIs the algorithm parametric or nonparametric?\nDoes the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a goldilocks problem?\nWhat are the key pros & cons of the algorithm?\n\nFor each algorithm, you should also reflect upon these important technical concepts:\n\nCan you summarize the steps of this algorithm?\nIs the algorithm parametric or nonparametric? (addressed above)\nWhat is the bias-variance tradeoff when working with or tuning this algorithm?\nIs it important to scale / pre-process our predictors before feeding them into this algorithm?\nIs this algorithm “computationally expensive”?\nCan you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?\n\n\n\n\nModel evaluation\nOn page 2, do the following for each model evaluation question in the righthand table:\n\nIdentify what to check or measure in order to address the question, and how to interpret it.\nExplain the steps of the CV algorithm.\n\n\n\n\nAlgorithm comparisons\n\nUse page 3 to make other observations about the Unit 1-3 modeling algorithms and their connections.\nUse page 4 to address and compare the interpretability & flexibility of the Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM algorithms. Where would you place KNN on this graphic?\n\n\n\n\n\n\nTidymodels Code Comparison\nCheck out and reflect upon some tidymodels code comparisons here. Copy, use, tweak, and add to this in whatever way suits you!",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
+    ]
+  },
+  {
+    "objectID": "L10-review.html#part-3-midterm-learning-reflection",
+    "href": "L10-review.html#part-3-midterm-learning-reflection",
+    "title": "10  Regression Review",
+    "section": "Part 3: Midterm Learning Reflection",
+    "text": "Part 3: Midterm Learning Reflection\nInstructions coming soon!",
+    "crumbs": [
+      "Regression: Flexible Models (Unit 3)",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Regression Review</span>"
     ]
   }
 ]

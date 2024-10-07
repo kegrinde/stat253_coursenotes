@@ -28,7 +28,7 @@ conflicts_prefer(dplyr::filter)
     - due by end of class
     - may have to interpret R output, but won't have to produce code
   - Part 2 (on computer): 
-    - open notes (current 253 course materials only), open collaboration (current 253 students only)
+    - open* notes (current 253 course materials only), open* collaboration (current 253 students only)
     - due within 24 hours, but designed to finish during class
 - HW3 due Thursday 
   - Special instructions for this one -- review the **Important Notes** before you begin!
