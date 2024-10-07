@@ -13,9 +13,9 @@ Readings refer to chapters/sections in the Introduction to Statistical Learning 
 #| results: asis
 #| eval: true
 #| cache: false
-xfun::file_string("schedule_table.html") 
+xfun::file_string("schedule_table.html")
 ```
 ````
 
-**Note: this page is currently under construction! More dates and links coming soon.**
+**Note: this page is currently under construction! More dates coming soon.**
 

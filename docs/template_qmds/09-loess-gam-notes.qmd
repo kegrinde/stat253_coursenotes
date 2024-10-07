@@ -33,9 +33,9 @@ knitr::opts_chunk$set(
 
 
 
-# Notes - Nonparametric v. Parametric Models
+# Nonparametric v. Parametric Models
 
-
+## Notes
 
 **CONTEXT**
 
@@ -56,7 +56,8 @@ knitr::opts_chunk$set(
 Our usual *parametric* models (eg: linear regression) are too rigid to represent the relationship between $y$ and our predictors $x$. Thus we need more *flexible* **nonparametric models**.
 
 
-  
+
+## Discussion  
 
 **EXAMPLE 1: KNN (Review)**
 
@@ -112,6 +113,9 @@ c. What did the KNN model tell us about the *relationship* of `Grad.Rate` with `
 
 
 
+# LOESS 
+
+## Notes
 
 **Local Regression or Locally Estimated Scatterplot Smoothing (LOESS)**    
 
@@ -162,6 +166,7 @@ ggplot(plot_data, aes(x = time, y = glucose)) +
 
 
 
+## Discussion
 
 **EXAMPLE 3: LOESS in R**
 
@@ -289,7 +294,9 @@ shinyApp(ui = ui_LOESS, server = server_LOESS)
 
 
 
+# GAMs
 
+## Notes
 
 **Generalized Additive Models (GAM)**    
 
@@ -347,6 +354,7 @@ Optional details are in the "Deeper Learning" section.
 
 
 
+## Discussion 
 
 **EXAMPLE 5: GAM**
 
@@ -358,7 +366,7 @@ wage = $\beta_0$ + f(year) + f(age) + f(education) + $\varepsilon$
 
 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/islr_gam.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/islr_gam.png)
 
 
 
@@ -375,6 +383,7 @@ wage = $\beta_0$ + f(year) + f(age) + f(education) + $\varepsilon$
 \
 
 
+# Other Flexible Models
 
 **NOTE**
 
@@ -708,7 +717,7 @@ Some of these exercises are similar to those on Homework 4. Thus solutions are n
 
 When picking between different model building algorithms, there are several considerations, including *flexibility* and *interpretability*. Consider the following graphic from ISLR:    
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/flex_interp_ISLR.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/flex_interp_ISLR.png)
 
 a. Convince yourself that the placement of Subset Selection (e.g. backward stepwise), LASSO, Least Squares, and GAM make sense. (We'll address the other algorithms later this semester.)
 
