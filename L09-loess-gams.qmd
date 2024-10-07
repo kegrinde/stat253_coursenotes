@@ -597,7 +597,7 @@ gam_models <- gam_workflow %>%
 ## Part 2: Identify and apply a "final" GAM {.unnumbered .smaller}
 
 1. **Computational time**    
-    We only ran 10 different GAMs of `Grad.Rate` by our 6 predictors above. What is it about this algorithm that makes it take so long?
+    We only ran 10 different GAMs of `Grad.Rate` by our 6 predictors above. What is it about this algorithm that makes it take so long? <!-- next time: ask them to identify how many GAMs we fit -->
     
     NOTE: In general, the GAM is not great when we have lots of predictors. In that case, we might use a poorly fit LASSO to help pick predictors, and then use GAM with these predictors for our final model and predictions.
     
