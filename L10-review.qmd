@@ -241,7 +241,10 @@ Check out and reflect upon some [tidymodels code comparisons here](https://docs.
 
 ## Part 3: Midterm Learning Reflection {.unnumbered .smaller}
 
-Instructions coming soon!
+The reflections above address your understanding of key machine learning concepts. 
+At this point in the semester, I'd also like you to take some time to reflect on your engagement with the course and your progress toward the "general skills" learning goals (e.g., collaboration) outlined in the [Course Syllabus](https://docs.google.com/presentation/d/1s7SeaT7i_IuJ_0pZKhpHn_9_LUz6_zi17fLUWbdfJFI/edit?usp=sharing) and on the [learning goals](learning-objectives.html) page on this website.
+
+To this end, please fill out [this Google Form](https://forms.gle/dxqC8VS69oXAVWQP7) sometime in the next week. 
 
 <!-- instructions for MLR -->
 
