@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="L10-review_files/libs/clipboard/clipboard.min.js"></script>
-<script src="L10-review_files/libs/quarto-html/tabby.min.js"></script>
-<script src="L10-review_files/libs/quarto-html/popper.min.js"></script>
-<script src="L10-review_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="L10-review_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="L10-review_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="L10-review_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="L10-review_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="L12-evaluating-classification-models_files/libs/clipboard/clipboard.min.js"></script>
+<script src="L12-evaluating-classification-models_files/libs/quarto-html/tabby.min.js"></script>
+<script src="L12-evaluating-classification-models_files/libs/quarto-html/popper.min.js"></script>
+<script src="L12-evaluating-classification-models_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="L12-evaluating-classification-models_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="L12-evaluating-classification-models_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="L12-evaluating-classification-models_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="L12-evaluating-classification-models_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
-  <title>Regression Review</title>
+  <title>Evaluating Classification Models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="L10-review_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="L10-review_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="L12-evaluating-classification-models_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="L12-evaluating-classification-models_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -28,14 +28,79 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="L10-review_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="L10-review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="L10-review_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="L10-review_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="L10-review_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="L10-review_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="L10-review_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="L12-evaluating-classification-models_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="L12-evaluating-classification-models_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="L12-evaluating-classification-models_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -328,270 +393,376 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Regression Review</h1>
+  <h1 class="title">Evaluating Classification Models</h1>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section>
-<section id="settling-in" class="title-slide slide level1 unnumbered smaller center">
+<section id="settling-in" class="title-slide slide level1 unnumbered center">
 <h1>Settling In</h1>
-<ul>
-<li>Sit with your assigned group</li>
-<li>Catch up on any posts you’ve missed on Slack</li>
-<li>Open Group Assignment 1</li>
-</ul>
-<p><br>
-</p>
+<p>Coming soon!</p>
 </section>
-<section id="quiz-1-reminders" class="slide level2 unnumbered smaller">
-<h2>Quiz 1 Reminders</h2>
-<p>Content:</p>
-<ul>
-<li>Regression (Units 1–3)</li>
-<li>Questions will range in style: multiple choice, fill in the blank, short response, matching, etc.</li>
-</ul>
-<p>Part 1:</p>
-<ul>
-<li>on paper</li>
-<li>closed people, closed notes</li>
-<li>due by the end of class</li>
-<li>you might be asked to interpret some R output, but I won’t ask you to produce any code</li>
-</ul>
-<p>Part 2:</p>
-<ul>
-<li>on computers</li>
-<li>you can chat with any current STAT 253 student, but nobody else (including preceptors)</li>
-<li>you can DM or email me clarifying questions and if there is something that could benefit from broader clarification I’ll share my answer (on Slack) with the entire class
-<ul>
-<li>note: I do not check email/Slack ~ 5pm–7am</li>
-</ul></li>
-<li>you can use any materials from this STAT 253 course (videos, course website, textbook, homework solutions, etc.), but you may not use any other resources (internet, chatGPT, etc.)</li>
-<li>this is designed to finish during class, but you can hand it in any time within 24 hours of your class end time (eg 11:10am the next day for the 9:40am section)</li>
-</ul>
-<p><br>
-<br>
-</p>
-</section></section>
-<section>
-<section id="notes" class="title-slide slide level1 unnumbered center">
-<h1>Notes</h1>
 
+<section id="learning-goals" class="title-slide slide level1 unnumbered center">
+<h1>Learning Goals</h1>
+<ul>
+<li>Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity</li>
+<li>Construct and interpret plots of predicted probabilities across classes</li>
+<li>Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric</li>
+<li>Appropriately use and interpret the no-information rate to evaluate accuracy metrics</li>
+</ul>
 </section>
-<section id="context" class="slide level2 unnumbered smaller">
-<h2>Context</h2>
+
+<section>
+<section id="notes-classification-evaluation" class="title-slide slide level1 unnumbered center">
+<h1>Notes: Classification Evaluation</h1>
 <center>
-<img src="images/MLDiagram.jpg">
+<img src="images/MLdiagram4.jpg">
 </center>
-<p><strong>What have we covered so far?</strong></p>
-<p>For the Regression task:</p>
-<ul>
-<li>Unit 1: Model evaluation</li>
-<li>Unit 2: Building models / selecting predictors</li>
-<li>Unit 3: Building flexible (nonparametric, nonlinear) models</li>
-</ul>
-<p>General concepts that translate to other ML tasks:</p>
-<ul>
-<li>Overfitting</li>
-<li>Cross validation</li>
-<li>Bias-variance tradeoff</li>
-<li>Algorithms and tuning parameters</li>
-<li>Preprocessing steps</li>
-<li>Parametric vs nonparametric models</li>
-</ul>
-</section>
-<section id="review-reflection" class="slide level2 unnumbered smaller">
-<h2>Review &amp; Reflection</h2>
-<p>STAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together. <!--Though you won't hand anything in, or work on this in class today, **you're strongly encouraged to complete this activity**.--> The material for class today is designed to help you reflect upon:</p>
-<ul>
-<li>ML concepts
-<ul>
-<li>enduring, big picture concepts</li>
-<li>technical concepts</li>
-<li><code>tidymodels</code> code</li>
-</ul></li>
-<li>Your progress toward…
-<ul>
-<li>engagement</li>
-<li>collaboration</li>
-<li>preparation (checkpoints)</li>
-<li>exploration (homework)</li>
-</ul></li>
-</ul>
-<p>Find and make a copy of the following 2 resources. You’ll be given some relevant prompts below, but you should use these materials in <em>whatever way suits you</em>! Take notes, add more content, rearrange, etc.</p>
-<ul>
-<li><a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 concept maps</a></li>
-<li><a href="https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing">tidymodels code comparison</a></li>
-</ul>
 <p><br>
 <br>
 </p>
+<p><strong>CONTEXT</strong></p>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = CLASSIFICATION</strong><br>
+<span class="math inline">\(y\)</span> is categorical and <strong>binary</strong></p></li>
+<li><p><strong>(parametric) algorithm</strong><br>
+logistic regression</p></li>
+<li><p><strong>application = classification</strong></p>
+<ul>
+<li>Use our algorithm to calculate the probability that y = 1.</li>
+<li>Turn these into binary classifications using a classification rule. For some probability threshold c:
+<ul>
+<li>If the probability that y = 1 is at least c, classify y as 1.</li>
+<li>Otherwise, classify y as 0.</li>
+</ul></li>
+<li>WE get to pick c.&nbsp;This should be guided by <em>context</em> (what are the consequences of misclassification?) and the <em>quality</em> of the resulting classifications.</li>
+</ul></li>
+</ul>
+<p><br>
+</p>
+<p><strong>GOAL</strong></p>
+<p><em>Evaluate</em> the quality of binary classifications of <span class="math inline">\(y\)</span> (here resulting logistic regression model).</p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="sensitivity-specificity" class="slide level2 unnumbered">
+<h2>Sensitivity &amp; specificity</h2>
+<p><span class="math display">\[\begin{split}
+\text{overall accuracy} &amp; = \text{probability of making a correct classification} \\
+\text{sensitivity} &amp; = \text{true positive rate}\\
+&amp;  = \text{probability of correctly classifying $y=1$ as $y=1$} \\
+\text{specificity} &amp; = \text{true negative rate} \\
+&amp; =  \text{probability of correctly classifying $y=0$ as $y=0$} \\
+\text{1 - specificity} &amp; = \text{false positive rate} \\
+&amp;  = \text{probability of classifying $y=0$ as $y=1$} \\
+\end{split}\]</span></p>
+<p><br>
+</p>
+<p><strong>In-sample estimation (how well our model classifies the same data points we used to build it)</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">y = 0</th>
+<th style="text-align: center;">y = 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>classify as 0</td>
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">b</td>
+</tr>
+<tr class="even">
+<td>classify as 1</td>
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">d</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\begin{split}
+\text{overall accuracy} &amp; = \frac{a + d}{a + b + c + d}\\
+\text{sensitivity} &amp; = \frac{d}{b + d} \\
+\text{specificity} &amp; = \frac{a}{a + c} \\
+\end{split}\]</span></p>
+<p><br>
+</p>
+<p><strong>k-Fold Cross-Validation (how well our model classifies NEW data points)</strong></p>
+<ul>
+<li>Divide the data into k folds of approximately equal size.<br>
+</li>
+<li>Repeat the following procedures for each fold j = 1, 2, …, k:
+<ul>
+<li>Remove fold j from the data set.<br>
+</li>
+<li>Fit a model using the other k - 1 folds.<br>
+</li>
+<li>Use this model to classify the outcomes for the data points in fold j.<br>
+</li>
+<li>Calculate the overall accuracy, sensitivity, and specificity of these classifications.<br>
+</li>
+</ul></li>
+<li>Average the metrics across the k folds. This gives our CV estimates of overall accuracy, sensitivity, and specificity.</li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="roc-curves-receiver-operating-characteristic-curves" class="slide level2 unnumbered">
+<h2>ROC curves (receiver operating characteristic curves)</h2>
+<p>Sensitivity and specificity depend upon the <em>specific</em> probability threshold c.</p>
+<ul>
+<li><p>If we lower c, hence make it <em>easier</em> to classify y as 1: sensitivity increases <em>but</em> specificity decreases</p></li>
+<li><p>If we increase c, hence make it <em>tougher</em> to classify y as 1: specificity increases <em>but</em> sensitivity decreases</p></li>
+</ul>
+<p>To understand this trade-off, for a <em>range</em> of possible thresholds c between 0 and 1, ROC curves calculate and plot</p>
+<ul>
+<li>y-axis: sensitivity (true positive rate)</li>
+<li>x-axis: 1 - specificity (false positive rate)<br>
+Since specificity is the probability of classifying y = 0 as 0, 1 - specificity is the misclassifying y = 0 as 1.</li>
+</ul>
+<p>Why we care:</p>
+<ul>
+<li>Along with context, ROC curves can help us identify an appropriate probability threshold c.</li>
+<li>ROC curves can help us compare the quality of different models.</li>
+<li>The <strong>area under an ROC curve</strong> (AUC) estimates the probability that our algorithm is <em>more</em> likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes. Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.</li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
 </section></section>
-<section>
+<section id="small-group-discussion" class="title-slide slide level1 unnumbered center scrollable">
+<h1>Small Group Discussion</h1>
+<p><strong>EXAMPLE 1</strong></p>
+<p>Suppose we model <code>RainTomorrow</code> in Sydney using only the number of hours of bright <code>Sunshine</code> today.</p>
+<p>Using a <strong>probability threshold of 0.5</strong>, this model produces the following <strong>classification rule</strong>:</p>
+<ul>
+<li>If <code>Sunshine</code> &lt; 3.125, predict rain.</li>
+<li>Otherwise, predict no rain.</li>
+</ul>
+<p><img data-src="images/classifying_rain_sunshine.png"></p>
+<p>Interpret these <strong>in-sample</strong> <em>estimates</em> of the resulting classification quality.</p>
+<ol type="a">
+<li>Overall accuracy = 0.803
+<ul>
+<li>We correctly predict the rain outcome (yes or no) 80.3% of the time.</li>
+<li>We correctly predict “no rain” on 80.3% of non-rainy days.</li>
+<li>We correctly predict “rain” on 80.3% of rainy days.</li>
+</ul></li>
+<li>Sensitivity = 0.506
+<ul>
+<li>We correctly predict the rain outcome (yes or no) 50.6% of the time.</li>
+<li>We correctly predict “no rain” on 50.6% of non-rainy days.</li>
+<li>We correctly predict “rain” on 50.6% of rainy days.</li>
+</ul></li>
+<li>Specificity = 0.906
+<ul>
+<li>We correctly predict the rain outcome (yes or no) 90.6% of the time.</li>
+<li>We correctly predict “no rain” on 90.6% of non-rainy days.</li>
+<li>We correctly predict “rain” on 90.6% of rainy days.</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>Overall accuracy = 0.803; We correctly predict the rain outcome (yes or no) 80.3% of the time.</li>
+<li>Sensitivity = 0.506; We correctly predict “rain” on 50.6% of rainy days.</li>
+<li>Specificity = 0.906; We correctly predict “no rain” on 90.6% of non-rainy days.</li>
+</ol>
+</details>
+<p><strong>OPTIONAL EXTRA PRACTICE</strong></p>
+<p>Confirm the 3 metrics above using the confusion matrix. Work is shown below (peek when you’re ready).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href=""></a>            Truth</span>
+<span id="cb1-2"><a href=""></a>Prediction   No  Yes</span>
+<span id="cb1-3"><a href=""></a>       No  3108  588</span>
+<span id="cb1-4"><a href=""></a>       Yes  324  602</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>
+Solution:
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># Overall accuracy</span></span>
+<span id="cb2-2"><a href=""></a>(<span class="dv">3108</span> <span class="sc">+</span> <span class="dv">602</span>) <span class="sc">/</span> (<span class="dv">3108</span> <span class="sc">+</span> <span class="dv">602</span> <span class="sc">+</span> <span class="dv">324</span> <span class="sc">+</span> <span class="dv">588</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8026828</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># Sensitivity</span></span>
+<span id="cb4-2"><a href=""></a><span class="dv">602</span> <span class="sc">/</span> (<span class="dv">602</span> <span class="sc">+</span> <span class="dv">588</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5058824</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># Specificity</span></span>
+<span id="cb6-2"><a href=""></a><span class="dv">3108</span> <span class="sc">/</span> (<span class="dv">3108</span> <span class="sc">+</span> <span class="dv">324</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9055944</code></pre>
+</div>
+</div>
+</details>
+<p><strong>EXAMPLE 2: ROC curves</strong></p>
+<p>We can change up the probability threshold in our classification rule!</p>
+<p>The ROC curve for our logistic regression model of <code>RainTomorrow</code> by <code>Sunshine</code> plots the sensitivity (true positive rate) vs 1 - specificity (false positive rate) corresponding to “every” possible threshold:</p>
+<p><img data-src="images/classifying_rain_sunshine_roc.png"></p>
+<ol type="a">
+<li><p>Which point represents the quality of our classification rule using a 0.5 probability threshold?</p></li>
+<li><p>The other point corresponds to a different classification rule which uses a different threshold. Is that threshold smaller or bigger than 0.5?</p></li>
+<li><p>Which classification rule do you prefer?</p></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>Red point: 0.5 probability rule (sensitivity ~ 0.5, specificity ~ 0.9)</li>
+<li>Black point (higher sensitivity, lower specificity) has a threshold that is lower than 0.5.</li>
+<li>Answers will vary. If you don’t like getting wet (accurately predict rain when it does rain), you’ll want a higher sensitivity. If you don’t like carrying an umbrella when it isn’t needed, you’ll want a higher specificity (lower false positive rate).</li>
+</ol>
+</details>
+<p><strong>EXAMPLE 3: Area Under the ROC Curve (AUC)</strong></p>
+<p>The <strong>area under an ROC curve</strong> (AUC) estimates the probability that our algorithm is <em>more</em> likely to classify y = 1 (rain) as 1 (rain) than to classify y = 0 (no rain) as 1 (rain), hence distinguish between the 2 classes.</p>
+<p>AUC is helpful for evaluating and comparing the overall quality of classification models. Consider 3 different possible predictors (A, B, C) of rainy and non-rainy days:</p>
+<p><img data-src="images/classifying_rain_simulation.png"></p>
+<p>The ROC curves corresponding to the models <code>RainTomorrow ~ A</code>, <code>RainTomorrow ~ B</code>, <code>RainTomorrow ~ C</code> are shown below.</p>
+<p><img data-src="images/classifying_rain_lots_of_rocs.png"></p>
+<p>For each ROC curve, indicate the corresponding model and the approximate AUC. Do this in any order you want!</p>
+<p><strong>black ROC curve</strong></p>
+<ul>
+<li><code>RainTomorrow ~ ___</code></li>
+<li>AUC is roughly ___</li>
+</ul>
+<p><strong>green ROC curve</strong></p>
+<ul>
+<li><code>RainTomorrow ~ ___</code></li>
+<li>AUC is roughly ___.</li>
+</ul>
+<p><strong>orange ROC curve</strong></p>
+<ul>
+<li><code>RainTomorrow ~ ___</code></li>
+<li>AUC is exactly ___.</li>
+</ul>
+<details>
+<summary>
+Solution:
+</summary>
+<p><strong>black ROC curve</strong></p>
+<ul>
+<li><code>RainTomorrow ~ A</code></li>
+<li>AUC is roughly 0.5</li>
+</ul>
+<p><strong>green ROC curve</strong></p>
+<ul>
+<li><code>RainTomorrow ~ C</code></li>
+<li>AUC is roughly .95.</li>
+</ul>
+<p><strong>orange ROC curve</strong></p>
+<ul>
+<li><code>RainTomorrow ~ B</code></li>
+<li>AUC is exactly 1.</li>
+</ul>
+</details>
+<p><strong>AUC OBSERVATION</strong></p>
+<p>In general:</p>
+<ul>
+<li>A <em>perfect</em> classification model has an AUC of 1.</li>
+<li>The <em>simplest</em> classification model that just randomly predicts y to be 1 or 0 (eg: by flipping a coin), has an AUC of 0.5. It is represented by the diagonal “no discrimination line” in an ROC plot.</li>
+<li>A model with an AUC below 0.5 is <em>worse</em> than just random. Flipping a coin would be better.</li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+</section>
+
 <section id="exercises" class="title-slide slide level1 unnumbered center">
 <h1>Exercises</h1>
-
-</section>
-<section id="part-1-group-assignment-1" class="slide level2 unnumbered smaller">
-<h2>Part 1: Group Assignment 1</h2>
-<p>Please fill out this <a href="https://docs.google.com/document/d/1xGDIWpAkstsNiRuzxl72YlpIC3206dZRCIbsY-P9F4Y/edit?usp=sharing">Group Agreement Activity</a> with your group. You will “submit” this activity by adding Kelsey as an editor on your google doc.</p>
-<!--
-goals: 
-
-- structured work time for getting started on GA1 
-- setting group norms, expectations, dividing up work load, etc. (ie write a "contract") 
-- sharing initial insight from data
--->
-<!-- from brianna: 
-
-10 minutes: 
-
-- each person take a turn summarizing what you learned about the data and your ability to predict arrival delays
-- share the best CV MAE you got
-- share your code (share QMDs via Slack/email)
-
-5 minutes: 
-
-- decide, as a group, what tools you want to use to build a predictive regression model (and in what order)
-
-20--30 minutes: 
-
-- open the template QMD from Moodle
-- copy code from individual QMDs into the appropriate sections
-- (you'll need to refine and adjust code as you go)
-- decide how you will share code moving forward
-
-5 minutes: 
-
-- decide who is going to "lead" each section of the template (this person will write the first draft of text)
-- decide who is going to "review" each section (this person will review/edit/improve)
-- sections: 
-  - data (can be paired with research question): 
-      - who, what, where, when, why, how
-      - give insight into the outcome and summary of available predictors (no list and no R variable names)
-  - model building: 
-      - describe the tools and the order in which tools are used to build the model
-      - justify all choices
-  - model evaluation: 
-      - answer the four questions in paragraph form
-      
-moving forward: 
-
-- work on sections and touch base with each other as needed
--->
+<p>Today’s in-class exercises will be due as Homework 5.</p>
+<p>Please find the exercises and template in Moodle.</p>
+<p>I recommend working on Exercises 1, 5, and 6 in class.</p>
+<p>Exercise 1 is necessary to the other exercises, and Exercises 5 and 6 involve new content: ROC curves, AUC, and LASSO for classification!</p>
 <p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+<!-- ## Deep Learning (Optional) -->
+<!-- **shiny!**     -->
+<!--     Play around with the shiny app below to solidify your understanding of the relationships between probability cut-offs, sensitivity, and specificity. In your opinion, what's the best probability cut-off to use in the rain example? -->
+<!-- \ -->
+<!-- **Run this really long shiny code in your console (bottom left). If you can't get shiny running on your machine, please just move on and view a classmate's app -- shiny isn't required for this course.** -->
+<!-- <div class = "solution"> -->
+<!-- </div> -->
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+<p><br>
+<br>
+<br>
+<br>
+<br>
 <br>
 </p>
 </section>
-<section id="part-2-preparing-for-quiz-1" class="slide level2 unnumbered smaller">
-<h2>Part 2: Preparing for Quiz 1</h2>
-<h3 class="unnumbered smaller" id="concept-maps">Concept Maps</h3>
-<p>Mark up <strong>slides 1–4</strong> of the <a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">concept map</a> with respect to the prompts below. Much of this overlaps with HW3.</p>
-<p><br>
-<br>
-</p>
-<p><strong>Enduring, big picture concepts</strong></p>
-<p>IMPORTANT to your learning: Respond in your own words.</p>
-<ul>
-<li>When do we perform a supervised vs unsupervised learning algorithm?</li>
-<li>Within supervised learning, when do we use a regression vs a classification algorithm?</li>
-<li>What is the importance of “model evaluation” and what questions does it address?</li>
-<li>What is “overfitting” and why is it bad?</li>
-<li>What is “cross-validation” and what problem is it trying to address?</li>
-<li>What is the “bias-variance tradeoff”?</li>
-</ul>
-<p><br>
-<br>
-</p>
-<p><strong>Technical concepts</strong></p>
-<p>On page 2, identify some general themes for each model algorithm listed in the lefthand table:</p>
-<ul>
-<li>What’s the goal?</li>
-<li>Is the algorithm parametric or nonparametric?</li>
-<li>Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a <strong>goldilocks problem</strong>?</li>
-<li>What are the key pros &amp; cons of the algorithm?</li>
-</ul>
-<p>For each algorithm, you should also reflect upon these <strong>important technical concepts</strong>:</p>
-<ul>
-<li>Can you summarize the steps of this algorithm?</li>
-<li>Is the algorithm parametric or nonparametric? (addressed above)</li>
-<li>What is the bias-variance tradeoff when working with or tuning this algorithm?</li>
-<li>Is it important to scale / pre-process our predictors before feeding them into this algorithm?</li>
-<li>Is this algorithm “computationally expensive”?</li>
-<li>Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?</li>
-</ul>
-<p><br>
-<br>
-</p>
-<p><strong>Model evaluation</strong></p>
-<p>On page 2, do the following for each model evaluation question in the righthand table:</p>
-<ul>
-<li>Identify what to check or measure in order to address the question, and how to interpret it.</li>
-<li>Explain the steps of the CV algorithm.</li>
-</ul>
-<p><br>
-<br>
-</p>
-<p><strong>Algorithm comparisons</strong></p>
-<ul>
-<li>Use page 3 to make other observations about the Unit 1-3 modeling algorithms and their connections.</li>
-<li>Use page 4 to address and compare the interpretability &amp; flexibility of the Subset Selection (e.g.&nbsp;backward stepwise), LASSO, Least Squares, and GAM algorithms. Where would you place KNN on this graphic?</li>
-</ul>
-<p><br>
-<br>
-</p>
-<h3 class="unnumbered smaller" id="tidymodels-code-comparison">Tidymodels Code Comparison</h3>
-<p>Check out and reflect upon some <a href="https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing">tidymodels code comparisons here</a>. Copy, use, tweak, and add to this in whatever way suits you!</p>
-<p><br>
-<br>
-</p>
-</section>
-<section id="part-3-midterm-learning-reflection" class="slide level2 unnumbered smaller">
-<h2>Part 3: Midterm Learning Reflection</h2>
-<p>The reflections above address your understanding of key machine learning concepts. At this point in the semester, I’d also like you to take some time to reflect on your engagement with the course and your progress toward the “general skills” learning goals (e.g., collaboration) outlined in the <a href="https://docs.google.com/presentation/d/1s7SeaT7i_IuJ_0pZKhpHn_9_LUz6_zi17fLUWbdfJFI/edit?usp=sharing">Course Syllabus</a> and on the <a href="learning-objectives.html">learning goals</a> page on this website.</p>
-<p>To this end, please fill out <a href="https://forms.gle/dxqC8VS69oXAVWQP7">this Google Form</a> sometime in the next week.</p>
-<!-- instructions for MLR -->
-<!-- from Brianna:
-By the end of the week, take 10-20 minutes to write in your individual Reflection Google Doc (shared with you and your Professor). In this reflection, consider your preparation for each class, your engagement in the course in and out of class, your actions towards collaboration, and your exploration of the material through the homeworks with the ultimate goal of meeting my learning goals for you and your own learning goals. 
--->
-<!-- from Alicia: 
-The reflections above address your understanding of the concepts in this course. Consider the other 4 core components that you’ve been working toward in Units 1–3. In addition to the below prompts, you’re encouraged to track your progress using the worksheet on page 10 (!) of the syllabus.
 
-- With respect to collaboration, reflect upon your strengths and what you might change:
-  - How actively did you contribute to group discussions?
-  - How actively did you include all other group members in discussion?
-  - In what ways did you (or did you not) help create a space where others feel comfortable making mistakes & sharing their ideas?
-
-- With respect to engagement, reflect upon your strengths and what you might change:
-  - Did you regularly attend, be on time for, & stay for the full class sessions?
-  - Have you not missed more than 3 in-person class sessions?
-  - Were you actively present during class (eg: not on your phone, not working on other courses, etc)?
-  - Did you stay updated on Slack?
-  - When you had questions, did you ask them on Slack or in OH?
-
-- With respect to preparation, how many of checkpoints 1–7 did you complete and pass?
-
-- With respect to exploration, how many of Homeworks 1–4 did you complete and pass?
--->
-<p><br>
-<br>
-</p>
-</section></section>
-<section id="wrapping-up" class="title-slide slide level1 unnumbered smaller center">
-<h1>Wrapping Up</h1>
-<ul>
-<li>finish HW3 (due TONIGHT)
-<ul>
-<li>I’ll post solutions within 3 days so you can review them while studying</li>
-</ul></li>
-<li>continue working on Group Assignment 1
-<ul>
-<li>before you leave today, make sure you have a clear idea of your next steps!</li>
-</ul></li>
-<li>study for Quiz 1</li>
-<li>continue working on your Midterm Learning Reflection</li>
-</ul>
+<section id="notes-r-code" class="title-slide slide level1 unnumbered center">
+<h1>Notes: R code</h1>
+<p>Let <code>my_model</code> be a logistic regression model of categorical response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb8-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
+<span id="cb8-5"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Calculate the probability that y = 1 for each sample data point</span></span>
+<span id="cb9-2"><a href=""></a><span class="co"># The probability is stored in the .pred_Yes column</span></span>
+<span id="cb9-3"><a href=""></a>in_sample_predictions <span class="ot">&lt;-</span> my_model <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># Plot the predicted probability that y = 1 by the actual y category</span></span>
+<span id="cb10-2"><a href=""></a><span class="fu">ggplot</span>(in_sample_predictions, <span class="fu">aes</span>(<span class="at">y =</span> .pred_Yes, <span class="at">x =</span> y)) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Calculate sensitivity &amp; specificity for a range of probability thresholds</span></span>
+<span id="cb11-2"><a href=""></a>in_sample_predictions <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> y, .pred_Yes, <span class="at">event_level =</span> <span class="st">"second"</span>) </span>
+<span id="cb11-4"><a href=""></a></span>
+<span id="cb11-5"><a href=""></a><span class="co"># Plot the ROC curve</span></span>
+<span id="cb11-6"><a href=""></a>in_sample_predictions <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href=""></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> y, .pred_Yes, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href=""></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb11-9"><a href=""></a></span>
+<span id="cb11-10"><a href=""></a><span class="co"># Calculate the AUC</span></span>
+<span id="cb11-11"><a href=""></a>in_sample_predictions <span class="sc">%&gt;%</span> </span>
+<span id="cb11-12"><a href=""></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> y, .pred_Yes, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="quarto-auto-generated-content">
 <p><img src="images/mac.png" class="slide-logo"></p>
 <div class="footer footer-default">
@@ -603,22 +774,22 @@ The reflections above address your understanding of the concepts in this course.
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="L10-review_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="L10-review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="L10-review_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="L10-review_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="L12-evaluating-classification-models_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -634,7 +805,7 @@ The reflections above address your understanding of the concepts in this course.
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"17277118560674811188","id":"3cb278267027591c","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"17295232585042408482","id":"3acc19bd4402f354","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner

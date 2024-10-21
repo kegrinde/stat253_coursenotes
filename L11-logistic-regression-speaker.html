@@ -401,7 +401,11 @@
 </section>
 <section id="settling-in" class="title-slide slide level1 unnumbered center">
 <h1>Settling In</h1>
-<p>Coming soon!</p>
+<ul>
+<li>Sit with your NEW group and introduce yourselves!</li>
+<li>Open today’s QMD</li>
+<li>Check Slack for recent messages, including a reminder about tomorrow’s <strong>coffee break</strong></li>
+</ul>
 </section>
 
 <section id="learning-goals" class="title-slide slide level1 unnumbered center">
@@ -412,8 +416,13 @@
 </ul>
 </section>
 
-<section id="notes-logistic-regression" class="title-slide slide level1 unnumbered center scrollable">
+<section>
+<section id="notes-logistic-regression" class="title-slide slide level1 unnumbered center">
 <h1>Notes: Logistic Regression</h1>
+
+</section>
+<section id="where-are-we" class="slide level2 unnumbered smaller">
+<h2>Where are we?</h2>
 <center>
 <img src="images/MLdiagram3.jpg">
 </center>
@@ -428,6 +437,9 @@ logistic regression</p></li>
 </ul>
 <p><strong>GOAL</strong></p>
 <p>Use the <em>parametric</em> logistic regression model to model and classify <span class="math inline">\(y\)</span>.</p>
+</section>
+<section id="logistic-regression-review" class="slide level2 unnumbered smaller">
+<h2>Logistic Regression Review</h2>
 <blockquote>
 <p><strong>Logistic Regression</strong></p>
 <p>Let <span class="math inline">\(y\)</span> be a binary categorical response variable:<br>
@@ -454,8 +466,12 @@ e^{\beta_0} &amp; = \text{ ODDS when } x=0 \\
 e^{\beta_1} &amp; = \text{ multiplicative change in ODDS per 1 unit increase in } x \\
 \end{split}\]</span></p>
 </blockquote>
-<p><strong>EXAMPLE 1: Check out the data</strong></p>
+</section>
+<section id="example-1-check-out-the-data" class="slide level2 unnumbered smaller">
+<h2>Example 1: Check out the data</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Load packages</span></span>
 <span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
@@ -471,6 +487,7 @@ e^{\beta_1} &amp; = \text{ multiplicative change in ODDS per 1 unit increase in 
 <span id="cb1-13"><a href=""></a></span>
 <span id="cb1-14"><a href=""></a><span class="co"># Check it out</span></span>
 <span id="cb1-15"><a href=""></a><span class="fu">head</span>(sydney)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   RainTomorrow Humidity9am Sunshine
@@ -511,11 +528,13 @@ Solution:
 Rainy days tend to be preceded by high humidity and low sunshine.
 </details>
 <p><br></p>
+</section>
+<section id="example-2-interpreting-coefficients" class="slide level2 unnumbered smaller scrollable">
+<h2>Example 2: Interpreting coefficients</h2>
 <!-- convince myself -->
 <!-- suppose odds ratio is 0.75 -->
 <!-- thus new odds = 0.75*old odds. -->
 <!-- equivalently: old odds - 0.25*old odds = new odds -->
-<p><strong>EXAMPLE 2: Interpreting coefficients</strong></p>
 <p>The logistic regression model is:</p>
 <ul>
 <li>log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine</li>
@@ -561,11 +580,15 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>DEFINITION: odds ratio</strong></p>
-<p>The coefficients on the odds scale are <em>odds ratios (OR)</em>:</p>
+</section>
+<section id="definition-odds-ratio" class="slide level2 unnumbered smaller">
+<h2>Definition: odds ratio</h2>
+<p>The (slope) coefficients on the odds scale are <em>odds ratios (OR)</em>:</p>
 <p><span class="math display">\[e^{\beta_1} = \frac{\text{odds of event at x + 1}}{\text{odds of event at x}}\]</span></p>
 <p><br></p>
-<p><strong>EXAMPLE 3: Classifications</strong></p>
+</section>
+<section id="example-3-classifications" class="slide level2 unnumbered smaller scrollable">
+<h2>Example 3: Classifications</h2>
 <p>log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine</p>
 <p>Suppose there’s 99% humidity at 9am today and only 2 hours of bright sunshine.</p>
 <ol type="a">
@@ -615,7 +638,9 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 4: Classification rules (intuition)</strong></p>
+</section>
+<section id="example-4-classification-rules-intuition" class="slide level2 unnumbered smaller">
+<h2>Example 4: Classification rules (intuition)</h2>
 <p>We used a simple classification rule above with a probability threshold of c = 0.5:</p>
 <ul>
 <li>If the probability of rain &gt;= c, then predict rain.</li>
@@ -624,7 +649,10 @@ Solution:
 <p>Let’s translate this into a classification rule that <strong>partitions</strong> the data points into rain / no rain predictions based on the predictor values.</p>
 <p>What do you think this classification rule / partition will look like?</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>rain_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -640,13 +668,18 @@ Solution:
 will vary
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 5: Building the classification rule</strong></p>
+</section>
+<section id="example-5-building-the-classification-rule" class="slide level2 unnumbered smaller">
+<h2>Example 5: Building the classification rule</h2>
 <ul>
 <li>If …, then predict rain.</li>
 <li>Otherwise, predict no rain.</li>
 </ul>
 <p><strong>Work</strong></p>
 <p>Identify the <em>pairs</em> of humidity and sunshine values for which the probability of rain is 0.5, hence the log(odds of rain) is 0.</p>
+<blockquote>
+<p>You should also convince yourself of this statement that if the probability of rain is 0.5, then the log(odds of rain) is 0.</p>
+</blockquote>
 <details>
 <summary>
 Solution:
@@ -664,9 +697,13 @@ Humidity9am = (1.01 / 0.026) + (0.3130 / 0.026) Sunshine = 38.846 + 12.038 Sunsh
 </ul>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 6: Examine the classification rule</strong></p>
+</section>
+<section id="example-6-examine-the-classification-rule" class="slide level2 unnumbered smaller">
+<h2>Example 6: Examine the classification rule</h2>
 <p>Let’s visualize the <strong>partition</strong>, hence <strong>classification regions</strong> defined by our classification rule:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Example data points</span></span>
 <span id="cb19-2"><a href=""></a>example <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Humidity9am =</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">90</span>, <span class="dv">60</span>), <span class="at">Sunshine =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>), <span class="at">RainTomorrow =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span>
 <span id="cb19-3"><a href=""></a></span>
@@ -674,6 +711,7 @@ Humidity9am = (1.01 / 0.026) + (0.3130 / 0.026) Sunshine = 38.846 + 12.038 Sunsh
 <span id="cb19-5"><a href=""></a>rain_plot <span class="sc">+</span></span>
 <span id="cb19-6"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">38.84615</span>, <span class="at">slope =</span> <span class="fl">12.03846</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
 <span id="cb19-7"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> example, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -699,7 +737,9 @@ Solution:
 </ul>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 7: General properties</strong></p>
+</section>
+<section id="example-7-general-properties" class="slide level2 unnumbered smaller scrollable">
+<h2>Example 7: General properties</h2>
 <ol type="a">
 <li>Does the logistic regression algorithm have a tuning parameter?</li>
 <li>Estimating the logistic regression model requires the same pre-processing steps as least squares regression.
@@ -716,17 +756,18 @@ Solution:
 <li>no</li>
 <li>.
 <ul>
-<li>no</li>
-<li>yes and yes</li>
+<li>no, R doesn’t standardize for logistic.</li>
+<li>yes and yes, R does this for us.</li>
 </ul></li>
 </ol>
 </details>
 <p><br></p>
-</section>
-
+</section></section>
 <section>
 <section id="exercises" class="title-slide slide level1 unnumbered center">
 <h1>Exercises</h1>
+<p>Work on exercises 1–8 [optional 9–10] with your group.</p>
+<p>Pay attention to new terms and concepts!</p>
 <p><strong>Goals</strong></p>
 <ul>
 <li>Implement logistic regression in R.<br>
@@ -735,7 +776,7 @@ Solution:
 </ul>
 <p><br></p>
 </section>
-<section id="part-1-build-the-model" class="slide level2 unnumbered">
+<section id="part-1-build-the-model" class="slide level2 unnumbered smaller">
 <h2>Part 1: Build the model</h2>
 <p>Let’s continue with our analysis of <code>RainTomorrow</code> vs <code>Humidity9am</code> and <code>Sunshine</code>. You’re given all code here. Be sure to scan and reflect upon what’s happening.</p>
 <p><strong>STEP 0: Organize the y categories</strong></p>
@@ -803,7 +844,7 @@ Solution:
 </div>
 </div>
 </section>
-<section id="part-2-apply-evaluate-the-model" class="slide level2 unnumbered scrollable">
+<section id="part-2-apply-evaluate-the-model" class="slide level2 unnumbered smaller scrollable">
 <h2>Part 2: Apply &amp; evaluate the model</h2>
 <ol type="1">
 <li><strong>Predictions &amp; classifications</strong><br>
@@ -1462,7 +1503,25 @@ Solution:
 </details>
 <p><br></p>
 </section></section>
-<section id="deeper-learning-optional" class="title-slide slide level1 unnumbered center">
+<section id="wrapping-up" class="title-slide slide level1 unnumbered smaller center">
+<h1>Wrapping Up</h1>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li>Group Assignment 1 is due TONIGHT
+<ul>
+<li>Step 1: submit brief report</li>
+<li>Step 2: submit test MAE</li>
+</ul></li>
+<li>Other upcoming due dates:
+<ul>
+<li>Friday: HW3 Revisions</li>
+<li>Next Tuesday: CP9, Quiz 1 Revisions</li>
+<li>Next Thursday: HW4</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="deeper-learning-optional" class="title-slide slide level1 unnumbered smaller center">
 <h1>Deeper learning (OPTIONAL)</h1>
 <p>Recall that in least squares regression, we use <em>residuals</em> to both estimate model coefficients (those that minimize the residual sum of squares) and measure model strength (<span class="math inline">\(R^2\)</span> is calculated from the variance of the residuals). BUT the concept of a “residual” is different in logistic regression. Mainly, we <em>observe</em> binary y outcomes but our predictions are on the probability scale. In this case, logistic regression requires different strategies for estimating and evaluating models.</p>
 <ul>
@@ -1479,7 +1538,7 @@ A common strategy is to use iterative processes to identify coefficient estimate
 <!-- MODEL QUALITY: deviance, aic (we'll use cross val) -->
 </section>
 
-<section id="notes-r-code" class="title-slide slide level1 unnumbered center">
+<section id="notes-r-code" class="title-slide slide level1 unnumbered smaller center">
 <h1>Notes: R code</h1>
 <p>Suppose we want to build a model of categorical response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
 <div class="cell">

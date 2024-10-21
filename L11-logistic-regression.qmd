@@ -8,9 +8,12 @@ logo: "images/mac.png"
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 ```
 
-# Settling In {-}
+# Settling In {.unnumbered}
 
-Coming soon!
+- Sit with your NEW group and introduce yourselves!
+- Open today's QMD
+- Check Slack for recent messages, including a reminder about tomorrow's **coffee break**
+
 
 # Learning Goals {-}
 
@@ -19,6 +22,8 @@ Coming soon!
 
 
 # Notes: Logistic Regression {-}
+
+## Where are we? {.unnumbered .smaller}
 
 <center>
 <img src="images/MLdiagram3.jpg"/>
@@ -34,13 +39,13 @@ Coming soon!
 
 - **(parametric) algorithm**        
     logistic regression
-    
+
 
 **GOAL**
 
-Use the *parametric* logistic regression model to model and classify $y$.
+Use the *parametric* logistic regression model to model and classify $y$.    
 
-
+## Logistic Regression Review {.unnumbered .smaller}
 
 > **Logistic Regression**    
 > 
@@ -75,9 +80,11 @@ e^{\beta_1} & = \text{ multiplicative change in ODDS per 1 unit increase in } x 
 
 
 
-**EXAMPLE 1: Check out the data**
+## Example 1: Check out the data {.unnumbered .smaller}
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 # Load packages
 library(tidyverse)
 library(tidymodels)
@@ -124,12 +131,14 @@ Rainy days tend to be preceded by high humidity and low sunshine.
 
 
 
+
+
+## Example 2: Interpreting coefficients {.unnumbered .smaller}
+
 <!-- convince myself -->
 <!-- suppose odds ratio is 0.75 -->
 <!-- thus new odds = 0.75*old odds. -->
 <!-- equivalently: old odds - 0.25*old odds = new odds -->
-
-**EXAMPLE 2: Interpreting coefficients**
 
 The logistic regression model is:
 
@@ -173,9 +182,9 @@ b. are roughly 73% as big (i.e. decrease by 27%)
 
 
 
-**DEFINITION: odds ratio**
+## Definition: odds ratio {.unnumbered .smaller}
 
-The coefficients on the odds scale are *odds ratios (OR)*:
+The (slope) coefficients on the odds scale are *odds ratios (OR)*:
 
 $$e^{\beta_1} = \frac{\text{odds of event at x + 1}}{\text{odds of event at x}}$$
 
@@ -186,7 +195,7 @@ $$e^{\beta_1} = \frac{\text{odds of event at x + 1}}{\text{odds of event at x}}$
 
 
 
-**EXAMPLE 3: Classifications**
+## Example 3: Classifications {.unnumbered .smaller}
 
 log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine
 
@@ -235,7 +244,7 @@ b. rain
 
 
 
-**EXAMPLE 4: Classification rules (intuition)**
+## Example 4: Classification rules (intuition) {.unnumbered .smaller}
 
 We used a simple classification rule above with a probability threshold of c = 0.5:
 
@@ -246,7 +255,9 @@ Let's translate this into a classification rule that **partitions** the data poi
 
 What do you think this classification rule / partition will look like?
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 rain_plot
 ```
 
@@ -263,7 +274,7 @@ will vary
 
 
 
-**EXAMPLE 5: Building the classification rule**
+## Example 5: Building the classification rule {.unnumbered .smaller}
 
 - If ..., then predict rain.
 - Otherwise, predict no rain.
@@ -272,6 +283,8 @@ will vary
 **Work**
 
 Identify the *pairs* of humidity and sunshine values for which the probability of rain is 0.5, hence the log(odds of rain) is 0.
+
+> You should also convince yourself of this statement that if the probability of rain is 0.5, then the log(odds of rain) is 0.
 
 
 <details>
@@ -291,11 +304,13 @@ Identify the *pairs* of humidity and sunshine values for which the probability o
 
 
 
-**EXAMPLE 6: Examine the classification rule**
+## Example 6: Examine the classification rule {.unnumbered .smaller}
 
 Let's visualize the **partition**, hence **classification regions** defined by our classification rule:
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 # Example data points
 example <- data.frame(Humidity9am = c(90, 90, 60), Sunshine = c(2, 5, 10), RainTomorrow = c(NA, NA, NA))
 
@@ -322,7 +337,7 @@ Use our classification rule to predict rain / no rain for the following days:
 
 
 
-**EXAMPLE 7: General properties**
+## Example 7: General properties {.unnumbered .smaller}
 
 a. Does the logistic regression algorithm have a tuning parameter?
 b. Estimating the logistic regression model requires the same pre-processing steps as least squares regression.       
@@ -335,8 +350,8 @@ b. Estimating the logistic regression model requires the same pre-processing ste
 <summary>Solution:</summary>
 a. no
 b. .    
-    - no
-    - yes and yes
+    - no, R doesn’t standardize for logistic.
+    - yes and yes, R does this for us.
 </details>
 <br>
 
@@ -346,6 +361,10 @@ b. .
 
 # Exercises  {-}   
 
+Work on exercises 1--8 [optional 9--10] with your group.
+
+Pay attention to new terms and concepts!
+
 **Goals**    
 
 - Implement logistic regression in R.    
@@ -354,7 +373,7 @@ b. .
 
 <br>
 
-## Part 1: Build the model  {-}
+## Part 1: Build the model  {.unnumbered .smaller}
 
 Let's continue with our analysis of `RainTomorrow` vs `Humidity9am` and `Sunshine`. You're given all code here. Be sure to scan and reflect upon what's happening.
 
@@ -456,7 +475,7 @@ logistic_model %>%
 
 
 
-## Part 2: Apply & evaluate the model {-}
+## Part 2: Apply & evaluate the model {.unnumbered .smaller}
 
 
 
@@ -937,8 +956,19 @@ $$\begin{split}
 
 
 
+# Wrapping Up {.unnumbered .smaller}
 
-# Deeper learning (OPTIONAL) {-}
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- Group Assignment 1 is due TONIGHT
+  - Step 1: submit brief report
+  - Step 2: submit test MAE
+- Other upcoming due dates: 
+  - Friday: HW3 Revisions
+  - Next Tuesday: CP9, Quiz 1 Revisions 
+  - Next Thursday: HW4
+
+
+# Deeper learning (OPTIONAL) {.unnumbered .smaller}
 
 Recall that in least squares regression, we use *residuals* to both estimate model coefficients (those that minimize the residual sum of squares) and measure model strength ($R^2$ is calculated from the variance of the residuals).
 BUT the concept of a "residual" is different in logistic regression.
@@ -971,7 +1001,7 @@ In this case, logistic regression requires different strategies for estimating a
 
 
 
-# Notes: R code {-}
+# Notes: R code {.unnumbered .smaller}
 
 Suppose we want to build a model of categorical response variable `y` using predictors `x1` and `x2` in our `sample_data`.
 
