@@ -291,7 +291,12 @@ Identify the *pairs* of humidity and sunshine values for which the probability o
 
 
 
-
+\
+\
+\
+\
+\
+\
 
 
 
@@ -323,7 +328,12 @@ Use our classification rule to predict rain / no rain for the following days:
 
 
 
-
+\
+\
+\
+\
+\
+\
 
 
 
@@ -351,10 +361,18 @@ b. Estimating the logistic regression model requires the same pre-processing ste
 
 
 
-
+\
+\
+\
+\
+\
+\
 
 
 # Exercises    
+
+Work on the exercises below with your group. 
+As you go, pay attention to new terms and concepts!
 
 **Goals**    
 
@@ -474,7 +492,7 @@ logistic_model %>%
 ## Part 2: Apply & evaluate the model
 
 
-### EXERCISE 1: Predictions & classifications*
+### EXERCISE 1: Predictions & classifications
     
 Consider the weather on 4 days in our data set:    
 
@@ -509,7 +527,7 @@ b. How many of the 4 classifications were accurate?
 
 
 
-### EXERCISE 2: Confusion matrix
+### Confusion matrix
 
 Let's calculate the `in_sample_classifications` for *all* days in our `sydney` sample ("in-sample" because we're evaluating our model using the same data we used to build it):
 
@@ -557,7 +575,7 @@ mosaic_plot
 
 
 
-### EXERCISE 3: Overall accuracy
+### EXERCISE 2: Overall accuracy
 
 ```{r}
 in_sample_confusion
@@ -594,7 +612,7 @@ summary(in_sample_confusion, event_level = "second")
 
 
 
-### EXERCISE 4: No information rate*
+### EXERCISE 3: No information rate
 
 Are our model classifications any better than just randomly guessing rain / no rain?! What if we didn't even build a model, and just always predicted the most common outcome of `RainTomorrow`: that it *wouldn't* rain?!       
 
@@ -619,7 +637,7 @@ b. Is the overall accuracy of our logistic regression model (81.2%) meaningfully
 
 
 
-### EXERCISE 5: Sensitivity
+### EXERCISE 4: Sensitivity
     
 Beyond *overall* accuracy, we care about the accuracy within each class (rain and no rain). Our model's **true positive rate** or **sensitivity** is the probability that it correctly classifies rain as rain. This is represented by the fraction of rain observations that are red:
 
@@ -670,7 +688,7 @@ d. Interpret the sensitivity and comment on whether this is low, moderate, or hi
 
 
 
-### EXERCISE 6: Specificity
+### EXERCISE 5: Specificity
 
 Similarly, we can calculate the model's **true negative rate** or **specificity**, i.e. the probability that it correctly classifies "no rain" as "no rain". This is represented by the fraction of no rain observations that are red:        
 
@@ -719,7 +737,7 @@ d. Interpret the specificity and comment on whether this is low, moderate, or hi
 
 
 
-### EXERCISE 7: In-sample vs CV Accuracy
+### EXERCISE 6: In-sample vs CV Accuracy
     
 The above **in-sample** metrics of overall accuracy (0.812), sensitivity (0.526), and specificity (0.912) helped us understand how well our model classifies rain / no rain for the same data points we used to build the model. Let's calculate the **cross-validated** metrics to better understand how well our model might classify days in the future:
 
@@ -752,7 +770,7 @@ How similar are the in-sample and CV evaluation metrics? Based on these, do you 
 
 
 
-### EXERCISE 8: Specificity vs Sensitivity
+### EXERCISE 7: Specificity vs Sensitivity
 
 a. Our model does better at correctly predicting non-rainy days than rainy days (specificity > sensitivity). *Why* do you think this is the case?
 
@@ -780,7 +798,7 @@ c. Changing up the probability threshold we use in classifying days as rain / no
 
 
 
-### EXERCISE 9: Change up the threshold
+### EXERCISE 8: Change up the threshold
 
 Let's try lowering the threshold to 0.05!
 
@@ -850,7 +868,7 @@ summary(new_confusion, event_level = "second")
 
 
 
-### EXERCISE 10: OPTIONAL challenge
+### EXERCISE 9: OPTIONAL challenge
 
 In Example 5, we built the following classification rule based on a 0.5 probability threshold:
 
@@ -879,7 +897,7 @@ Challenge: Modify this rule and the plot using a 0.05 probability threshold.
 
 
 
-### EXERCISE 11: OPTIONAL math
+### EXERCISE 10: OPTIONAL math
 
 For a general logistic regression model
 
