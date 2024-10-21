@@ -1,0 +1,691 @@
+# Evaluating Classification Models
+
+## Learning Goals {-}
+
+-   Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity
+-   Construct and interpret plots of predicted probabilities across classes
+-   Explain how a ROC curve is constructed and the rationale behind AUC as an evaluation metric
+-   Appropriately use and interpret the no-information rate to evaluate accuracy metrics
+
+
+## Notes: Classification Evaluation {-}
+
+<center>
+<img src="images/MLdiagram4.jpg"/>
+</center>
+
+
+
+
+\
+\
+
+
+
+**CONTEXT**
+
+- **world = supervised learning**       
+    We want to model some output variable $y$ using a set of potential predictors ($x_1, x_2, ..., x_p$).
+
+- **task = CLASSIFICATION**       
+    $y$ is categorical and **binary**
+
+- **(parametric) algorithm**        
+    logistic regression
+    
+- **application = classification**          
+    - Use our algorithm to calculate the probability that y = 1.
+    - Turn these into binary classifications using a classification rule. For some probability threshold c:
+        - If the probability that y = 1 is at least c, classify y as 1.
+        - Otherwise, classify y as 0.
+    - WE get to pick c. This should be guided by *context* (what are the consequences of misclassification?) and the *quality* of the resulting classifications.
+
+    
+
+\
+
+
+**GOAL**
+
+*Evaluate* the quality of binary classifications of $y$ (here resulting logistic regression model).
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+### Sensitivity & specificity   {-}
+
+$$\begin{split}
+\text{overall accuracy} & = \text{probability of making a correct classification} \\
+\text{sensitivity} & = \text{true positive rate}\\
+&  = \text{probability of correctly classifying $y=1$ as $y=1$} \\
+\text{specificity} & = \text{true negative rate} \\
+& =  \text{probability of correctly classifying $y=0$ as $y=0$} \\
+\text{1 - specificity} & = \text{false positive rate} \\
+&  = \text{probability of classifying $y=0$ as $y=1$} \\
+\end{split}$$
+
+
+\
+
+
+**In-sample estimation (how well our model classifies the same data points we used to build it)**
+
+                y = 0   y = 1
+-------------- ------- -------
+classify as 0      a      b
+classify as 1      c      d
+
+$$\begin{split}
+\text{overall accuracy} & = \frac{a + d}{a + b + c + d}\\
+\text{sensitivity} & = \frac{d}{b + d} \\
+\text{specificity} & = \frac{a}{a + c} \\
+\end{split}$$
+
+
+\
+
+
+**k-Fold Cross-Validation (how well our model classifies NEW data points)**    
+
+- Divide the data into k folds of approximately equal size.    
+- Repeat the following procedures for each fold j = 1, 2, ..., k:    
+   - Remove fold j from the data set.    
+   - Fit a model using the other k - 1 folds.    
+   - Use this model to classify the outcomes for the data points in fold j.    
+   - Calculate the overall accuracy, sensitivity, and specificity of these classifications.    
+- Average the metrics across the k folds. This gives our CV estimates of overall accuracy, sensitivity, and specificity.
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+### ROC curves (receiver operating characteristic curves) {-}
+
+Sensitivity and specificity depend upon the  *specific* probability threshold c.
+
+- If we lower c, hence make it *easier* to classify y as 1: sensitivity increases *but* specificity decreases
+
+- If we increase c, hence make it *tougher* to classify y as 1: specificity increases *but* sensitivity decreases
+
+To understand this trade-off, for a *range* of possible thresholds c between 0 and 1, ROC curves calculate and plot
+
+- y-axis: sensitivity (true positive rate)
+- x-axis: 1 - specificity (false positive rate)       
+    Since specificity is the probability of classifying y = 0 as 0, 1 - specificity is the misclassifying y = 0 as 1.
+
+Why we care:
+
+- Along with context, ROC curves can help us identify an appropriate probability threshold c.
+- ROC curves can help us compare the quality of different models.
+- The **area under an ROC curve** (AUC) estimates the probability that our algorithm is *more* likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes. Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.
+
+
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+## Small Group Discussion {-}
+
+
+```{r eval = FALSE, echo = FALSE, fig.width = 8}
+# Code for warm-up plots
+
+# Load packages
+library(tidyverse)
+library(tidymodels)
+library(ggpubr)
+
+# Load weather data from rattle package
+library(rattle)
+data("weatherAUS")
+
+# Wrangle data
+sydney <- weatherAUS %>% 
+  filter(Location == "Sydney",
+         !is.na(RainTomorrow)) %>% 
+  select(-Location, -Date, -RISK_MM) %>% 
+  mutate(RainTomorrow = relevel(RainTomorrow, ref = "No"))
+
+logistic_spec <- logistic_reg() %>%
+  set_mode("classification") %>% 
+  set_engine("glm")
+
+logistic_model <- logistic_spec %>% 
+  fit(RainTomorrow ~ Sunshine, data = sydney)
+
+# log(odds) = 1.1 - 0.352 Humidity  --> cutoff = 3.125
+# logistic_model %>% 
+#   tidy()
+
+conf <- logistic_model %>%
+  augment(new_data = sydney) %>%
+  conf_mat(truth = RainTomorrow, estimate = .pred_class) 
+
+summaries <- conf %>%
+  summary(event_level = "second")
+
+
+
+x_val <- 3.125
+g <- ggplot(sydney, aes(x = Sunshine, fill = RainTomorrow)) + 
+  geom_density(alpha = 0.5) + 
+  geom_vline(xintercept = x_val) + 
+  theme(legend.position = "bottom")
+d <- ggplot_build(g)$data[[1]]
+
+# Overall
+g1 <- g + labs(title = "Overall = 0.803")
+
+# Sensitivity
+g2 <- g + geom_area(data = subset(d, x <= x_val & group == 2), 
+  aes(x = x, y = y), fill = "red", alpha = 0.75) + 
+  labs(title = "Sensitivity = 0.506")
+
+# Specificity
+g3 <- g + geom_area(data = subset(d, x > x_val & group == 1), 
+  aes(x = x, y = y), fill = "red", alpha = 0.75) + 
+  labs(title = "Specificity = 0.906")
+
+# classifying_rain_sunshine
+ggarrange(g1, g2, g3, ncol = 3, nrow = 1, common.legend = TRUE, legend = "bottom")
+
+```
+
+```{r echo = FALSE, eval = FALSE}
+# classifying_rain_sunshine_roc
+examples <- data.frame(y = c(0.506, 0.919), x = c(0.094, 0.496))
+logistic_model %>%
+  augment(new_data = sydney) %>% 
+  roc_curve(truth = RainTomorrow, .pred_Yes, event_level = "second") %>%
+  autoplot() +
+  geom_point(data = examples, aes(x = x, y = y), size = 2, color = c("red", "black"))
+
+
+```
+
+```{r fig.width=8, fig.height=3, echo=FALSE, eval = FALSE}
+# classifying_rain_simulation
+set.seed(2014)
+x <- rnorm(3000, mean = c(rep(5,1000), rep(6.5,500), rep(3.5,500), rep(6.5,500), rep(3.5,500)), sd = rep(c(1.5, 0.5, 1.25), each = 1000))
+RainTomorrow <- rep(rep(c("Yes","No"), each = 500), 3)
+Predictor <- rep(c("A","B","C"), each = 1000)
+dat <- data.frame(x, RainTomorrow, Predictor)
+ggplot(dat, aes(x = x, fill = RainTomorrow)) + 
+    geom_density(alpha = 0.5) + 
+    facet_wrap(~ Predictor) + 
+    theme(legend.position = "bottom")
+```    
+
+
+```{r fig.width=5, fig.height=3, echo=FALSE, eval = FALSE}
+# classifying_rain_lots_of_rocs
+library(pROC)
+mod_Z <- glm(as.factor(RainTomorrow) ~ x, dat[Predictor == "A",], family = "binomial")
+mod_U <- glm(as.factor(RainTomorrow) ~ x, dat[Predictor == "B",], family = "binomial")
+mod_V <- glm(as.factor(RainTomorrow) ~ x, dat[Predictor == "C",], family = "binomial")
+class <- rep(c("irregular","regular"), each = 500)
+roc(response=dat[Predictor == "A",]$RainTomorrow, pred=mod_Z$fitted, plot=TRUE, legacy.axes=T)
+roc(response=dat[Predictor == "B",]$RainTomorrow, pred=mod_U$fitted, plot=TRUE, legacy.axes=T, add=T, col=2)
+roc(response=dat[Predictor == "C",]$RainTomorrow, pred=mod_V$fitted, plot=TRUE, legacy.axes=T, add=T, col=4)
+``` 
+
+
+**EXAMPLE 1**
+
+Suppose we model `RainTomorrow` in Sydney using only the number of hours of bright `Sunshine` today.
+
+Using a **probability threshold of 0.5**, this model produces the following **classification rule**:
+
+- If `Sunshine` < 3.125, predict rain.
+- Otherwise, predict no rain.
+
+![](images/classifying_rain_sunshine.png)
+
+
+Interpret these **in-sample** *estimates* of the resulting classification quality.
+
+a. Overall accuracy = 0.803
+    - We correctly predict the rain outcome (yes or no) 80.3% of the time.
+    - We correctly predict "no rain" on 80.3% of non-rainy days.
+    - We correctly predict "rain" on 80.3% of rainy days.
+
+b. Sensitivity = 0.506       
+    - We correctly predict the rain outcome (yes or no) 50.6% of the time.
+    - We correctly predict "no rain" on 50.6% of non-rainy days.
+    - We correctly predict "rain" on 50.6% of rainy days.
+
+c. Specificity = 0.906        
+    - We correctly predict the rain outcome (yes or no) 90.6% of the time.
+    - We correctly predict "no rain" on 90.6% of non-rainy days.
+    - We correctly predict "rain" on 90.6% of rainy days.
+
+
+
+<details>
+<summary>Solution:</summary>
+a. Overall accuracy = 0.803; We correctly predict the rain outcome (yes or no) 80.3% of the time.
+b. Sensitivity = 0.506; We correctly predict "rain" on 50.6% of rainy days. 
+c. Specificity = 0.906; We correctly predict "no rain" on 90.6% of non-rainy days.
+</details>
+
+**OPTIONAL EXTRA PRACTICE**
+
+Confirm the 3 metrics above using the confusion matrix. Work is shown below (peek when you're ready).
+
+```{verbatim}
+            Truth
+Prediction   No  Yes
+       No  3108  588
+       Yes  324  602
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+<details>
+<summary>Solution:</summary>
+```{r}
+# Overall accuracy
+(3108 + 602) / (3108 + 602 + 324 + 588)
+
+# Sensitivity
+602 / (602 + 588)
+
+# Specificity
+3108 / (3108 + 324)
+```
+</details>
+
+
+
+
+
+**EXAMPLE 2: ROC curves**
+
+We can change up the probability threshold in our classification rule!
+
+The ROC curve for our logistic regression model of `RainTomorrow` by `Sunshine` plots the sensitivity (true positive rate) vs 1 - specificity (false positive rate) corresponding to "every" possible threshold: 
+
+
+![](images/classifying_rain_sunshine_roc.png)
+
+
+a. Which point represents the quality of our classification rule using a 0.5 probability threshold?
+
+b. The other point corresponds to a different classification rule which uses a different threshold. Is that threshold smaller or bigger than 0.5?
+
+c. Which classification rule do you prefer?
+
+
+<details>
+<summary>Solution:</summary>
+a. Red point: 0.5 probability rule (sensitivity ~ 0.5, specificity ~ 0.9)
+b. Black point (higher sensitivity, lower specificity) has a threshold that is lower than 0.5.
+c. Answers will vary. If you don't like getting wet (accurately predict rain when it does rain), you'll want a higher sensitivity. If you don't like carrying an umbrella when it isn't needed, you'll want a higher specificity (lower false positive rate).
+</details>
+
+
+
+**EXAMPLE 3: Area Under the ROC Curve (AUC)**
+
+The **area under an ROC curve** (AUC) estimates the probability that our algorithm is *more* likely to classify y = 1 (rain) as 1 (rain) than to classify y = 0 (no rain) as 1 (rain), hence distinguish between the 2 classes.
+
+AUC is helpful for evaluating and comparing the overall quality of classification models.
+Consider 3 different possible predictors (A, B, C) of rainy and non-rainy days:    
+
+![](images/classifying_rain_simulation.png)
+
+
+The ROC curves corresponding to the models `RainTomorrow ~ A`, `RainTomorrow ~ B`, `RainTomorrow ~ C` are shown below.
+
+![](images/classifying_rain_lots_of_rocs.png)
+
+
+For each ROC curve, indicate the corresponding model and the approximate AUC. Do this in any order you want!       
+
+**black ROC curve**
+
+- `RainTomorrow ~ ___`
+- AUC is roughly ___
+
+**green ROC curve**
+
+- `RainTomorrow ~ ___`
+- AUC is roughly ___.
+
+**orange ROC curve**
+
+- `RainTomorrow ~ ___`
+- AUC is exactly ___.
+
+
+
+
+<details>
+<summary>Solution:</summary>
+**black ROC curve**
+
+- `RainTomorrow ~ A`
+- AUC is roughly 0.5
+
+**green ROC curve**
+
+- `RainTomorrow ~ C`
+- AUC is roughly .95.
+
+**orange ROC curve**
+
+- `RainTomorrow ~ B`
+- AUC is exactly 1.
+</details>
+
+
+
+
+
+
+
+**AUC OBSERVATION**
+
+In general:
+
+- A *perfect* classification model has an AUC of 1.
+- The *simplest* classification model that just randomly predicts y to be 1 or 0 (eg: by flipping a coin), has an AUC of 0.5. It is represented by the diagonal "no discrimination line" in an ROC plot.
+- A model with an AUC below 0.5 is *worse* than just random. Flipping a coin would be better. 
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+
+
+
+## Exercises {-}
+
+
+Today's in-class exercises will be due as Homework 5.
+
+Please find the exercises and template in Moodle.
+
+I recommend working on Exercises 1, 5, and 6 in class. 
+
+Exercise 1 is necessary to the other exercises, and Exercises 5 and 6 involve new content: ROC curves, AUC, and LASSO for classification!
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+
+
+<!-- ## Deep Learning (Optional) -->
+
+
+
+
+
+<!-- **shiny!**     -->
+<!--     Play around with the shiny app below to solidify your understanding of the relationships between probability cut-offs, sensitivity, and specificity. In your opinion, what's the best probability cut-off to use in the rain example? -->
+
+
+<!-- \ -->
+
+
+<!-- **Run this really long shiny code in your console (bottom left). If you can't get shiny running on your machine, please just move on and view a classmate's app -- shiny isn't required for this course.** -->
+
+<!-- <div class = "solution"> -->
+
+```{r eval = FALSE, echo = FALSE}
+# Load packages
+library(ggplot2)
+library(dplyr)
+library(caret)
+library(rattle)    # for the weather data
+library(shiny)
+library(gridExtra)
+
+# Load & process weather data for Sydney
+data("weatherAUS")
+sydney <- weatherAUS %>% 
+  filter(Location == "Sydney", !is.na(RainTomorrow)) %>% 
+  select(-Location, -Date, -RISK_MM)
+
+
+# Define sydney data with model predictions
+shiny_data_1 <- sydney %>% 
+  select(RainTomorrow, Humidity9am) %>% 
+  na.omit() %>% 
+  mutate(odds = exp(-5.524109 + 0.062484*Humidity9am)) %>% 
+  mutate(prediction = odds / (odds + 1))
+  
+cutoff_x <- function(p){
+  (log(p / (1-p)) + 5.524109)/0.062484
+}
+
+# Define sensitivity, specificity, & model plots
+plot_accuracy <- function(p){
+  x_val <- cutoff_x(p) 
+  plot_data <- shiny_data_1 %>% filter(!is.na(RainTomorrow))
+  g <- ggplot(plot_data, aes(x = Humidity9am, fill = factor(RainTomorrow))) + 
+    geom_density(alpha = 0.5) + 
+    geom_vline(xintercept = x_val)
+  d <- ggplot_build(g)$data[[1]]
+  g1 <- g + 
+    geom_area(data = subset(d, x >= x_val & group == 2), 
+aes(x = x, y = y), fill = "red", alpha = 0.75) + 
+    labs(title = "sensitivity") + 
+    theme(legend.position = "bottom", text = element_text(size = 16)) 
+  g2 <- g + 
+    geom_area(data = subset(d, x < x_val & group == 1), 
+aes(x = x, y = y), fill = "red", alpha = 0.75) + 
+    labs(title = "specificity") + 
+    theme(legend.position = "bottom", text = element_text(size = 16)) 
+  
+  g0 <- ggplot(shiny_data_1, aes(x = Humidity9am, y = as.numeric(RainTomorrow)-1)) +
+    geom_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE) + 
+    theme(legend.position = "bottom") + 
+    labs(y = "probability of rain")   +
+    lims(y = c(0,1),x = c(20,100)) + 
+    geom_segment(aes(x = x_val, xend = x_val, y = 0, yend = p), color = "red") + 
+    geom_segment(aes(x = 20, xend = x_val, y = p, yend = p), color = "red") + 
+    theme(legend.position = "bottom", text = element_text(size = 16)) 
+  
+  grid.arrange(g0, g1, g2, ncol = 3)
+}
+    
+
+# Define confusion matrix
+matrix_p <- function(p){
+ pred_data <- shiny_data_1 %>%
+   mutate(Prediction = (prediction >= p)) %>% 
+   mutate(Reference = RainTomorrow)
+ addmargins(table(pred_data$Prediction, pred_data$Reference))
+}
+
+# Calculate sensitivity & specificity
+accuracy_p <- function(p){
+  pred_data <- shiny_data_1 %>%
+    mutate(Prediction = (prediction >= p)) %>% 
+    mutate(Reference = RainTomorrow)
+  mat <- table(pred_data$Prediction, pred_data$Reference)
+  sens <- mat[2,2] / sum(mat[,2])
+  spec <- mat[1,1] / sum(mat[,1])
+  overall <- sum(diag(mat)) / sum(mat)
+  return(data.frame(overall = round(overall,3), sensitivity = round(sens,3), specificity = round(spec,3)))
+}
+
+# Build the shiny server
+server_KNN <- function(input, output) {
+  output$accuracy_plot <- renderPlot({
+    plot_accuracy(p = input$threshold)
+  })
+  output$confusion <- renderPrint({
+    matrix_p(p = input$threshold)
+  })
+  output$metrics <- renderPrint({
+    t(accuracy_p(p = input$threshold))
+  })
+}
+
+
+# Build the shiny user interface
+ui_KNN <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      h4("Pick the p threshold:"), 
+      sliderInput("threshold", "p", min = 0, max = 1, value = 0.5),
+      h4("Confusion matrix:"),
+      verbatimTextOutput("confusion"),
+      h4("In-sample accuracy metrics:"),
+      verbatimTextOutput("metrics")
+    ),
+    mainPanel(
+      plotOutput("accuracy_plot")
+    )
+  )
+)
+
+
+# Run the shiny app!
+shinyApp(ui = ui_KNN, server = server_KNN)
+```
+
+
+<!-- </div> -->
+
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+## Notes: R code {-}
+
+Let `my_model` be a logistic regression model of categorical response variable `y` using predictors `x1` and `x2` in our `sample_data`.
+
+
+```{r eval = FALSE}
+# Load packages
+library(tidymodels)
+
+# Resolves package conflicts by preferring tidymodels functions
+tidymodels_prefer()
+```
+
+```{r eval = FALSE}
+# Calculate the probability that y = 1 for each sample data point
+# The probability is stored in the .pred_Yes column
+in_sample_predictions <- my_model %>%
+  augment(new_data = sample_data)
+```
+
+```{r eval = FALSE}
+# Plot the predicted probability that y = 1 by the actual y category
+ggplot(in_sample_predictions, aes(y = .pred_Yes, x = y)) + 
+  geom_boxplot()
+```
+
+```{r eval = FALSE}
+# Calculate sensitivity & specificity for a range of probability thresholds
+in_sample_predictions %>% 
+  roc_curve(truth = y, .pred_Yes, event_level = "second") 
+
+# Plot the ROC curve
+in_sample_predictions %>% 
+  roc_curve(truth = y, .pred_Yes, event_level = "second") %>% 
+  autoplot()
+
+# Calculate the AUC
+in_sample_predictions %>% 
+  roc_auc(truth = y, .pred_Yes, event_level = "second")
+```
+
+
+
+
+
+
+
+

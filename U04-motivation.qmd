@@ -1,0 +1,91 @@
+# Motivating Question {.unnumbered}
+
+
+```{r}
+#| echo: false
+#| message: false
+conflicted::conflicts_prefer(yardstick::sensitivity)
+conflicted::conflicts_prefer(yardstick::specificity)
+```
+
+
+<!-- for me: confusion matrix summaries -->
+
+<!-- kap = cohen's kappa. Kappa is a similar measure to accuracy(), but is normalized by the accuracy that would be expected by chance alone and is very useful when one or more classes have large frequency distributions. -->
+
+<!-- ppv = positive predictive value = the percent of predicted positives that are actually positive -->
+
+<!-- npv = negative predictive value = percent of negative positives that are actually negative. -->
+
+<!-- mcc = matthews correlation coefficient = -1--1. 1 = perfect agreement between observed and predicted classes. 0 = no agreement (predictions are random) -->
+
+<!-- j_index = sensitivity + specificity - 1. 0--1. 1 = perfect -->
+
+<!-- bal_accuracy = average of sensitivity and specificity -->
+
+<!-- detection_prevalence = fraction of all predictions that were for the "positive" class -->
+
+
+
+<center>
+<img src="images/MLdiagram3.jpg"/>
+</center>
+
+
+\
+\
+
+
+
+**Where are we?**    
+
+Within the **supervised learning** framework, we have a **categorical response variable** $y$ and a set of potential predictors $x$.  For example:
+
+- y = vote / don’t vote, x = (age, party id, ...)    
+- y = spam / not spam, x = (# of $, # of !, …)    
+- y = human / car / plant, x = (speed, shape, ...)
+
+
+\
+
+
+
+We have the following goals:   
+
+- **Build a classification model**    
+    We'll use the following techniques to build classification models of $y$ from predictors $x$:    
+    - parametric techniques    
+        - logistic regression (with or without LASSO!)    
+        - support vector machines (optional)
+    
+    - nonparametric techniques    
+        - K Nearest Neighbors (KNN)
+        - classification trees    
+        - random forests and bagging
+
+\
+
+
+- **Evaluate the quality of a classification model**    
+    We'll use the following metrics and tools to evaluate the quality of a classification model:    
+    - overall accuracy, sensitivity, & specificity    
+        We can approximate these metrics using in-sample and cross validation techniques.    
+    - ROC (receiver operating characteristic) curves    
+    
+    
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+
+<br><br><br>
