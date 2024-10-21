@@ -1,0 +1,972 @@
+---
+title: "Principal component analysis"
+subtitle: "Stat 253"
+author: "Your Name"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+---
+
+
+```{r include = FALSE}
+# OPTIONAL: Set a more color blind friendly palette 
+palette("Okabe-Ito")
+scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
+scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
+
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+
+
+
+
+
+
+
+# Context
+
+
+
+**CONTEXT**
+
+In **unsupervised learning** we don't have any y outcome variable, we're just exploring the structure of our data.
+This can be divided into 2 types of tasks:
+
+- **clustering**    
+    - GOAL: examine structure & similarities among the individual observations (rows) of our dataset
+    - METHODS: hierarchical and K-means clustering
+    
+- **dimension reduction**    
+    - GOAL: examine & simplify structure among the features (columns) of our dataset
+    - METHODS: principal components analysis (and many others, including singular value decomposition (SVD), Uniform Manifold Approximation and Projection (UMAP))
+    
+
+
+
+<br>
+
+
+
+**DIMENSION REDUCTION MOTIVATION**    
+
+Especially when we have a *lot* of features, dimension reduction helps:
+
+- identify patterns among the features
+- conserve computational resources
+- **feature engineering**: create salient features to use in regression & classification (will discuss next class)
+
+
+
+
+<br>
+
+
+
+**PRINCIPAL COMPONENT ANALYSIS (PCA)**    
+
+
+![](https://bcheggeseth.github.io/253_spring_2024/images/pca_flow.png)
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+
+
+
+
+
+**INSPIRATION**
+
+PCA is pretty cool.
+Check out this article ["Genes mirror geography in Europe"](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2735096/) which examined more than 500,000 DNA sites on 3,000 Europeans.
+Thus we have high dimensional data with 3,000 rows (n) and 500,000 columns (p), thus p > n.
+We can capture much of the geographic relationship by reducing these 500,000 features to just 2 principal components! 
+
+![](https://bcheggeseth.github.io/253_spring_2024/images/pca_geography.png)
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+# Principal Component Analysis
+
+**NOTE**
+
+The section here provides a general overview of the PCA algorithm.
+
+The details require linear algebra, which is not a pre-req for this course.
+
+If you're curious, more details are provided in the Deeper Learning section below.
+
+
+\
+\
+\
+\
+
+
+
+
+
+
+**PRINCIPAL COMPONENT ANALYSIS**    
+
+Suppose we start with high dimensional data with p *correlated* features: $x_1$, $x_2$, ..., $x_p$.
+We want to turn these into a *smaller* set of k < p features or *principal components* $PC_1$, $PC_2$, …., $PC_k$ that: 
+
+- are *uncorrelated* (i.e. each contain *unique* information)
+- preserve the majority of information or variability in the original data
+
+
+
+**Step 1**    
+Define the p principal components as **linear combinations** of the original x features.
+These combinations are specified by **loadings** or coefficients a:    
+
+$$\begin{split}
+PC_1 & = a_{11} x_1 + a_{12} x_2 + \cdots + a_{1p} x_p \\
+PC_2 & = a_{21} x_1 + a_{22} x_2 + \cdots + a_{2p} x_p \\
+\vdots & \\
+PC_p & = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
+\end{split}$$    
+
+The **first PC** $PC_1$ is the direction of maximal variability -- it retains the greatest variability or information in the original data.
+The subsequent PCs are defined to have maximal variation among the directions orthogonal to /  perpendicular to / uncorrelated with the previously constructed PCs.    
+
+\
+
+
+**Step 2**    
+
+Keep only the subset of PCs which retain "enough" of the variability / information in the original dataset.
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+# Small Group Discussion {-}
+
+
+Recall the Australian weather data from Homework 2 (image: http://toursmaps.com/wp-content/uploads/2017/09/australia-map-google-_0.jpg):
+
+![](https://bcheggeseth.github.io/253_spring_2024/images/australia-map.jpg)
+
+
+```{r}
+# Import the data and load some packages
+library(tidyverse)
+library(rattle)
+data(weatherAUS)
+
+# Note that this has missing values
+colSums(is.na(weatherAUS))
+```
+
+
+PCA cannot handle missing values.
+We *could* simply eliminate days with any missing values, but this would kick out a lot of useful info.
+Instead, we'll use KNN to *impute* the missing values using the `VIM` package.
+
+```{r}
+# If your VIM package works, use this chunk to process the data
+library(VIM)
+
+# It would be better to impute before filtering & selecting
+# BUT it's very computationally expensive in this case
+weather_temp <- weatherAUS %>% 
+  filter(Date == "2008-12-01") %>% 
+  dplyr::select(-Date, -RainTomorrow, -Temp3pm, -WindGustDir, -WindDir9am, -WindDir3pm) %>% 
+  VIM::kNN(imp_var = FALSE)
+
+# Now convert Location to the row name (not a feature)
+weather_temp <- weather_temp %>% 
+  column_to_rownames("Location") 
+
+# Create a new data frame that processes logical and factor features into dummy variables
+weather_data <- data.frame(model.matrix(~ . - 1, data = weather_temp))
+rownames(weather_data) <- rownames(weather_temp)
+```
+
+If your VIM package doesn't work, import the processed data from here:
+
+```{r eval = FALSE}
+weather_data <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/weatherAUS_processed_subset.csv") %>% 
+  column_to_rownames("Location")
+```
+
+
+
+
+
+
+
+
+
+
+\
+\
+
+
+**EXAMPLE 1: Research goals**
+
+Check out the `weather_data`:
+
+```{r}
+head(weather_data)
+```
+
+a. Identify a research goal that could be addressed using one of our **clustering** algorithms.
+
+
+
+
+
+b. Identify a research goal that could be addressed using our **PCA** dimension reduction algorithm.
+
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+**EXAMPLE 2: Starting small**
+
+Let's start with just 3 *correlated* features:
+$x_1$ (Temp9am), $x_2$ (MinTemp), and $x_3$ (WindSpeed9am)
+
+```{r fig.width = 5, fig.height = 5}
+small_example <- weather_data %>% 
+  select(Temp9am, MinTemp, WindSpeed9am)
+
+pairs(small_example)
+```
+
+
+The goal of PCA will be to *combine* these correlated features into a *smaller* set of **uncorrelated** principal components (PCs) without losing a significant amount of information.
+
+a. The first PC will be defined to retain the greatest variability, hence information in the original features. What do you expect the first PC to be like?
+
+
+
+
+b. How many PCs do you think we'll need to keep without losing too much of the original information?
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+
+**EXAMPLE 3: Defining the PCs**
+
+Perform a PCA on the `small_example` data:
+
+```{r}
+# This code is nice and short!
+# scale = TRUE, center = TRUE first standardizes the features
+pca_small <- prcomp(small_example, scale = TRUE, center = TRUE)
+```
+
+This creates 3 PCs which are each different *combinations* of the (standardized) original features:
+
+```{r}
+# Original (standardized) features
+scale(small_example) %>% 
+  head()
+
+# PCs
+pca_small %>% 
+  pluck("x") %>% 
+  head()
+```
+
+
+Specifically, these PCs are *linear combinations* of the (standardized) original x features, defined by **loadings** a:
+
+$PC_1 = a_{11}x_1 + a_{12}x_2 + a_{13}x_3$
+
+$PC_2 = a_{21}x_1 + a_{22}x_2 + a_{23}x_3$
+
+$PC_3 = a_{31}x_1 + a_{32}x_2 + a_{33}x_3$
+
+
+
+And these linear combinations are defined so that the PCs are *uncorrelated*, thus each contain *unique* weather information about the cities!
+
+```{r fig.width = 5, fig.height = 5}
+pca_small %>% 
+  pluck("x") %>% 
+  pairs()
+```
+
+
+
+a. Use the loadings below to specify the formula for the first PC:    
+    
+    PC1 = ___*Temp9am + ___*MinTemp + ___*WindSpeed9am
+  
+    ```{r}
+    pca_small %>% 
+      pluck("rotation")
+    ```
+
+
+b. For just the first city, confirm that its PC1 coordinate or **score** can be calculated from its original coordinates using the formula in part a: 
+    
+    ```{r}
+    # Original (standardized) coordinates
+    scale(small_example) %>% 
+      head(1)
+    
+    # PC coordinates
+    pca_small %>% 
+      pluck("x") %>% 
+      head(1)
+    ```
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+**EXAMPLE 4: Examining the components of each PC (part 1)**
+
+Plots can help us interpret the above numerical loadings, hence the important components of each PC.
+
+```{r fig.width = 8}
+# Plot the loadings for all 3 PCs
+library(reshape2)
+melt(pca_small$rotation[, 1:3]) %>% 
+  ggplot(aes(x = Var1, y = value, fill = Var1)) +
+    geom_bar(stat = "identity") +
+    facet_wrap(~ Var2) + 
+    labs(y = "loadings", x = "original features", fill = "original features")
+```
+
+```{r fig.width = 8}
+# Focus on the 1st PC (this will be helpful when we have more PCs!)
+melt(pca_small$rotation) %>%
+  filter(Var2 == "PC1") %>% 
+  ggplot(aes(x = Var1, y = value, fill = Var1)) +
+    geom_bar(stat = "identity") +
+    labs(y = "loadings", x = "original features", fill = "original features")
+```
+
+
+
+a. Which features contribute the most, either positively or negatively, to the first PC?
+
+
+
+
+
+b. What about the second PC?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+**EXAMPLE 5: Examining the components of each PC (part 2)**
+
+When we have a lot of features x, the above plots get messy.
+A **loadings plot** is another way to visualize PC1 and PC2 (the most important PCs):
+
+- each *arrow* represents a feature x
+- the arrow point falls at the feature's PC1 loading (x-axis) and PC2 loading (y-axis)
+- arrow *length* reflects how much the feature contributes to the first 2 PCs 
+
+It is powerful in that it can provide a 2-dimensional visualization of high dimensional data (just 3 dimensions in our small example here)!   
+
+```{r fig.width = 6, fig.height = 6}
+library(factoextra)
+fviz_pca_var(pca_small, repel = TRUE)
+```
+
+a. Positively correlated features point in similar directions. The opposite is true for negatively correlated features. What do you learn here?
+
+
+
+
+
+b. Which features contribute the most to the first PC (x-axis)? (Is this consistent with what we observed in the earlier plots?)
+
+
+
+
+
+c. What about the second PC? 
+
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+**EXAMPLE 6: Examining the amount of information captured by each PC (numerical metrics)**
+
+Now that we better understand the *structures* of the PCs, let's examine the relative amount of information they each capture from the original set of features:
+
+```{r}
+# Load package for tidy table
+library(tidymodels)
+
+# Measure information captured by each PC
+# Calculate variance from standard deviation
+pca_small %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  mutate(var = std.dev^2)
+```
+
+NOTE:
+
+- `var` = amount of variability, hence information, in the original features captured by each PC
+- `percent` = % of original information captured by each PC
+- `cumulative` = cumulative % of original information captured by the PCs
+
+a. What % of the original information is captured by PC1? Confirm using both the `var` and `percent` columns.
+
+
+```{r}
+
+```
+
+
+b. What % of the original information is captured by PC2?
+
+
+
+c. In total, 100% of the original information is captured by PC1, PC2, and PC3. What % of the original info would we retain if we only kept PC1 and PC2, i.e. if we reduced the PC dimensions by 1? Confirm using both the `percent` and `cumulative` columns.
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+**EXAMPLE 7: Examining the amount of information captured by each PC (SCREE plots)**
+
+Especially when we start with lots of features, graphical summaries of the above tidy summary can help understand the variation captured by the PCs:
+
+```{r}
+# SCREE PLOT: % of variance explained by each PC
+pca_small %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  ggplot(aes(y = percent, x = PC)) + 
+    geom_point(size = 2) + 
+    geom_line() + 
+    labs(y = "% of variance explained")
+```
+    
+```{r}
+# Cumulative % of variance explained
+pca_small %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  rbind(0) %>% 
+  ggplot(aes(y = cumulative, x = PC)) + 
+    geom_point(size = 2) + 
+    geom_line() + 
+    labs(y = "CUMULATIVE % of variance explained")
+```
+    
+
+Based on these summaries, how many and which of the 3 PCs does it make sense to keep?
+Thus by how much can we reduce the dimensions of our dataset?  
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+**EXAMPLE 8: Examining the new PC coordinates of the data points (score plots)**
+
+Finally, now that we better understand the "meaning" of our 3 new PCs, let's explore their outcomes for each city (row) in the dataset.
+The below **scores** provide the new coordinates with respect to the 3 PCs:
+
+```{r}
+pca_small %>% 
+  pluck("x") %>% 
+  head()
+```
+
+A **score plot** maps out the scores of the first, and most important, 2 PCs for each city.
+PC1 is on the x-axis and PC2 on the y-axis.
+Again, since these PCs are linear combinations of all original features (only 3 here), a score plot can provide a 2-dimensional visualization of high dimensional data!
+
+Question: Unless you're familiar with Australian geography, it might be tough to ascertain any meaningful patterns here. Looking back to the map, and recalling the key information captured by PC1 and PC2, does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?   
+
+
+```{r fig.width = 6, fig.height = 6}
+# Score plot: plot PC1 scores (x-axis) vs PC2 scores (y-axis) of all data points
+fviz_pca_ind(pca_small, repel = TRUE)
+```
+
+
+
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+**EXAMPLE 9: PCA using all features**
+
+Repeat the PCA using all 18 original features in the `weather_data`, our goal being to reduce the dimensions of this dataset while still maintaining a "sufficient" amount of the original information!
+
+```{r}
+pca_weather <- prcomp(weather_data, scale = TRUE, center = TRUE)
+```
+
+This produces 18 *uncorrelated* PCs that are linear combinations of the original (standardized) features:
+
+```{r}
+pca_weather %>% 
+  pluck("x") %>% 
+  head()
+```
+
+a. Suppose we wanted to retain at least 80% of the information in the original 18 features. What's the smallest number of PCs we need to keep? *Thus how much can we reduce the original dimensions?*
+    ```{r}
+    # Cumulative % of variance explained (in numbers)
+    pca_weather %>% 
+      tidy(matrix = "eigenvalues")
+    ```
+    
+    ```{r}
+    # Cumulative % of variance explained (plot)
+    pca_weather %>% 
+      tidy(matrix = "eigenvalues") %>% 
+      rbind(0) %>% 
+      ggplot(aes(y = cumulative, x = PC)) + 
+        geom_point(size = 2) + 
+        geom_line() + 
+        labs(y = "CUMULATIVE % of variance explained")
+    ```
+    
+
+
+
+b. Check out some plots of the loadings in the more important PCs. Describe the general properties of the first 2 PCs. What original features do they most capture?        
+```{r fig.width = 8, fig.height = 6}
+# Plot the loadings for first 5 PCs
+# We have to use a different color palette -- we need enough colors for our 18 features
+pca_weather$rotation %>% as.data.frame() %>% select(PC1:PC5) %>% rownames_to_column(var = 'Variable') %>% pivot_longer(PC1:PC5 ,names_to = 'PC', values_to = 'Value') %>% #melt
+  ggplot(aes(x = Variable, y = Value, fill = Variable)) +
+    geom_bar(stat = "identity") +
+    facet_wrap(~ PC) + 
+    labs(y = "loadings", x = "original features", fill = "original features") + 
+    scale_fill_manual(values = rainbow(18)) + 
+    theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+```
+    
+```{r fig.width = 6, fig.height = 6}
+# Loadings plot: first 2 PCs
+fviz_pca_var(pca_weather, repel = TRUE)
+```
+
+
+c. Finally, check out the **score plot** for the first 2 PCs. Does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?       
+
+```{r fig.width = 6, fig.height = 6}
+fviz_pca_ind(pca_weather, repel = TRUE)
+```
+    
+    
+
+
+
+<br>
+
+
+
+**EXAMPLE 10: Drawbacks**
+
+a. In what kind of scenario would you be relieved to have PCA as a tool?    
+b. What are the drawbacks of PCA? When might you hesitate to use it?
+
+
+
+    
+
+
+
+
+
+
+<br>
+
+# Exercises {-}
+
+Do exercises 7 and 8 in Homework 7.
+
+The R code section below will be handy.
+
+
+
+   
+<br>
+
+
+
+
+# Notes: R code {-}
+
+Suppose we have a set of `sample_data` with multiple feature columns x, and (possibly) a column named `id` which labels each data point.
+
+```{r eval = FALSE}
+# Install packages
+library(tidyverse)
+```
+
+\
+
+**PROCESS THE DATA**
+
+If there's a column that's an identifying variable or label, not a feature of the data points, convert it to a row name.
+
+```{r eval = FALSE}
+sample_data <- sample_data %>% 
+  column_to_rownames("id")
+```
+
+PCA can't handle NA values! There are a couple options.
+
+```{r eval = FALSE}
+# Omit missing cases (this can be bad if there are a lot of missing points!)
+sample_data <- na.omit(sample_data)
+
+# Impute the missing cases
+library(VIM)
+sample_data <- sample_data %>%
+  VIM::kNN(imp_var = FALSE)
+```
+
+
+IF you have at least 1 *categorical* / factor feature, you'll need to pre-process the data even further.
+
+You should NOT do this if you have *quantitative* and/or *logical* features.
+
+```{r eval = FALSE}
+# Turn categorical features into dummy variables
+sample_data <- data.frame(model.matrix(~ . - 1, sample_data))
+```
+
+
+
+
+
+**RUN THE PCA**
+
+```{r eval = FALSE}
+# scale = TRUE, center = TRUE first standardizes the features
+pca_results <- prcomp(sample_data, scale = TRUE, center = TRUE)
+```
+
+
+
+
+
+**CHECK OUT THE PCs**
+
+```{r eval = FALSE}
+# Get the loadings which define the PCs
+pca_results %>% 
+  pluck("rotation")
+
+# Plot loadings for first "k" PCs (you pick k)
+library(reshape2)
+pca_results$rotation %>% as.data.frame() %>% 
+  select(PC1:PCk) %>% 
+  rownames_to_column(var = 'Variable') %>% 
+  pivot_longer(PC1:PC5 ,names_to = 'PC', values_to = 'Value') %>% 
+  ggplot(aes(x = Variable, y = Value, fill = Variable)) +
+    geom_bar(stat = "identity") +
+    facet_wrap(~ PC) + 
+    labs(y = "loadings", x = "original features", fill = "original features") + 
+    theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+# Plot loadings for just the first PC
+pca_results$rotation %>% as.data.frame() %>% 
+  select(PC1:PCk) %>% 
+  rownames_to_column(var = 'Variable') %>% 
+  pivot_longer(PC1:PC5 ,names_to = 'PC', values_to = 'Value') %>%
+  filter(PC == "PC1") %>% 
+  ggplot(aes(x = Variable, y = Value, fill = Variable)) +
+    geom_bar(stat = "identity") +
+    labs(y = "loadings", x = "original features", fill = "original features")
+
+# Loadings plot for first 2 PCs
+library(factoextra)
+fviz_pca_var(pca_results, repel = TRUE)
+```
+
+
+
+\
+\
+
+
+**EXAMINE AMOUNT OF VARIABILITY / INFORMATION CAPTURED BY EACH PC**
+
+```{r eval = FALSE}
+# Load package for tidy table
+library(tidymodels)
+
+# Numerical summaries: Measure information captured by each PC
+pca_results %>% 
+  tidy(matrix = "eigenvalues")
+
+# Graphical summary 1: SCREE PLOT
+# Plot % of variance explained by each PC
+pca_results %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  ggplot(aes(y = percent, x = PC)) + 
+    geom_point(size = 2) + 
+    geom_line() + 
+    labs(y = "% of variance explained")
+
+# Graphical summary 2: Plot cumulative % of variance explained by each PC
+pca_results %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  rbind(0) %>% 
+  ggplot(aes(y = cumulative, x = PC)) + 
+    geom_point(size = 2) + 
+    geom_line() + 
+    labs(y = "CUMULATIVE % of variance explained")
+```
+
+
+
+\
+\
+
+
+**EXAMINE THE SCORES, i.e PC COORDINATES FOR THE DATA POINTS**
+
+```{r eval = FALSE}
+# Numerical summary: check out the scores
+pca_results %>% 
+  pluck("x")
+
+# Graphical summary: Score plot
+# Plot PC1 scores (x-axis) vs PC2 scores (y-axis) of all data points
+fviz_pca_ind(pca_results, repel = TRUE)
+```
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+# Deeper learning (OPTIONAL)
+
+
+**ALTERNATIVES TO PCA**
+
+For more dimension reduction techniques, check out:
+
+- https://juliasilge.com/blog/billboard-100/
+- https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/
+
+
+\
+\
+
+
+
+**MATH BEHIND PCA**
+
+Let $X$ be our original (centered) $n \times p$ data matrix.
+Mathematically, PCA produces an **orthogonal linear transformation** of $X$.
+To this end, first note that the **covariance** or relationship among the features in $X$ is proportional to the $p \times p$ matrix
+
+$$X^TX$$    
+
+Further, we can express this covariance structure as
+
+$$X^TX = W \Lambda W^T$$
+
+where $W$ is a $p \times p$ matrix, the columns of which are eigenvectors of $X^TX$, and $\Lambda$ is a diagonal matrix of eigenvalues. 
+
+- **principal components**    
+    The $p$ principal components are defined by the columns of $W$.    
+- **scores**    
+    $XW$ maps the original data to the transformed data set, the columns of which are the scores (coordinates) for each of the PCs.    
+- **loadings**    
+    Scaling the columns of $W$, ie. multiplying them by the square root of the corresponding eigenvalue, gives the loadings.
+- **proportion of variance explained by each principal component**    
+    The eigenvalues in $\Lambda$ measure the relative proportion of variability that's explained by each principal component (eg: $\lambda_1 / (\lambda_1 + \cdots + \lambda_p)$).    
+
+Alternatively, we can obtain the principal components via **singular value decomposition (SVD)**.
+Instead of decomposing $X^TX$, SVD decomposes $X$.
+In fact, this is a bit more computationally stable!  Specifically, SVD expresses $X$ as 
+
+$$X = U \Sigma W^T$$    
+
+where $U$ is an $n \times n$ matrix of orthogonal *left singular vectors* of $X$ and $\Sigma$ is an $n \times p$ diagonal matrix of *singular values*.  Then $W$ still provides the principal components and the diagonal of $\Sigma^2$ is equivalent to the diagonal of $\Lambda$ since by the SVD,    
+
+$$X^TX = W \Sigma^T U^T U \Sigma W^T = W \Sigma^2 W^T$$
+
+Further resource: https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/
+
+
+
+
+
+
+

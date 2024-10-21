@@ -1,6 +1,14 @@
-# Evaluating Classification Models
+---
+title: "Evaluating Classification Models"
+logo: "images/mac.png"
+---
 
-## Learning Goals {-}
+# Settling In {-}
+
+Coming soon!
+
+
+# Learning Goals {-}
 
 -   Calculate (by hand from confusion matrices) and contextually interpret overall accuracy, sensitivity, and specificity
 -   Construct and interpret plots of predicted probabilities across classes
@@ -8,7 +16,7 @@
 -   Appropriately use and interpret the no-information rate to evaluate accuracy metrics
 
 
-## Notes: Classification Evaluation {-}
+# Notes: Classification Evaluation {-}
 
 <center>
 <img src="images/MLdiagram4.jpg"/>
@@ -63,7 +71,7 @@
 
 
 
-### Sensitivity & specificity   {-}
+## Sensitivity & specificity   {-}
 
 $$\begin{split}
 \text{overall accuracy} & = \text{probability of making a correct classification} \\
@@ -118,7 +126,7 @@ $$\begin{split}
 
 
 
-### ROC curves (receiver operating characteristic curves) {-}
+## ROC curves (receiver operating characteristic curves) {-}
 
 Sensitivity and specificity depend upon the  *specific* probability threshold c.
 
@@ -154,7 +162,7 @@ Why we care:
 
 
 
-## Small Group Discussion {-}
+# Small Group Discussion {-}
 
 
 ```{r eval = FALSE, echo = FALSE, fig.width = 8}
@@ -453,8 +461,7 @@ In general:
 
 
 
-
-## Exercises {-}
+# Exercises {-}
 
 
 Today's in-class exercises will be due as Homework 5.
@@ -641,7 +648,7 @@ shinyApp(ui = ui_KNN, server = server_KNN)
 
 
 
-## Notes: R code {-}
+# Notes: R code {-}
 
 Let `my_model` be a logistic regression model of categorical response variable `y` using predictors `x1` and `x2` in our `sample_data`.
 

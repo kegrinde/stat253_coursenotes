@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="L11-logistic-regression_files/libs/clipboard/clipboard.min.js"></script>
+<script src="L11-logistic-regression_files/libs/quarto-html/tabby.min.js"></script>
+<script src="L11-logistic-regression_files/libs/quarto-html/popper.min.js"></script>
+<script src="L11-logistic-regression_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="L11-logistic-regression_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="L11-logistic-regression_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="L11-logistic-regression_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="L11-logistic-regression_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.4.555">
+
+  <title>Logistic Regression: Model Building &amp; Evaluation</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="L11-logistic-regression_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="L11-logistic-regression_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="L11-logistic-regression_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="L11-logistic-regression_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="L11-logistic-regression_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="L11-logistic-regression_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="L11-logistic-regression_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="L11-logistic-regression_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="L11-logistic-regression_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Logistic Regression: Model Building &amp; Evaluation</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="settling-in" class="title-slide slide level1 unnumbered center">
+<h1>Settling In</h1>
+<p>Coming soon!</p>
+</section>
+
+<section id="learning-goals" class="title-slide slide level1 unnumbered center">
+<h1>Learning Goals</h1>
+<ul>
+<li>Use a logistic regression model to make hard (class) and soft (probability) predictions</li>
+<li>Interpret non-intercept coefficients from logistic regression models in the data context</li>
+</ul>
+</section>
+
+<section id="notes-logistic-regression" class="title-slide slide level1 unnumbered center scrollable">
+<h1>Notes: Logistic Regression</h1>
+<center>
+<img src="images/MLdiagram3.jpg">
+</center>
+<p><strong>CONTEXT</strong></p>
+<ul>
+<li><p><strong>world = supervised learning</strong><br>
+We want to model some output variable <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
+<li><p><strong>task = CLASSIFICATION</strong><br>
+<span class="math inline">\(y\)</span> is categorical and <strong>binary</strong></p></li>
+<li><p><strong>(parametric) algorithm</strong><br>
+logistic regression</p></li>
+</ul>
+<p><strong>GOAL</strong></p>
+<p>Use the <em>parametric</em> logistic regression model to model and classify <span class="math inline">\(y\)</span>.</p>
+<blockquote>
+<p><strong>Logistic Regression</strong></p>
+<p>Let <span class="math inline">\(y\)</span> be a binary categorical response variable:<br>
+<span class="math display">\[y =
+\begin{cases}
+1 &amp; \; \text{ if event happens} \\
+0 &amp; \; \text{ if event doesn't happen} \\
+\end{cases}\]</span></p>
+<p>Further define <span class="math display">\[\begin{split}
+p &amp;= \text{ probability event happens} \\
+1-p &amp;= \text{ probability event doesn't happen} \\
+\text{odds} &amp; = \text{ odds event happens} = \frac{p}{1-p} \\
+\end{split}\]</span></p>
+<p>Then a logistic regression model of <span class="math inline">\(y\)</span> by <span class="math inline">\(x\)</span> is <span class="math display">\[\begin{split}
+\log(\text{odds}) &amp; = \beta_0 + \beta_1 x \\
+\text{odds} &amp; = e^{\beta_0 + \beta_1 x} \\
+p           &amp; = \frac{\text{odds}}{\text{odds}+1} = \frac{e^{\beta_0 + \beta_1 x}}{e^{\beta_0 + \beta_1 x}+1} \\
+\end{split}\]</span></p>
+<p><strong>Coefficient interpretation</strong><br>
+<span class="math display">\[\begin{split}    
+\beta_0 &amp; = \text{ LOG(ODDS) when } x=0 \\
+e^{\beta_0} &amp; = \text{ ODDS when } x=0 \\
+\beta_1 &amp; = \text{ unit change in LOG(ODDS) per 1 unit increase in } x \\
+e^{\beta_1} &amp; = \text{ multiplicative change in ODDS per 1 unit increase in } x \\
+\end{split}\]</span></p>
+</blockquote>
+<p><strong>EXAMPLE 1: Check out the data</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a><span class="co"># Load weather data from rattle package</span></span>
+<span id="cb1-6"><a href=""></a><span class="fu">library</span>(rattle)</span>
+<span id="cb1-7"><a href=""></a><span class="fu">data</span>(<span class="st">"weatherAUS"</span>)</span>
+<span id="cb1-8"><a href=""></a></span>
+<span id="cb1-9"><a href=""></a><span class="co"># Wrangle data</span></span>
+<span id="cb1-10"><a href=""></a>sydney <span class="ot">&lt;-</span> weatherAUS <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href=""></a>  <span class="fu">filter</span>(Location <span class="sc">==</span> <span class="st">"Sydney"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-12"><a href=""></a>  <span class="fu">select</span>(RainTomorrow, Humidity9am, Sunshine)</span>
+<span id="cb1-13"><a href=""></a></span>
+<span id="cb1-14"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb1-15"><a href=""></a><span class="fu">head</span>(sydney)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  RainTomorrow Humidity9am Sunshine
+  &lt;fct&gt;              &lt;int&gt;    &lt;dbl&gt;
+1 Yes                   92      0  
+2 Yes                   83      2.7
+3 Yes                   88      0.1
+4 Yes                   83      0  
+5 Yes                   88      0  
+6 Yes                   69      8.6</code></pre>
+</div>
+</div>
+<p>Let’s model <code>RainTomorrow</code>, whether or not it rains tomorrow in Sydney, by <em>two</em> predictors:</p>
+<ul>
+<li><code>Humidity9am</code> (% humidity at 9am today)</li>
+<li><code>Sunshine</code> (number of hours of bright sunshine today)</li>
+</ul>
+<p>Check out &amp; comment on the relationship of rain with these 2 predictors:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Store so we can modify later</span></span>
+<span id="cb3-2"><a href=""></a>rain_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sydney, <span class="fu">aes</span>(<span class="at">y =</span> Humidity9am, <span class="at">x =</span> Sunshine, <span class="at">color =</span> RainTomorrow)) <span class="sc">+</span> </span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution:
+</summary>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>rain_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+Rainy days tend to be preceded by high humidity and low sunshine.
+</details>
+<p><br></p>
+<!-- convince myself -->
+<!-- suppose odds ratio is 0.75 -->
+<!-- thus new odds = 0.75*old odds. -->
+<!-- equivalently: old odds - 0.25*old odds = new odds -->
+<p><strong>EXAMPLE 2: Interpreting coefficients</strong></p>
+<p>The logistic regression model is:</p>
+<ul>
+<li>log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine</li>
+<li>odds of rain = exp(-1.01 + 0.0260 Humidity9am - 0.313 Sunshine)</li>
+<li>probability of rain = odds / (odds + 1)</li>
+</ul>
+<p>Let’s interpret the Sunshine coefficient of -0.313:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># Not transformed</span></span>
+<span id="cb5-2"><a href=""></a><span class="sc">-</span><span class="fl">0.313</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.313</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Transformed</span></span>
+<span id="cb7-2"><a href=""></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.313</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7312499</code></pre>
+</div>
+</div>
+<ol type="a">
+<li><em>When controlling for humidity</em>, and for every extra hour of sunshine, the LOG(ODDS) of rain…
+<ul>
+<li>decrease by 0.313</li>
+<li>are roughly 31% as big (i.e.&nbsp;decrease by 69%)</li>
+<li>are roughly 73% as big (i.e.&nbsp;decrease by 27%)</li>
+<li>increase by 0.731</li>
+</ul></li>
+<li><em>When controlling for humidity</em>, and for every extra hour of sunshine, the ODDS of rain…
+<ul>
+<li>decrease by 0.313</li>
+<li>are roughly 31% as big (i.e.&nbsp;decrease by 69%)</li>
+<li>are roughly 73% as big (i.e.&nbsp;decrease by 27%)</li>
+<li>increase by 0.731</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>decrease by 0.313</li>
+<li>are roughly 73% as big (i.e.&nbsp;decrease by 27%)</li>
+</ol>
+</details>
+<p><br></p>
+<p><strong>DEFINITION: odds ratio</strong></p>
+<p>The coefficients on the odds scale are <em>odds ratios (OR)</em>:</p>
+<p><span class="math display">\[e^{\beta_1} = \frac{\text{odds of event at x + 1}}{\text{odds of event at x}}\]</span></p>
+<p><br></p>
+<p><strong>EXAMPLE 3: Classifications</strong></p>
+<p>log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine</p>
+<p>Suppose there’s 99% humidity at 9am today and only 2 hours of bright sunshine.</p>
+<ol type="a">
+<li>What’s the probability of rain?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># log(odds of rain)</span></span>
+<span id="cb9-2"><a href=""></a>log_odds <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.01</span> <span class="sc">+</span> <span class="fl">0.0260</span> <span class="sc">*</span> <span class="dv">99</span> <span class="sc">-</span> <span class="fl">0.313</span> <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb9-3"><a href=""></a>log_odds</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.938</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># odds of rain</span></span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a></span>
+<span id="cb11-4"><a href=""></a><span class="co"># probability of rain</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="a">
+<li>What’s your binary <em>classification</em>: do you predict that it will rain or not rain?</li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># log(odds of rain)</span></span>
+<span id="cb12-2"><a href=""></a><span class="sc">-</span><span class="fl">1.01</span> <span class="sc">+</span> <span class="fl">0.0260</span> <span class="sc">*</span> <span class="dv">99</span> <span class="sc">-</span> <span class="fl">0.313</span> <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.938</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># odds of rain (MODIFY THIS)</span></span>
+<span id="cb14-2"><a href=""></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">1.01</span> <span class="sc">+</span> <span class="fl">0.0260</span> <span class="sc">*</span> <span class="dv">99</span> <span class="sc">-</span> <span class="fl">0.313</span> <span class="sc">*</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.554867</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># probability of rain</span></span>
+<span id="cb16-2"><a href=""></a><span class="fl">2.554867</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">2.554867</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7186955</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>rain</li>
+</ol>
+</details>
+<p><br></p>
+<p><strong>EXAMPLE 4: Classification rules (intuition)</strong></p>
+<p>We used a simple classification rule above with a probability threshold of c = 0.5:</p>
+<ul>
+<li>If the probability of rain &gt;= c, then predict rain.</li>
+<li>Otherwise, predict no rain.</li>
+</ul>
+<p>Let’s translate this into a classification rule that <strong>partitions</strong> the data points into rain / no rain predictions based on the predictor values.</p>
+<p>What do you think this classification rule / partition will look like?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>rain_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<details>
+<summary>
+Solution:
+</summary>
+will vary
+</details>
+<p><br></p>
+<p><strong>EXAMPLE 5: Building the classification rule</strong></p>
+<ul>
+<li>If …, then predict rain.</li>
+<li>Otherwise, predict no rain.</li>
+</ul>
+<p><strong>Work</strong></p>
+<p>Identify the <em>pairs</em> of humidity and sunshine values for which the probability of rain is 0.5, hence the log(odds of rain) is 0.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<ul>
+<li><p>Set the log odds to 0:<br>
+log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine = 0</p></li>
+<li><p>Solve for Humidity9am:</p>
+<ul>
+<li>Move constant and Sunshine term to other side.<br>
+0.0260 Humidity9am = 1.01 + 0.3130 Sunshine</li>
+<li>Divide both sides by 0.026:<br>
+Humidity9am = (1.01 / 0.026) + (0.3130 / 0.026) Sunshine = 38.846 + 12.038 Sunshine</li>
+</ul></li>
+</ul>
+</details>
+<p><br></p>
+<p><strong>EXAMPLE 6: Examine the classification rule</strong></p>
+<p>Let’s visualize the <strong>partition</strong>, hence <strong>classification regions</strong> defined by our classification rule:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Example data points</span></span>
+<span id="cb19-2"><a href=""></a>example <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Humidity9am =</span> <span class="fu">c</span>(<span class="dv">90</span>, <span class="dv">90</span>, <span class="dv">60</span>), <span class="at">Sunshine =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>), <span class="at">RainTomorrow =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>))</span>
+<span id="cb19-3"><a href=""></a></span>
+<span id="cb19-4"><a href=""></a><span class="co"># Include the line Humidity9am = 38.84615 + 12.03846 Sunshine</span></span>
+<span id="cb19-5"><a href=""></a>rain_plot <span class="sc">+</span></span>
+<span id="cb19-6"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">38.84615</span>, <span class="at">slope =</span> <span class="fl">12.03846</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb19-7"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> example, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Use our classification rule to predict rain / no rain for the following days:</p>
+<ul>
+<li>Day 1: humidity = 90, sunshine = 2</li>
+<li>Day 2: humidity = 90, sunshine = 5</li>
+<li>Day 3: humidity = 60, sunshine = 10</li>
+</ul>
+<details>
+<summary>
+Solution:
+</summary>
+<ul>
+<li>Day 1: rain</li>
+<li>Day 2: no rain</li>
+<li>Day 3: no rain</li>
+</ul>
+</details>
+<p><br></p>
+<p><strong>EXAMPLE 7: General properties</strong></p>
+<ol type="a">
+<li>Does the logistic regression algorithm have a tuning parameter?</li>
+<li>Estimating the logistic regression model requires the same pre-processing steps as least squares regression.
+<ul>
+<li>Is it necessary to standardize quantitative predictors? If so, does the R function do this for us?</li>
+<li>Is it necessary to create dummy variables for our categorical predictors? If so, does the R function do this for us?</li>
+</ul></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>no</li>
+<li>.
+<ul>
+<li>no</li>
+<li>yes and yes</li>
+</ul></li>
+</ol>
+</details>
+<p><br></p>
+</section>
+
+<section>
+<section id="exercises" class="title-slide slide level1 unnumbered center">
+<h1>Exercises</h1>
+<p><strong>Goals</strong></p>
+<ul>
+<li>Implement logistic regression in R.<br>
+</li>
+<li><em>Evaluate</em> the accuracy of our logistic regression classifications.</li>
+</ul>
+<p><br></p>
+</section>
+<section id="part-1-build-the-model" class="slide level2 unnumbered">
+<h2>Part 1: Build the model</h2>
+<p>Let’s continue with our analysis of <code>RainTomorrow</code> vs <code>Humidity9am</code> and <code>Sunshine</code>. You’re given all code here. Be sure to scan and reflect upon what’s happening.</p>
+<p><strong>STEP 0: Organize the y categories</strong></p>
+<p>We want to model the log(odds of <em>rain</em>), thus the <code>Yes</code> category of <code>RainTomorrow</code>.</p>
+<p>But R can’t read minds.</p>
+<p>We have to explicitly tell it to treat the <code>No</code> category as the <em>reference level</em> (not the category we want to model).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>sydney <span class="ot">&lt;-</span> sydney <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">RainTomorrow =</span> <span class="fu">relevel</span>(RainTomorrow, <span class="at">ref =</span> <span class="st">"No"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 1: logistic regression model specification</strong></p>
+<p>What’s new here?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>logistic_spec <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 2: variable recipe</strong></p>
+<p>There are no <em>required</em> pre-processing steps, but you could add some. Nothing new here!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(RainTomorrow <span class="sc">~</span> Humidity9am <span class="sc">+</span> Sunshine, <span class="at">data =</span> sydney)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 3: workflow specification (recipe + model)</strong></p>
+<p>Nothing new here!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>logistic_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href=""></a>  <span class="fu">add_model</span>(logistic_spec) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>STEP 4: Estimate the model using the data</strong></p>
+<p>Since the logistic regression model has no tuning parameter to tune, we can just <code>fit()</code> the model using our sample data – no need for <code>tune_grid()</code>!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>logistic_model <span class="ot">&lt;-</span> logistic_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> sydney)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Check out the tidy model summary</strong></p>
+<p>Note that these coefficients are the same that we used in the above examples.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href=""></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -1.01     0.258       -3.90 9.61e-  5
+2 Humidity9am   0.0260   0.00307      8.45 2.91e- 17
+3 Sunshine     -0.313    0.0119     -26.3  2.81e-152</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="co"># Transform coefficients and confidence intervals to the odds scale</span></span>
+<span id="cb27-2"><a href=""></a><span class="co"># These are odds ratios (OR)</span></span>
+<span id="cb27-3"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href=""></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-5"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-6"><a href=""></a>    <span class="at">OR =</span> <span class="fu">exp</span>(estimate),</span>
+<span id="cb27-7"><a href=""></a>    <span class="at">OR.conf.low =</span> <span class="fu">exp</span>(estimate <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error),</span>
+<span id="cb27-8"><a href=""></a>    <span class="at">OR.conf.high =</span> <span class="fu">exp</span>(estimate <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error)</span>
+<span id="cb27-9"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 8
+  term     estimate std.error statistic   p.value    OR OR.conf.low OR.conf.high
+  &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+1 (Interc…  -1.01     0.258       -3.90 9.61e-  5 0.365       0.220        0.606
+2 Humidit…   0.0260   0.00307      8.45 2.91e- 17 1.03        1.02         1.03 
+3 Sunshine  -0.313    0.0119     -26.3  2.81e-152 0.731       0.714        0.748</code></pre>
+</div>
+</div>
+</section>
+<section id="part-2-apply-evaluate-the-model" class="slide level2 unnumbered scrollable">
+<h2>Part 2: Apply &amp; evaluate the model</h2>
+<ol type="1">
+<li><strong>Predictions &amp; classifications</strong><br>
+Consider the weather on 4 days in our data set:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>examples <span class="ot">&lt;-</span> sydney[<span class="dv">7</span><span class="sc">:</span><span class="dv">10</span>,]</span>
+<span id="cb29-2"><a href=""></a>examples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  RainTomorrow Humidity9am Sunshine
+  &lt;fct&gt;              &lt;int&gt;    &lt;dbl&gt;
+1 Yes                   75      5.2
+2 Yes                   77      2.1
+3 Yes                   92      3  
+4 No                    80     10.1</code></pre>
+</div>
+</div>
+<p>Use the <code>logistic_model</code> to calculate the probability of rain <em>and</em> the rain prediction / classification for these 4 days.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> examples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  .pred_class .pred_No .pred_Yes RainTomorrow Humidity9am Sunshine
+  &lt;fct&gt;          &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;              &lt;int&gt;    &lt;dbl&gt;
+1 No             0.665     0.335 Yes                   75      5.2
+2 Yes            0.417     0.583 Yes                   77      2.1
+3 Yes            0.391     0.609 Yes                   92      3  
+4 No             0.890     0.110 No                    80     10.1</code></pre>
+</div>
+</div>
+<ol type="a">
+<li>Convince yourself that you understand what’s being reported in the <code>.pred_class</code>, <code>.pred_No</code>, and <code>.pred_Yes</code> columns, as well as the correspondence between these columns (how they’re related to each other).</li>
+<li>How many of the 4 classifications were accurate?</li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li><code>.pred_class</code> (classification based on probability 0.5 threshold), <code>.pred_No</code> (probability of no rain), and <code>.pred_Yes</code> (probability of rain)</li>
+<li>3</li>
+</ol>
+</details>
+<p><br></p>
+<p><strong>Confusion matrix</strong><br>
+Let’s calculate the <code>in_sample_classifications</code> for <em>all</em> days in our <code>sydney</code> sample (“in-sample” because we’re evaluating our model using the same data we used to build it):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>in_sample_classifications <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sydney)</span>
+<span id="cb33-3"><a href=""></a>    </span>
+<span id="cb33-4"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb33-5"><a href=""></a><span class="fu">head</span>(in_sample_classifications)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  .pred_class .pred_No .pred_Yes RainTomorrow Humidity9am Sunshine
+  &lt;fct&gt;          &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;              &lt;int&gt;    &lt;dbl&gt;
+1 Yes            0.201     0.799 Yes                   92      0  
+2 Yes            0.425     0.575 Yes                   83      2.7
+3 Yes            0.223     0.777 Yes                   88      0.1
+4 Yes            0.241     0.759 Yes                   83      0  
+5 Yes            0.218     0.782 Yes                   88      0  
+6 No             0.871     0.129 Yes                   69      8.6</code></pre>
+</div>
+</div>
+<p>A <strong>confusion matrix</strong> summarizes the accuracy of the <code>.pred_class</code> model classifications. You’ll answer follow-up questions in the next exercises.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>in_sample_confusion <span class="ot">&lt;-</span> in_sample_classifications <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> RainTomorrow, <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># Check it out in table form</span></span>
+<span id="cb36-2"><a href=""></a>in_sample_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No  3119  563
+       Yes  301  625</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># Check it out in plot form</span></span>
+<span id="cb38-2"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href=""></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># Check it out in a color plot (which we'll store and use later)</span></span>
+<span id="cb39-2"><a href=""></a>mosaic_plot <span class="ot">&lt;-</span> in_sample_confusion <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb39-4"><a href=""></a>  <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">rep</span>(<span class="fu">colnames</span>(in_sample_confusion<span class="sc">$</span>table), <span class="fu">ncol</span>(in_sample_confusion<span class="sc">$</span>table))) <span class="sc">+</span> </span>
+<span id="cb39-5"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb39-6"><a href=""></a>    </span>
+<span id="cb39-7"><a href=""></a>mosaic_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><strong>Overall accuracy</strong></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>in_sample_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No  3119  563
+       Yes  301  625</code></pre>
+</div>
+</div>
+<ol type="a">
+<li>What do these numbers add up to, both numerically and contextually?</li>
+</ol>
+<ol start="2" type="a">
+<li>Use this matrix to calculate the <em>overall</em> accuracy of the model classifications. That is, what proportion of the classifications were correct?</li>
+</ol>
+<ol start="3" type="a">
+<li>Check that your answer to part b matches the <code>accuracy</code> listed in the confusion matrix <code>summary()</code>:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="co"># event_level indicates that the second RainTomorrow</span></span>
+<span id="cb42-2"><a href=""></a><span class="co"># category (Yes) is our category of interest</span></span>
+<span id="cb42-3"><a href=""></a><span class="fu">summary</span>(in_sample_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary         0.812
+ 2 kap                  binary         0.472
+ 3 sens                 binary         0.526
+ 4 spec                 binary         0.912
+ 5 ppv                  binary         0.675
+ 6 npv                  binary         0.847
+ 7 mcc                  binary         0.478
+ 8 j_index              binary         0.438
+ 9 bal_accuracy         binary         0.719
+10 detection_prevalence binary         0.201
+11 precision            binary         0.675
+12 recall               binary         0.526
+13 f_meas               binary         0.591</code></pre>
+</div>
+</div>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>sample size (not including data points with NA on variables used in our model)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="dv">3119</span> <span class="sc">+</span> <span class="dv">563</span> <span class="sc">+</span> <span class="dv">301</span> <span class="sc">+</span> <span class="dv">625</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4608</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>(<span class="dv">3119</span> <span class="sc">+</span> <span class="dv">625</span>) <span class="sc">/</span> (<span class="dv">3119</span> <span class="sc">+</span> <span class="dv">563</span> <span class="sc">+</span> <span class="dv">301</span> <span class="sc">+</span> <span class="dv">625</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8125</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>yep<br>
+</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="3" type="1">
+<li><strong>No information rate</strong><br>
+Are our model classifications any better than just randomly guessing rain / no rain?! What if we didn’t even build a model, and just always predicted the most common outcome of <code>RainTomorrow</code>: that it <em>wouldn’t</em> rain?!</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>sydney <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href=""></a>  <span class="fu">count</span>(RainTomorrow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  RainTomorrow     n
+  &lt;fct&gt;        &lt;int&gt;
+1 No            3443
+2 Yes           1196
+3 &lt;NA&gt;            14</code></pre>
+</div>
+</div>
+<ol type="a">
+<li>Ignoring the <code>NA</code> outcomes, prove that if we just always predicted no rain, we’d be correct 74.2% of the time. This is called the <strong>no information rate</strong>.</li>
+</ol>
+<ol start="2" type="a">
+<li>Is the overall accuracy of our logistic regression model (81.2%) meaningfully better than this random guessing approach?</li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>We’re only right when it doesn’t rain.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a> <span class="dv">3443</span> <span class="sc">/</span> (<span class="dv">3443</span> <span class="sc">+</span> <span class="dv">1196</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7421858</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>this is subjective – depends on context / how we’ll use the predictions / consequences for being wrong.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="4" type="1">
+<li><strong>Sensitivity</strong><br>
+Beyond <em>overall</em> accuracy, we care about the accuracy within each class (rain and no rain). Our model’s <strong>true positive rate</strong> or <strong>sensitivity</strong> is the probability that it correctly classifies rain as rain. This is represented by the fraction of rain observations that are red:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: We're only plotting RAINY days</span></span>
+<span id="cb52-2"><a href=""></a>in_sample_classifications <span class="sc">%&gt;%</span> </span>
+<span id="cb52-3"><a href=""></a>  <span class="fu">filter</span>(RainTomorrow <span class="sc">==</span> <span class="st">"Yes"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">correct =</span> (RainTomorrow <span class="sc">==</span> .pred_class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-5"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> Humidity9am, <span class="at">x =</span> Sunshine, <span class="at">color =</span> correct)) <span class="sc">+</span> </span>
+<span id="cb52-6"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb52-7"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">38.84615</span>, <span class="at">slope =</span> <span class="fl">12.03846</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb52-8"><a href=""></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or, the proportion of the <code>Yes</code> column that falls into the <code>Yes</code> prediction box:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>mosaic_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>Visually, does it appear that the sensitivity is low, moderate, or high?</p></li>
+<li><p>Calculate the sensitivity using the confusion matrix.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>in_sample_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No  3119  563
+       Yes  301  625</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Check that your answer to part b matches the <code>sens</code> listed in the confusion matrix <code>summary()</code>:<br>
+eval=TRUE</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="fu">summary</span>(in_sample_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary         0.812
+ 2 kap                  binary         0.472
+ 3 sens                 binary         0.526
+ 4 spec                 binary         0.912
+ 5 ppv                  binary         0.675
+ 6 npv                  binary         0.847
+ 7 mcc                  binary         0.478
+ 8 j_index              binary         0.438
+ 9 bal_accuracy         binary         0.719
+10 detection_prevalence binary         0.201
+11 precision            binary         0.675
+12 recall               binary         0.526
+13 f_meas               binary         0.591</code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>Interpret the sensitivity and comment on whether this is low, moderate, or high.</li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>moderate (or low)</li>
+<li>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="dv">625</span> <span class="sc">/</span> (<span class="dv">625</span> <span class="sc">+</span> <span class="dv">563</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5260943</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>yep<br>
+</li>
+<li>We correctly anticipate rain 52.6% of the time. Or, on 52.6% of rainy days, we correctly predict rain.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="5" type="1">
+<li><strong>Specificity</strong><br>
+Similarly, we can calculate the model’s <strong>true negative rate</strong> or <strong>specificity</strong>, i.e.&nbsp;the probability that it correctly classifies “no rain” as “no rain”. This is represented by the fraction of no rain observations that are red:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: We're only plotting NON-RAINY days</span></span>
+<span id="cb60-2"><a href=""></a>in_sample_classifications <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href=""></a>  <span class="fu">filter</span>(RainTomorrow <span class="sc">==</span> <span class="st">"No"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">correct =</span> (RainTomorrow <span class="sc">==</span> .pred_class)) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-5"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> Humidity9am, <span class="at">x =</span> Sunshine, <span class="at">color =</span> correct)) <span class="sc">+</span> </span>
+<span id="cb60-6"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb60-7"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">38.84615</span>, <span class="at">slope =</span> <span class="fl">12.03846</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb60-8"><a href=""></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or, the proportion of the <code>No</code> column that falls into the <code>No</code> prediction box:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>mosaic_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="a">
+<li><p>Visually, does it appear that the specificity is low, moderate, or high?</p></li>
+<li><p>Calculate specificity using the confusion matrix.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>in_sample_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No  3119  563
+       Yes  301  625</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Check that your answer to part b matches the <code>spec</code> listed in the confusion matrix <code>summary()</code>:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="fu">summary</span>(in_sample_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary         0.812
+ 2 kap                  binary         0.472
+ 3 sens                 binary         0.526
+ 4 spec                 binary         0.912
+ 5 ppv                  binary         0.675
+ 6 npv                  binary         0.847
+ 7 mcc                  binary         0.478
+ 8 j_index              binary         0.438
+ 9 bal_accuracy         binary         0.719
+10 detection_prevalence binary         0.201
+11 precision            binary         0.675
+12 recall               binary         0.526
+13 f_meas               binary         0.591</code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>Interpret the specificity and comment on whether this is low, moderate, or high.</li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>high</li>
+<li>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a><span class="dv">3119</span> <span class="sc">/</span> (<span class="dv">3119</span> <span class="sc">+</span> <span class="dv">301</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9119883</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>yep</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a><span class="fu">summary</span>(in_sample_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary         0.812
+ 2 kap                  binary         0.472
+ 3 sens                 binary         0.526
+ 4 spec                 binary         0.912
+ 5 ppv                  binary         0.675
+ 6 npv                  binary         0.847
+ 7 mcc                  binary         0.478
+ 8 j_index              binary         0.438
+ 9 bal_accuracy         binary         0.719
+10 detection_prevalence binary         0.201
+11 precision            binary         0.675
+12 recall               binary         0.526
+13 f_meas               binary         0.591</code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>On 91.2% of non-rainy days, we correctly predict no rain.</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="6" type="1">
+<li><strong>In-sample vs CV Accuracy</strong><br>
+The above <strong>in-sample</strong> metrics of overall accuracy (0.812), sensitivity (0.526), and specificity (0.912) helped us understand how well our model classifies rain / no rain for the same data points we used to build the model. Let’s calculate the <strong>cross-validated</strong> metrics to better understand how well our model might classify days in the future:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: This is very similar to the code for CV with least squares!</span></span>
+<span id="cb70-2"><a href=""></a><span class="co"># EXCEPT: We need the "control" argument to again specify our interest in the "Yes" category</span></span>
+<span id="cb70-3"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb70-4"><a href=""></a>logistic_model_cv <span class="ot">&lt;-</span> logistic_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb70-5"><a href=""></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb70-6"><a href=""></a>    RainTomorrow <span class="sc">~</span> Humidity9am <span class="sc">+</span> Sunshine,</span>
+<span id="cb70-7"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sydney, <span class="at">v =</span> <span class="dv">10</span>), </span>
+<span id="cb70-8"><a href=""></a>    <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">event_level =</span> <span class="st">'second'</span>),</span>
+<span id="cb70-9"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy, sensitivity, specificity)</span>
+<span id="cb70-10"><a href=""></a>  )</span>
+<span id="cb70-11"><a href=""></a></span>
+<span id="cb70-12"><a href=""></a><span class="co"># Check out the resulting CV metrics</span></span>
+<span id="cb70-13"><a href=""></a>logistic_model_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb70-14"><a href=""></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  .metric     .estimator  mean     n std_err .config             
+  &lt;chr&gt;       &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy    binary     0.812    10 0.00651 Preprocessor1_Model1
+2 sensitivity binary     0.527    10 0.0149  Preprocessor1_Model1
+3 specificity binary     0.911    10 0.00677 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+<p>How similar are the in-sample and CV evaluation metrics? Based on these, do you think our model is overfit?</p>
+<details>
+<summary>
+Solution:
+</summary>
+They’re similar, thus our model doesn’t seem overfit.
+</details>
+<p><br></p>
+<ol start="7" type="1">
+<li><strong>Specificity vs Sensitivity</strong>
+<ol type="a">
+<li>Our model does better at correctly predicting non-rainy days than rainy days (specificity &gt; sensitivity). <em>Why</em> do you think this is the case?</li>
+<li>In the context of predicting rain, what would <em>you</em> prefer: high sensitivity or high specificity?<br>
+</li>
+<li>Changing up the probability threshold we use in classifying days as rain / no rain gives us some control over sensitivity and specificity. Consider <em>lowering</em> the threshold from 0.5 to 0.05. Thus if there’s even a 5% chance of rain, we’ll predict rain! What’s your intuition:
+<ul>
+<li>sensitivity will decrease and specificity will increase</li>
+<li>sensitivity will increase and specificity will decrease</li>
+<li>both sensitivity and specificity will increase</li>
+</ul></li>
+</ol></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>because non-rainy days are much more common</li>
+<li>will vary. would you rather risk getting wet instead of carrying your umbrella, or carry your umbrella when it doesn’t rain?</li>
+<li>will vary</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="8" type="1">
+<li><strong>Change up the threshold</strong><br>
+Let’s try lowering the threshold to 0.05!</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a><span class="co"># Calculate .pred_class using a 0.05 threshold</span></span>
+<span id="cb72-2"><a href=""></a><span class="co"># (this overwrites the default .pred_class which uses 0.5)</span></span>
+<span id="cb72-3"><a href=""></a>new_classifications <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb72-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sydney) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">.pred_class =</span> <span class="fu">ifelse</span>(.pred_Yes <span class="sc">&gt;=</span> <span class="fl">0.05</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb72-6"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">.pred_class =</span> <span class="fu">as.factor</span>(.pred_class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href=""></a><span class="co"># Obtain a new confusion matrix</span></span>
+<span id="cb73-2"><a href=""></a>new_confusion <span class="ot">&lt;-</span> new_classifications <span class="sc">%&gt;%</span> </span>
+<span id="cb73-3"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> RainTomorrow, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb73-4"><a href=""></a>new_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction   No  Yes
+       No   622   23
+       Yes 2798 1165</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href=""></a><span class="co"># Obtain new summaries    </span></span>
+<span id="cb75-2"><a href=""></a><span class="fu">summary</span>(new_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary        0.388 
+ 2 kap                  binary        0.0922
+ 3 sens                 binary        0.981 
+ 4 spec                 binary        0.182 
+ 5 ppv                  binary        0.294 
+ 6 npv                  binary        0.964 
+ 7 mcc                  binary        0.205 
+ 8 j_index              binary        0.163 
+ 9 bal_accuracy         binary        0.581 
+10 detection_prevalence binary        0.860 
+11 precision            binary        0.294 
+12 recall               binary        0.981 
+13 f_meas               binary        0.452 </code></pre>
+</div>
+</div>
+<ol type="a">
+<li><p>How does the new sensitivity compare to that using the 0.5 threshold (0.526)?</p></li>
+<li><p>How does the new specificity compare to that using the 0.5 threshold (0.912)?</p></li>
+<li><p>Was your intuition right? When we decrease the probability threshold…</p></li>
+</ol>
+<ul>
+<li>sensitivity decreases and specificity increases</li>
+<li>sensitivity increases and specificity decreases</li>
+<li>both sensitivity and specificity increase</li>
+</ul>
+<ol start="4" type="a">
+<li>WE get to pick an appropriate threshold for our analysis. Change up 0.05 in the code below to identify a threshold <em>you</em> like.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href=""></a><span class="co"># Calculate .pred_class using a 0.05 threshold</span></span>
+<span id="cb77-2"><a href=""></a><span class="co"># (this overwrites the defaulty .pred_class which uses 0.5)</span></span>
+<span id="cb77-3"><a href=""></a>new_classifications <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb77-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sydney) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">.pred_class =</span> <span class="fu">ifelse</span>(.pred_Yes <span class="sc">&gt;=</span> <span class="fl">0.05</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb77-6"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">.pred_class =</span> <span class="fu">as.factor</span>(.pred_class))</span>
+<span id="cb77-7"><a href=""></a></span>
+<span id="cb77-8"><a href=""></a><span class="co"># Obtain a new confusion matrix</span></span>
+<span id="cb77-9"><a href=""></a>new_confusion <span class="ot">&lt;-</span> new_classifications <span class="sc">%&gt;%</span> </span>
+<span id="cb77-10"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> RainTomorrow, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb77-11"><a href=""></a>new_confusion</span>
+<span id="cb77-12"><a href=""></a></span>
+<span id="cb77-13"><a href=""></a><span class="co"># Obtain new summaries    </span></span>
+<span id="cb77-14"><a href=""></a><span class="fu">summary</span>(new_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>much higher (0.981)</li>
+<li>much lower (0.182)</li>
+<li>sensitivity increases and specificity decreases</li>
+<li>will vary</li>
+</ol>
+</details>
+<p><br></p>
+<ol start="9" type="1">
+<li><strong>OPTIONAL challenge</strong><br>
+In Example 5, we built the following classification rule based on a 0.5 probability threshold:</li>
+</ol>
+<ul>
+<li>If <code>Humidity9am &gt; 38.84615 + 12.03846 Sunshine</code>, then predict rain.</li>
+<li>Otherwise, predict no rain.</li>
+</ul>
+<p>And we plotted this rule:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href=""></a><span class="fu">ggplot</span>(sydney, <span class="fu">aes</span>(<span class="at">y =</span> Humidity9am, <span class="at">x =</span> Sunshine, <span class="at">color =</span> RainTomorrow)) <span class="sc">+</span> </span>
+<span id="cb78-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb78-3"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">38.84615</span>, <span class="at">slope =</span> <span class="fl">12.03846</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb78-4"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> example, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-47-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Challenge: Modify this rule and the plot using a 0.05 probability threshold.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<ul>
+<li>If <code>Humidity9am &gt; -74.385 + 12.03846 Sunshine</code>, then predict rain.</li>
+<li>Otherwise, predict no rain.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a><span class="fu">ggplot</span>(sydney, <span class="fu">aes</span>(<span class="at">y =</span> Humidity9am, <span class="at">x =</span> Sunshine, <span class="at">color =</span> RainTomorrow)) <span class="sc">+</span> </span>
+<span id="cb79-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb79-3"><a href=""></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="sc">-</span><span class="fl">74.385</span>, <span class="at">slope =</span> <span class="fl">12.03846</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb79-4"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> example, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L11-logistic-regression_files/figure-revealjs/unnamed-chunk-48-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Work</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href=""></a>prob <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb80-2"><a href=""></a>odds <span class="ot">&lt;-</span> prob <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> prob)</span>
+<span id="cb80-3"><a href=""></a><span class="fu">log</span>(odds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.944439</code></pre>
+</div>
+</div>
+<p>Set log(odds) to -2.944:</p>
+<p>log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine = -2.944</p>
+<p>0.0260 Humidity9am = -2.944 + 1.01 + 0.3130 Sunshine = -1.934 + 0.3130 Sunshine</p>
+<p>Humidity9am = (-1.934/0.0260) + (0.3130/0.0260) Sunshine = -74.385 + 12.038 Sunshine</p>
+</details>
+<p><br></p>
+<ol start="10" type="1">
+<li><strong>OPTIONAL math</strong><br>
+For a general logistic regression model</li>
+</ol>
+<p><span class="math display">\[log(\text{odds}) = \beta_0 + \beta_1 x\]</span></p>
+<p><span class="math inline">\(\beta_1\)</span> is the change in log(odds) when we increase <span class="math inline">\(x\)</span> by 1:</p>
+<p><span class="math display">\[\beta_1 = log(\text{odds at x + 1}) - log(\text{odds at x})\]</span></p>
+<p>Prove <span class="math inline">\(e^{\beta_1}\)</span> is the <em>multiplicative</em> change in odds when we increase <span class="math inline">\(x\)</span> by 1.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<span class="math display">\[\begin{split}
+    \beta_1 &amp; = log(\text{odds at x + 1}) - log(\text{odds at x}) \\
+    &amp; = log\left(\frac{\text{odds at x + 1}}{\text{odds at x}} \right) \\
+    e^{\beta_1} &amp; = e^{log\left(\frac{\text{odds at x + 1}}{\text{odds at x}} \right)}\\
+    &amp; = \frac{\text{odds at x + 1}}{\text{odds at x}} \\
+    \end{split}\]</span>
+</details>
+<p><br></p>
+</section></section>
+<section id="deeper-learning-optional" class="title-slide slide level1 unnumbered center">
+<h1>Deeper learning (OPTIONAL)</h1>
+<p>Recall that in least squares regression, we use <em>residuals</em> to both estimate model coefficients (those that minimize the residual sum of squares) and measure model strength (<span class="math inline">\(R^2\)</span> is calculated from the variance of the residuals). BUT the concept of a “residual” is different in logistic regression. Mainly, we <em>observe</em> binary y outcomes but our predictions are on the probability scale. In this case, logistic regression requires different strategies for estimating and evaluating models.</p>
+<ul>
+<li><p><strong>Calculating coefficient estimates</strong><br>
+A common strategy is to use iterative processes to identify coefficient estimates <span class="math inline">\(\hat{\beta}\)</span> that <em>maximize the likelihood function</em> <span class="math display">\[L(\hat{\beta}) = \prod_{i=1}^{n} p_i^{y_i}(1-p_i)^{1-y_i} \;\; \text{ where } \;\; log\left(\frac{p_i}{1-p_i}\right) = \hat{\beta}_0 + \hat{\beta}_1 x\]</span></p></li>
+<li><p><strong>Measuring model quality</strong><br>
+<em>Akaike’s Information Criterion (AIC)</em> is a common metric with which to <em>compare models</em>. The smaller the AIC the better! Specifically: <span class="math display">\[\text{AIC} = \text{-(likelihood of our model)} + 2(p + 1)\]</span> where <span class="math inline">\(p\)</span> is the number of non-intercept coefficients.</p></li>
+</ul>
+<!-- ASSUMPTIONS -->
+<!-- - independence -->
+<!-- - errors are NOT homoskedastic -->
+<!--     more variability in regions with p ≈ 0.5 than p ≈ 0 or 1 -->
+<!-- INFERENCE: clt for regression coef (complicated s.e. fmla) -->
+<!-- MODEL QUALITY: deviance, aic (we'll use cross val) -->
+</section>
+
+<section id="notes-r-code" class="title-slide slide level1 unnumbered center">
+<h1>Notes: R code</h1>
+<p>Suppose we want to build a model of categorical response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb82-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb82-3"><a href=""></a></span>
+<span id="cb82-4"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
+<span id="cb82-5"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Organize the y categories</strong></p>
+<p>Unless told otherwise, our R functions will model the log(odds) of whatever <code>y</code> category is <em>last</em> alphabetically. To be safe, we should always set the reference level of <code>y</code> to the outcome we are NOT interested in (eg: “No” if modeling <code>RainTomorrow</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">relevel</span>(y, <span class="at">ref =</span> <span class="st">"CATEGORY NOT INTERESTED IN"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Build the model</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href=""></a><span class="co"># STEP 1: logistic regression model specification</span></span>
+<span id="cb84-2"><a href=""></a>logistic_spec <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb84-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
+<span id="cb85-2"><a href=""></a><span class="co"># There are no REQUIRED pre-processing steps, but you CAN add some</span></span>
+<span id="cb85-3"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href=""></a><span class="co"># STEP 3: workflow specification (recipe + model)</span></span>
+<span id="cb86-2"><a href=""></a>logistic_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb86-3"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span></span>
+<span id="cb86-4"><a href=""></a>  <span class="fu">add_model</span>(logistic_spec) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href=""></a><span class="co"># STEP 4: Estimate the model using the data</span></span>
+<span id="cb87-2"><a href=""></a>logistic_model <span class="ot">&lt;-</span> logistic_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb87-3"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Examining model coefficients</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href=""></a><span class="co"># Get a summary table</span></span>
+<span id="cb88-2"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb88-3"><a href=""></a>  <span class="fu">tidy</span>()</span>
+<span id="cb88-4"><a href=""></a></span>
+<span id="cb88-5"><a href=""></a><span class="co"># Transform coefficients and confidence intervals to the odds scale</span></span>
+<span id="cb88-6"><a href=""></a><span class="co"># These are odds ratios (OR)</span></span>
+<span id="cb88-7"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb88-8"><a href=""></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb88-9"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb88-10"><a href=""></a>    <span class="at">OR =</span> <span class="fu">exp</span>(estimate),</span>
+<span id="cb88-11"><a href=""></a>    <span class="at">OR.conf.low =</span> <span class="fu">exp</span>(estimate <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>std.error),</span>
+<span id="cb88-12"><a href=""></a>    <span class="at">OR.conf.high =</span> <span class="fu">exp</span>(estimate <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>std.error)</span>
+<span id="cb88-13"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Calculate predictions and classifications</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href=""></a><span class="co"># augment gives both probability calculations and classifications</span></span>
+<span id="cb89-2"><a href=""></a><span class="co"># Plug in a data.frame object with observations on each predictor in the model</span></span>
+<span id="cb89-3"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb89-4"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> ___)</span>
+<span id="cb89-5"><a href=""></a></span>
+<span id="cb89-6"><a href=""></a>  </span>
+<span id="cb89-7"><a href=""></a><span class="co"># We can also use predict!</span></span>
+<span id="cb89-8"><a href=""></a><span class="co"># Make soft (probability) predictions</span></span>
+<span id="cb89-9"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb89-10"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___, <span class="at">type =</span> <span class="st">"prob"</span>)</span>
+<span id="cb89-11"><a href=""></a></span>
+<span id="cb89-12"><a href=""></a><span class="co"># Make hard (class) predictions (using a default 0.5 probability threshold)</span></span>
+<span id="cb89-13"><a href=""></a>logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb89-14"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___, <span class="at">type =</span> <span class="st">"class"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>In-sample evaluation metrics</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href=""></a><span class="co"># Calculate in-sample classifications</span></span>
+<span id="cb90-2"><a href=""></a>in_sample_classifications <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb90-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sample_data)</span>
+<span id="cb90-4"><a href=""></a></span>
+<span id="cb90-5"><a href=""></a><span class="co"># Confusion matrix</span></span>
+<span id="cb90-6"><a href=""></a>in_sample_confusion <span class="ot">&lt;-</span> in_sample_classifications <span class="sc">%&gt;%</span> </span>
+<span id="cb90-7"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> y, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb90-8"><a href=""></a></span>
+<span id="cb90-9"><a href=""></a><span class="co"># Summaries</span></span>
+<span id="cb90-10"><a href=""></a><span class="co"># event_level = "second" indicates that the second category</span></span>
+<span id="cb90-11"><a href=""></a><span class="co"># is the category of interest</span></span>
+<span id="cb90-12"><a href=""></a><span class="fu">summary</span>(in_sample_confusion, <span class="at">event_level =</span> <span class="st">"second"</span>)</span>
+<span id="cb90-13"><a href=""></a></span>
+<span id="cb90-14"><a href=""></a><span class="co"># Mosaic plots</span></span>
+<span id="cb90-15"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
+<span id="cb90-16"><a href=""></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb90-17"><a href=""></a></span>
+<span id="cb90-18"><a href=""></a><span class="co"># Mosaic plot with color</span></span>
+<span id="cb90-19"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
+<span id="cb90-20"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb90-21"><a href=""></a>  <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">rep</span>(<span class="fu">colnames</span>(in_sample_confusion<span class="sc">$</span>table), <span class="fu">ncol</span>(in_sample_confusion<span class="sc">$</span>table))) <span class="sc">+</span> </span>
+<span id="cb90-22"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Cross-validated evaluation metrics</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href=""></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb91-2"><a href=""></a>logistic_model_cv <span class="ot">&lt;-</span> logistic_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb91-3"><a href=""></a>  <span class="fu">fit_resamples</span>(</span>
+<span id="cb91-4"><a href=""></a>    y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
+<span id="cb91-5"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___), </span>
+<span id="cb91-6"><a href=""></a>    <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">event_level =</span> <span class="st">'second'</span>),</span>
+<span id="cb91-7"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy, sensitivity, specificity)</span>
+<span id="cb91-8"><a href=""></a>  )</span>
+<span id="cb91-9"><a href=""></a></span>
+<span id="cb91-10"><a href=""></a><span class="co"># Check out the resulting CV metrics</span></span>
+<span id="cb91-11"><a href=""></a>logistic_model_cv <span class="sc">%&gt;%</span> </span>
+<span id="cb91-12"><a href=""></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-auto-generated-content">
+<p><img src="images/mac.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="L11-logistic-regression_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="L11-logistic-regression_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'multiplex': {"secret":"17295193468735913738","id":"dc7a92e56515d806","url":"https://reveal-multiplex.glitch.me/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

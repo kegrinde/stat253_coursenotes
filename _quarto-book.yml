@@ -43,6 +43,11 @@ book:
         - L08-knn-bias-variance.qmd
         - L09-loess-gams.qmd
         - L10-review.qmd
+    - part: "Classification: Modeling Building (Unit 4)"
+      chapters: 
+        - U04-motivation.qmd
+        - L11-logistic-regression.qmd
+        - L12-evaluating-classification-models.qmd
   appendices:
     - r_rstudio.qmd
     - r_resources.qmd

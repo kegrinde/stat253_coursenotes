@@ -1,21 +1,37 @@
-```{r 11_setup, include=FALSE}
-knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+---
+title: "Logistic Regression: Model Building & Evaluation (Notes)"
+subtitle: "Stat 253"
+author: "Your Name"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+---
+
+
+```{r include = FALSE}
+# OPTIONAL: Set a more color blind friendly palette 
+palette("Okabe-Ito")
+scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
+scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
+
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
 ```
 
-# Logistic Regression: Model Building & Evaluation 
+
+# Notes: Logistic Regression
 
 
-## Learning Goals {-}
 
-- Use a logistic regression model to make hard (class) and soft (probability) predictions
-- Interpret non-intercept coefficients from logistic regression models in the data context
-
-
-## Notes: Logistic Regression {-}
-
-<center>
-<img src="images/MLdiagram3.jpg"/>
-</center>
 
 **CONTEXT**
 
@@ -32,6 +48,13 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 **GOAL**
 
 Use the *parametric* logistic regression model to model and classify $y$.
+
+
+
+
+
+
+
 
 
 
@@ -68,9 +91,19 @@ e^{\beta_1} & = \text{ multiplicative change in ODDS per 1 unit increase in } x 
 
 
 
+
+
+\
+\
+\
+\
+\
+\
+
+
 **EXAMPLE 1: Check out the data**
 
-```{r eval=TRUE}
+```{r}
 # Load packages
 library(tidyverse)
 library(tidymodels)
@@ -96,31 +129,26 @@ Let's model `RainTomorrow`, whether or not it rains tomorrow in Sydney, by *two*
 
 Check out & comment on the relationship of rain with these 2 predictors:
 
-```{r eval=TRUE}
+```{r}
 # Store so we can modify later
 rain_plot <- ggplot(sydney, aes(y = Humidity9am, x = Sunshine, color = RainTomorrow)) + 
   geom_point(alpha = 0.5)
 
-```
-
-
-<details>
-<summary>Solution:</summary>
-```{r eval=TRUE}
 rain_plot
 ```
 
-Rainy days tend to be preceded by high humidity and low sunshine.
-</details>
-<br>
 
 
 
 
-<!-- convince myself -->
-<!-- suppose odds ratio is 0.75 -->
-<!-- thus new odds = 0.75*old odds. -->
-<!-- equivalently: old odds - 0.25*old odds = new odds -->
+\
+\
+\
+\
+\
+\
+
+
 
 **EXAMPLE 2: Interpreting coefficients**
 
@@ -132,7 +160,7 @@ The logistic regression model is:
 
 Let's interpret the Sunshine coefficient of -0.313:
 
-```{r eval=TRUE}
+```{r}
 # Not transformed
 -0.313
 
@@ -156,12 +184,8 @@ b. *When controlling for humidity*, and for every extra hour of sunshine, the OD
 
 
 
-<details>
-<summary>Solution:</summary>
-a. decrease by 0.313
-b. are roughly 73% as big (i.e. decrease by 27%)
-</details>
-<br>
+
+
 
 
 
@@ -174,7 +198,12 @@ $$e^{\beta_1} = \frac{\text{odds of event at x + 1}}{\text{odds of event at x}}$
 
 
 
-<br>
+
+
+
+
+
+
 
 
 
@@ -187,7 +216,7 @@ Suppose there's 99% humidity at 9am today and only 2 hours of bright sunshine.
 
 a. What's the probability of rain?
 
-```{r eval=TRUE}
+```{r}
 # log(odds of rain)
 log_odds <- -1.01 + 0.0260 * 99 - 0.313 * 2
 log_odds
@@ -196,6 +225,8 @@ log_odds
 
 
 # probability of rain
+
+
 ```
 
 
@@ -204,26 +235,16 @@ b. What's your binary *classification*: do you predict that it will rain or not 
 
 
 
-<details>
-<summary>Solution:</summary>
-a. .
-
-```{r eval=TRUE}
-# log(odds of rain)
--1.01 + 0.0260 * 99 - 0.313 * 2
-
-# odds of rain (MODIFY THIS)
-exp(-1.01 + 0.0260 * 99 - 0.313 * 2)
-
-# probability of rain
-2.554867 / (1 + 2.554867)
-```
-
-b. rain
-</details>
-<br>
 
 
+
+
+\
+\
+\
+\
+\
+\
 
 
 
@@ -236,22 +257,22 @@ We used a simple classification rule above with a probability threshold of c = 0
 - Otherwise, predict no rain.
 
 Let's translate this into a classification rule that **partitions** the data points into rain / no rain predictions based on the predictor values.
-
 What do you think this classification rule / partition will look like?
 
-```{r eval=TRUE}
+```{r}
 rain_plot
 ```
 
 
 
-<details>
-<summary>Solution:</summary>
-will vary
-</details>
-<br>
 
 
+\
+\
+\
+\
+\
+\
 
 
 
@@ -267,18 +288,8 @@ will vary
 Identify the *pairs* of humidity and sunshine values for which the probability of rain is 0.5, hence the log(odds of rain) is 0.
 
 
-<details>
-<summary>Solution:</summary>
-- Set the log odds to 0:        
-    log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine = 0
-    
-- Solve for Humidity9am:        
-    - Move constant and Sunshine term to other side.        
-        0.0260 Humidity9am = 1.01 + 0.3130 Sunshine
-    - Divide both sides by 0.026:       
-        Humidity9am = (1.01 / 0.026) + (0.3130 / 0.026) Sunshine = 38.846 + 12.038 Sunshine
-</details>
-<br>
+
+
 
 
 
@@ -288,7 +299,7 @@ Identify the *pairs* of humidity and sunshine values for which the probability o
 
 Let's visualize the **partition**, hence **classification regions** defined by our classification rule:
 
-```{r eval=TRUE}
+```{r}
 # Example data points
 example <- data.frame(Humidity9am = c(90, 90, 60), Sunshine = c(2, 5, 10), RainTomorrow = c(NA, NA, NA))
 
@@ -305,39 +316,45 @@ Use our classification rule to predict rain / no rain for the following days:
 - Day 3: humidity = 60, sunshine = 10
 
 
-<details>
-<summary>Solution:</summary>
-- Day 1: rain
-- Day 2: no rain
-- Day 3: no rain
-</details>
-<br>
+
+
+
+
+
+
+
+
+
 
 
 
 **EXAMPLE 7: General properties**
 
 a. Does the logistic regression algorithm have a tuning parameter?
+
+
 b. Estimating the logistic regression model requires the same pre-processing steps as least squares regression.       
-    - Is it necessary to standardize quantitative predictors? If so, does the R function do this for us?
-    - Is it necessary to create dummy variables for our categorical predictors? If so, does the R function do this for us?
+
+  - Is it necessary to standardize quantitative predictors? If so, does the R function do this for us?
 
 
-
-<details>
-<summary>Solution:</summary>
-a. no
-b. .    
-    - no
-    - yes and yes
-</details>
-<br>
+  - Is it necessary to create dummy variables for our categorical predictors? If so, does the R function do this for us?
 
 
 
 
 
-## Exercises  {-}   
+
+
+
+
+
+
+
+
+
+
+# Exercises    
 
 **Goals**    
 
@@ -345,9 +362,9 @@ b. .
 - *Evaluate* the accuracy of our logistic regression classifications.
 
 
-<br>
 
-### Part 1: Build the model  {-}
+
+## Part 1: Build the model
 
 Let's continue with our analysis of `RainTomorrow` vs `Humidity9am` and `Sunshine`. You're given all code here. Be sure to scan and reflect upon what's happening.
 
@@ -359,12 +376,10 @@ Let's continue with our analysis of `RainTomorrow` vs `Humidity9am` and `Sunshin
 **STEP 0: Organize the y categories**
 
 We want to model the log(odds of *rain*), thus the `Yes` category of `RainTomorrow`.
-
 But R can't read minds.
-
 We have to explicitly tell it to treat the `No` category as the *reference level* (not the category we want to model).
 
-```{r eval=TRUE}
+```{r}
 sydney <- sydney %>%
   mutate(RainTomorrow = relevel(RainTomorrow, ref = "No"))
 ```
@@ -374,9 +389,9 @@ sydney <- sydney %>%
 
 **STEP 1: logistic regression model specification**
 
-What's new here?
+What's new here?!
 
-```{r eval=TRUE}
+```{r}
 logistic_spec <- logistic_reg() %>%
   set_mode("classification") %>% 
   set_engine("glm")
@@ -390,7 +405,7 @@ logistic_spec <- logistic_reg() %>%
 
 There are no *required* pre-processing steps, but you could add some. Nothing new here!
 
-```{r eval=TRUE}
+```{r}
 variable_recipe <- recipe(RainTomorrow ~ Humidity9am + Sunshine, data = sydney)
 ```
 
@@ -402,7 +417,7 @@ variable_recipe <- recipe(RainTomorrow ~ Humidity9am + Sunshine, data = sydney)
 
 Nothing new here!
 
-```{r eval=TRUE}
+```{r}
 logistic_workflow <- workflow() %>% 
   add_recipe(variable_recipe) %>%
   add_model(logistic_spec) 
@@ -416,7 +431,7 @@ logistic_workflow <- workflow() %>%
 
 Since the logistic regression model has no tuning parameter to tune, we can just `fit()` the model using our sample data -- no need for `tune_grid()`!
 
-```{r eval=TRUE}
+```{r}
 logistic_model <- logistic_workflow %>% 
   fit(data = sydney)
 ```
@@ -428,7 +443,7 @@ logistic_model <- logistic_workflow %>%
 
 Note that these coefficients are the same that we used in the above examples.
 
-```{r eval=TRUE}
+```{r}
 logistic_model %>% 
   tidy()
 
@@ -446,289 +461,269 @@ logistic_model %>%
 
 
 
+\
+\
+\
+\
+\
+\
 
 
 
-### Part 2: Apply & evaluate the model {-}
+
+## Part 2: Apply & evaluate the model
 
 
-
-
-1. **Predictions & classifications**    
-    Consider the weather on 4 days in our data set:    
+### EXERCISE 1: Predictions & classifications*
     
-```{r eval=TRUE}
+Consider the weather on 4 days in our data set:    
+
+```{r}
 examples <- sydney[7:10,]
 examples
 ```
-    
+
 Use the `logistic_model` to calculate the probability of rain *and* the rain prediction / classification for these 4 days.
-    
-```{r eval=TRUE}
+
+```{r}
 logistic_model %>% 
   augment(new_data = examples)
 ```
 
 a. Convince yourself that you understand what's being reported in the `.pred_class`, `.pred_No`, and `.pred_Yes` columns, as well as the correspondence between these columns (how they're related to each other).
+
+
+
+
 b. How many of the 4 classifications were accurate?
     
 
-<details>
-<summary>Solution:</summary>
-a. `.pred_class` (classification based on probability 0.5 threshold), `.pred_No` (probability of no rain), and `.pred_Yes` (probability of rain)
-b. 3
-</details>
-<br>
 
 
 
 
 
+\
+\
 
-**Confusion matrix**    
-    Let's calculate the `in_sample_classifications` for *all* days in our `sydney` sample ("in-sample" because we're evaluating our model using the same data we used to build it):
-    
-```{r eval=TRUE}
+
+
+
+### EXERCISE 2: Confusion matrix
+
+Let's calculate the `in_sample_classifications` for *all* days in our `sydney` sample ("in-sample" because we're evaluating our model using the same data we used to build it):
+
+```{r}
 in_sample_classifications <- logistic_model %>% 
   augment(new_data = sydney)
-    
+
 # Check it out
 head(in_sample_classifications)
 ```
-    
+
 A **confusion matrix** summarizes the accuracy of the `.pred_class` model classifications. You'll answer follow-up questions in the next exercises.        
-    
-```{r eval=TRUE}
+
+```{r}
 in_sample_confusion <- in_sample_classifications %>% 
   conf_mat(truth = RainTomorrow, estimate = .pred_class)
 ```
-    
-```{r eval=TRUE}
+
+```{r}
 # Check it out in table form
 in_sample_confusion
 ```
-    
-```{r eval=TRUE}
+
+```{r}
 # Check it out in plot form
 in_sample_confusion %>% 
   autoplot()
 ```
-    
-```{r eval=TRUE}
+
+```{r}
 # Check it out in a color plot (which we'll store and use later)
 mosaic_plot <- in_sample_confusion %>% 
   autoplot() +
   aes(fill = rep(colnames(in_sample_confusion$table), ncol(in_sample_confusion$table))) + 
   theme(legend.position = "none")
-    
+
 mosaic_plot
 ```
 
 
 
 
+\
+\
 
 
-2. **Overall accuracy**    
-```{r eval=TRUE}
+
+### EXERCISE 3: Overall accuracy
+
+```{r}
 in_sample_confusion
 ```
 
 a. What do these numbers add up to, both numerically and contextually?        
 
 ```{r}
-        
+
 ```
 
-b. Use this matrix to calculate the *overall* accuracy of the model classifications. That is, what proportion of the classifications were correct?   
+
+
+b. Use this matrix to calculate the *overall* accuracy of the model classifications. That is, what proportion of the classifications were correct?       
 
 ```{r}
-        
+
 ```
 
-c. Check that your answer to part b matches the `accuracy` listed in the confusion matrix `summary()`:  
 
-```{r eval=TRUE}
+
+
+c. Check that your answer to part b matches the `accuracy` listed in the confusion matrix `summary()`:       
+
+```{r}
 # event_level indicates that the second RainTomorrow
 # category (Yes) is our category of interest
 summary(in_sample_confusion, event_level = "second")
 ```
         
-<details>
-<summary>Solution:</summary>
-a. sample size (not including data points with NA on variables used in our model)       
 
-```{r eval=TRUE}
-3119 + 563 + 301 + 625
-```
-
-b. 
-
-```{r eval=TRUE}
-(3119 + 625) / (3119 + 563 + 301 + 625)
-```
-
-c. yep   
-</details>
-<br>
+\
+\
 
 
 
-3. **No information rate**    
-    Are our model classifications any better than just randomly guessing rain / no rain?! What if we didn't even build a model, and just always predicted the most common outcome of `RainTomorrow`: that it *wouldn't* rain?!       
-    
-```{r eval=TRUE}
+### EXERCISE 4: No information rate*
+
+Are our model classifications any better than just randomly guessing rain / no rain?! What if we didn't even build a model, and just always predicted the most common outcome of `RainTomorrow`: that it *wouldn't* rain?!       
+
+```{r}
 sydney %>% 
   count(RainTomorrow)
 ```
-    
+
 a. Ignoring the `NA` outcomes, prove that if we just always predicted no rain, we'd be correct 74.2% of the time. This is called the **no information rate**.        
 
 ```{r}
-        
+
 ```
-    
+
 b. Is the overall accuracy of our logistic regression model (81.2%) meaningfully better than this random guessing approach?
     
     
     
 
-<details>
-<summary>Solution:</summary>
- a. We're only right when it doesn't rain.
- 
-```{r eval=TRUE}
- 3443 / (3443 + 1196)
-```
+\
+\
+
+
+
+### EXERCISE 5: Sensitivity
     
-b. this is subjective -- depends on context / how we'll use the predictions / consequences for being wrong.
-    
-</details>
-<br>
+Beyond *overall* accuracy, we care about the accuracy within each class (rain and no rain). Our model's **true positive rate** or **sensitivity** is the probability that it correctly classifies rain as rain. This is represented by the fraction of rain observations that are red:
 
-
-
-4. **Sensitivity**    
-Beyond *overall* accuracy, we care about the accuracy within each class (rain and no rain). Our model's **true positive rate** or **sensitivity** is the probability that it correctly classifies rain as rain. This is represented by the fraction of rain observations that are red:        
-
-```{r eval=TRUE}
+```{r}
 # NOTE: We're only plotting RAINY days
 in_sample_classifications %>% 
   filter(RainTomorrow == "Yes") %>% 
   mutate(correct = (RainTomorrow == .pred_class)) %>% 
   ggplot(aes(y = Humidity9am, x = Sunshine, color = correct)) + 
-  geom_point(alpha = 0.5) + 
-  geom_abline(intercept = 38.84615, slope = 12.03846, size = 2) + 
-  scale_color_manual(values = c("black", "red"))
+    geom_point(alpha = 0.5) + 
+    geom_abline(intercept = 38.84615, slope = 12.03846, size = 2) + 
+    scale_color_manual(values = c("black", "red"))
 ```
-    
+
 Or, the proportion of the `Yes` column that falls into the `Yes` prediction box:
 
-```{r eval=TRUE}
+```{r}
 mosaic_plot
 ```
-    
-    
+
+
 a. Visually, does it appear that the sensitivity is low, moderate, or high?
-    
+
+
+
 b. Calculate the sensitivity using the confusion matrix.        
 
-```{r eval=TRUE}
+```{r}
 in_sample_confusion
-```   
+```       
+
 
 c. Check that your answer to part b matches the `sens` listed in the confusion matrix `summary()`:       
-eval=TRUE
-```{r eval=TRUE}
+
+```{r}
 summary(in_sample_confusion, event_level = "second")
 ```
 
+
 d. Interpret the sensitivity and comment on whether this is low, moderate, or high.
-    
-    
-    
-    
-    
-<details>
-<summary>Solution:</summary>
-a. moderate (or low)
-b. .
 
-```{r eval=TRUE}
-625 / (625 + 563)
-```       
-
-c. yep       
-d. We correctly anticipate rain 52.6% of the time. Or, on 52.6% of rainy days, we correctly predict rain.
-</details>
-<br>
+    
+    
+    
+    
+\
+\
 
 
 
-5. **Specificity**    
-    Similarly, we can calculate the model's **true negative rate** or **specificity**, i.e. the probability that it correctly classifies "no rain" as "no rain". This is represented by the fraction of no rain observations that are red: 
-    
-```{r eval=TRUE}
+### EXERCISE 6: Specificity
+
+Similarly, we can calculate the model's **true negative rate** or **specificity**, i.e. the probability that it correctly classifies "no rain" as "no rain". This is represented by the fraction of no rain observations that are red:        
+
+```{r}
 # NOTE: We're only plotting NON-RAINY days
 in_sample_classifications %>% 
   filter(RainTomorrow == "No") %>% 
   mutate(correct = (RainTomorrow == .pred_class)) %>% 
   ggplot(aes(y = Humidity9am, x = Sunshine, color = correct)) + 
-  geom_point(alpha = 0.5) + 
-  geom_abline(intercept = 38.84615, slope = 12.03846, size = 2) + 
-  scale_color_manual(values = c("black", "red"))
+    geom_point(alpha = 0.5) + 
+    geom_abline(intercept = 38.84615, slope = 12.03846, size = 2) + 
+    scale_color_manual(values = c("black", "red"))
 ```
-    
+
 Or, the proportion of the `No` column that falls into the `No` prediction box:
-    
-```{r eval=TRUE}
+
+```{r}
 mosaic_plot
 ```
-    
-a. Visually, does it appear that the specificity is low, moderate, or high?
-    
-b. Calculate specificity using the confusion matrix.
 
-```{r eval=TRUE}
+a. Visually, does it appear that the specificity is low, moderate, or high?
+
+
+
+b. Calculate specificity using the confusion matrix.        
+
+```{r}
 in_sample_confusion
 ```       
 
+
 c. Check that your answer to part b matches the `spec` listed in the confusion matrix `summary()`:       
 
-```{r eval=TRUE}
+```{r}
 summary(in_sample_confusion, event_level = "second")
 ```
+
 
 d. Interpret the specificity and comment on whether this is low, moderate, or high.
-    
+
  
     
-<details>
-<summary>Solution:</summary>
-a. high
-b. .        
-```{r eval=TRUE}
-3119 / (3119 + 301)
-```       
+\
+\
 
-c. yep       
 
-```{r eval=TRUE}
-summary(in_sample_confusion, event_level = "second")
-```
 
-d. On 91.2% of non-rainy days, we correctly predict no rain.
+
+### EXERCISE 7: In-sample vs CV Accuracy
     
-</details>
-<br>
-
-
-
-
-6. **In-sample vs CV Accuracy**    
 The above **in-sample** metrics of overall accuracy (0.812), sensitivity (0.526), and specificity (0.912) helped us understand how well our model classifies rain / no rain for the same data points we used to build the model. Let's calculate the **cross-validated** metrics to better understand how well our model might classify days in the future:
 
-```{r eval=TRUE}
+```{r}
 # NOTE: This is very similar to the code for CV with least squares!
 # EXCEPT: We need the "control" argument to again specify our interest in the "Yes" category
 set.seed(253)
@@ -738,56 +733,58 @@ logistic_model_cv <- logistic_spec %>%
     resamples = vfold_cv(sydney, v = 10), 
     control = control_resamples(save_pred = TRUE, event_level = 'second'),
     metrics = metric_set(accuracy, sensitivity, specificity)
-  )
+)
 
 # Check out the resulting CV metrics
 logistic_model_cv %>% 
   collect_metrics()
 ```
-    
+
 How similar are the in-sample and CV evaluation metrics? Based on these, do you think our model is overfit?
     
     
 
 
 
-<details>
-<summary>Solution:</summary>
-They're similar, thus our model doesn't seem overfit.
-</details>
-<br>
+\
+\
 
 
 
 
-7. **Specificity vs Sensitivity**    
-    a. Our model does better at correctly predicting non-rainy days than rainy days (specificity > sensitivity). *Why* do you think this is the case?
-    b. In the context of predicting rain, what would *you* prefer: high sensitivity or high specificity?       
-    c. Changing up the probability threshold we use in classifying days as rain / no rain gives us some control over sensitivity and specificity. Consider *lowering* the threshold from 0.5 to 0.05. Thus if there's even a 5% chance of rain, we'll predict rain! What's your intuition:        
-        - sensitivity will decrease and specificity will increase
-        - sensitivity will increase and specificity will decrease
-        - both sensitivity and specificity will increase
-    
+### EXERCISE 8: Specificity vs Sensitivity
 
-
-
-<details>
-<summary>Solution:</summary>
-
-a. because non-rainy days are much more common
-b. will vary. would you rather risk getting wet instead of carrying your umbrella, or carry your umbrella when it doesn't rain?
-c. will vary
-    
-</details>
-<br>
+a. Our model does better at correctly predicting non-rainy days than rainy days (specificity > sensitivity). *Why* do you think this is the case?
 
 
 
 
-8. **Change up the threshold**        
+
+b. In the context of predicting rain, what would *you* prefer: high sensitivity or high specificity?       
+
+
+
+
+c. Changing up the probability threshold we use in classifying days as rain / no rain gives us some control over sensitivity and specificity. Consider *lowering* the threshold from 0.5 to 0.05. Thus if there's even a 5% chance of rain, we'll predict rain! What's your intuition:        
+    - sensitivity will decrease and specificity will increase
+    - sensitivity will increase and specificity will decrease
+    - both sensitivity and specificity will increase
+
+
+
+
+
+\
+\
+
+
+
+
+### EXERCISE 9: Change up the threshold
+
 Let's try lowering the threshold to 0.05!
 
-```{r eval=TRUE}
+```{r}
 # Calculate .pred_class using a 0.05 threshold
 # (this overwrites the default .pred_class which uses 0.5)
 new_classifications <- logistic_model %>% 
@@ -796,29 +793,35 @@ new_classifications <- logistic_model %>%
   mutate(.pred_class = as.factor(.pred_class))
 ```
 
-```{r eval=TRUE}
+```{r}
 # Obtain a new confusion matrix
 new_confusion <- new_classifications %>% 
   conf_mat(truth = RainTomorrow, estimate = .pred_class)
 new_confusion
 ```
 
-```{r eval=TRUE}
+```{r}
 # Obtain new summaries    
 summary(new_confusion, event_level = "second")
 ```
-        
+    
 a. How does the new sensitivity compare to that using the 0.5 threshold (0.526)?
-    
-b. How does the new specificity compare to that using the 0.5 threshold (0.912)?
-    
-c. Was your intuition right? When we decrease the probability threshold...  
 
-  - sensitivity decreases and specificity increases
-  - sensitivity increases and specificity decreases
-  - both sensitivity and specificity increase
-        
-d. WE get to pick an appropriate threshold for our analysis. Change up 0.05 in the code below to identify a threshold *you* like.  
+
+
+
+b. How does the new specificity compare to that using the 0.5 threshold (0.912)?
+
+
+
+
+c. Was your intution right? When we decrease the probability threshold...        
+    - sensitivity decreases and specificity increases
+    - sensitivity increases and specificity decreases
+    - both sensitivity and specificity increase
+
+    
+d. WE get to pick an appropriate threshold for our analysis. Change up 0.05 in the code below to identify a threshold *you* like.        
 
 ```{r}
 # Calculate .pred_class using a 0.05 threshold
@@ -837,101 +840,76 @@ new_confusion
 summary(new_confusion, event_level = "second")
 ```
 
-<details>
-<summary>Solution:</summary>
-a. much higher (0.981)
-b. much lower (0.182)
-c. sensitivity increases and specificity decreases
-d. will vary
-</details>
-<br>
 
 
 
-9. **OPTIONAL challenge**         
-    In Example 5, we built the following classification rule based on a 0.5 probability threshold:
-    
+
+
+\
+\
+
+
+
+### EXERCISE 10: OPTIONAL challenge
+
+In Example 5, we built the following classification rule based on a 0.5 probability threshold:
+
 - If `Humidity9am > 38.84615 + 12.03846 Sunshine`, then predict rain.
 - Otherwise, predict no rain.
-    
+
 And we plotted this rule:
-    
-```{r eval=TRUE}
+
+```{r}
 ggplot(sydney, aes(y = Humidity9am, x = Sunshine, color = RainTomorrow)) + 
   geom_point(alpha = 0.5) + 
   geom_abline(intercept = 38.84615, slope = 12.03846, size = 2) + 
   geom_point(data = example, color = "black", size = 3)
 ```
-    
-  Challenge: Modify this rule and the plot using a 0.05 probability threshold.
-    
 
-
-<details>
-<summary>Solution:</summary>
-
-- If `Humidity9am > -74.385 + 12.03846 Sunshine`, then predict rain.
-- Otherwise, predict no rain.
-    
-```{r eval=TRUE}
-ggplot(sydney, aes(y = Humidity9am, x = Sunshine, color = RainTomorrow)) + 
-  geom_point(alpha = 0.5) + 
-  geom_abline(intercept = -74.385, slope = 12.03846, size = 2) + 
-  geom_point(data = example, color = "black", size = 3)
-```
-    
-**Work**
-    
-```{r eval=TRUE}
-prob <- 0.05
-odds <- prob / (1 - prob)
-log(odds)
-```
-    
-Set log(odds) to -2.944:
-    
-log(odds of rain) = -1.01 + 0.0260 Humidity9am - 0.313 Sunshine = -2.944
-    
-0.0260 Humidity9am = -2.944 + 1.01 + 0.3130 Sunshine = -1.934 + 0.3130 Sunshine
-    
-Humidity9am = (-1.934/0.0260) + (0.3130/0.0260) Sunshine = -74.385 + 12.038 Sunshine
-    
-
-</details>
-<br>
+Challenge: Modify this rule and the plot using a 0.05 probability threshold.
 
 
 
-10. **OPTIONAL math**    
-    For a general logistic regression model
-    
+
+
+
+
+\
+\
+
+
+
+### EXERCISE 11: OPTIONAL math
+
+For a general logistic regression model
+
 $$log(\text{odds}) = \beta_0 + \beta_1 x$$
-    
+
 $\beta_1$ is the change in log(odds) when we increase $x$ by 1:
-    
+
 $$\beta_1 = log(\text{odds at x + 1}) - log(\text{odds at x})$$
-    
+
 Prove $e^{\beta_1}$ is the *multiplicative* change in odds when we increase $x$ by 1.    
-    
-    
 
 
-<details>
-<summary>Solution:</summary>
-$$\begin{split}
-    \beta_1 & = log(\text{odds at x + 1}) - log(\text{odds at x}) \\
-    & = log\left(\frac{\text{odds at x + 1}}{\text{odds at x}} \right) \\
-    e^{\beta_1} & = e^{log\left(\frac{\text{odds at x + 1}}{\text{odds at x}} \right)}\\
-    & = \frac{\text{odds at x + 1}}{\text{odds at x}} \\
-    \end{split}$$
-</details>
-<br>
+
+
+\
+\
+\
+\
+\
+\
 
 
 
 
 
-## Deeper learning (OPTIONAL) {-}
+
+
+
+
+# Deeper learning (OPTIONAL)
 
 Recall that in least squares regression, we use *residuals* to both estimate model coefficients (those that minimize the residual sum of squares) and measure model strength ($R^2$ is calculated from the variance of the residuals).
 BUT the concept of a "residual" is different in logistic regression.
@@ -949,22 +927,17 @@ In this case, logistic regression requires different strategies for estimating a
 
 
 
-<!-- ASSUMPTIONS -->
 
-<!-- - independence -->
-
-<!-- - errors are NOT homoskedastic -->
-<!--     more variability in regions with p ≈ 0.5 than p ≈ 0 or 1 -->
-
-
-<!-- INFERENCE: clt for regression coef (complicated s.e. fmla) -->
-
-<!-- MODEL QUALITY: deviance, aic (we'll use cross val) -->
+\
+\
+\
+\
+\
+\
 
 
 
-
-## Notes: R code {-}
+# Notes: R code
 
 Suppose we want to build a model of categorical response variable `y` using predictors `x1` and `x2` in our `sample_data`.
 
@@ -972,9 +945,6 @@ Suppose we want to build a model of categorical response variable `y` using pred
 ```{r eval = FALSE}
 # Load packages
 library(tidymodels)
-
-# Resolves package conflicts by preferring tidymodels functions
-tidymodels_prefer()
 ```
 
 
@@ -1098,7 +1068,6 @@ logistic_model_cv <- logistic_spec %>%
   fit_resamples(
     y ~ x1 + x2,
     resamples = vfold_cv(sample_data, v = ___), 
-    control = control_resamples(save_pred = TRUE, event_level = 'second'),
     metrics = metric_set(accuracy, sensitivity, specificity)
   )
 
@@ -1106,8 +1075,6 @@ logistic_model_cv <- logistic_spec %>%
 logistic_model_cv %>% 
   collect_metrics()
 ```
-
-
 
 
 
