@@ -2,10 +2,11 @@
 title: "Random forests & bagging"
 subtitle: "Stat 253"
 author: "Your Name"
-output: 
-  html_document:
+format:
+  html:
     toc: true
-    toc_float: true
+    toc-depth: 2
+    embed-resources: true
 ---
 
 
