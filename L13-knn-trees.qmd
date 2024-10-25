@@ -9,16 +9,28 @@ logo: "images/mac.png"
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 ```
 
-::: {.callout-warning}
-This page is currently under construction. Check back soon for updates!
-:::
 
-# Settling In {-}
 
+# Settling In {.unnumbered}
+
+:::: {.columns}
+
+::: {.column width="70%"}
 - Sit with the same group as last class
 - Locate and open today's QMD
-- Catch up on announcements/messages on Slack
-- If you didn't already, install the two R packages we need today: `rpart` and `rpart.plot`
+- Catch up on announcements and messages on Slack
+- Install the two R packages we need today: `rpart` and `rpart.plot`
+:::
+
+::: {.column width="30%"}
+<center>
+![Happy Halloween!](images/Roo_Halloween_Cropped.png){width=90%}
+</center>
+:::
+
+::::
+
+
 
 
 
@@ -78,15 +90,15 @@ $$\text{log(odds that y is 1)} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \be
 
 
 
-## MOTIVATING EXAMPLE {.unnumbered .smaller}
+## Motivating Example {.unnumbered .smaller}
 
 Aerial photography studies of land cover is important to land conservation, land management, and understanding environmental impact of land use.
 
 IMPORTANT: Other aerial photography studies focused on people and movement can be used for surveillance, raising major ethical questions.
 
-![](https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
+![Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg](https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
 
-(Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
+
 
 Let's load data on a sample of aerial images from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover):
 
@@ -101,7 +113,7 @@ library(tidyverse)
 # Load & process data
 # There are 9 types of land use. For now, we'll only consider 3 types.
 # There are 147 possible predictors of land use. For now, we'll only consider 4 predictors.
-land_3 <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/land_cover.csv") %>% 
+land_3 <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/land_cover.csv") %>% 
   rename(type = class) %>% 
   filter(type %in% c("asphalt ","grass ","tree ")) %>% 
   mutate(type = as.factor(type)) %>% 
@@ -145,7 +157,7 @@ Thus we have the following variables:
 
 
 
-**QUESTION**        
+## Limits of Logistic Regression {.unnumbered}         
 
 Why *can't* we use logistic regression to model land `type` (y) by the possible predictors `NDVI`, `Mean_G`, `Bright_100`, `SD_NIR` (x)?
 
@@ -160,20 +172,23 @@ Why *can't* we use logistic regression to model land `type` (y) by the possible 
 
 
 
-**PARAMETRIC VS NONPARAMETRIC**
+## Parametric v. Nonparametric Classification {.unnumbered .smaller} 
 
 There *are* parametric classifications algorithms that can model y outcomes with more than 2 categories.
 But they're complicated and not very common.
 
 We'll consider two **nonparametric** algorithms today: K Nearest Neighbors & classification trees.
 
-- pro of nonparametric algorithms: **flexibility**        
-    Assume there *is* a relationship between y and x, but don't make any assumptions about the "shape" of this relationship.
-    This is good when our relationships are complicated!
+## Nonparametric Classification {.unnumbered .smaller} 
 
-- cons of nonparametric algorithms      
+- Pro: **flexibility**        
+    - Assume there *is* a relationship between y and x, but don't make any assumptions about the "shape" of this relationship.
+    - This is good when our relationships are complicated!
+
+- Cons:      
     - **lack of insights:** Can be useful for classification, but provide fewer insights into the *relationships* we're modeling (eg: no coefficients, p-values, etc).
-    - **ignoring information about relationships**: When the assumptions of a parametric model are appropriate, i.e. when the shape of a relationship is "known", nonparametric algorithms will typically provide worse classifications by not utilizing that shape. 
+    - **ignoring information about relationships**: When the assumptions of a parametric model are appropriate, i.e. when the shape of a relationship is "known", nonparametric algorithms will typically provide worse classifications by not utilizing that shape. (When the shape of a relationship is "known", we should use that shape.)
+    - more computationally intense
 
 
 
@@ -185,27 +200,24 @@ We'll consider two **nonparametric** algorithms today: K Nearest Neighbors & cla
 
 
 
-# Exercises {-}
+# Exercises: Part 1 (KNN) {-}
 
-## Part 1: K Nearest Neighbors {-}
-
-**GOAL**
+**GOAL** 
 
 Build *intuition* for the K Nearest Neighbors classification algorithm.
 
 
 \
-\
 
 
-
-### Exercise 1: Check out the data {-}
+## Exercise 1: Check out the data {.unnumbered .smaller}
 
 We'll start by classifying land `type` using vegetation index (`NDVI`) and green-ness (`Mean_G`).
 
 First, plot and describe this relationship.
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Store the plot because we'll use it later
 veg_green_plot <- ggplot(land_3, aes(x = Mean_G, y = NDVI, color = type)) + 
   geom_point() +
@@ -228,11 +240,12 @@ Grass and tree images both tend to have higher vegetation index and greenness th
 
 
 
-### Exercise 2: Intuition {-}
+## Exercise 2: Intuition {.unnumbered .smaller}
     
 The red dot below represents a *new* image with `NDVI` = 0.335 and `Mean_G` = 110:
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 veg_green_plot + 
   geom_point(aes(y = 0.335, x = 110), color = "red")
 ```
@@ -266,7 +279,7 @@ c. grass (we learned above that tree images were the most common in our sample)
 \
 \
 
-### Exercise 3: Details {-}
+## Exercise 3: Details {.unnumbered .smaller}
 
 Just as with KNN in the regression setting, it will be important to *standardize* quantitative x predictors before using them in the algorithm. *Why*? 
     
@@ -280,14 +293,20 @@ So that the different scales don't skew how we identify our nearest neighbors.
 </details>
 
 
-### Exercise 4: Check your work {-}
+## Exercise 4: Check your work {.unnumbered .smaller}
 
-In exercise two, your answers should be grass (a), tree (b), and grass (c). If any of your answers are different, revisit!
+In exercise two, your answers should be grass (a), tree (b), and grass (c). <!--If any of your answers are different, revisit!--> 
+Let's confirm these results by doing this "by hand" ...
+
+Try writing R code to find the closest neighbors (without `tidymodels`).
     
 <details>
 <summary>Solution:</summary>
 
-```{r eval=TRUE}
+Preprocessing: 
+
+```{r}
+#| eval: true
 # Scale variables (x - mean)/sd
 land_3 <- land_3 %>% 
   mutate(zNDVI = scale(NDVI), zMean_G = scale(NDVI)) 
@@ -296,11 +315,21 @@ land_3 <- land_3 %>%
 land_3 <- land_3 %>%
   mutate(new_zNDVI = (0.335 - mean(NDVI))/sd(NDVI)) %>% 
   mutate(new_zMean_G = (110 - mean(Mean_G))/sd(Mean_G))
-  
+```
+
+Calculate distance: 
+
+```{r}
+#| eval: true
 # Euclidean Distance
 land_3 <- land_3 %>%
   mutate(dist_to_new = sqrt((new_zNDVI - zNDVI)^2 + ( new_zMean_G - zMean_G)^2))
+```
 
+Find neighbors: 
+
+```{r}
+#| eval: true
 # K = 1
 land_3 %>%
   arrange(dist_to_new) %>%
@@ -329,24 +358,20 @@ land_3 %>%
 
 
 
-### Exercise 5: Tuning the KNN algorithm: Intuition {-}
+## Exercise 5: Tuning the KNN algorithm {.unnumbered .smaller}
 
-The KNN algorithm depends upon tuning parameter K, the number of neighbors we consider in our classifications.
+The KNN algorithm depends upon the tuning parameter $K$, the number of neighbors we consider in our classifications.
 
-Play around with the shiny app below to build some intuition here.
+Play around with the shiny app (code below) to build some intuition here.
 
 After, answer the following questions.
 
 a. In general, how would you describe the **classification regions** defined by the KNN algorithm?
 
-
-
-
 b. Let's explore the goldilocks problem here. When K is too small:
     - the classification regions are very ____
     - the model is (overfit or underfit?)
     - the model will have _____ bias and ____ variance
-
 
 c. When K is too big:
     - the classification regions are very ____
@@ -360,6 +385,7 @@ d. What K value would you pick, based solely on the plots? (We'll eventually tun
 
 
 ```{r}
+#| code-fold: true
 # Define KNN plot
 library(gridExtra)
 library(FNN)
@@ -389,7 +415,9 @@ knnplot <- function(x1, x2, y, k, lab_1, lab_2){
 }
 ```
 
-```{r eval = FALSE}
+```{r}
+#| code-fold: true
+#| eval: false
 library(shiny)
 # Build the shiny server
 server_KNN <- function(input, output) {
@@ -415,13 +443,19 @@ ui_KNN <- fluidPage(
 # Run the shiny app!
 shinyApp(ui = ui_KNN, server = server_KNN)
 ```
+
 <details>
 <summary>Solution:</summary>
-a. cool. flexible.
-b. When K is too small:
+
+<!-- note to self: this formatting looks weird on slides...-->
+
+a. cool. flexible.  
+
+b. When K is too small: 
   - the classification regions are very small / wiggly / flexible
   - the model is overfit
   - the model will have low bias and high variance
+  
 c. When K is too big:
   - the classification regions are very large / rigid / overly simple
   - the model is underfit
@@ -443,7 +477,7 @@ c. When K is too big:
 
 
 
-**PAUSE TO REFLECT: KNN pros & cons**       
+## PAUSE TO REFLECT: KNN pros & cons {.unnumbered .smaller}       
 
 Pros:
 
@@ -475,16 +509,20 @@ Cons:
 
 
 
-## Part 2: Classification trees {-}
+# Exercises: Part 2 (Trees) {-}
+
+For the rest of class, work together to develop intuition on a new method: Classification Trees
+
+Work together on Exercises 6--11.
 
 
-### Exercise 6: Intuition {-}
+## Exercise 6: Intuition {.unnumbered .smaller}
     
 Classification trees are another nonparametric algorithm.
 
 Let's build intuition for trees here.
 
-Ask Brianna for the [paper handout](https://docs.google.com/document/d/1RaTC8rSCxaT_k30BeNosFSbj14BIk2wNQtkHxQVoSSA/edit?usp=sharing).
+Ask Kelsey for the [paper handout](https://docs.google.com/document/d/10T6EEO73TUUZP3GbRxCkEXfoeVpG-hEc5gBmkNncwUQ/edit?usp=sharing).
 
 Complete it using only your intuition!
 
@@ -495,13 +533,14 @@ Complete it using only your intuition!
 
 
 
-### Exercise 7: Use the tree {-}
+## Exercise 7: Use the tree {.unnumbered .smaller}
 
 Build the classification tree in R.
 
 We'll use this tree for prediction in this exercise, and dig into the tree details in the next exercise.
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Build the tree in R
 # This is only demo code! It will change in the future.
 library(rpart)
@@ -531,7 +570,7 @@ b. asphalt
 </details>
 
 
-### Exercise 8: Understand the tree {-}
+## Exercise 8: Understand the tree {.unnumbered .smaller}
 
 The classification tree is like an upside down real world tree.
 
@@ -568,7 +607,7 @@ b. .
 
 
 
-### Exercise 9: tuning trees: `min_n` {-}
+## Exercise 9: tuning trees: `min_n` {.unnumbered .smaller}
 
 In the above tree, we only made 2 splits.
 But we can keep growing our tree!
@@ -634,7 +673,8 @@ tree_plot_2 <- function(cp, minbucket){
 }
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 library(shiny)
 # Build the shiny server
 server_tree <- function(input, output) {
@@ -685,7 +725,7 @@ shinyApp(ui = ui_tree, server = server_tree)
 
 
 
-### Exercise 10: tuning trees: cost-complexity parameter {-}
+## Exercise 10: tuning trees: cost-complexity parameter {.unnumbered .smaller}
 
 There's another tuning parameter to consider: `cost_complexity`!
 Like the LASSO $\lambda$ *penalty* parameter penalizes the inclusion of more predictors, `cost_complexity` penalizes the introduction of new splits.
@@ -736,7 +776,7 @@ R(T) + $\alpha$ T
 
 
 
-### Exercise 11: tree properties  {-}       
+## Exercise 11: tree properties  {.unnumbered .smaller}       
     
 NOTE: If you don't get to this during class, no big deal. These ideas will also be in our next video!
 
@@ -767,6 +807,11 @@ c. Nope.
 </details>
 
 
-# Wrapping Up {-}
+# Wrapping Up {.unnumbered .smaller}
 
-Coming soon!
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- Upcoming due dates: 
+  - Today(!): HW4
+  - Before next class: CP10
+  - November 13: HW5
+- IMPORTANT: Do you have a voting plan for next Tuesday?
