@@ -387,11 +387,20 @@ window.Quarto = {
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
   <li><a href="#notes-classification-evaluation" id="toc-notes-classification-evaluation" class="nav-link" data-scroll-target="#notes-classification-evaluation">Notes: Classification Evaluation</a>
   <ul class="collapse">
+  <li><a href="#where-are-we" id="toc-where-are-we" class="nav-link" data-scroll-target="#where-are-we">Where are we?</a></li>
   <li><a href="#sensitivity-specificity" id="toc-sensitivity-specificity" class="nav-link" data-scroll-target="#sensitivity-specificity">Sensitivity &amp; specificity</a></li>
-  <li><a href="#roc-curves-receiver-operating-characteristic-curves" id="toc-roc-curves-receiver-operating-characteristic-curves" class="nav-link" data-scroll-target="#roc-curves-receiver-operating-characteristic-curves">ROC curves (receiver operating characteristic curves)</a></li>
+  <li><a href="#roc-curves" id="toc-roc-curves" class="nav-link" data-scroll-target="#roc-curves">ROC curves</a></li>
   </ul></li>
-  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a></li>
+  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
+  <li><a href="#optional-extra-practice" id="toc-optional-extra-practice" class="nav-link" data-scroll-target="#optional-extra-practice">(OPTIONAL) Extra Practice</a></li>
+  <li><a href="#example-2-roc-curves" id="toc-example-2-roc-curves" class="nav-link" data-scroll-target="#example-2-roc-curves">Example 2: ROC curves</a></li>
+  <li><a href="#example-3-area-under-the-roc-curve-auc" id="toc-example-3-area-under-the-roc-curve-auc" class="nav-link" data-scroll-target="#example-3-area-under-the-roc-curve-auc">Example 3: Area Under the ROC Curve (AUC)</a></li>
+  <li><a href="#auc-observation" id="toc-auc-observation" class="nav-link" data-scroll-target="#auc-observation">AUC Observation</a></li>
+  </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
   <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L12-evaluating-classification-models.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -420,7 +429,12 @@ window.Quarto = {
 
 <section id="settling-in" class="level1 unnumbered">
 <h1 class="unnumbered">Settling In</h1>
-<p>Coming soon!</p>
+<ul>
+<li>Sit with your NEW group from last class. If anyone in your group wasn’t here, please re-introduce yourselves!</li>
+<li>Locate and open today’s QMD</li>
+<li>Catch up on announcements/messages on Slack</li>
+<li>Hand in your Quiz 1 Revisions</li>
+</ul>
 </section>
 <section id="learning-goals" class="level1 unnumbered">
 <h1 class="unnumbered">Learning Goals</h1>
@@ -433,14 +447,21 @@ window.Quarto = {
 </section>
 <section id="notes-classification-evaluation" class="level1 unnumbered">
 <h1 class="unnumbered">Notes: Classification Evaluation</h1>
+<section id="where-are-we" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="where-are-we">Where are we?</h2>
+<!--
 <center>
-<img src="images/MLdiagram4.jpg">
+<img src="images/MLdiagram4.jpg"/>
 </center>
-<p><br>
-<br>
-</p>
+-->
+<p><img src="images/MLdiagram4.jpg" class="img-fluid" style="width:90.0%"></p>
+<!--
+\
+\
+-->
 <p><strong>CONTEXT</strong></p>
-<ul>
+<div class="incremental">
+<ul class="incremental">
 <li><p><strong>world = supervised learning</strong><br>
 We want to model some output variable <span class="math inline">\(y\)</span> using a set of potential predictors (<span class="math inline">\(x_1, x_2, ..., x_p\)</span>).</p></li>
 <li><p><strong>task = CLASSIFICATION</strong><br>
@@ -448,27 +469,33 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <li><p><strong>(parametric) algorithm</strong><br>
 logistic regression</p></li>
 <li><p><strong>application = classification</strong></p>
-<ul>
+<ul class="incremental">
 <li>Use our algorithm to calculate the probability that y = 1.</li>
 <li>Turn these into binary classifications using a classification rule. For some probability threshold c:
-<ul>
+<ul class="incremental">
 <li>If the probability that y = 1 is at least c, classify y as 1.</li>
 <li>Otherwise, classify y as 0.</li>
 </ul></li>
 <li>WE get to pick c.&nbsp;This should be guided by <em>context</em> (what are the consequences of misclassification?) and the <em>quality</em> of the resulting classifications.</li>
 </ul></li>
 </ul>
+</div>
 <p><br>
 </p>
+<div class="incremental">
 <p><strong>GOAL</strong></p>
-<p><em>Evaluate</em> the quality of binary classifications of <span class="math inline">\(y\)</span> (here resulting logistic regression model).</p>
+<ul class="incremental">
+<li><em>Evaluate</em> the quality of binary classifications of <span class="math inline">\(y\)</span> (here resulting logistic regression model).</li>
+</ul>
+</div>
 <p><br>
 <br>
 <br>
 <br>
 </p>
-<section id="sensitivity-specificity" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="sensitivity-specificity">Sensitivity &amp; specificity</h2>
+</section>
+<section id="sensitivity-specificity" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="sensitivity-specificity">Sensitivity &amp; specificity</h2>
 <p><span class="math display">\[\begin{split}
 \text{overall accuracy} &amp; = \text{probability of making a correct classification} \\
 \text{sensitivity} &amp; = \text{true positive rate}\\
@@ -478,9 +505,10 @@ logistic regression</p></li>
 \text{1 - specificity} &amp; = \text{false positive rate} \\
 &amp;  = \text{probability of classifying $y=0$ as $y=1$} \\
 \end{split}\]</span></p>
+<p>. . .</p>
 <p><br>
 </p>
-<p><strong>In-sample estimation (how well our model classifies the same data points we used to build it)</strong></p>
+<p><strong>In-sample estimation</strong> (how well our model classifies the same data points we used to build it)</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -507,9 +535,10 @@ logistic regression</p></li>
 \text{sensitivity} &amp; = \frac{d}{b + d} \\
 \text{specificity} &amp; = \frac{a}{a + c} \\
 \end{split}\]</span></p>
+<p>. . .</p>
 <p><br>
 </p>
-<p><strong>k-Fold Cross-Validation (how well our model classifies NEW data points)</strong></p>
+<p><strong>k-Fold Cross-Validation</strong> (how well our model classifies NEW data points)</p>
 <ul>
 <li>Divide the data into k folds of approximately equal size.<br>
 </li>
@@ -534,24 +563,39 @@ logistic regression</p></li>
 <br>
 </p>
 </section>
-<section id="roc-curves-receiver-operating-characteristic-curves" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="roc-curves-receiver-operating-characteristic-curves">ROC curves (receiver operating characteristic curves)</h2>
+<section id="roc-curves" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="roc-curves">ROC curves</h2>
+<p>ROC: Receiver Operating Characteristic curves</p>
+<p>. . .</p>
 <p>Sensitivity and specificity depend upon the <em>specific</em> probability threshold c.</p>
 <ul>
-<li><p>If we lower c, hence make it <em>easier</em> to classify y as 1: sensitivity increases <em>but</em> specificity decreases</p></li>
-<li><p>If we increase c, hence make it <em>tougher</em> to classify y as 1: specificity increases <em>but</em> sensitivity decreases</p></li>
+<li>If we lower c, hence make it <em>easier</em> to classify y as 1:
+<ul>
+<li>sensitivity increases <em>but</em> specificity decreases</li>
+</ul></li>
+<li>If we increase c, hence make it <em>tougher</em> to classify y as 1:
+<ul>
+<li>specificity increases <em>but</em> sensitivity decreases</li>
+</ul></li>
 </ul>
+<p>. . .</p>
 <p>To understand this trade-off, for a <em>range</em> of possible thresholds c between 0 and 1, ROC curves calculate and plot</p>
 <ul>
 <li>y-axis: sensitivity (true positive rate)</li>
-<li>x-axis: 1 - specificity (false positive rate)<br>
-Since specificity is the probability of classifying y = 0 as 0, 1 - specificity is the misclassifying y = 0 as 1.</li>
+<li>x-axis: 1 - specificity (false positive rate)
+<ul>
+<li>Since specificity is the probability of classifying y = 0 as 0, 1 - specificity is the probability of misclassifying y = 0 as 1.</li>
+</ul></li>
 </ul>
+<p>. . .</p>
 <p>Why we care:</p>
 <ul>
 <li>Along with context, ROC curves can help us identify an appropriate probability threshold c.</li>
 <li>ROC curves can help us compare the quality of different models.</li>
-<li>The <strong>area under an ROC curve</strong> (AUC) estimates the probability that our algorithm is <em>more</em> likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes. Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.</li>
+<li>The <strong>area under an ROC curve</strong> (AUC) estimates the probability that our algorithm is <em>more</em> likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes.
+<ul>
+<li>Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.</li>
+</ul></li>
 </ul>
 <p><br>
 <br>
@@ -564,7 +608,9 @@ Since specificity is the probability of classifying y = 0 as 0, 1 - specificity 
 </section>
 <section id="small-group-discussion" class="level1 unnumbered">
 <h1 class="unnumbered">Small Group Discussion</h1>
-<p><strong>EXAMPLE 1</strong></p>
+<p>Open the QMD template for today.</p>
+<section id="example-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-1">Example 1</h2>
 <p>Suppose we model <code>RainTomorrow</code> in Sydney using only the number of hours of bright <code>Sunshine</code> today.</p>
 <p>Using a <strong>probability threshold of 0.5</strong>, this model produces the following <strong>classification rule</strong>:</p>
 <ul>
@@ -603,7 +649,9 @@ Solution:
 <li>Specificity = 0.906; We correctly predict “no rain” on 90.6% of non-rainy days.</li>
 </ol>
 </details>
-<p><strong>OPTIONAL EXTRA PRACTICE</strong></p>
+</section>
+<section id="optional-extra-practice" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="optional-extra-practice">(OPTIONAL) Extra Practice</h2>
 <p>Confirm the 3 metrics above using the confusion matrix. Work is shown below (peek when you’re ready).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>            Truth</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Prediction   No  Yes</span>
@@ -631,7 +679,9 @@ Solution:
 </div>
 </div>
 </details>
-<p><strong>EXAMPLE 2: ROC curves</strong></p>
+</section>
+<section id="example-2-roc-curves" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-2-roc-curves">Example 2: ROC curves</h2>
 <p>We can change up the probability threshold in our classification rule!</p>
 <p>The ROC curve for our logistic regression model of <code>RainTomorrow</code> by <code>Sunshine</code> plots the sensitivity (true positive rate) vs 1 - specificity (false positive rate) corresponding to “every” possible threshold:</p>
 <p><img src="images/classifying_rain_sunshine_roc.png" class="img-fluid"></p>
@@ -650,10 +700,14 @@ Solution:
 <li>Answers will vary. If you don’t like getting wet (accurately predict rain when it does rain), you’ll want a higher sensitivity. If you don’t like carrying an umbrella when it isn’t needed, you’ll want a higher specificity (lower false positive rate).</li>
 </ol>
 </details>
-<p><strong>EXAMPLE 3: Area Under the ROC Curve (AUC)</strong></p>
+</section>
+<section id="example-3-area-under-the-roc-curve-auc" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-3-area-under-the-roc-curve-auc">Example 3: Area Under the ROC Curve (AUC)</h2>
 <p>The <strong>area under an ROC curve</strong> (AUC) estimates the probability that our algorithm is <em>more</em> likely to classify y = 1 (rain) as 1 (rain) than to classify y = 0 (no rain) as 1 (rain), hence distinguish between the 2 classes.</p>
 <p>AUC is helpful for evaluating and comparing the overall quality of classification models. Consider 3 different possible predictors (A, B, C) of rainy and non-rainy days:</p>
 <p><img src="images/classifying_rain_simulation.png" class="img-fluid"></p>
+<p>Which predictor is the “strongest” predictor of rain tomorrow?</p>
+<p>. . .</p>
 <p>The ROC curves corresponding to the models <code>RainTomorrow ~ A</code>, <code>RainTomorrow ~ B</code>, <code>RainTomorrow ~ C</code> are shown below.</p>
 <p><img src="images/classifying_rain_lots_of_rocs.png" class="img-fluid"></p>
 <p>For each ROC curve, indicate the corresponding model and the approximate AUC. Do this in any order you want!</p>
@@ -692,7 +746,9 @@ Solution:
 <li>AUC is exactly 1.</li>
 </ul>
 </details>
-<p><strong>AUC OBSERVATION</strong></p>
+</section>
+<section id="auc-observation" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="auc-observation">AUC Observation</h2>
 <p>In general:</p>
 <ul>
 <li>A <em>perfect</em> classification model has an AUC of 1.</li>
@@ -707,10 +763,11 @@ Solution:
 <br>
 </p>
 </section>
+</section>
 <section id="exercises" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises</h1>
-<p>Today’s in-class exercises will be due as Homework 5.</p>
-<p>Please find the exercises and template in Moodle.</p>
+<p>Today’s in-class exercises will be due as HW4.</p>
+<p>Please find the exercises and template on Moodle.</p>
 <p>I recommend working on Exercises 1, 5, and 6 in class.</p>
 <p>Exercise 1 is necessary to the other exercises, and Exercises 5 and 6 involve new content: ROC curves, AUC, and LASSO for classification!</p>
 <p><br>
@@ -720,6 +777,18 @@ Solution:
 <br>
 <br>
 </p>
+</section>
+<section id="wrapping-up" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Wrapping Up</h1>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li>Upcoming due dates:
+<ul>
+<li>TODAY: Quiz 1 Revisions</li>
+<li>Thursday, October 31: HW4</li>
+</ul></li>
+<li>Please install two packages before our next class: <code>rpart</code> and <code>rpart.plot</code></li>
+</ul>
 <!-- ## Deep Learning (Optional) -->
 <!-- **shiny!**     -->
 <!--     Play around with the shiny app below to solidify your understanding of the relationships between probability cut-offs, sensitivity, and specificity. In your opinion, what's the best probability cut-off to use in the rain example? -->
@@ -742,46 +811,52 @@ Solution:
 <br>
 </p>
 </section>
-<section id="notes-r-code" class="level1 unnumbered">
-<h1 class="unnumbered">Notes: R code</h1>
+<section id="notes-r-code" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Notes: R code</h1>
 <p>Let <code>my_model</code> be a logistic regression model of categorical response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the probability that y = 1 for each sample data point</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The probability is stored in the .pred_Yes column</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>in_sample_predictions <span class="ot">&lt;-</span> my_model <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the predicted probability that y = 1 by the actual y category</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(in_sample_predictions, <span class="fu">aes</span>(<span class="at">y =</span> .pred_Yes, <span class="at">x =</span> y)) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate sensitivity &amp; specificity for a range of probability thresholds</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>in_sample_predictions <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> y, .pred_Yes, <span class="at">event_level =</span> <span class="st">"second"</span>) </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ROC curve</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>in_sample_predictions <span class="sc">%&gt;%</span> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> y, .pred_Yes, <span class="at">event_level =</span> <span class="st">"second"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the AUC</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>in_sample_predictions <span class="sc">%&gt;%</span> </span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_auc</span>(<span class="at">truth =</span> y, .pred_Yes, <span class="at">event_level =</span> <span class="st">"second"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
 </section>
 
 </main> <!-- /main -->
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

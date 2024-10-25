@@ -1631,7 +1631,18 @@
     "href": "L12-evaluating-classification-models.html",
     "title": "12  Evaluating Classification Models",
     "section": "",
-    "text": "Settling In\nComing soon!",
+    "text": "Settling In",
+    "crumbs": [
+      "Classification: Modeling Building (Unit 4)",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
+    ]
+  },
+  {
+    "objectID": "L12-evaluating-classification-models.html#where-are-we",
+    "href": "L12-evaluating-classification-models.html#where-are-we",
+    "title": "12  Evaluating Classification Models",
+    "section": "Where are we?",
+    "text": "Where are we?\n\n\n\nCONTEXT\n\n\nworld = supervised learning\nWe want to model some output variable \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)).\ntask = CLASSIFICATION\n\\(y\\) is categorical and binary\n(parametric) algorithm\nlogistic regression\napplication = classification\n\nUse our algorithm to calculate the probability that y = 1.\nTurn these into binary classifications using a classification rule. For some probability threshold c:\n\nIf the probability that y = 1 is at least c, classify y as 1.\nOtherwise, classify y as 0.\n\nWE get to pick c. This should be guided by context (what are the consequences of misclassification?) and the quality of the resulting classifications.\n\n\n\n\n\n\nGOAL\n\nEvaluate the quality of binary classifications of \\(y\\) (here resulting logistic regression model).",
     "crumbs": [
       "Classification: Modeling Building (Unit 4)",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
@@ -1642,18 +1653,73 @@
     "href": "L12-evaluating-classification-models.html#sensitivity-specificity",
     "title": "12  Evaluating Classification Models",
     "section": "Sensitivity & specificity",
-    "text": "Sensitivity & specificity\n\\[\\begin{split}\n\\text{overall accuracy} & = \\text{probability of making a correct classification} \\\\\n\\text{sensitivity} & = \\text{true positive rate}\\\\\n&  = \\text{probability of correctly classifying $y=1$ as $y=1$} \\\\\n\\text{specificity} & = \\text{true negative rate} \\\\\n& =  \\text{probability of correctly classifying $y=0$ as $y=0$} \\\\\n\\text{1 - specificity} & = \\text{false positive rate} \\\\\n&  = \\text{probability of classifying $y=0$ as $y=1$} \\\\\n\\end{split}\\]\n\n\nIn-sample estimation (how well our model classifies the same data points we used to build it)\n\n\n\n\ny = 0\ny = 1\n\n\n\n\nclassify as 0\na\nb\n\n\nclassify as 1\nc\nd\n\n\n\n\\[\\begin{split}\n\\text{overall accuracy} & = \\frac{a + d}{a + b + c + d}\\\\\n\\text{sensitivity} & = \\frac{d}{b + d} \\\\\n\\text{specificity} & = \\frac{a}{a + c} \\\\\n\\end{split}\\]\n\n\nk-Fold Cross-Validation (how well our model classifies NEW data points)\n\nDivide the data into k folds of approximately equal size.\n\nRepeat the following procedures for each fold j = 1, 2, …, k:\n\nRemove fold j from the data set.\n\nFit a model using the other k - 1 folds.\n\nUse this model to classify the outcomes for the data points in fold j.\n\nCalculate the overall accuracy, sensitivity, and specificity of these classifications.\n\n\nAverage the metrics across the k folds. This gives our CV estimates of overall accuracy, sensitivity, and specificity.",
+    "text": "Sensitivity & specificity\n\\[\\begin{split}\n\\text{overall accuracy} & = \\text{probability of making a correct classification} \\\\\n\\text{sensitivity} & = \\text{true positive rate}\\\\\n&  = \\text{probability of correctly classifying $y=1$ as $y=1$} \\\\\n\\text{specificity} & = \\text{true negative rate} \\\\\n& =  \\text{probability of correctly classifying $y=0$ as $y=0$} \\\\\n\\text{1 - specificity} & = \\text{false positive rate} \\\\\n&  = \\text{probability of classifying $y=0$ as $y=1$} \\\\\n\\end{split}\\]\n. . .\n\n\nIn-sample estimation (how well our model classifies the same data points we used to build it)\n\n\n\n\ny = 0\ny = 1\n\n\n\n\nclassify as 0\na\nb\n\n\nclassify as 1\nc\nd\n\n\n\n\\[\\begin{split}\n\\text{overall accuracy} & = \\frac{a + d}{a + b + c + d}\\\\\n\\text{sensitivity} & = \\frac{d}{b + d} \\\\\n\\text{specificity} & = \\frac{a}{a + c} \\\\\n\\end{split}\\]\n. . .\n\n\nk-Fold Cross-Validation (how well our model classifies NEW data points)\n\nDivide the data into k folds of approximately equal size.\n\nRepeat the following procedures for each fold j = 1, 2, …, k:\n\nRemove fold j from the data set.\n\nFit a model using the other k - 1 folds.\n\nUse this model to classify the outcomes for the data points in fold j.\n\nCalculate the overall accuracy, sensitivity, and specificity of these classifications.\n\n\nAverage the metrics across the k folds. This gives our CV estimates of overall accuracy, sensitivity, and specificity.",
     "crumbs": [
       "Classification: Modeling Building (Unit 4)",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
     ]
   },
   {
-    "objectID": "L12-evaluating-classification-models.html#roc-curves-receiver-operating-characteristic-curves",
-    "href": "L12-evaluating-classification-models.html#roc-curves-receiver-operating-characteristic-curves",
+    "objectID": "L12-evaluating-classification-models.html#roc-curves",
+    "href": "L12-evaluating-classification-models.html#roc-curves",
     "title": "12  Evaluating Classification Models",
-    "section": "ROC curves (receiver operating characteristic curves)",
-    "text": "ROC curves (receiver operating characteristic curves)\nSensitivity and specificity depend upon the specific probability threshold c.\n\nIf we lower c, hence make it easier to classify y as 1: sensitivity increases but specificity decreases\nIf we increase c, hence make it tougher to classify y as 1: specificity increases but sensitivity decreases\n\nTo understand this trade-off, for a range of possible thresholds c between 0 and 1, ROC curves calculate and plot\n\ny-axis: sensitivity (true positive rate)\nx-axis: 1 - specificity (false positive rate)\nSince specificity is the probability of classifying y = 0 as 0, 1 - specificity is the misclassifying y = 0 as 1.\n\nWhy we care:\n\nAlong with context, ROC curves can help us identify an appropriate probability threshold c.\nROC curves can help us compare the quality of different models.\nThe area under an ROC curve (AUC) estimates the probability that our algorithm is more likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes. Put another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.",
+    "section": "ROC curves",
+    "text": "ROC curves\nROC: Receiver Operating Characteristic curves\n. . .\nSensitivity and specificity depend upon the specific probability threshold c.\n\nIf we lower c, hence make it easier to classify y as 1:\n\nsensitivity increases but specificity decreases\n\nIf we increase c, hence make it tougher to classify y as 1:\n\nspecificity increases but sensitivity decreases\n\n\n. . .\nTo understand this trade-off, for a range of possible thresholds c between 0 and 1, ROC curves calculate and plot\n\ny-axis: sensitivity (true positive rate)\nx-axis: 1 - specificity (false positive rate)\n\nSince specificity is the probability of classifying y = 0 as 0, 1 - specificity is the probability of misclassifying y = 0 as 1.\n\n\n. . .\nWhy we care:\n\nAlong with context, ROC curves can help us identify an appropriate probability threshold c.\nROC curves can help us compare the quality of different models.\nThe area under an ROC curve (AUC) estimates the probability that our algorithm is more likely to classify y = 1 as 1 than to classify y = 0 as 1, hence distinguish between the 2 classes.\n\nPut another way: if we give our model 2 data points, one with y = 0 and the other with y = 1, AUC is the probability that we correctly identify which is which.",
+    "crumbs": [
+      "Classification: Modeling Building (Unit 4)",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
+    ]
+  },
+  {
+    "objectID": "L12-evaluating-classification-models.html#example-1",
+    "href": "L12-evaluating-classification-models.html#example-1",
+    "title": "12  Evaluating Classification Models",
+    "section": "Example 1",
+    "text": "Example 1\nSuppose we model RainTomorrow in Sydney using only the number of hours of bright Sunshine today.\nUsing a probability threshold of 0.5, this model produces the following classification rule:\n\nIf Sunshine &lt; 3.125, predict rain.\nOtherwise, predict no rain.\n\n\nInterpret these in-sample estimates of the resulting classification quality.\n\nOverall accuracy = 0.803\n\nWe correctly predict the rain outcome (yes or no) 80.3% of the time.\nWe correctly predict “no rain” on 80.3% of non-rainy days.\nWe correctly predict “rain” on 80.3% of rainy days.\n\nSensitivity = 0.506\n\nWe correctly predict the rain outcome (yes or no) 50.6% of the time.\nWe correctly predict “no rain” on 50.6% of non-rainy days.\nWe correctly predict “rain” on 50.6% of rainy days.\n\nSpecificity = 0.906\n\nWe correctly predict the rain outcome (yes or no) 90.6% of the time.\nWe correctly predict “no rain” on 90.6% of non-rainy days.\nWe correctly predict “rain” on 90.6% of rainy days.\n\n\n\n\nSolution:\n\n\nOverall accuracy = 0.803; We correctly predict the rain outcome (yes or no) 80.3% of the time.\nSensitivity = 0.506; We correctly predict “rain” on 50.6% of rainy days.\nSpecificity = 0.906; We correctly predict “no rain” on 90.6% of non-rainy days.",
+    "crumbs": [
+      "Classification: Modeling Building (Unit 4)",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
+    ]
+  },
+  {
+    "objectID": "L12-evaluating-classification-models.html#optional-extra-practice",
+    "href": "L12-evaluating-classification-models.html#optional-extra-practice",
+    "title": "12  Evaluating Classification Models",
+    "section": "(OPTIONAL) Extra Practice",
+    "text": "(OPTIONAL) Extra Practice\nConfirm the 3 metrics above using the confusion matrix. Work is shown below (peek when you’re ready).\n            Truth\nPrediction   No  Yes\n       No  3108  588\n       Yes  324  602\n\n\nSolution:\n\n\n# Overall accuracy\n(3108 + 602) / (3108 + 602 + 324 + 588)\n\n[1] 0.8026828\n\n# Sensitivity\n602 / (602 + 588)\n\n[1] 0.5058824\n\n# Specificity\n3108 / (3108 + 324)\n\n[1] 0.9055944",
+    "crumbs": [
+      "Classification: Modeling Building (Unit 4)",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
+    ]
+  },
+  {
+    "objectID": "L12-evaluating-classification-models.html#example-2-roc-curves",
+    "href": "L12-evaluating-classification-models.html#example-2-roc-curves",
+    "title": "12  Evaluating Classification Models",
+    "section": "Example 2: ROC curves",
+    "text": "Example 2: ROC curves\nWe can change up the probability threshold in our classification rule!\nThe ROC curve for our logistic regression model of RainTomorrow by Sunshine plots the sensitivity (true positive rate) vs 1 - specificity (false positive rate) corresponding to “every” possible threshold:\n\n\nWhich point represents the quality of our classification rule using a 0.5 probability threshold?\nThe other point corresponds to a different classification rule which uses a different threshold. Is that threshold smaller or bigger than 0.5?\nWhich classification rule do you prefer?\n\n\n\nSolution:\n\n\nRed point: 0.5 probability rule (sensitivity ~ 0.5, specificity ~ 0.9)\nBlack point (higher sensitivity, lower specificity) has a threshold that is lower than 0.5.\nAnswers will vary. If you don’t like getting wet (accurately predict rain when it does rain), you’ll want a higher sensitivity. If you don’t like carrying an umbrella when it isn’t needed, you’ll want a higher specificity (lower false positive rate).",
+    "crumbs": [
+      "Classification: Modeling Building (Unit 4)",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
+    ]
+  },
+  {
+    "objectID": "L12-evaluating-classification-models.html#example-3-area-under-the-roc-curve-auc",
+    "href": "L12-evaluating-classification-models.html#example-3-area-under-the-roc-curve-auc",
+    "title": "12  Evaluating Classification Models",
+    "section": "Example 3: Area Under the ROC Curve (AUC)",
+    "text": "Example 3: Area Under the ROC Curve (AUC)\nThe area under an ROC curve (AUC) estimates the probability that our algorithm is more likely to classify y = 1 (rain) as 1 (rain) than to classify y = 0 (no rain) as 1 (rain), hence distinguish between the 2 classes.\nAUC is helpful for evaluating and comparing the overall quality of classification models. Consider 3 different possible predictors (A, B, C) of rainy and non-rainy days:\n\nWhich predictor is the “strongest” predictor of rain tomorrow?\n. . .\nThe ROC curves corresponding to the models RainTomorrow ~ A, RainTomorrow ~ B, RainTomorrow ~ C are shown below.\n\nFor each ROC curve, indicate the corresponding model and the approximate AUC. Do this in any order you want!\nblack ROC curve\n\nRainTomorrow ~ ___\nAUC is roughly ___\n\ngreen ROC curve\n\nRainTomorrow ~ ___\nAUC is roughly ___.\n\norange ROC curve\n\nRainTomorrow ~ ___\nAUC is exactly ___.\n\n\n\nSolution:\n\nblack ROC curve\n\nRainTomorrow ~ A\nAUC is roughly 0.5\n\ngreen ROC curve\n\nRainTomorrow ~ C\nAUC is roughly .95.\n\norange ROC curve\n\nRainTomorrow ~ B\nAUC is exactly 1.",
+    "crumbs": [
+      "Classification: Modeling Building (Unit 4)",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
+    ]
+  },
+  {
+    "objectID": "L12-evaluating-classification-models.html#auc-observation",
+    "href": "L12-evaluating-classification-models.html#auc-observation",
+    "title": "12  Evaluating Classification Models",
+    "section": "AUC Observation",
+    "text": "AUC Observation\nIn general:\n\nA perfect classification model has an AUC of 1.\nThe simplest classification model that just randomly predicts y to be 1 or 0 (eg: by flipping a coin), has an AUC of 0.5. It is represented by the diagonal “no discrimination line” in an ROC plot.\nA model with an AUC below 0.5 is worse than just random. Flipping a coin would be better.",
     "crumbs": [
       "Classification: Modeling Building (Unit 4)",
       "<span class='chapter-number'>12</span>  <span class='chapter-title'>Evaluating Classification Models</span>"
