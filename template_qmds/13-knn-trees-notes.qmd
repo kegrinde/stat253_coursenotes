@@ -87,9 +87,9 @@ $$\text{log(odds that y is 1)} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \be
 Aerial photography studies of land cover is important to land conservation, land management, and understanding environmental impact of land use.
 IMPORTANT: Other aerial photography studies focused on people and movement can be used for surveillance, raising major ethical questions.
 
-![](https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
+![Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg](https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
 
-(https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
+
 
 Let's load data on a sample of aerial images from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover):
 
@@ -202,7 +202,7 @@ We'll consider two **nonparametric** algorithms today: K Nearest Neighbors & cla
 
 
 
-# Exercises Part 1: K Nearest Neighbors {-}
+# Exercises: Part 1 (K Nearest Neighbors) {-}
 
 **GOAL**
 
@@ -222,7 +222,7 @@ First, plot and describe this relationship.
 ```{r}
 # Store the plot because we'll use it later
 veg_green_plot <- ggplot(land_3, aes(x = Mean_G, y = NDVI, color = type)) + 
-  geom_point() + +
+  geom_point() + 
   scale_color_manual(values = c("asphalt " = "black",
                             "grass " = "#E69F00",
                             "tree " = "#56B4E9")) + 
@@ -315,7 +315,7 @@ In the previous exercise, your answers should be grass (a), tree (b), and grass 
 
 
 
-## Exercise 5: Tuning the KNN algorithm: Intuition {-}
+## Exercise 5: Tuning the KNN algorithm {-}
 
 The KNN algorithm depends upon tuning parameter K, the number of neighbors we consider in our classifications.
 Play around with the shiny app below to build some intuition here.
@@ -373,7 +373,8 @@ knnplot <- function(x1, x2, y, k, lab_1, lab_2){
 }
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 library(shiny)
 # Build the shiny server
 server_KNN <- function(input, output) {
@@ -413,7 +414,7 @@ shinyApp(ui = ui_KNN, server = server_KNN)
 
 
 
-**PAUSE TO REFLECT: KNN pros & cons**       
+## PAUSE TO REFLECT: KNN pros & cons {-}     
 
 Pros:
 
@@ -446,7 +447,7 @@ Cons:
 
 
 
-# Exercises Part 2: Classification trees {-}
+# Exercises: Part 2 (Classification trees) {-}
 
 
 ## Exercise 6: Intuition {-}
@@ -454,7 +455,7 @@ Cons:
 Classification trees are another nonparametric algorithm.
 Let's build intuition for trees here.
 
-Ask Brianna for the [paper handout](https://docs.google.com/document/d/1RaTC8rSCxaT_k30BeNosFSbj14BIk2wNQtkHxQVoSSA/edit?usp=sharing).
+Ask Kelsey for the paper handout.
 
 Then complete it using only your intuition!
 
@@ -588,7 +589,8 @@ tree_plot_2 <- function(cp, minbucket){
 }
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Build the shiny server
 server_tree <- function(input, output) {
   output$model_plot <- renderPlot({
@@ -652,7 +654,7 @@ b. When `cost_complexity` is too *big* (i.e. the tree is too *small*):
 <br>
 
 
-**OPTIONAL: cost complexity details**
+## OPTIONAL: cost complexity details {-}
 
 Define some notation:
 
@@ -671,7 +673,7 @@ R(T) + $\alpha$ T
 
 
 
-## Exercise 11: tree properties** {-}       
+## Exercise 11: tree properties {-}       
     
 NOTE: If you don't get to this during class, no big deal. These ideas will also be in our next video!
 
