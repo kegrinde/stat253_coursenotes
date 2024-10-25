@@ -1,0 +1,142 @@
+---
+title: "Unit 4 - 5 Reflection"
+logo: "images/mac.png"
+---
+
+
+```{r 16_setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+
+::: {.callout-warning}
+This page is currently under construction. Check back soon for updates!
+:::
+
+
+# Settling In {-}
+
+Coming soon!
+
+
+
+# Review & Reflection {-}
+
+STAT 253 is a survey course of statistical machine learning techniques and concepts. It's important to continuously reflect on these and how they fit together. Though you won't hand anything in, or work on this in class today, **you're strongly encouraged to complete this activity**. This material is designed to help you reflect upon:
+
+- ML concepts
+    - enduring, big picture concepts
+    - technical concepts
+    - `tidymodels` code
+
+Follow the links below and make a copy of the STAT 253 concept maps (or find and modify the copy you made while reviewing the regression unit). 
+
+You'll be given some relevant prompts below, but you should use these materials in *whatever way suits you*! Take notes, add more content, rearrange, etc. 
+
+- [STAT 253 concept maps](https://docs.google.com/presentation/d/1Kto9AzJTb6GB4VzmkTl1F1ICzRRaQ4Ib5EVtpjIiyUY/edit?usp=sharing)
+- [tidymodels code comparison](https://docs.google.com/document/d/1oMeKmcCAUN2SKF4tnH3bGIoGbP3EgggXRsNDMynq2sU/edit?usp=sharing)
+
+
+
+
+
+# STAT 253 concept maps {-}
+
+Review __slides 3--5__ (classification) of the concept map, and mark up **slides 1, 7, and 8** with respect to the prompts below.
+
+
+
+\
+\
+
+
+**Enduring, big picture concepts**
+
+IMPORTANT to your learning: Respond in your own words. 
+
+- When do we perform a supervised vs unsupervised learning algorithm?
+- Within supervised learning, when do we use a regression vs a classification algorithm?
+- What is the importance of "model evaluation" and what questions does it address?
+- What is "overfitting" and why is it bad?
+- What is "cross-validation" and what problem is it trying to address?
+- What is the "bias-variance tradeoff"?
+
+
+
+\
+\
+
+
+
+**Technical concepts**
+
+On *page 7*, identify some general themes for each model algorithm listed in the lefthand table:
+
+- What's the goal?
+- Is the algorithm parametric or nonparametric?
+- Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a **goldilocks problem**?
+- What are the key pros & cons of the algorithm?
+
+For each algorithm, you should also reflect upon the **important technical concepts** listed in the syllabus:
+
+- Can you summarize the steps of this algorithm?
+- Is the algorithm parametric or nonparametric? (addressed above)
+- What is the bias-variance tradeoff when working with or tuning this algorithm?
+- Is it important to scale / pre-process our predictors before feeding them into this algorithm?
+- Is this algorithm "computationally expensive"?
+- Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?
+
+
+And some **details**:
+
+- If this algorithm is parametric, could you:        
+    - interpret its coefficients?
+    - calculate / predict the probability of different y outcomes from these coefficients?
+    - come up with a classification rule for a given probability cut-off?
+- If this algorithm is non-parametric:        
+    - Could you implement the alghorithm "by hand" for a small sample of data points?
+- If this algorithm is a tree-based method:       
+    - Could you explain the difference between in-sample, OOB, and CV metrics?
+
+And what about narrowing down to **important predictors**?
+
+- What tools do we have to give us a sense of important predictors?
+    - binary outcome?
+    - multiclass outcome?
+
+\
+\
+
+
+
+**Model evaluation**
+
+On *page 7*, the righthand table lists some model evaluation metrics for *binary* classification algorithms. Do the following:
+
+- Define each metric. THINK: Could you calculate these metrics if given a confusion matrix?
+- Explain the steps of the CV algorithm.
+
+
+
+
+
+
+
+\
+\
+
+
+**Algorithm comparisons**
+
+Use *page 8* to make other observations about the Unit 4-5 modeling algorithms and their connections.
+
+
+
+
+
+
+
+# Wrapping Up {-}
+
+Coming soon!
+    

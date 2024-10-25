@@ -48,6 +48,12 @@ book:
         - U04-motivation.qmd
         - L11-logistic-regression.qmd
         - L12-evaluating-classification-models.qmd
+    - part: "Classification: Building Flexible Models (Unit 5)"
+      chapters: 
+        - L13-knn-trees.qmd
+        - L14-knn-trees-2.qmd
+        - L15-forests.qmd
+        - L16-review.qmd
   appendices:
     - r_rstudio.qmd
     - r_resources.qmd
