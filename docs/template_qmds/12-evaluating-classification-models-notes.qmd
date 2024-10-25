@@ -72,7 +72,12 @@ knitr::opts_chunk$set(
 
 
 
-
+\
+\
+\
+\
+\
+\
 
 
 
@@ -94,7 +99,7 @@ $$\begin{split}
 \
 
 
-**In-sample estimation (how well our model classifies the same data points we used to build it)**
+**In-sample estimation** (how well our model classifies the same data points we used to build it)
 
                 y = 0   y = 1
 -------------- ------- -------
@@ -111,7 +116,7 @@ $$\begin{split}
 \
 
 
-**k-Fold Cross-Validation (how well our model classifies NEW data points)**    
+**k-Fold Cross-Validation** (how well our model classifies NEW data points)    
 
 - Divide the data into k folds of approximately equal size.    
 - Repeat the following procedures for each fold j = 1, 2, ..., k:    
@@ -172,7 +177,7 @@ Why we care:
 # Small Group Discussion
 
 
-**EXAMPLE 1**
+## EXAMPLE 1
 
 Suppose we model `RainTomorrow` in Sydney using only the number of hours of bright `Sunshine` today.
 Using a **probability threshold of 0.5**, this model produces the following **classification rule**:
@@ -180,7 +185,7 @@ Using a **probability threshold of 0.5**, this model produces the following **cl
 - If `Sunshine` < 3.125, predict rain.
 - Otherwise, predict no rain.
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/classifying_rain_sunshine.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/classifying_rain_sunshine.png)
 
 
 Interpret these **in-sample** *estimates* of the resulting classification quality.
@@ -210,7 +215,7 @@ c. Specificity = 0.906
 
 
 
-**OPTIONAL EXTRA PRACTICE**
+## OPTIONAL EXTRA PRACTICE
 
 Confirm the 3 metrics above using the confusion matrix. Work is shown below (peek when you're ready).
 
@@ -268,13 +273,13 @@ Prediction   No  Yes
 
 
 
-**EXAMPLE 2: ROC curves**
+## EXAMPLE 2: ROC curves
 
 We can change up the probability threshold in our classification rule!
 The ROC curve for our logistic regression model of `RainTomorrow` by `Sunshine` plots the sensitivity (true positive rate) vs 1 - specificity (false positive rate) corresponding to "every" possible threshold: 
 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/classifying_rain_sunshine_roc.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/classifying_rain_sunshine_roc.png)
 
 
 a. Which point represents the quality of our classification rule using a 0.5 probability threshold?
@@ -311,7 +316,7 @@ The **area under an ROC curve** (AUC) estimates the probability that our algorit
 AUC is helpful for evaluating and comparing the overall quality of classification models.
 Consider 3 different possible predictors (A, B, C) of rainy and non-rainy days:    
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/classifying_rain_simulation.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/classifying_rain_simulation.png)
 
 
 The ROC curves corresponding to the models `RainTomorrow ~ A`, `RainTomorrow ~ B`, `RainTomorrow ~ C` are shown below.
@@ -355,7 +360,7 @@ For each ROC curve, indicate the corresponding model and the approximate AUC. Do
 
 
 
-**AUC OBSERVATIONS**
+## AUC OBSERVATIONS
 
 In general:
 
@@ -387,8 +392,8 @@ In general:
 # Exercises
 
 
-Today's in-class exercises will be due as Homework 5.
-Please find the exercises and template there.
+Today's in-class exercises will be due as HW4.
+Please find the exercises and template on Moodle.
 I recommend working on Exercises 1, 5, and 6 in class. Exercise 1 is necessary to the other exercises, and Exercises 5 and 6 involve new content: ROC curves, AUC, and LASSO for classification!
 
 
@@ -414,7 +419,8 @@ I recommend working on Exercises 1, 5, and 6 in class. Exercise 1 is necessary t
 Let `my_model` be a logistic regression model of categorical response variable `y` using predictors `x1` and `x2` in our `sample_data`.
 
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Load packages
 library(tidymodels)
 
@@ -422,20 +428,23 @@ library(tidymodels)
 tidymodels_prefer()
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Calculate the probability that y = 1 for each sample data point
 # The probability is stored in the .pred_Yes column
 in_sample_predictions <- my_model %>%
   augment(new_data = sample_data)
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Plot the predicted probability that y = 1 by the actual y category
 ggplot(in_sample_predictions, aes(y = .pred_Yes, x = y)) + 
   geom_boxplot()
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 # Calculate sensitivity & specificity for a range of probability thresholds
 in_sample_predictions %>% 
   roc_curve(truth = y, .pred_Yes, event_level = "second") 
