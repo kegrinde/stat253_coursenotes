@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 - Sit with the same group as last class
 - Locate and open today's QMD
 - Catch up on announcements and messages on Slack
-- Install the two R packages we need today: `rpart` and `rpart.plot`
+- If you didn't already, install the two R packages we need today: `rpart` and `rpart.plot`
 :::
 
 ::: {.column width="30%"}
@@ -239,6 +239,8 @@ Grass and tree images both tend to have higher vegetation index and greenness th
 </details>
 
 
+\
+\
 
 ## Exercise 2: Intuition {.unnumbered .smaller}
     
@@ -292,6 +294,8 @@ Just as with KNN in the regression setting, it will be important to *standardize
 So that the different scales don't skew how we identify our nearest neighbors. 
 </details>
 
+\
+\
 
 ## Exercise 4: Check your work {.unnumbered .smaller}
 
@@ -709,17 +713,21 @@ shinyApp(ui = ui_tree, server = server_tree)
  
 <details>
 <summary>Solution:</summary>
-   a. When `min_n` is too *small* (i.e. the tree is too *big*):
-        - the classification regions are very small / flexible
-        - the model is overfit
-        - the model will have low bias and high variance
-    b. When `min_n` is too *big* (i.e. the tree is too *small*):
-        - the classification regions are very big / rigid
-        - the model is underfit
-        - the model will have high bias and low variance
-    c. will vary
-    d. like pruning a real tree, tuning classification trees "lops off" branches
-    e. they are boxy
+a. When `min_n` is too *small* (i.e. the tree is too *big*):
+    - the classification regions are very small / flexible
+    - the model is overfit
+    - the model will have low bias and high variance
+        
+b. When `min_n` is too *big* (i.e. the tree is too *small*)
+    - the classification regions are very big / rigid
+    - the model is underfit
+    - the model will have high bias and low variance
+        
+c. will vary
+    
+d. like pruning a real tree, tuning classification trees "lops off" branches
+    
+e. they are boxy
 </details>
 
 
@@ -761,7 +769,7 @@ b. When `cost_complexity` is too *big* (i.e. the tree is too *small*):
 
 
 
-**OPTIONAL: cost complexity details**
+## OPTIONAL: cost complexity details {.unnumbered .smaller}
 
 Define some notation:
 

@@ -423,27 +423,29 @@ window.Quarto = {
   <li><a href="#notes-nonparametric-classification" id="toc-notes-nonparametric-classification" class="nav-link" data-scroll-target="#notes-nonparametric-classification">Notes: Nonparametric Classification</a>
   <ul class="collapse">
   <li><a href="#where-are-we" id="toc-where-are-we" class="nav-link" data-scroll-target="#where-are-we">Where are we?</a></li>
-  <li><a href="#motivating-example" id="toc-motivating-example" class="nav-link" data-scroll-target="#motivating-example">MOTIVATING EXAMPLE</a></li>
+  <li><a href="#motivating-example" id="toc-motivating-example" class="nav-link" data-scroll-target="#motivating-example">Motivating Example</a></li>
+  <li><a href="#limits-of-logistic-regression" id="toc-limits-of-logistic-regression" class="nav-link" data-scroll-target="#limits-of-logistic-regression">Limits of Logistic Regression</a></li>
+  <li><a href="#parametric-v.-nonparametric-classification" id="toc-parametric-v.-nonparametric-classification" class="nav-link" data-scroll-target="#parametric-v.-nonparametric-classification">Parametric v. Nonparametric Classification</a></li>
+  <li><a href="#nonparametric-classification" id="toc-nonparametric-classification" class="nav-link" data-scroll-target="#nonparametric-classification">Nonparametric Classification</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
-  <ul class="collapse">
-  <li><a href="#part-1-k-nearest-neighbors" id="toc-part-1-k-nearest-neighbors" class="nav-link" data-scroll-target="#part-1-k-nearest-neighbors">Part 1: K Nearest Neighbors</a>
+  <li><a href="#exercises-part-1-knn" id="toc-exercises-part-1-knn" class="nav-link" data-scroll-target="#exercises-part-1-knn">Exercises: Part 1 (KNN)</a>
   <ul class="collapse">
   <li><a href="#exercise-1-check-out-the-data" id="toc-exercise-1-check-out-the-data" class="nav-link" data-scroll-target="#exercise-1-check-out-the-data">Exercise 1: Check out the data</a></li>
   <li><a href="#exercise-2-intuition" id="toc-exercise-2-intuition" class="nav-link" data-scroll-target="#exercise-2-intuition">Exercise 2: Intuition</a></li>
   <li><a href="#exercise-3-details" id="toc-exercise-3-details" class="nav-link" data-scroll-target="#exercise-3-details">Exercise 3: Details</a></li>
   <li><a href="#exercise-4-check-your-work" id="toc-exercise-4-check-your-work" class="nav-link" data-scroll-target="#exercise-4-check-your-work">Exercise 4: Check your work</a></li>
-  <li><a href="#exercise-5-tuning-the-knn-algorithm-intuition" id="toc-exercise-5-tuning-the-knn-algorithm-intuition" class="nav-link" data-scroll-target="#exercise-5-tuning-the-knn-algorithm-intuition">Exercise 5: Tuning the KNN algorithm: Intuition</a></li>
+  <li><a href="#exercise-5-tuning-the-knn-algorithm" id="toc-exercise-5-tuning-the-knn-algorithm" class="nav-link" data-scroll-target="#exercise-5-tuning-the-knn-algorithm">Exercise 5: Tuning the KNN algorithm</a></li>
+  <li><a href="#pause-to-reflect-knn-pros-cons" id="toc-pause-to-reflect-knn-pros-cons" class="nav-link" data-scroll-target="#pause-to-reflect-knn-pros-cons">PAUSE TO REFLECT: KNN pros &amp; cons</a></li>
   </ul></li>
-  <li><a href="#part-2-classification-trees" id="toc-part-2-classification-trees" class="nav-link" data-scroll-target="#part-2-classification-trees">Part 2: Classification trees</a>
+  <li><a href="#exercises-part-2-trees" id="toc-exercises-part-2-trees" class="nav-link" data-scroll-target="#exercises-part-2-trees">Exercises: Part 2 (Trees)</a>
   <ul class="collapse">
   <li><a href="#exercise-6-intuition" id="toc-exercise-6-intuition" class="nav-link" data-scroll-target="#exercise-6-intuition">Exercise 6: Intuition</a></li>
   <li><a href="#exercise-7-use-the-tree" id="toc-exercise-7-use-the-tree" class="nav-link" data-scroll-target="#exercise-7-use-the-tree">Exercise 7: Use the tree</a></li>
   <li><a href="#exercise-8-understand-the-tree" id="toc-exercise-8-understand-the-tree" class="nav-link" data-scroll-target="#exercise-8-understand-the-tree">Exercise 8: Understand the tree</a></li>
   <li><a href="#exercise-9-tuning-trees-min_n" id="toc-exercise-9-tuning-trees-min_n" class="nav-link" data-scroll-target="#exercise-9-tuning-trees-min_n">Exercise 9: tuning trees: <code>min_n</code></a></li>
   <li><a href="#exercise-10-tuning-trees-cost-complexity-parameter" id="toc-exercise-10-tuning-trees-cost-complexity-parameter" class="nav-link" data-scroll-target="#exercise-10-tuning-trees-cost-complexity-parameter">Exercise 10: tuning trees: cost-complexity parameter</a></li>
+  <li><a href="#optional-cost-complexity-details" id="toc-optional-cost-complexity-details" class="nav-link" data-scroll-target="#optional-cost-complexity-details">OPTIONAL: cost complexity details</a></li>
   <li><a href="#exercise-11-tree-properties" id="toc-exercise-11-tree-properties" class="nav-link" data-scroll-target="#exercise-11-tree-properties">Exercise 11: tree properties</a></li>
-  </ul></li>
   </ul></li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
   </ul>
@@ -471,27 +473,27 @@ window.Quarto = {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This page is currently under construction. Check back soon for updates!</p>
-</div>
-</div>
 <section id="settling-in" class="level1 unnumbered">
 <h1 class="unnumbered">Settling In</h1>
+<div class="columns">
+<div class="column" style="width:70%;">
 <ul>
 <li>Sit with the same group as last class</li>
 <li>Locate and open today’s QMD</li>
-<li>Catch up on announcements/messages on Slack</li>
+<li>Catch up on announcements and messages on Slack</li>
 <li>If you didn’t already, install the two R packages we need today: <code>rpart</code> and <code>rpart.plot</code></li>
 </ul>
+</div><div class="column" style="width:30%;">
+<center>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Roo_Halloween_Cropped.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Happy Halloween!</figcaption>
+</figure>
+</div>
+</center>
+</div>
+</div>
 </section>
 <section id="learning-goals" class="level1 unnumbered smaller">
 <h1 class="unnumbered smaller">Learning Goals</h1>
@@ -527,11 +529,15 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <p><strong>NONparametric</strong> algorithms will be necessary when this model is too rigid to capture more complicated relationships.</p>
 </section>
 <section id="motivating-example" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="motivating-example">MOTIVATING EXAMPLE</h2>
+<h2 class="unnumbered smaller anchored" data-anchor-id="motivating-example">Motivating Example</h2>
 <p>Aerial photography studies of land cover is important to land conservation, land management, and understanding environmental impact of land use.</p>
 <p>IMPORTANT: Other aerial photography studies focused on people and movement can be used for surveillance, raising major ethical questions.</p>
-<p><img src="https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg" class="img-fluid"></p>
-<p>(Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg" class="img-fluid figure-img"></p>
+<figcaption>Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg</figcaption>
+</figure>
+</div>
 <p>Let’s load data on a sample of aerial images from the <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">UCI Machine Learning Repository</a>:</p>
 <div class="cell">
 <details class="code-fold">
@@ -543,7 +549,7 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load &amp; process data</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># There are 9 types of land use. For now, we'll only consider 3 types.</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># There are 147 possible predictors of land use. For now, we'll only consider 4 predictors.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/land_cover.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/land_cover.csv"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">type =</span> class) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"asphalt "</span>,<span class="st">"grass "</span>,<span class="st">"tree "</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type)) <span class="sc">%&gt;%</span> </span>
@@ -591,35 +597,43 @@ Though the data includes measurements of size and shape, we’ll focus on textur
 <p><br>
 <br>
 </p>
-<p><strong>QUESTION</strong></p>
+</section>
+<section id="limits-of-logistic-regression" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="limits-of-logistic-regression">Limits of Logistic Regression</h2>
 <p>Why <em>can’t</em> we use logistic regression to model land <code>type</code> (y) by the possible predictors <code>NDVI</code>, <code>Mean_G</code>, <code>Bright_100</code>, <code>SD_NIR</code> (x)?</p>
 <p><br></p>
-<p><strong>PARAMETRIC VS NONPARAMETRIC</strong></p>
+</section>
+<section id="parametric-v.-nonparametric-classification" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="parametric-v.-nonparametric-classification">Parametric v. Nonparametric Classification</h2>
 <p>There <em>are</em> parametric classifications algorithms that can model y outcomes with more than 2 categories. But they’re complicated and not very common.</p>
 <p>We’ll consider two <strong>nonparametric</strong> algorithms today: K Nearest Neighbors &amp; classification trees.</p>
+</section>
+<section id="nonparametric-classification" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="nonparametric-classification">Nonparametric Classification</h2>
 <ul>
-<li><p>pro of nonparametric algorithms: <strong>flexibility</strong><br>
-Assume there <em>is</em> a relationship between y and x, but don’t make any assumptions about the “shape” of this relationship. This is good when our relationships are complicated!</p></li>
-<li><p>cons of nonparametric algorithms</p>
+<li>Pro: <strong>flexibility</strong>
+<ul>
+<li>Assume there <em>is</em> a relationship between y and x, but don’t make any assumptions about the “shape” of this relationship.</li>
+<li>This is good when our relationships are complicated!</li>
+</ul></li>
+<li>Cons:
 <ul>
 <li><strong>lack of insights:</strong> Can be useful for classification, but provide fewer insights into the <em>relationships</em> we’re modeling (eg: no coefficients, p-values, etc).</li>
-<li><strong>ignoring information about relationships</strong>: When the assumptions of a parametric model are appropriate, i.e.&nbsp;when the shape of a relationship is “known”, nonparametric algorithms will typically provide worse classifications by not utilizing that shape.</li>
+<li><strong>ignoring information about relationships</strong>: When the assumptions of a parametric model are appropriate, i.e.&nbsp;when the shape of a relationship is “known”, nonparametric algorithms will typically provide worse classifications by not utilizing that shape. (When the shape of a relationship is “known”, we should use that shape.)</li>
+<li>more computationally intense</li>
 </ul></li>
 </ul>
 <p><br><br></p>
 </section>
 </section>
-<section id="exercises" class="level1 unnumbered">
-<h1 class="unnumbered">Exercises</h1>
-<section id="part-1-k-nearest-neighbors" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="part-1-k-nearest-neighbors">Part 1: K Nearest Neighbors</h2>
+<section id="exercises-part-1-knn" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises: Part 1 (KNN)</h1>
 <p><strong>GOAL</strong></p>
 <p>Build <em>intuition</em> for the K Nearest Neighbors classification algorithm.</p>
 <p><br>
-<br>
 </p>
-<section id="exercise-1-check-out-the-data" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-1-check-out-the-data">Exercise 1: Check out the data</h3>
+<section id="exercise-1-check-out-the-data" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-1-check-out-the-data">Exercise 1: Check out the data</h2>
 <p>We’ll start by classifying land <code>type</code> using vegetation index (<code>NDVI</code>) and green-ness (<code>Mean_G</code>).</p>
 <p>First, plot and describe this relationship.</p>
 <div class="cell">
@@ -634,7 +648,7 @@ Assume there <em>is</em> a relationship between y and x, but don’t make any as
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L13-knn-trees_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -647,9 +661,12 @@ Solution:
 <p>Asphalt images tend to have low vegetation index and greenness.</p>
 Grass and tree images both tend to have higher vegetation index and greenness than asphalt, and tree images tend to have the highest vegetation index.
 </details>
+<p><br>
+<br>
+</p>
 </section>
-<section id="exercise-2-intuition" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-2-intuition">Exercise 2: Intuition</h3>
+<section id="exercise-2-intuition" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-2-intuition">Exercise 2: Intuition</h2>
 <p>The red dot below represents a <em>new</em> image with <code>NDVI</code> = 0.335 and <code>Mean_G</code> = 110:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>veg_green_plot <span class="sc">+</span> </span>
@@ -657,7 +674,7 @@ Grass and tree images both tend to have higher vegetation index and greenness th
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L13-knn-trees_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -682,8 +699,8 @@ Solution:
 <br>
 </p>
 </section>
-<section id="exercise-3-details" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-3-details">Exercise 3: Details</h3>
+<section id="exercise-3-details" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-3-details">Exercise 3: Details</h2>
 <p>Just as with KNN in the regression setting, it will be important to <em>standardize</em> quantitative x predictors before using them in the algorithm. <em>Why</em>?</p>
 <details>
 <summary>
@@ -691,14 +708,19 @@ Solution:
 </summary>
 So that the different scales don’t skew how we identify our nearest neighbors.
 </details>
+<p><br>
+<br>
+</p>
 </section>
-<section id="exercise-4-check-your-work" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-4-check-your-work">Exercise 4: Check your work</h3>
-<p>In exercise two, your answers should be grass (a), tree (b), and grass (c). If any of your answers are different, revisit!</p>
+<section id="exercise-4-check-your-work" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-4-check-your-work">Exercise 4: Check your work</h2>
+<p>In exercise two, your answers should be grass (a), tree (b), and grass (c). <!--If any of your answers are different, revisit!--> Let’s confirm these results by doing this “by hand” …</p>
+<p>Try writing R code to find the closest neighbors (without <code>tidymodels</code>).</p>
 <details>
 <summary>
 Solution:
 </summary>
+<p>Preprocessing:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale variables (x - mean)/sd</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span> </span>
@@ -707,37 +729,41 @@ Solution:
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale new point using mean, sd of sample</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_zNDVI =</span> (<span class="fl">0.335</span> <span class="sc">-</span> <span class="fu">mean</span>(NDVI))<span class="sc">/</span><span class="fu">sd</span>(NDVI)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_zMean_G =</span> (<span class="dv">110</span> <span class="sc">-</span> <span class="fu">mean</span>(Mean_G))<span class="sc">/</span><span class="fu">sd</span>(Mean_G))</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Euclidean Distance</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dist_to_new =</span> <span class="fu">sqrt</span>((new_zNDVI <span class="sc">-</span> zNDVI)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> ( new_zMean_G <span class="sc">-</span> zMean_G)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 1</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>land_3 <span class="sc">%&gt;%</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dist_to_new) <span class="sc">%&gt;%</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_zMean_G =</span> (<span class="dv">110</span> <span class="sc">-</span> <span class="fu">mean</span>(Mean_G))<span class="sc">/</span><span class="fu">sd</span>(Mean_G))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate distance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Euclidean Distance</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dist_to_new =</span> <span class="fu">sqrt</span>((new_zNDVI <span class="sc">-</span> zNDVI)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> ( new_zMean_G <span class="sc">-</span> zMean_G)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Find neighbors:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>land_3 <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dist_to_new) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    type NDVI Mean_G Bright_100 SD_NIR      zNDVI    zMean_G new_zNDVI
 1 grass  0.17 183.07     164.54  11.73 0.06245739 0.06245739  1.010834
   new_zMean_G dist_to_new
 1  -0.9128659    1.360395</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 3</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>land_3  <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dist_to_new) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type) <span class="sc">%&gt;%</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 3</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>land_3  <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dist_to_new) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    type n
 1 grass  2
 2  tree  1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 277</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>land_3 <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type) <span class="sc">%&gt;%</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 277</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>land_3 <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      type   n
 1   grass  112
@@ -747,10 +773,10 @@ Solution:
 </div>
 </details>
 </section>
-<section id="exercise-5-tuning-the-knn-algorithm-intuition" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-5-tuning-the-knn-algorithm-intuition">Exercise 5: Tuning the KNN algorithm: Intuition</h3>
-<p>The KNN algorithm depends upon tuning parameter K, the number of neighbors we consider in our classifications.</p>
-<p>Play around with the shiny app below to build some intuition here.</p>
+<section id="exercise-5-tuning-the-knn-algorithm" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-5-tuning-the-knn-algorithm">Exercise 5: Tuning the KNN algorithm</h2>
+<p>The KNN algorithm depends upon the tuning parameter <span class="math inline">\(K\)</span>, the number of neighbors we consider in our classifications.</p>
+<p>Play around with the shiny app (code below) to build some intuition here.</p>
 <p>After, answer the following questions.</p>
 <ol type="a">
 <li><p>In general, how would you describe the <strong>classification regions</strong> defined by the KNN algorithm?</p></li>
@@ -769,67 +795,74 @@ Solution:
 <li><p>What K value would you pick, based solely on the plots? (We’ll eventually tune the KNN using classification accuracy as a guide.)</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define KNN plot</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FNN)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>knnplot <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, y, k, lab_1, lab_2){</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> x1 <span class="ot">&lt;-</span> (x1 <span class="sc">-</span> <span class="fu">mean</span>(x1)) <span class="sc">/</span> <span class="fu">sd</span>(x1)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a> x2 <span class="ot">&lt;-</span> (x2 <span class="sc">-</span> <span class="fu">mean</span>(x2)) <span class="sc">/</span> <span class="fu">sd</span>(x2)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> x1s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x1), <span class="fu">max</span>(x1), <span class="at">len =</span> <span class="dv">100</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a> x2s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x2), <span class="fu">max</span>(x2), <span class="at">len =</span> <span class="dv">100</span>) </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> testdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(x1s,x2s)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a> knnmod <span class="ot">&lt;-</span> <span class="fu">knn</span>(<span class="at">train =</span> <span class="fu">data.frame</span>(x1, x2), <span class="at">test =</span> testdata, <span class="at">cl =</span> y, <span class="at">k =</span> k, <span class="at">prob =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a> testdata <span class="ot">&lt;-</span> testdata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">class =</span> knnmod)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a> g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(testdata, <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">color =</span> class)) <span class="sc">+</span> </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>     <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"KNN classification regions"</span>) <span class="sc">+</span> </span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) </span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a> g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> x2, <span class="at">color =</span> y)) <span class="sc">+</span> </span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>     <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"Raw data"</span>) <span class="sc">+</span> </span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) </span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a> <span class="fu">grid.arrange</span>(g1, g2)</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define KNN plot</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FNN)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>knnplot <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, y, k, lab_1, lab_2){</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a> x1 <span class="ot">&lt;-</span> (x1 <span class="sc">-</span> <span class="fu">mean</span>(x1)) <span class="sc">/</span> <span class="fu">sd</span>(x1)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a> x2 <span class="ot">&lt;-</span> (x2 <span class="sc">-</span> <span class="fu">mean</span>(x2)) <span class="sc">/</span> <span class="fu">sd</span>(x2)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a> x1s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x1), <span class="fu">max</span>(x1), <span class="at">len =</span> <span class="dv">100</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a> x2s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x2), <span class="fu">max</span>(x2), <span class="at">len =</span> <span class="dv">100</span>) </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a> testdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(x1s,x2s)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a> knnmod <span class="ot">&lt;-</span> <span class="fu">knn</span>(<span class="at">train =</span> <span class="fu">data.frame</span>(x1, x2), <span class="at">test =</span> testdata, <span class="at">cl =</span> y, <span class="at">k =</span> k, <span class="at">prob =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a> testdata <span class="ot">&lt;-</span> testdata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">class =</span> knnmod)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a> g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(testdata, <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">color =</span> class)) <span class="sc">+</span> </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>     <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"KNN classification regions"</span>) <span class="sc">+</span> </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a> g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> x2, <span class="at">color =</span> y)) <span class="sc">+</span> </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>     <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"Raw data"</span>) <span class="sc">+</span> </span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) </span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a> <span class="fu">grid.arrange</span>(g1, g2)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny server</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>server_KNN <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>model_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">knnplot</span>(<span class="at">x1 =</span> land_3<span class="sc">$</span>Mean_G, <span class="at">x2 =</span> land_3<span class="sc">$</span>NDVI, <span class="at">y =</span> land_3<span class="sc">$</span>type, <span class="at">k =</span> input<span class="sc">$</span>k_pick, <span class="at">lab_1 =</span> <span class="st">"Mean_G (standardized)"</span>, <span class="at">lab_2 =</span> <span class="st">"NDVI (standardized)"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny user interface</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>ui_KNN <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"Pick K:"</span>), </span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"k_pick"</span>, <span class="st">"K"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">277</span>, <span class="at">value =</span> <span class="dv">1</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"model_plot"</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the shiny app!</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_KNN, <span class="at">server =</span> server_KNN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny server</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>server_KNN <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>model_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">knnplot</span>(<span class="at">x1 =</span> land_3<span class="sc">$</span>Mean_G, <span class="at">x2 =</span> land_3<span class="sc">$</span>NDVI, <span class="at">y =</span> land_3<span class="sc">$</span>type, <span class="at">k =</span> input<span class="sc">$</span>k_pick, <span class="at">lab_1 =</span> <span class="st">"Mean_G (standardized)"</span>, <span class="at">lab_2 =</span> <span class="st">"NDVI (standardized)"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny user interface</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>ui_KNN <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">h4</span>(<span class="st">"Pick K:"</span>), </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"k_pick"</span>, <span class="st">"K"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">277</span>, <span class="at">value =</span> <span class="dv">1</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"model_plot"</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the shiny app!</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_KNN, <span class="at">server =</span> server_KNN)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <details>
 <summary>
 Solution:
 </summary>
+<!-- note to self: this formatting looks weird on slides...-->
 <ol type="a">
-<li>cool. flexible.</li>
-<li>When K is too small:</li>
+<li><p>cool. flexible.</p></li>
+<li><p>When K is too small:</p></li>
 </ol>
 <ul>
 <li>the classification regions are very small / wiggly / flexible</li>
@@ -848,7 +881,9 @@ Solution:
 <p><br>
 <br>
 </p>
-<p><strong>PAUSE TO REFLECT: KNN pros &amp; cons</strong></p>
+</section>
+<section id="pause-to-reflect-knn-pros-cons" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="pause-to-reflect-knn-pros-cons">PAUSE TO REFLECT: KNN pros &amp; cons</h2>
 <p>Pros:</p>
 <ul>
 <li>flexible</li>
@@ -865,31 +900,33 @@ In logistic regression, we run the algorithm <em>one time</em> to get a formula 
 <p><br><br></p>
 </section>
 </section>
-<section id="part-2-classification-trees" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="part-2-classification-trees">Part 2: Classification trees</h2>
-<section id="exercise-6-intuition" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-6-intuition">Exercise 6: Intuition</h3>
+<section id="exercises-part-2-trees" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises: Part 2 (Trees)</h1>
+<p>For the rest of class, work together to develop intuition on a new method: Classification Trees</p>
+<p>Work together on Exercises 6–11.</p>
+<section id="exercise-6-intuition" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-6-intuition">Exercise 6: Intuition</h2>
 <p>Classification trees are another nonparametric algorithm.</p>
 <p>Let’s build intuition for trees here.</p>
-<p>Ask Brianna for the <a href="https://docs.google.com/document/d/1RaTC8rSCxaT_k30BeNosFSbj14BIk2wNQtkHxQVoSSA/edit?usp=sharing">paper handout</a>.</p>
+<p>Ask Kelsey for the <a href="https://docs.google.com/document/d/10T6EEO73TUUZP3GbRxCkEXfoeVpG-hEc5gBmkNncwUQ/edit?usp=sharing">paper handout</a>.</p>
 <p>Complete it using only your intuition!</p>
 </section>
-<section id="exercise-7-use-the-tree" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-7-use-the-tree">Exercise 7: Use the tree</h3>
+<section id="exercise-7-use-the-tree" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-7-use-the-tree">Exercise 7: Use the tree</h2>
 <p>Build the classification tree in R.</p>
 <p>We’ll use this tree for prediction in this exercise, and dig into the tree details in the next exercise.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the tree in R</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This is only demo code! It will change in the future.</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>demo_model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(type <span class="sc">~</span> NDVI <span class="sc">+</span> SD_NIR, land_3, <span class="at">maxdepth =</span> <span class="dv">2</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(demo_model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the tree in R</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This is only demo code! It will change in the future.</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>demo_model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(type <span class="sc">~</span> NDVI <span class="sc">+</span> SD_NIR, land_3, <span class="at">maxdepth =</span> <span class="dv">2</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(demo_model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></p>
+<p><img src="L13-knn-trees_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -909,8 +946,8 @@ Solution:
 </ol>
 </details>
 </section>
-<section id="exercise-8-understand-the-tree" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-8-understand-the-tree">Exercise 8: Understand the tree</h3>
+<section id="exercise-8-understand-the-tree" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-8-understand-the-tree">Exercise 8: Understand the tree</h2>
 <p>The classification tree is like an upside down real world tree.</p>
 <p>The <strong>root node</strong> at the top starts with all 277 sample images, i.e.&nbsp;100% of the data.</p>
 <p>Among the images in this node, 21% are asphalt, 40% are grass, and 38% are tree. Thus if we stopped our tree here, we’d classify any new image as “grass” since it’s the most common category.</p>
@@ -940,8 +977,8 @@ Solution:
 </details>
 <p><br></p>
 </section>
-<section id="exercise-9-tuning-trees-min_n" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-9-tuning-trees-min_n">Exercise 9: tuning trees: <code>min_n</code></h3>
+<section id="exercise-9-tuning-trees-min_n" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-9-tuning-trees-min_n">Exercise 9: tuning trees: <code>min_n</code></h2>
 <p>In the above tree, we only made 2 splits. But we can keep growing our tree! Run the shiny app below.</p>
 <p>Keep <code>cost_complexity</code> at 0 and change <code>min_n</code>. This tuning parameter controls the minimum size, or number of images, that can fall into any (terminal) leaf node.</p>
 <ol type="a">
@@ -962,99 +999,97 @@ Solution:
 <li><p>Check out the classification regions. In what way do these differ from the KNN classification regions? What feature of these regions reflects <em>binary</em> splitting?</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define tree plot functions</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>tree_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, y, lab_1, lab_2, <span class="at">cp =</span> <span class="dv">0</span>, <span class="at">minbucket =</span> <span class="dv">1</span>){</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">cp =</span> cp, <span class="at">minbucket =</span> minbucket)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  x1s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x1), <span class="fu">max</span>(x1), <span class="at">len =</span> <span class="dv">100</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  x2s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x2), <span class="fu">max</span>(x2), <span class="at">len =</span> <span class="dv">100</span>) </span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  testdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(x1s,x2s) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> Var1, <span class="at">x2 =</span> Var2), <span class="at">type =</span> <span class="st">"class"</span>))</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(testdata, <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">color =</span> type)) <span class="sc">+</span> </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"tree classification regions"</span>)  <span class="sc">+</span> </span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) <span class="sc">+</span> </span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> x2, <span class="at">color =</span> y)) <span class="sc">+</span> </span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"Raw data"</span>) <span class="sc">+</span> </span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) <span class="sc">+</span> </span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid.arrange</span>(g1, g2, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>tree_plot_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(cp, minbucket){</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(type <span class="sc">~</span> NDVI <span class="sc">+</span> SD_NIR, land_3, <span class="at">cp =</span> cp, <span class="at">minbucket =</span> minbucket)</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(model,</span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">box.palette =</span> <span class="dv">0</span>,</span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">extra =</span> <span class="dv">0</span></span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>  )  </span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define tree plot functions</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>tree_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(x1, x2, y, lab_1, lab_2, <span class="at">cp =</span> <span class="dv">0</span>, <span class="at">minbucket =</span> <span class="dv">1</span>){</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">cp =</span> cp, <span class="at">minbucket =</span> minbucket)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  x1s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x1), <span class="fu">max</span>(x1), <span class="at">len =</span> <span class="dv">100</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  x2s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x2), <span class="fu">max</span>(x2), <span class="at">len =</span> <span class="dv">100</span>) </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  testdata <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(x1s,x2s) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> Var1, <span class="at">x2 =</span> Var2), <span class="at">type =</span> <span class="st">"class"</span>))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(testdata, <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Var2, <span class="at">color =</span> type)) <span class="sc">+</span> </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"tree classification regions"</span>)  <span class="sc">+</span> </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) <span class="sc">+</span> </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> x2, <span class="at">color =</span> y)) <span class="sc">+</span> </span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste</span>(lab_1), <span class="at">y =</span> <span class="fu">paste</span>(lab_2), <span class="at">title =</span> <span class="st">"Raw data"</span>) <span class="sc">+</span> </span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"asphalt "</span> <span class="ot">=</span> <span class="st">"black"</span>,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"grass "</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"tree "</span> <span class="ot">=</span> <span class="st">"#56B4E9"</span>)) <span class="sc">+</span> </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grid.arrange</span>(g1, g2, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>tree_plot_2 <span class="ot">&lt;-</span> <span class="cf">function</span>(cp, minbucket){</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(type <span class="sc">~</span> NDVI <span class="sc">+</span> SD_NIR, land_3, <span class="at">cp =</span> cp, <span class="at">minbucket =</span> minbucket)</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(model,</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">box.palette =</span> <span class="dv">0</span>,</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">extra =</span> <span class="dv">0</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>  )  </span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny server</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>server_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>model_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tree_plot</span>(<span class="at">x1 =</span> land_3<span class="sc">$</span>SD_NIR, <span class="at">x2 =</span> land_3<span class="sc">$</span>NDVI, <span class="at">y =</span> land_3<span class="sc">$</span>type, <span class="at">cp =</span> input<span class="sc">$</span>cp_pick, <span class="at">lab_1 =</span> <span class="st">"SD_NIR"</span>, <span class="at">lab_2 =</span> <span class="st">"NDVI"</span>, <span class="at">minbucket =</span> input<span class="sc">$</span>bucket)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>trees <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tree_plot_2</span>(<span class="at">cp =</span> input<span class="sc">$</span>cp_pick, <span class="at">minbucket =</span> input<span class="sc">$</span>bucket)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny user interface</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ui_tree <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"bucket"</span>, <span class="st">"min_n"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">100</span>, <span class="at">value =</span> <span class="dv">1</span>),</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"cp_pick"</span>, <span class="st">"cost_complexity"</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.36</span>, <span class="at">value =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"model_plot"</span>),</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"trees"</span>)</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the shiny app!</span></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_tree, <span class="at">server =</span> server_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny server</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>server_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>model_plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tree_plot</span>(<span class="at">x1 =</span> land_3<span class="sc">$</span>SD_NIR, <span class="at">x2 =</span> land_3<span class="sc">$</span>NDVI, <span class="at">y =</span> land_3<span class="sc">$</span>type, <span class="at">cp =</span> input<span class="sc">$</span>cp_pick, <span class="at">lab_1 =</span> <span class="st">"SD_NIR"</span>, <span class="at">lab_2 =</span> <span class="st">"NDVI"</span>, <span class="at">minbucket =</span> input<span class="sc">$</span>bucket)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>trees <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tree_plot_2</span>(<span class="at">cp =</span> input<span class="sc">$</span>cp_pick, <span class="at">minbucket =</span> input<span class="sc">$</span>bucket)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the shiny user interface</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ui_tree <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"bucket"</span>, <span class="st">"min_n"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">100</span>, <span class="at">value =</span> <span class="dv">1</span>),</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">"cp_pick"</span>, <span class="st">"cost_complexity"</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">0.36</span>, <span class="at">value =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"model_plot"</span>),</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">"trees"</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the shiny app!</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_tree, <span class="at">server =</span> server_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
 Solution:
 </summary>
 <ol type="a">
-<li>When <code>min_n</code> is too <em>small</em> (i.e.&nbsp;the tree is too <em>big</em>):
+<li><p>When <code>min_n</code> is too <em>small</em> (i.e.&nbsp;the tree is too <em>big</em>):</p>
 <ul>
 <li>the classification regions are very small / flexible</li>
 <li>the model is overfit</li>
-<li>the model will have low bias and high variance
-<ol start="2" type="a">
-<li>When <code>min_n</code> is too <em>big</em> (i.e.&nbsp;the tree is too <em>small</em>):</li>
-</ol></li>
+<li>the model will have low bias and high variance</li>
+</ul></li>
+<li><p>When <code>min_n</code> is too <em>big</em> (i.e.&nbsp;the tree is too <em>small</em>)</p>
+<ul>
 <li>the classification regions are very big / rigid</li>
 <li>the model is underfit</li>
-<li>the model will have high bias and low variance
-<ol start="3" type="a">
-<li>will vary</li>
-<li>like pruning a real tree, tuning classification trees “lops off” branches</li>
-<li>they are boxy</li>
-</ol></li>
+<li>the model will have high bias and low variance</li>
 </ul></li>
+<li><p>will vary</p></li>
+<li><p>like pruning a real tree, tuning classification trees “lops off” branches</p></li>
+<li><p>they are boxy</p></li>
 </ol>
 </details>
 </section>
-<section id="exercise-10-tuning-trees-cost-complexity-parameter" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-10-tuning-trees-cost-complexity-parameter">Exercise 10: tuning trees: cost-complexity parameter</h3>
+<section id="exercise-10-tuning-trees-cost-complexity-parameter" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-10-tuning-trees-cost-complexity-parameter">Exercise 10: tuning trees: cost-complexity parameter</h2>
 <p>There’s another tuning parameter to consider: <code>cost_complexity</code>! Like the LASSO <span class="math inline">\(\lambda\)</span> <em>penalty</em> parameter penalizes the inclusion of more predictors, <code>cost_complexity</code> penalizes the introduction of new splits. When <code>cost_complexity</code> is 0, there’s no penalty – we can make a split even if it doesn’t improve our classification accuracy. But the bigger (more positive) the <code>cost_complexity</code>, the greater the penalty – we can only make a split if the complexity it adds to the tree is offset by its improvement to the classification accuracy.</p>
 <ol type="a">
 <li>Let’s explore the goldilocks problem here. When <code>cost_complexity</code> is too <em>small</em> (i.e.&nbsp;the tree is too <em>big</em>):
@@ -1089,7 +1124,9 @@ Solution:
 </ul></li>
 </ol>
 </details>
-<p><strong>OPTIONAL: cost complexity details</strong></p>
+</section>
+<section id="optional-cost-complexity-details" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="optional-cost-complexity-details">OPTIONAL: cost complexity details</h2>
 <p>Define some notation:</p>
 <ul>
 <li>Greek letter <span class="math inline">\(\alpha\)</span> (“alpha”) = cost complexity parameter</li>
@@ -1099,8 +1136,8 @@ Solution:
 <p>Then our final tree is that which <em>minimizes</em> the combined misclassification rate and penalized number of nodes:</p>
 <p>R(T) + <span class="math inline">\(\alpha\)</span> T</p>
 </section>
-<section id="exercise-11-tree-properties" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-11-tree-properties">Exercise 11: tree properties</h3>
+<section id="exercise-11-tree-properties" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-11-tree-properties">Exercise 11: tree properties</h2>
 <p>NOTE: If you don’t get to this during class, no big deal. These ideas will also be in our next video!</p>
 <ol type="a">
 <li><p>We called the KNN algorithm <strong>lazy</strong> since we have to re-build the algorithm every time we want to make a new prediction / classification. Are classification trees lazy?</p></li>
@@ -1119,53 +1156,23 @@ Solution:
 </details>
 </section>
 </section>
-</section>
-<section id="wrapping-up" class="level1 unnumbered">
-<h1 class="unnumbered">Wrapping Up</h1>
-<p>Coming soon!</p>
+<section id="wrapping-up" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Wrapping Up</h1>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li>Upcoming due dates:
+<ul>
+<li>Today(!): HW4</li>
+<li>Before next class: CP10</li>
+<li>November 13: HW5</li>
+</ul></li>
+<li>IMPORTANT: Do you have a voting plan for next Tuesday?</li>
+</ul>
 
 
 </section>
 
 </main> <!-- /main -->
-
-<script>
-  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-  // slide changes (different for each slide format).
-  (function () {
-    // dispatch for htmlwidgets
-    function fireSlideEnter() {
-      const event = window.document.createEvent("Event");
-      event.initEvent("slideenter", true, true);
-      window.document.dispatchEvent(event);
-    }
-
-    function fireSlideChanged(previousSlide, currentSlide) {
-      fireSlideEnter();
-
-      // dispatch for shiny
-      if (window.jQuery) {
-        if (previousSlide) {
-          window.jQuery(previousSlide).trigger("hidden");
-        }
-        if (currentSlide) {
-          window.jQuery(currentSlide).trigger("shown");
-        }
-      }
-    }
-
-    // hookup for slidy
-    if (window.w3c_slidy) {
-      window.w3c_slidy.add_observer(function (slide_num) {
-        // slide_num starts at position 1
-        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-      });
-    }
-
-  })();
-</script>
-
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
