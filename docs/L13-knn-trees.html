@@ -420,7 +420,11 @@ window.Quarto = {
   <ul>
   <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#notes-nonparametric-classification" id="toc-notes-nonparametric-classification" class="nav-link" data-scroll-target="#notes-nonparametric-classification">Notes: Nonparametric Classification</a></li>
+  <li><a href="#notes-nonparametric-classification" id="toc-notes-nonparametric-classification" class="nav-link" data-scroll-target="#notes-nonparametric-classification">Notes: Nonparametric Classification</a>
+  <ul class="collapse">
+  <li><a href="#where-are-we" id="toc-where-are-we" class="nav-link" data-scroll-target="#where-are-we">Where are we?</a></li>
+  <li><a href="#motivating-example" id="toc-motivating-example" class="nav-link" data-scroll-target="#motivating-example">MOTIVATING EXAMPLE</a></li>
+  </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
   <ul class="collapse">
   <li><a href="#part-1-k-nearest-neighbors" id="toc-part-1-k-nearest-neighbors" class="nav-link" data-scroll-target="#part-1-k-nearest-neighbors">Part 1: K Nearest Neighbors</a>
@@ -482,10 +486,15 @@ Warning
 </div>
 <section id="settling-in" class="level1 unnumbered">
 <h1 class="unnumbered">Settling In</h1>
-<p>Coming soon!</p>
+<ul>
+<li>Sit with the same group as last class</li>
+<li>Locate and open today’s QMD</li>
+<li>Catch up on announcements/messages on Slack</li>
+<li>If you didn’t already, install the two R packages we need today: <code>rpart</code> and <code>rpart.plot</code></li>
+</ul>
 </section>
-<section id="learning-goals" class="level1 unnumbered">
-<h1 class="unnumbered">Learning Goals</h1>
+<section id="learning-goals" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Learning Goals</h1>
 <ul>
 <li>Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification</li>
 <li>Compute the weighted average Gini index to measure the quality of a classification tree split</li>
@@ -497,6 +506,9 @@ Warning
 </section>
 <section id="notes-nonparametric-classification" class="level1 unnumbered">
 <h1 class="unnumbered">Notes: Nonparametric Classification</h1>
+<section id="where-are-we" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="where-are-we">Where are we?</h2>
+<p><img src="images/MLdiagram3.jpg" class="img-fluid" style="width:90.0%"></p>
 <p><strong>CONTEXT</strong></p>
 <ul>
 <li><p><strong>world = supervised learning</strong><br>
@@ -505,6 +517,7 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <span class="math inline">\(y\)</span> is categorical</p></li>
 <li><p><strong>algorithm = NONparametric</strong></p></li>
 </ul>
+<p>. . .</p>
 <p><br>
 </p>
 <p><strong>GOAL</strong></p>
@@ -512,13 +525,17 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <p>Specifically, it assumes this relationship can be written as a specific formula with <em>parameters</em> <span class="math inline">\(\beta\)</span>:</p>
 <p><span class="math display">\[\text{log(odds that y is 1)} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_k x_k\]</span></p>
 <p><strong>NONparametric</strong> algorithms will be necessary when this model is too rigid to capture more complicated relationships.</p>
-<p><strong>MOTIVATING EXAMPLE</strong></p>
+</section>
+<section id="motivating-example" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="motivating-example">MOTIVATING EXAMPLE</h2>
 <p>Aerial photography studies of land cover is important to land conservation, land management, and understanding environmental impact of land use.</p>
 <p>IMPORTANT: Other aerial photography studies focused on people and movement can be used for surveillance, raising major ethical questions.</p>
 <p><img src="https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg" class="img-fluid"></p>
-<p>(https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)</p>
+<p>(Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)</p>
 <p>Let’s load data on a sample of aerial images from the <a href="https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover">UCI Machine Learning Repository</a>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -531,6 +548,7 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"asphalt "</span>,<span class="st">"grass "</span>,<span class="st">"tree "</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type)) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(type, NDVI, Mean_G, Bright_100, SD_NIR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check it out</span></span>
@@ -556,18 +574,20 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 3    tree  106</code></pre>
 </div>
 </div>
+<div class="incremental">
 <p>Thus we have the following variables:</p>
-<ul>
+<ul class="incremental">
 <li><p><code>type</code> = observed type of land cover, hand-labelled by a <em>human</em> (asphalt, grass, or tree)</p></li>
 <li><p>factors <em>computed</em> from the image<br>
 Though the data includes measurements of size and shape, we’ll focus on texture and “spectral” measurements, i.e.&nbsp;how the land interacts with sun radiation.</p>
-<ul>
+<ul class="incremental">
 <li><code>NDVI</code> = vegetation index</li>
 <li><code>Mean_G</code> = the green-ness of the image</li>
 <li><code>Bright_100</code> = the brightness of the image</li>
 <li><code>SD_NIR</code> = a texture measurement (calculated by the standard deviation of “near infrared”)</li>
 </ul></li>
 </ul>
+</div>
 <p><br>
 <br>
 </p>
@@ -587,6 +607,7 @@ Assume there <em>is</em> a relationship between y and x, but don’t make any as
 </ul></li>
 </ul>
 <p><br><br></p>
+</section>
 </section>
 <section id="exercises" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises</h1>
@@ -613,7 +634,7 @@ Assume there <em>is</em> a relationship between y and x, but don’t make any as
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L13-knn-trees_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -636,7 +657,7 @@ Grass and tree images both tend to have higher vegetation index and greenness th
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L13-knn-trees_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -868,7 +889,7 @@ In logistic regression, we run the algorithm <em>one time</em> to get a formula 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="L13-knn-trees_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1107,6 +1128,44 @@ Solution:
 </section>
 
 </main> <!-- /main -->
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

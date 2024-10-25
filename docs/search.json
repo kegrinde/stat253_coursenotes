@@ -1730,7 +1730,29 @@
     "href": "L13-knn-trees.html",
     "title": "13  KNN and Trees",
     "section": "",
-    "text": "Settling In\nComing soon!",
+    "text": "Settling In",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>KNN and Trees</span>"
+    ]
+  },
+  {
+    "objectID": "L13-knn-trees.html#where-are-we",
+    "href": "L13-knn-trees.html#where-are-we",
+    "title": "13  KNN and Trees",
+    "section": "Where are we?",
+    "text": "Where are we?\n\nCONTEXT\n\nworld = supervised learning\nWe want to model some output variable \\(y\\) using a set of potential predictors (\\(x_1, x_2, ..., x_p\\)).\ntask = CLASSIFICATION\n\\(y\\) is categorical\nalgorithm = NONparametric\n\n. . .\n\n\nGOAL\nJust as least squares and LASSO in the regression setting, the parametric logistic regression model makes very specific assumptions about the relationship of a binary categorical outcome \\(y\\) with predictors \\(x\\).\nSpecifically, it assumes this relationship can be written as a specific formula with parameters \\(\\beta\\):\n\\[\\text{log(odds that y is 1)} = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + ... + \\beta_k x_k\\]\nNONparametric algorithms will be necessary when this model is too rigid to capture more complicated relationships.",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>KNN and Trees</span>"
+    ]
+  },
+  {
+    "objectID": "L13-knn-trees.html#motivating-example",
+    "href": "L13-knn-trees.html#motivating-example",
+    "title": "13  KNN and Trees",
+    "section": "MOTIVATING EXAMPLE",
+    "text": "MOTIVATING EXAMPLE\nAerial photography studies of land cover is important to land conservation, land management, and understanding environmental impact of land use.\nIMPORTANT: Other aerial photography studies focused on people and movement can be used for surveillance, raising major ethical questions.\n\n(Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)\nLet’s load data on a sample of aerial images from the UCI Machine Learning Repository:\n\n\nCode\n# Load packages\nlibrary(tidymodels)\nlibrary(tidyverse)\n\n# Load & process data\n# There are 9 types of land use. For now, we'll only consider 3 types.\n# There are 147 possible predictors of land use. For now, we'll only consider 4 predictors.\nland_3 &lt;- read.csv(\"https://bcheggeseth.github.io/253_spring_2024/data/land_cover.csv\") %&gt;% \n  rename(type = class) %&gt;% \n  filter(type %in% c(\"asphalt \",\"grass \",\"tree \")) %&gt;% \n  mutate(type = as.factor(type)) %&gt;% \n  select(type, NDVI, Mean_G, Bright_100, SD_NIR)\n\n\n\n# Check it out\nhead(land_3)\n\n      type  NDVI Mean_G Bright_100 SD_NIR\n1    tree   0.31 240.18     161.92  11.50\n2    tree   0.39 184.15     117.76  11.30\n3 asphalt  -0.13  68.07      86.41   6.12\n4   grass   0.19 213.71     175.82  11.10\n5    tree   0.35 201.84     125.71  14.31\n6    tree   0.23 200.16     124.30  12.97\n\n\n\n# Table of land types\nland_3 %&gt;% \n  count(type)\n\n      type   n\n1 asphalt   59\n2   grass  112\n3    tree  106\n\n\n\nThus we have the following variables:\n\ntype = observed type of land cover, hand-labelled by a human (asphalt, grass, or tree)\nfactors computed from the image\nThough the data includes measurements of size and shape, we’ll focus on texture and “spectral” measurements, i.e. how the land interacts with sun radiation.\n\nNDVI = vegetation index\nMean_G = the green-ness of the image\nBright_100 = the brightness of the image\nSD_NIR = a texture measurement (calculated by the standard deviation of “near infrared”)\n\n\n\n\n\n\nQUESTION\nWhy can’t we use logistic regression to model land type (y) by the possible predictors NDVI, Mean_G, Bright_100, SD_NIR (x)?\n\nPARAMETRIC VS NONPARAMETRIC\nThere are parametric classifications algorithms that can model y outcomes with more than 2 categories. But they’re complicated and not very common.\nWe’ll consider two nonparametric algorithms today: K Nearest Neighbors & classification trees.\n\npro of nonparametric algorithms: flexibility\nAssume there is a relationship between y and x, but don’t make any assumptions about the “shape” of this relationship. This is good when our relationships are complicated!\ncons of nonparametric algorithms\n\nlack of insights: Can be useful for classification, but provide fewer insights into the relationships we’re modeling (eg: no coefficients, p-values, etc).\nignoring information about relationships: When the assumptions of a parametric model are appropriate, i.e. when the shape of a relationship is “known”, nonparametric algorithms will typically provide worse classifications by not utilizing that shape.",
     "crumbs": [
       "Classification: Building Flexible Models (Unit 5)",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>KNN and Trees</span>"

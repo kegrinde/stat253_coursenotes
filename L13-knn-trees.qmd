@@ -15,9 +15,14 @@ This page is currently under construction. Check back soon for updates!
 
 # Settling In {-}
 
-Coming soon!
+- Sit with the same group as last class
+- Locate and open today's QMD
+- Catch up on announcements/messages on Slack
+- If you didn't already, install the two R packages we need today: `rpart` and `rpart.plot`
 
-# Learning Goals {-}
+
+
+# Learning Goals {.unnumbered .smaller}
 
 - Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
 - Compute the weighted average Gini index to measure the quality of a classification tree split
@@ -31,7 +36,9 @@ Coming soon!
 
 # Notes: Nonparametric Classification {-}
 
+## Where are we?  {.unnumbered .smaller}
 
+![](images/MLdiagram3.jpg){width=90%}
 
 **CONTEXT**
 
@@ -44,6 +51,7 @@ Coming soon!
 - **algorithm = NONparametric**        
     
  
+. . .
 
 \
  
@@ -70,7 +78,7 @@ $$\text{log(odds that y is 1)} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \be
 
 
 
-**MOTIVATING EXAMPLE**
+## MOTIVATING EXAMPLE {.unnumbered .smaller}
 
 Aerial photography studies of land cover is important to land conservation, land management, and understanding environmental impact of land use.
 
@@ -78,12 +86,14 @@ IMPORTANT: Other aerial photography studies focused on people and movement can b
 
 ![](https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
 
-(https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
+(Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
 
 Let's load data on a sample of aerial images from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover):
 
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 # Load packages
 library(tidymodels)
 library(tidyverse)
@@ -98,12 +108,14 @@ land_3 <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/land_cove
   select(type, NDVI, Mean_G, Bright_100, SD_NIR)
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Check it out
 head(land_3)
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Table of land types
 land_3 %>% 
   count(type)
@@ -111,7 +123,7 @@ land_3 %>%
 
 
 
-
+::: {.incremental}
 Thus we have the following variables:
 
 - `type` = observed type of land cover, hand-labelled by a *human* (asphalt, grass, or tree)
@@ -122,6 +134,8 @@ Thus we have the following variables:
     - `Mean_G` = the green-ness of the image
     - `Bright_100` = the brightness of the image
     - `SD_NIR` = a texture measurement (calculated by the standard deviation of "near infrared")
+    
+:::
 
 
 
