@@ -271,7 +271,7 @@ c. all **277** neighbors in the sample
 <summary>Solution:</summary>
 a. grass
 b. tree
-c. grass (we learned above that tree images were the most common in our sample)
+c. grass (we learned above that grass images were the most common in our sample)
 </details>
 
 

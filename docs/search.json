@@ -1807,7 +1807,7 @@
     "href": "L13-knn-trees.html#exercise-2-intuition",
     "title": "13  KNN and Trees",
     "section": "Exercise 2: Intuition",
-    "text": "Exercise 2: Intuition\nThe red dot below represents a new image with NDVI = 0.335 and Mean_G = 110:\n\nveg_green_plot + \n  geom_point(aes(y = 0.335, x = 110), color = \"red\")\n\n\n\n\n\n\n\n\nHow would you classify this image (asphalt, grass, or tree) using…\n\nthe 1 nearest neighbor\nthe 3 nearest neighbors\nall 277 neighbors in the sample\n\n\n\nSolution:\n\n\ngrass\ntree\ngrass (we learned above that tree images were the most common in our sample)",
+    "text": "Exercise 2: Intuition\nThe red dot below represents a new image with NDVI = 0.335 and Mean_G = 110:\n\nveg_green_plot + \n  geom_point(aes(y = 0.335, x = 110), color = \"red\")\n\n\n\n\n\n\n\n\nHow would you classify this image (asphalt, grass, or tree) using…\n\nthe 1 nearest neighbor\nthe 3 nearest neighbors\nall 277 neighbors in the sample\n\n\n\nSolution:\n\n\ngrass\ntree\ngrass (we learned above that grass images were the most common in our sample)",
     "crumbs": [
       "Classification: Building Flexible Models (Unit 5)",
       "<span class='chapter-number'>13</span>  <span class='chapter-title'>KNN and Trees</span>"
