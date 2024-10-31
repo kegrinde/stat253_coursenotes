@@ -6,6 +6,8 @@ logo: "images/mac.png"
 
 ```{r 13_setup}
 #| include: false
+#| cache: false
+library(dplyr)
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 ```
 
@@ -311,6 +313,7 @@ Preprocessing:
 
 ```{r}
 #| eval: true
+#| cache: false
 # Scale variables (x - mean)/sd
 land_3 <- land_3 %>% 
   mutate(zNDVI = scale(NDVI), zMean_G = scale(Mean_G)) 
@@ -325,6 +328,7 @@ Calculate distance:
 
 ```{r}
 #| eval: true
+#| cache: false
 # Euclidean Distance
 land_3 <- land_3 %>%
   mutate(dist_to_new = sqrt((new_zNDVI - zNDVI)^2 + ( new_zMean_G - zMean_G)^2))
@@ -334,22 +338,23 @@ Find neighbors:
 
 ```{r}
 #| eval: true
+#| cache: false
 # K = 1
 land_3 %>%
   arrange(dist_to_new) %>%
-  slice(1)
+  slice(1) 
 
 # K = 3
 land_3  %>%
   arrange(dist_to_new) %>%
   slice(1:3) %>% 
   count(type) %>%
-  arrange(desc(n))
+  arrange(desc(n)) 
 
 # K = 277
 land_3 %>% 
   count(type) %>%
-  arrange(desc(n))
+  arrange(desc(n)) 
 ```
 </details>  
   
