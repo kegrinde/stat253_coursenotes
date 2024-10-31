@@ -724,7 +724,7 @@ Solution:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale variables (x - mean)/sd</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zNDVI =</span> <span class="fu">scale</span>(NDVI), <span class="at">zMean_G =</span> <span class="fu">scale</span>(NDVI)) </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zNDVI =</span> <span class="fu">scale</span>(NDVI), <span class="at">zMean_G =</span> <span class="fu">scale</span>(Mean_G)) </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale new point using mean, sd of sample</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span></span>

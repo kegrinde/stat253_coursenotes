@@ -313,7 +313,7 @@ Preprocessing:
 #| eval: true
 # Scale variables (x - mean)/sd
 land_3 <- land_3 %>% 
-  mutate(zNDVI = scale(NDVI), zMean_G = scale(NDVI)) 
+  mutate(zNDVI = scale(NDVI), zMean_G = scale(Mean_G)) 
 
 # Scale new point using mean, sd of sample
 land_3 <- land_3 %>%
