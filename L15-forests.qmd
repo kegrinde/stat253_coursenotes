@@ -47,7 +47,7 @@ More generally, use this shiny app (created by Prof Brianna Heggeseth) to help e
 
 ## Where Are We? {.unnumbered .smaller}
 
-Let's check out the table of contents in our textbook...
+Let's check out the table of contents in [our textbook](https://www.statlearning.com/)...
 
 . . . 
 
@@ -204,7 +204,7 @@ What does the word "forest" mean to you?
 
 ```{r}
 #| eval: true
-#| echo: false
+#| echo: true
 library(tidyverse)
 library(tidymodels)
 library(rpart)        # for building trees
@@ -461,6 +461,7 @@ Record your prediction and paste a picture of your tree into [this document](htt
 
 
 
+<br>
 
 ## EXAMPLE 6: Using our FOREST {.unnumbered .smaller}
 
@@ -654,6 +655,7 @@ candy_forest %>%
 
 
 
+<br><br>
 
 4. **Evaluating forests: concepts**    
 
@@ -773,6 +775,8 @@ Just like any classification model, forests divide our data points into classifi
 Let's explore this idea using some *simulated* data that illustrate some important contrasts.^[citation: https://daviddalpiaz.github.io/r4sl/ensemble-methods.html#tree-versus-ensemble-boundaries]
 
 Import and plot the data:
+
+<!-- note to self: change data source -->
     
 ```{r eval=TRUE}
 # Import data
