@@ -11,10 +11,11 @@ format:
 
 
 
-**NOTE:** You won't be able to knit this document until you complete some code chunks.
+**NOTE:** You should be able to render this document right away, but there will be ERROR messages in many of the code chunks until you complete them.
 
 
-```{r include = FALSE}
+```{r}
+#| include: false
 # OPTIONAL: Set a more color blind friendly palette 
 palette("Okabe-Ito")
 scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
@@ -23,7 +24,8 @@ scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
 knitr::opts_chunk$set(
   collapse = TRUE, 
   warning = FALSE,
-  message = FALSE,
+  message = FALSE, 
+  error = TRUE,
   fig.height = 2.75, 
   fig.width = 4.25,
   fig.env='figure',
@@ -38,7 +40,7 @@ knitr::opts_chunk$set(
 
 > **READING**    
 > 
-> For more on this topic, you're encouraged to read [ISLR](https://drive.google.com/file/d/106d-rN7cXpyAkgrUqjcPONNCyO-rX7MQ/view) Chapter 8.2.
+> For more on this topic, you're encouraged to read [ISLR](https://www.statlearning.com/) Chapter 8.2.
 
 
 
@@ -64,10 +66,14 @@ Add more nonparametric algorithms to our toolkit: **random forests** & **bagging
 
 
 
+\
+\
+\
+\
 
 
 
-**EXAMPLE 1: Anticipation**
+## EXAMPLE 1: Anticipation
 
 What does the word "forest" mean to you?
 
@@ -87,7 +93,7 @@ What does the word "forest" mean to you?
 
 
 
-**EXAMPLE 2: Candy!!!**
+## EXAMPLE 2: Candy!!!
 
 [fivethirtyeight article](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
 
@@ -103,6 +109,8 @@ library(infer)        # for resampling
 
 library(fivethirtyeight)
 data("candy_rankings")
+
+head(candy_rankings)
 ```
 
 ```{r}
@@ -112,6 +120,18 @@ data("candy_rankings")
 # The least popular?
 
 ```
+
+
+
+\
+\
+\
+\
+
+
+
+## EXAMPLE 3: Build an unpruned tree
+
 
 *For demonstration purposes only* let's:
 
@@ -131,23 +151,8 @@ candy <- candy_rankings %>%
 
 
 
-
-
-
-
-
-
-
-
 \
 \
-\
-\
-
-
-
-**EXAMPLE 3: Build an unpruned tree**
-
 
 Our goal is to model candy `popularity` by all possible predictors in our data.
 
@@ -177,6 +182,9 @@ Ideally, our classification algorithm would have both low bias and low variance:
 - low variance = the results wouldn't change much if we changed up the data set
 - low bias = within any data set, the predictions of y tend to have low error / high accuracy
 
+\
+\
+
 Unfortunately, like other **overfit** algorithms, unpruned trees don't enjoy both of these.
 They have...
 
@@ -204,7 +212,7 @@ They have...
 
 
 
-
+## New Concept
 
 **GOAL**
 
@@ -237,7 +245,7 @@ We only have 1 set of data...
 
 
 
-**EXAMPLE 4: Take a REsample of candy**
+## EXAMPLE 4: Take a REsample of candy
 
 We only have 1 sample of data.
 But we can *re*sample it (basically pretending we have a different sample).
@@ -291,7 +299,7 @@ c. TRUE / FALSE: Our trees will use the same predictors in all splits.
 
 
 
-**EXAMPLE 5: Build & share YOUR tree**
+## EXAMPLE 5: Build & share YOUR tree
 
 Build and plot a tree using your unique sample (`my_candy`):
 
@@ -318,7 +326,7 @@ my_tree %>%
 
 Finally, share your results!
 
-Record your prediction and paste a picture of your tree into [this document](https://docs.google.com/document/d/1i0hcFzXnscnWyRKB4LHW_BkHpAsDdDnYre3gHwhffhI/edit?usp=sharing).
+Record your prediction and paste a picture of your tree into [this document](https://docs.google.com/document/d/1S3l0dN1vPhy6N_OOom8Z91HPe4X9f-V-_EC0e9_L0do/edit?usp=sharing).
 
 
 
@@ -335,7 +343,7 @@ Record your prediction and paste a picture of your tree into [this document](htt
 
 
 
-**EXAMPLE 6: Using our FOREST**
+## EXAMPLE 6: Using our FOREST
 
 We now have a group of multiple trees -- a **forest**!
 These trees...
@@ -374,7 +382,9 @@ c. Can you anticipate any *drawbacks* of using forests instead of trees?
 
 
 
-**BAGGING (Bootstrap AGGregatING) & RANDOM FORESTS**    
+# Notes
+
+## BAGGING (Bootstrap AGGregatING) & RANDOM FORESTS  
 
 To classify a categorical response variable y using a set of p predictors x:
 
@@ -398,7 +408,7 @@ To classify a categorical response variable y using a set of p predictors x:
 
 
 
-**ENSEMBLE METHODS**    
+## ENSEMBLE METHODS    
 
 Bagging and random forest algorithms are **ensemble methods**.
 They combine the outputs of *multiple* machine learning algorithms.
@@ -412,7 +422,7 @@ As a result, they decrease variability from sample to sample, hence provide more
 \
 
 
-**EXAMPLE 7: pros & cons**
+## EXAMPLE 7: pros & cons
 
 a. Order trees, forests, & bagging algorithms from least to most computationally expensive.
 
@@ -430,7 +440,17 @@ c. Which of bagging or forests will produce a collection of trees that tend to l
 
 
 
+\
+\
+\
+\
 
+
+
+\
+\
+\
+\
 
 
 
@@ -652,7 +672,7 @@ Import and plot the data:
 
 ```{r}
 # Import data
-simulated_data <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/circle_sim.csv") %>% 
+simulated_data <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/circle_sim.csv") %>% 
   mutate(class = as.factor(class))
 
 # Plot data
@@ -740,7 +760,7 @@ Do one of the following:
 
 - Check out group assignment 2 on Moodle.
 
-- Work on Homework 6.
+- Work on homework.
 
 
 
@@ -749,6 +769,17 @@ Do one of the following:
 
     
 
+
+
+
+\
+\
+\
+\
+\
+\
+\
+\
 
 
 
@@ -786,7 +817,14 @@ The **big picture**:
 
 
 
-
+\
+\
+\
+\
+\
+\
+\
+\
 
 
 
