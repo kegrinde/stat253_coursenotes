@@ -8,15 +8,76 @@ logo: "images/mac.png"
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 ```
 
-::: {.callout-warning}
-This page is currently under construction. Check back soon for updates!
-:::
 
-# Settling In {-}
 
-Coming soon!
+# Settling In {.unnumbered}
+
+- Sit with the same group as last class. 
+    - Ask your groupmates what classes they are planning to take next semester!
+- Locate and open today's QMD
+- Catch up on announcements and messages on Slack
+<!--- Check your Feedback Spreadsheet for recent updates-->
+
+## Registration Tips {.unnumbered .smaller}
+
+Thinking about what MSCS course to take next semester? Consider the following: 
+
+- Interested in working with _**data**_ (eg wrangling, plotting, data acquisition, advanced data processing)? Try: 
+    - COMP/STAT 112 (Intro to Data Science)
+    - COMP/STAT 212 (Intermediate Data Science)
+- Interested in data and its connection to _**public health**_? Try:
+    - STAT 125 (Epidemiology)
+    - <mark>STAT 494 (Statistical Genetics)</mark>
+- Interested in developing a _**mathematical**_ foundation for better/deeper understanding of statistical methodology? Try: 
+    - <mark>MATH/STAT 354 (Probability)</mark>
+    - <mark>MATH/STAT 355 (Statistical Theory)</mark>
+    - COMP/MATH 365 (Computational Linear Algebra)
+- Interested in learning some _**computing**_ techniques that are fundamental to data science? Try: 
+    - COMP 123 (Core Concepts in Comp Sci)
+    - COMP 127 (Object-Oriented Programming and Abstraction)
+    - COMP 302 (Introduction to Database Management Systems)
+
+<mark>NOTE:</mark> all of the highlighted courses above require permission of instructor to register. Fill out the corresponding interest form by the end of the day <mark>TODAY</mark> if you're interested in taking any of these courses: [https://www.macalester.edu/mscs/mscs-course-waitlists/](https://www.macalester.edu/mscs/mscs-course-waitlists/)
 
 <br>
+
+More generally, use this shiny app (created by Prof Brianna Heggeseth) to help explore courses being offered next semester: [https://bheggeseth.shinyapps.io/Spring2025Courses/](https://bheggeseth.shinyapps.io/Spring2025Courses/)
+
+<br>
+
+## Where Are We? {.unnumbered .smaller}
+
+Let's check out the table of contents in our textbook...
+
+. . . 
+
+We've covered so far: 
+
+- Chapter 2
+- Chapter 3
+- Chapter 4 (except 4.4--4.6, which we won't cover)
+- Chapter 5
+- Chapter 6 (except 6.3, but we'll get there)
+- Chapter 7 (we focused on 7.1, 7.6--7.7)
+- Chapter 8 (doing more today...)
+
+. . . 
+
+After this, we'll cover: 
+
+- Chapter 12
+- Chapter 6.3
+
+. . . 
+
+Curious about some of the other chapters? 
+
+- Chapters 9 and 13: take Statistical Genetics 
+- Chapter 10: take Introduction to Artificial Intelligence
+- Chapter 11: take Survival Analysis
+
+<br>
+
 
 
 <!-- build a shiny app comparing unpruned trees and forests across multiple datasets? -->
@@ -47,9 +108,10 @@ Coming soon!
 
 
 
+# Small Group Discussion {-}
 
+Discuss the following examples with your group.
 
-# Small Group Discussions {-}
 
 ```{r}
 #| echo: false
@@ -83,12 +145,15 @@ candy_forest <- rf_spec %>%
   fit(popularity ~ ., data = candy)
 ```
 
+## Context {.unnumbered .smaller} 
 
+![](images/MLdiagram3.jpg){width=90%}
 
+<!--
 <center>
 <img src="images/MLdiagram3.jpg"/>
 </center>
-
+-->
 
 
 Within the broader machine learning landscape, we left off by discussing **supervised classification techniques**:
@@ -104,41 +169,42 @@ Within the broader machine learning landscape, we left off by discussing **super
 
 
 
-
-
-\
 \
 
 
 
-**GOAL**        
+**TODAY'S GOAL**        
 
 Add more nonparametric algorithms to our toolkit: **random forests** & **bagging**
 
 
 
-\
-\
-\
-\
+<br>
 
 
 
 
-**EXAMPLE 1: Anticipation**
+## EXAMPLE 1: Anticipation {.unnumbered .smaller}
 
 What does the word "forest" mean to you?
 
+<!-- note to self: switch this to a picture I took -->
+
+<center>
+<img src="images/forest.JPG" height="600"/>
+</center>
 
 <br>
 
-**EXAMPLE 2: Candy!!!**
+## EXAMPLE 2: Candy!!! {.unnumbered .smaller}
 
 [fivethirtyeight article](https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/)
 
 [the experiment](http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/)
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| echo: false
 library(tidyverse)
 library(tidymodels)
 library(rpart)        # for building trees
@@ -151,12 +217,51 @@ data("candy_rankings")
 ```
 
 ```{r}
+#| eval: true
+head(candy_rankings)
+```
+
+<br> 
+
+Write R code to find out the following: 
+
+```{r}
 # What are the 6 most popular candies?
 
 
 # The least popular?
 
 ```
+
+
+<details>
+<summary>Solution:</summary>
+```{r eval=TRUE}
+# What are the 6 most popular candies?
+## OPTION 1
+candy_rankings %>% 
+  arrange(desc(winpercent)) %>% 
+  head()
+
+## OPTION 2
+candy_rankings %>%
+  slice_max(winpercent, n = 6)
+
+# The least popular?
+## OPTION 1
+candy_rankings %>% 
+  arrange(winpercent) %>% 
+  head()
+
+## OPTION 2
+candy_rankings %>%
+  slice_min(winpercent, n = 6)
+```
+</details><br>
+<br>
+
+
+## EXAMPLE 3: Build an unpruned tree {.unnumbered .smaller}
 
 *For demonstration purposes only* let's:
 
@@ -177,25 +282,11 @@ candy <- candy_rankings %>%
 
 
 
-<details>
-<summary>Solution:</summary>
-```{r eval=TRUE}
-# What are the 6 most popular candies?
-candy_rankings %>% 
-  arrange(desc(winpercent)) %>% 
-  head()
-
-# The least popular?
-candy_rankings %>% 
-  arrange(winpercent) %>% 
-  head()
-```
-</details><br>
-<br>
 
 
 
-**EXAMPLE 3: Build an unpruned tree**
+
+
 
 Our goal is to model candy `popularity` by all possible predictors in our data.
 
@@ -243,20 +334,22 @@ low bias, high variance
 
 
 
-
+## New Concept {.unnumbered .smaller}
 
 **GOAL**
 
 Maintain the low bias of an unpruned tree while decreasing variance.
 
+\
 
 **APPROACH**
 
 Build a bunch of unpruned trees from different data.
 This way, our final result isn't overfit to our sample data.
 
+\
 
-**THE RUB**
+**THE RUB (CHALLENGE/DIFFICULTY)**
 
 We only have 1 set of data...
 
@@ -265,11 +358,12 @@ We only have 1 set of data...
 
 
 
-**EXAMPLE 4: Take a REsample of candy**
+## EXAMPLE 4: Take a REsample of candy {.unnumbered .smaller}
 
 We only have 1 sample of data.
 But we can *re*sample it (basically pretending we have a different sample).
-Let's each take our *own* unique candy resample:
+
+Let's each take our *own* unique candy resample (aka **bootstrapping**):
 
 - Take a sample of 85 candies from the original 85 candies, *with* replacement.
 - Some data points will be sampled multiple times while others aren't sampled at all.
@@ -279,9 +373,10 @@ Let's each take our *own* unique candy resample:
 
 Take your resample:
     
-```{r eval = FALSE}
+```{r}
+#| eval: true
 # Set the seed to YOUR phone number (just the numbers)
-set.seed(___)
+set.seed(123456789)
 
 # Take a REsample of candies from our sample
 my_candy <- sample_n(candy, size = nrow(candy), replace = TRUE)
@@ -325,11 +420,15 @@ Thus, the probability that any one row is NOT chosen is about 1/3 and the probab
 
 
 
-**EXAMPLE 5: Build & share YOUR tree**
+## EXAMPLE 5: Build & share YOUR tree {.unnumbered .smaller}
 
 Build and plot a tree using your unique sample (`my_candy`):
 
-```{r eval = FALSE, fig.width = 8, fig.height = 8}
+```{r}
+#| code-fold: true
+#| eval: false
+#| fig-width: 8
+#| fig-height: 8
 # Build your tree
 my_tree <- tree_spec %>% 
   fit(popularity ~ ., data = my_candy)
@@ -345,14 +444,16 @@ my_tree %>%
 
 Use your tree to classify Baby Ruth, the 7th candy in the original data.
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
+#| code-fold: true
 my_tree %>% 
   predict(new_data = candy[7,])
 ```
 
 Finally, share your results!
 
-Record your prediction and paste a picture of your tree into [this document](https://docs.google.com/document/d/1i0hcFzXnscnWyRKB4LHW_BkHpAsDdDnYre3gHwhffhI/edit?usp=sharing).
+Record your prediction and paste a picture of your tree into [this document](https://docs.google.com/document/d/1S3l0dN1vPhy6N_OOom8Z91HPe4X9f-V-_EC0e9_L0do/edit?usp=sharing).
 
 
 
@@ -361,9 +462,10 @@ Record your prediction and paste a picture of your tree into [this document](htt
 
 
 
-**EXAMPLE 6: Using our FOREST**
+## EXAMPLE 6: Using our FOREST {.unnumbered .smaller}
 
 We now have a group of multiple trees -- a **forest**!
+
 These trees...
 
 - differ from resample to resample
@@ -393,41 +495,49 @@ c. computational intensity (lack of efficiency)
 
 
 
-**BAGGING (Bootstrap AGGregatING) & RANDOM FORESTS**    
+# Notes: Bagging and Forests {-}
+
+## BAGGING (Bootstrap AGGregatING) & Random Forests {.unnumbered .smaller}
+
+::: {.incremental}
 
 To classify a categorical response variable y using a set of p predictors x:
 
 - Take B *re*samples from the original sample.
+    - Sample WITH replacement
+    - Sample size = original sample size n
 
 - Use each resample to build an *unpruned* tree.    
     - For bagging: consider all p predictors in each split of each tree    
-    - For forests: at each split in each tree, randomly select and consider only a *subset* of the predictors (often roughly p/2 or $\sqrt{p}$)
+    - For *random* forests: at each split in each tree, randomly select and consider only a *subset* of the predictors (often roughly p/2 or $\sqrt{p}$)
 
 - Use each of the B trees to classify y at a set of predictor values x.    
 
 - Average the classifications using a *majority vote*: classify y as the most common classification among the B trees.    
-
+:::
 
 <br>
 
 
 
 
-**ENSEMBLE METHODS**    
+## Ensemble Methods {.unnumbered .smaller}    
 
 Bagging and random forest algorithms are **ensemble methods**.
+
 They combine the outputs of *multiple* machine learning algorithms.
+
 As a result, they decrease variability from sample to sample, hence provide more stable predictions / classifications than might be obtained by any algorithm alone.
 
 
 <br>
 
 
-**EXAMPLE 7: pros & cons**
+## EXAMPLE 7: pros & cons {.unnumbered .smaller} 
 
 a. Order trees, forests, & bagging algorithms from least to most computationally expensive.
 b. What results will be easier to interpret: trees or forests?
-c. Which of bagging or forests will produce a collection of trees that tend to look very similar to each other, and similar to the original tree? Hence which of these algorithms is more dependent on the sample data, thus will *vary* more if we change up the data?
+c. Which of bagging or forests will produce a collection of trees that tend to look very similar to each other, and similar to the original tree? Hence which of these algorithms is more dependent on the sample data, thus will *vary* more if we change up the data? [both questions have the same answer]
 
 
 <details>
@@ -446,7 +556,9 @@ c. bagging (forests tend to have lower variability)
 
 # Exercises {-}
 
+For the rest of the class, work together on Exercises 1--7
 
+## {.unnumbered .smaller}
 
 1. **Tuning parameters (challenge)**        
 
@@ -778,15 +890,19 @@ e. Forest classification regions are less rigid / boxy than tree classification 
 Do one of the following:  
 
 - Check out the optional "Deeper learning" section below on another ensemble method: **boosting**.
-- Check out group assignment 2 on Moodle. On Thursday, you will be getting into groups of your own choosing and picking what topic to explore.
-- Work on Homework 6.
+- Check out group assignment 2 on Moodle. Next class, your group will pick what topic to explore.
+- Work on homework.
     
  
 
 
-# Wrapping Up {-}
+# Wrapping Up {.unnumbered .smaller}
 
-Coming soon!
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- Upcoming due dates: 
+  - Before next class: CP11 (formal review of forests) _**AND**_ review Group Assignment 2 instructions
+  - Next Wednesday: HW5 and HW4 Revisions
+  - Coming soon: Quiz 2 (Nov 19), Group Assignment 2 (Nov 26)
 
 
 
