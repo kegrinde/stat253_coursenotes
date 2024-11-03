@@ -780,7 +780,7 @@ Import and plot the data:
     
 ```{r eval=TRUE}
 # Import data
-simulated_data <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/circle_sim.csv") %>% 
+simulated_data <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/circle_sim.csv") %>% 
   mutate(class = as.factor(class))
     
 # Plot data
@@ -899,6 +899,7 @@ Do one of the following:
     
  
 
+<br><br>
 
 # Wrapping Up {.unnumbered .smaller}
 
@@ -909,6 +910,7 @@ Do one of the following:
   - Coming soon: Quiz 2 (Nov 19), Group Assignment 2 (Nov 26)
 
 
+<br><br>
 
 # Deeper learning (optional) {-}
 
@@ -943,6 +945,7 @@ The **big picture**:
 
 
 
+<br><br>
 
 # Notes: R code {-}
 
