@@ -1,0 +1,645 @@
+---
+title: "Cross-Validation (Notes)"
+subtitle: "Stat 253"
+author: "Your Name"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+---
+
+```{r include = FALSE}
+# OPTIONAL: Set a more color blind friendly palette 
+palette("Okabe-Ito")
+scale_colour_discrete <- function(...) scale_colour_manual(values = palette())
+scale_fill_discrete   <- function(...) scale_fill_manual(values = palette())
+
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 2.75, 
+  fig.width = 4.25,
+  fig.env='figure',
+  fig.pos = 'h',
+  fig.align = 'center')
+```
+
+
+
+
+
+
+# IMPORTANT REMINDERS
+
+- The "Notes" sections of this document for your reference. Leave any code in 
+those sections as is.
+- When working on the exercises, copy-paste any starter code that I give you into a 
+new code chunk, below, and edit from there.
+
+
+
+
+
+
+
+
+
+# Notes: k-fold Cross-Validation {-}
+
+
+**CONTEXT**
+
+- **world = supervised learning**       
+    We want to build a model some output variable $y$ by some predictors $x$.
+
+- **task = regression**       
+    $y$ is quantitative
+
+- **algorithm = linear regression model**       
+    We'll assume that the relationship between $y$ and $x$ can be represented by
+    
+    $$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ... + \beta_p x_p + \varepsilon$$
+
+
+
+
+**GOAL: model evaluation**        
+
+We want more **honest** metrics of prediction quality that 
+
+(1) assess how well our model predicts **new outcomes**; and 
+(2) help prevent **overfitting**.
+    
+
+
+**Why is overfitting so bad?**
+
+Not only can overfitting produce misleading models, it can have serious societal impacts. Examples:
+
+- [A former Amazon algorithm](https://www.reuters.com/article/us-amazon-com-jobs-automation-insight/amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK08G) built to help sift through resumes was _overfit_ to its current employees in leadership positions (who weren't representative of the general population or candidate pool).
+
+- Facial recognition algorithms are often _overfit_ to the people who build them (who are not broadly representative of society). As one example, this has led to [disproportionate bias in policing](https://www.nytimes.com/2019/07/08/us/detroit-facial-recognition-cameras.html). For more on this topic, you might check out [Coded Bias](https://www.youtube.com/watch?v=jZl55PsfZJQ), a documentary by Shalini Kantayya which features MIT Media Lab researcher Joy Buolamwini.
+
+- Polygenic risk scores (PRSs), which aim to predict a person's risk of developing a particular disease/trait 
+based on their genetics, are often _overfit_ to the data on which they are built (which, historically, 
+has exclusively---or at least primarily---included individuals of European ancestry). 
+As a result, PRS predictions tend to be more accurate in European populations and new
+research suggests that their [continued use in clinical settings could exacerbate health disparities](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6563838/). 
+
+
+
+We can use **k-fold cross-validation** to estimate the typical error in our model predictions for *new* data:
+
+- Divide the data into $k$ folds (or groups) of approximately equal size.    
+- Repeat the following procedures for each fold $j = 1,2,...,k$:    
+    - Remove fold $j$ from the data set.    
+    - Fit a model using the data in the other $k-1$ folds (training).    
+    - Use this model to predict the responses for the $n_j$ cases in fold $j$: $\hat{y}_1, ..., \hat{y}_{n_j}$.    
+    - Calculate the MAE for fold $j$ (testing): $\text{MAE}_j = \frac{1}{n_j}\sum_{i=1}^{n_j} |y_i - \hat{y}_i|$.
+- Combine this information into one measure of model quality:
+    $$\text{CV}_{(k)} = \frac{1}{k} \sum_{j=1}^k \text{MAE}_j$$
+
+
+
+![](https://kegrinde.github.io/stat253_coursenotes/images/crossval.png)
+
+
+
+
+
+
+
+
+
+
+
+
+# Small Group Discussion: Algorithms and Tuning {-}
+
+
+**Definitions:**
+
+- **algorithm** = a step-by-step procedure for solving a problem (Merriam-Webster)
+
+- **tuning parameter** = a *parameter* or *quantity* upon which an algorithm depends, that must be *selected* or *tuned* to "optimize" the algorithm
+
+![](https://c1.wallpaperflare.com/preview/461/820/840/music-low-electric-bass-strings.jpg){width=250px}^[https://www.wallpaperflare.com/grayscale-photography-of-guitar-headstock-music-low-electric-bass-wallpaper-zzbyn]
+![](https://p1.pxfuel.com/preview/870/881/120/mixer-music-audio-studio-sound-studio-sound-mixer.jpg){width=250px}
+
+
+**Prompts:**
+
+1. **Algorithms**
+
+a. Why is $k$-fold cross-validation an *algorithm*?
+
+
+
+b. What is the *tuning parameter* of this algorithm and what values can this take?
+
+
+
+
+
+
+2. **Tuning the k-fold Cross-Validation algorithm**
+
+Let's explore k-fold cross-validation with some personal experience. Our class has a representative sample of cards from a non-traditional population (no "face cards", not equal numbers, etc). We want to use these to predict whether a new card will be odd or even (a classification task).
+
+a. Based on *all* of our cards, do we predict the next card will be odd or even?
+
+
+b. You've been split into 2 groups. Use 2-fold cross-validation to estimate the possible error of using *our* sample of cards to predict whether a *new* card will be odd or even. How's this different than *validation*?
+
+
+c. Repeat for 3-fold cross-validation. Why might this be better than 2-fold cross-validation?
+
+
+
+d. Repeat for LOOCV, i.e. n-fold cross-validation where n is the number of students in this room. Why might this be worse than 3-fold cross-validation?
+
+
+
+e. What value of k do you think practitioners typically use?
+
+
+
+3. **R Code Preview**
+
+We've been doing a 2-step process to build **linear regression models** using the **tidymodels** package:
+
+```{r eval = FALSE}
+# STEP 1: model specification
+lm_spec <- linear_reg() %>%
+  set_mode("regression") %>% 
+  set_engine("lm")
+  
+# STEP 2: model estimation
+my_model <- lm_spec %>% 
+  fit(
+    y ~ x1 + x2,
+    data = sample_data
+  )
+```
+
+
+For k-fold cross-validation, we can *tweak* STEP 2.
+
+Discuss the code and why we need to set the seed.
+
+```{r eval = FALSE}
+# k-fold cross-validation
+set.seed(___)
+my_model_cv <- lm_spec %>% 
+  fit_resamples(
+    y ~ x1 + x2, 
+    resamples = vfold_cv(sample_data, v = ___), 
+    metrics = metric_set(mae, rsq)
+  )
+```
+
+
+
+
+
+
+
+
+
+# Notes: R code {-}
+
+
+Suppose we wish to build and evaluate a linear regression model of `y` vs `x1` and `x2` using our `sample_data`. 
+
+
+**First, load the appropriate packages**
+
+```{r eval = FALSE}
+# Load packages
+library(tidyverse)
+library(tidymodels)
+```
+
+
+
+
+**Obtain k-fold cross-validated estimates of MAE and $R^2$**
+
+(Review example 3 above for discussion of these steps.)
+
+
+```{r eval = FALSE}
+# model specification
+lm_spec <- linear_reg() %>%
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# k-fold cross-validation
+# For "v", put your number of folds k
+set.seed(___)
+model_cv <- lm_spec %>% 
+  fit_resamples(
+    y ~ x1 + x2,
+    resamples = vfold_cv(sample_data, v = ___), 
+    metrics = metric_set(mae, rsq)
+)
+```
+
+
+
+
+
+**Obtain the cross-validated metrics**
+
+```{r eval = FALSE}
+model_cv %>% 
+  collect_metrics()
+```
+
+
+
+
+
+
+**Details: get the MAE and R-squared for each test fold**
+
+```{r eval = FALSE}
+# MAE for each test fold: Model 1
+model_cv %>% 
+  unnest(.metrics)
+```
+
+
+
+
+
+
+
+
+# Exercises
+
+```{r message = FALSE, warning = FALSE}
+# Load packages and data
+library(tidyverse)
+library(tidymodels)
+humans <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/bodyfat50.csv") %>% 
+  filter(ankle < 30) %>% 
+  rename(body_fat = fatSiri)
+```
+
+
+
+
+## EXERCISE 1: Review -- In-sample metrics
+
+Use the `humans` data to build two separate models of `height`:
+
+```{r eval = FALSE}
+# STEP 1: model specification
+lm_spec <- ___() %>% 
+  set_mode(___) %>% 
+  set_engine(___)
+```
+
+```{r}
+
+```
+
+
+```{r eval = FALSE}
+# STEP 2: model estimation
+model_1 <- ___ %>% 
+  ___(height ~ hip + weight + thigh + knee + ankle, data = humans)
+model_2 <- ___ %>% 
+  ___(height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist, data = humans)
+```
+
+```{r}
+
+```
+
+
+
+
+
+Calculate the **in-sample** R-squared for both models:
+
+```{r eval = FALSE}
+# IN-SAMPLE R^2 for model_1 = ???
+model_1 %>% 
+  ___()
+
+# IN-SAMPLE R^2 for model_2 = ???
+model_2 %>% 
+  ___()
+```
+
+```{r}
+
+```
+
+
+
+
+Calculate the **in-sample** MAE for both models:
+
+```{r eval = FALSE}
+# IN-SAMPLE MAE for model_1 = ???
+model_1 %>% 
+  ___(new_data = ___) %>% 
+  mae(truth = ___, estimate = ___)
+
+# IN-SAMPLE MAE for model_2 = ???
+model_2 %>% 
+  ___(new_data = ___) %>% 
+  mae(truth = ___, estimate = ___)
+```
+
+```{r}
+
+```
+
+
+
+
+
+\
+\
+
+
+## EXERCISE 2: In-sample model comparison
+
+Which model seems "better" by the in-sample metrics you calculated above? Any concerns about either of these models?
+
+
+
+
+
+
+
+
+
+
+\
+\
+
+
+## EXERCISE 3: 10-fold CV
+
+Complete the code to run 10-fold cross-validation for our two models.
+
+`model_1`: `height ~ hip + weight + thigh + knee + ankle`       
+`model_2`: `height ~ chest * age * weight * body_fat + abdomen + hip + thigh + knee + ankle + biceps + forearm + wrist`
+
+```{r eval = FALSE}
+# 10-fold cross-validation for model_1
+set.seed(253)
+model_1_cv <- ___ %>% 
+  ___(
+    ___,
+    ___ = vfold_cv(___, v = ___), 
+    ___ = metric_set(mae, rsq)
+  )
+```
+
+```{r}
+
+```
+
+
+```{r eval = FALSE}
+# 10-fold cross-validation for model_2
+set.seed(253)
+model_2_cv <- ___ %>% 
+  ___(
+    ___,
+    ___ = vfold_cv(___, v = ___), 
+    ___ = metric_set(mae, rsq)
+  )
+```
+
+```{r}
+
+```
+    
+
+
+\
+\
+
+
+
+## EXERCISE 4: Calculating the CV MAE
+
+a. Use `collect_metrics()` to obtain the cross-validated MAE and $R^2$ for both models.
+
+```{r eval = FALSE}
+# HINT
+___ %>% 
+  collect_metrics()
+```
+    
+b. Interpret the cross-validated MAE *and* $R^2$ for `model_1`.    
+    
+
+
+
+
+
+
+
+\
+\
+
+
+## EXERCISE 5: Details -- fold-by-fold results
+
+`collect_metrics()` gave the final CV MAE, or the average MAE across all 10 test folds. `unnest(.metrics)` provides the MAE from *each* test fold.
+
+a. Obtain the fold-by-fold results for the `model_1` cross-validation procedure using `unnest(.metrics)`.       
+
+```{r eval = FALSE}
+# HINT
+___ %>% 
+  unnest(.metrics)
+```
+
+```{r}
+
+```
+
+
+
+b. Which fold had the worst average prediction error and what was it?
+
+
+
+c. Recall that `collect_metrics()` reported a final CV MAE of 1.87 for `model_1`. Confirm this calculation by wrangling the fold-by-fold results from part a.
+
+
+
+   
+    
+    
+    
+
+
+\
+\
+
+
+
+
+
+## EXERCISE 6: Comparing models
+
+The table below summarizes the in-sample and 10-fold CV MAE for both models.    
+    
+Model        IN-SAMPLE MAE  10-fold CV MAE
+----------- -------------- ---------------
+`model_1`             1.55            1.87
+`model_2`             0.64            2.47
+
+
+a. Based on the in-sample MAE alone, which model appears better?    
+
+
+b. Based on the CV MAE alone, which model appears better?    
+
+
+c. Based on all of these results, which model would you pick?
+
+
+d. Do the in-sample and CV MAE suggest that `model_1` is overfit to our `humans` sample data? What about `model_2`?
+
+
+
+
+
+\
+\
+
+
+## EXERCISE 7: LOOCV
+
+a. Reconsider `model_1`. Instead of estimating its prediction accuracy using the 10-fold CV MAE, use the LOOCV MAE. THINK: How many people are in our `humans` sample?
+
+
+
+b. How does the LOOCV MAE compare to the 10-fold CV MAE of 1.87? NOTE: These are just two different *approaches* to estimating the same thing: the typical prediction error when applying our model to new data. Thus we should expect them to be similar.    
+
+
+
+c. Explain why we technically don't *need* to `set.seed()` for the LOOCV algorithm.
+
+
+
+
+
+\
+\
+
+
+
+## EXERCISE 8: Data drill
+
+a. Calculate the average height of people under 40 years old vs people 40+ years old.
+
+```{r}
+
+```
+
+b. Plot height vs age among our subjects that are 30+ years old.
+
+```{r}
+
+```
+
+c. Fix this code:       
+
+```{r eval = FALSE}
+model_3<-lm_spec%>%fit(height~age,data=humans)
+model_3%>%tidy()
+```
+
+```{r}
+
+```
+
+
+
+
+
+## EXERCISE 9: Reflection (Part 1)
+
+The "regular" exercises are over but class is not done! Your group should agree to either work on HW2 OR the remaining reflection questions. 
+    
+This is the end of Unit 1 on "Regression: Model Evaluation"! Let's reflect on the technical content of this unit:
+
+- What was the main motivation / goal behind this unit?
+
+- What are the four main questions that were important to this unit?
+
+- For each of the following tools, describe how they work and what questions they help us address:        
+    - R-squared
+    - residual plots
+    - MAE
+    - in-sample MAE
+    - validation
+    - cross-validation
+
+- In your own words, define the following: overfitting, algorithm, tuning parameter.
+
+- Review the new tidymodels syntax from this unit. Identify key themes and patterns.
+
+
+
+
+
+\
+\
+
+
+## EXERCISE 10: Reflection (Part 2)
+
+The reflection above addresses your **learning goals** in this course. Consider the other components that have helped you worked toward this learning throughout Unit 1.
+    
+a. With respect to **collaboration**, reflect upon your strengths and what you might change in the next unit:  
+    
+    - How actively did you contribute to group discussions?
+    - How actively did you include all other group members in discussion?
+    - In what ways did you (or did you not) help create a space where others feel comfortable making mistakes & sharing their ideas?
+
+b. With respect to **engagement**, reflect upon your strengths and what you might change the next unit:
+    
+    - Did you regularly attend, be on time for, & stay for the full class sessions?
+    - Have you not missed more than 3 in-person class sessions?
+    - Were you actively present during class (eg: not on your phone, not working on other courses, etc)?
+    - Did you stay updated on Slack?
+    - When you had questions, did you ask them on Slack or in OH?
+
+c. With respect to **preparation**, how many of checkpoints 1--3 did you complete and pass?
+
+d. With respect to **exploration**, did you complete and pass HW1? Are you on track to complete and pass HW2?
+    
+  
+    
+
+
+
+\
+\
+
+
+## Done!
+
+- Knit/render your notes.
+- Check the solutions in the online manual.
+- Check out the wrap-up steps online
+- Work on your homework!
+
+
+
+    
