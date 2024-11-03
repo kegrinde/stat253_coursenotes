@@ -12,13 +12,17 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 This page is currently under construction. Check back soon for updates!
 :::
 
-# Settling In {-}
+# Settling In {.unnumbered}
 
-Coming soon!
+- Sit with the same group as last class.
+  - If you missed class last week, please check in with me to get your (potentially) new group number!
+- Locate and open today's QMD
+- Catch up on announcements and messages on Slack
+- Check your Feedback Spreadsheet for recent updates
 
 <br>
 
-# Learning Goals {-}
+# Learning Goals {.unnumbered .smaller}
 
 - Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
 - Compute the weighted average Gini index to measure the quality of a classification tree split
@@ -38,7 +42,9 @@ Coming soon!
 
 <!-- MY CODE -->
 
-```{r eval = FALSE, echo = FALSE}
+```{r}
+#| eval: false
+#| echo: false
 # Define a function that we'll use to plot classification regions
 # of land type with respect to Mean_G and NDVI
 # (This is just demo code! Don't worry about it.)
@@ -129,7 +135,9 @@ class_region_plot(model = knn_k_16) +
 
 
 
-```{r eval = FALSE, echo = FALSE}
+```{r}
+#| eval: false
+#| echo: false
 # CHUNK GOAL:
 # BUILD A BUNCH OF TREES FOR A RANGE OF COST COMPLEXITY PARAMETERS
 # THIS WILL TAKE A WHILE TO RUN. WHY?
@@ -230,7 +238,8 @@ class_region_plot(model = unpruned_small_tree) +
 
 
 
-```{r echo = FALSE}
+```{r}
+#| echo: false
 # Ignore. This sets color blind compatible palettes
 library(viridis)
 scale_colour_discrete <- function(...) scale_color_viridis_d()
@@ -240,7 +249,9 @@ scale_fill_discrete <- function(...) scale_fill_viridis_d()
 
 # Notes: Nonparametric Classification {-}
 
+## Where Are We? {.unnumbered .smaller}
 
+![](images/MLdiagram3.jpg){width=90%}
 
 **CONTEXT**
 
@@ -265,16 +276,51 @@ Build and evaluate **nonparametric** classification models of some **categorical
 
 
 
+## Quick Recap {.unnumbered .smaller}
+
+How do we evaluate classification models? 
+
+. . . 
+
+Binary Metrics: 
+
+- Accuracy (overall; compare to no information rate = frequency of largest class)
+- Sensitivity (accuracy among Y = 1, true positive rate, recall)
+- Specificity (accuracy among Y = 0, true negative rate)
+- False Positive Rate = 1 - Specificity
+- ROC AUC (accounts for many thresholds)
+  - the probability that a randomly chosen case from the Y=1 class will receive, from the classifier, a higher predicted probability than a randomly chosen case from the Y = 0 class
+
+. . .
+
+More Binary Metrics [optional]:
+
+- False Negative Rate = 1 - Sensitivity
+- J Index =  Sensitivity + Specificity - 1
+- Balanced Accuracy = (Sens + Spec)/2
+- Kappa (how much better your model is over using class frequencies)
+- MCC (correlation between truth and prediction)
+- Positive Predictive Value (accuracy among those we predicted Y = 1, precision)
+- Precision-Recall AUC (accounts for many thresholds)
+- F measure = $(1 + \beta^2) * precision*recall/((\beta^2*precision) +recall)$ (chosen beta gives one or the other more weight)
+
+. . .
+
+Multiclass Metrics:
+
+- Accuracy
+- Many binary metrics can be generalized to multiclass situations (optionally see <https://yardstick.tidymodels.org/articles/multiclass.html>, <https://www.evidentlyai.com/classification-metrics/multi-class-metrics>)
 
 
-
-
-
-**LAND TYPE EXAMPLE**
+## Motivating Example {.unnumbered .smaller}
 
 We'll continue to classify land type using metrics from aerial photographs:
 
-```{r eval=TRUE}
+![Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg](https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg)
+
+```{r}
+#| eval: true
+#| echo: false
 # Load packages
 library(tidyverse)
 library(tidymodels)
@@ -283,27 +329,31 @@ library(rpart.plot)  # for plotting trees
 library(class)       # for my plotting functions
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Load & process data
 # NOTE: Our y variable has to be converted to a "factor" variable, not a character string
-land <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/land_cover.csv") %>% 
+land <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/land_cover.csv") %>% 
   rename(type = class) %>% 
   mutate(type = as.factor(type))
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # There are 9 land types! 
 # Let's consider all of them (not just asphalt, grass, trees)
 land %>% 
   count(type)
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # There are 675 data points and 147 potential predictors of land type!
 dim(land)
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # For now: we'll consider Mean_G & NDVI
 # (It's not easy to visually distinguish between 9 colors!)
 
@@ -314,7 +364,8 @@ ggplot(land, aes(x = Mean_G, fill = type)) +
   theme_minimal()
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Plot type vs NDVI alone
 ggplot(land, aes(x = NDVI, fill = type)) + 
   geom_density(alpha = 0.5) + 
@@ -322,7 +373,8 @@ ggplot(land, aes(x = NDVI, fill = type)) +
   theme_minimal()
 ```
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
 # Finally consider both
 ggplot(land, aes(y = Mean_G, x = NDVI, color = type)) + 
   geom_point() + 
@@ -342,11 +394,13 @@ ggplot(land, aes(y = Mean_G, x = NDVI, color = type)) +
 
 # Small Group Discussion {-}
 
+Discuss the following examples with your group.
 
 
-**EXAMPLE 1: KNN**
+## Example 1: KNN {.unnumbered .smaller}
 
 Check out the classification regions for two KNN models of land `type` by `Mean_G` and `NDVI`: using K = 1 neighbor and using K = 16 neighbors.
+
 Though the KNN models were *built* using standardized predictors, the predictors are plotted on their original scales here.
 
 <center>
@@ -355,7 +409,7 @@ Though the KNN models were *built* using standardized predictors, the predictors
 
 <!-- ![](https://ajohns24.github.io/images/stat253/knn_land.png) -->
 
-Follow-up:
+Discuss:
 
 - What do KNN regression and classification have in common?
 - How are they different?
@@ -375,7 +429,7 @@ Follow-up:
 
 
 
-**EXAMPLE 2: Pruned tree**
+## Example 2: Pruned tree {.unnumbered .smaller}
 
 Next, consider a **PRUNED classification tree** of land `type` by `Mean_G` and `NDVI` that was pruned as follows:
 
@@ -400,7 +454,7 @@ Next, consider a **PRUNED classification tree** of land `type` by `Mean_G` and `
 <!-- ![](https://ajohns24.github.io/images/stat253/trees_land_2.png) -->
 
 
-Follow-up:
+Discuss:
 
 - What's missing from the leaf nodes?
 - Why did this happen?
@@ -416,7 +470,7 @@ Follow-up:
 
 
 
-**EXAMPLE 3: Unpruned tree**
+## Example 3: Unpruned tree {.unnumbered .smaller}
 
 Finally, consider a (mostly) **UNPRUNED classification tree** of land `type` by `Mean_G` and `NDVI` that was built using the following tuning parameters:
 
@@ -450,6 +504,8 @@ The labels are left off to just focus on structure:
 <!-- ![](https://ajohns24.github.io/images/stat253/trees_land_3.png) -->
 
 
+Discuss:
+
 - What happens to the length of the split branches the further down the tree we get? What does this mean?
 - What are your thoughts about this tree?
 - What questions do you have about the impact of the tuning parameters, or anything else tree related?
@@ -464,11 +520,32 @@ The labels are left off to just focus on structure:
 </details>
 
 
+# New Concepts {-}
+
+## Gini Index  {.unnumbered .smaller}
+
+**Gini Index**: Node Purity Measure
+
+$$G = p_1(1-p_1) + p_2(1-p_2) + \cdots + p_k(1-p_k)$$
+
+- "probability of misclassifying a randomly selected case"
+-  Smaller signals "better" classifier
+-  Used to decide whether or not to split based on the cost-complexity parameter (default in rpart)
+
+## Information Index {.unnumbered .smaller}
+
+**Information/Entropy Index**: Alternative to Gini 
+
+$$I = -(p_1\log(p_1) + p_2\log(p_2) + \cdots + p_k\log(p_k))$$
+
+- "measure of amount of uncertainty in the data"
+-  Smaller signals "better" classifier
+-  Used to decide whether or to split based on the cost-complexity parameter (option in rpart)
 
 
 # Exercises {-}
 
-## Part 1 {-}
+## Part 1  {.unnumbered .smaller}
 
 Let's focus on trees.
 
@@ -796,7 +873,7 @@ a. 57 / (57 + 1 + 1) = 0.966
 b. soil. probably because it had the fewest data points.
 </details>
 
-## Part 2 {-}
+## Part 2  {.unnumbered .smaller}
 
 Just like KNN, trees can be applied in both regression *and* classification settings.
 
@@ -931,14 +1008,19 @@ Check out this [visual essay](http://www.r2d3.us/visual-intro-to-machine-learnin
 
 ### Exercise 10: Work on Homework {-}
 
-With your remaining time, work on either Homework 5 (logistic regression) or 6 (trees...and forests, which we'll discuss next week).
+With your remaining time, work on HW5.
     
 
 <br>
 
 # Wrapping Up {-}
 
-Coming soon!
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- <mark>IMPORTANT: If you are eligible to vote and have not already done so, please do!</mark> Polls close at 8 pm.
+- Upcoming due dates: 
+  - HW5: due next week (Nov 13)
+  - HW4 Revisions: due next week (Nov 13)
+  - Quiz 2: two weeks from today (Nov 19)
 
 <br>
 

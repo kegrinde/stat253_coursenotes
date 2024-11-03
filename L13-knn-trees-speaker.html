@@ -407,7 +407,7 @@
 <li>Sit with the same group as last class</li>
 <li>Locate and open today’s QMD</li>
 <li>Catch up on announcements and messages on Slack</li>
-<li>Install the two R packages we need today: <code>rpart</code> and <code>rpart.plot</code></li>
+<li>If you didn’t already, install the two R packages we need today: <code>rpart</code> and <code>rpart.plot</code></li>
 </ul>
 </div><div class="column" style="width:30%;">
 <center>
@@ -581,7 +581,7 @@ Though the data includes measurements of size and shape, we’ll focus on textur
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+<p><img data-src="L13-knn-trees_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -594,6 +594,9 @@ Solution:
 <p>Asphalt images tend to have low vegetation index and greenness.</p>
 Grass and tree images both tend to have higher vegetation index and greenness than asphalt, and tree images tend to have the highest vegetation index.
 </details>
+<p><br>
+<br>
+</p>
 </section>
 <section id="exercise-2-intuition" class="slide level2 unnumbered smaller scrollable">
 <h2>Exercise 2: Intuition</h2>
@@ -604,7 +607,7 @@ Grass and tree images both tend to have higher vegetation index and greenness th
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+<p><img data-src="L13-knn-trees_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -622,7 +625,7 @@ Solution:
 <ol type="a">
 <li>grass</li>
 <li>tree</li>
-<li>grass (we learned above that tree images were the most common in our sample)</li>
+<li>grass (we learned above that grass images were the most common in our sample)</li>
 </ol>
 </details>
 <p><br>
@@ -638,6 +641,9 @@ Solution:
 </summary>
 So that the different scales don’t skew how we identify our nearest neighbors.
 </details>
+<p><br>
+<br>
+</p>
 </section>
 <section id="exercise-4-check-your-work" class="slide level2 unnumbered smaller">
 <h2>Exercise 4: Check your work</h2>
@@ -651,7 +657,7 @@ Solution:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Scale variables (x - mean)/sd</span></span>
 <span id="cb8-2"><a href=""></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">zNDVI =</span> <span class="fu">scale</span>(NDVI), <span class="at">zMean_G =</span> <span class="fu">scale</span>(NDVI)) </span>
+<span id="cb8-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">zNDVI =</span> <span class="fu">scale</span>(NDVI), <span class="at">zMean_G =</span> <span class="fu">scale</span>(Mean_G)) </span>
 <span id="cb8-4"><a href=""></a></span>
 <span id="cb8-5"><a href=""></a><span class="co"># Scale new point using mean, sd of sample</span></span>
 <span id="cb8-6"><a href=""></a>land_3 <span class="ot">&lt;-</span> land_3 <span class="sc">%&gt;%</span></span>
@@ -669,28 +675,28 @@ Solution:
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># K = 1</span></span>
 <span id="cb10-2"><a href=""></a>land_3 <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href=""></a>  <span class="fu">arrange</span>(dist_to_new) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href=""></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href=""></a>  <span class="fu">slice</span>(<span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    type NDVI Mean_G Bright_100 SD_NIR      zNDVI    zMean_G new_zNDVI
-1 grass  0.17 183.07     164.54  11.73 0.06245739 0.06245739  1.010834
+<pre><code>    type NDVI Mean_G Bright_100 SD_NIR     zNDVI    zMean_G new_zNDVI
+1 grass  0.33 113.05      84.58  13.24 0.9820958 -0.8600159  1.010834
   new_zMean_G dist_to_new
-1  -0.9128659    1.360395</code></pre>
+1  -0.9128659  0.06015842</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># K = 3</span></span>
 <span id="cb12-2"><a href=""></a>land_3  <span class="sc">%&gt;%</span></span>
 <span id="cb12-3"><a href=""></a>  <span class="fu">arrange</span>(dist_to_new) <span class="sc">%&gt;%</span></span>
 <span id="cb12-4"><a href=""></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-5"><a href=""></a>  <span class="fu">count</span>(type) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    type n
-1 grass  2
-2  tree  1</code></pre>
+1  tree  2
+2 grass  1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># K = 277</span></span>
 <span id="cb14-2"><a href=""></a>land_3 <span class="sc">%&gt;%</span> </span>
 <span id="cb14-3"><a href=""></a>  <span class="fu">count</span>(type) <span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      type   n
 1   grass  112
@@ -854,7 +860,7 @@ In logistic regression, we run the algorithm <em>one time</em> to get a formula 
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L13-knn-trees_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+<p><img data-src="L13-knn-trees_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -998,23 +1004,21 @@ Solution:
 Solution:
 </summary>
 <ol type="a">
-<li>When <code>min_n</code> is too <em>small</em> (i.e.&nbsp;the tree is too <em>big</em>):
+<li><p>When <code>min_n</code> is too <em>small</em> (i.e.&nbsp;the tree is too <em>big</em>):</p>
 <ul>
 <li>the classification regions are very small / flexible</li>
 <li>the model is overfit</li>
-<li>the model will have low bias and high variance
-<ol start="2" type="a">
-<li>When <code>min_n</code> is too <em>big</em> (i.e.&nbsp;the tree is too <em>small</em>):</li>
-</ol></li>
+<li>the model will have low bias and high variance</li>
+</ul></li>
+<li><p>When <code>min_n</code> is too <em>big</em> (i.e.&nbsp;the tree is too <em>small</em>)</p>
+<ul>
 <li>the classification regions are very big / rigid</li>
 <li>the model is underfit</li>
-<li>the model will have high bias and low variance
-<ol start="3" type="a">
-<li>will vary</li>
-<li>like pruning a real tree, tuning classification trees “lops off” branches</li>
-<li>they are boxy</li>
-</ol></li>
+<li>the model will have high bias and low variance</li>
 </ul></li>
+<li><p>will vary</p></li>
+<li><p>like pruning a real tree, tuning classification trees “lops off” branches</p></li>
+<li><p>they are boxy</p></li>
 </ol>
 </details>
 </section>
@@ -1054,7 +1058,9 @@ Solution:
 </ul></li>
 </ol>
 </details>
-<p><strong>OPTIONAL: cost complexity details</strong></p>
+</section>
+<section id="optional-cost-complexity-details" class="slide level2 unnumbered smaller">
+<h2>OPTIONAL: cost complexity details</h2>
 <p>Define some notation:</p>
 <ul>
 <li>Greek letter <span class="math inline">\(\alpha\)</span> (“alpha”) = cost complexity parameter</li>
@@ -1317,44 +1323,6 @@ Solution:
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

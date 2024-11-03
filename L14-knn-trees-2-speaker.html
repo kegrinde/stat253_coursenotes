@@ -417,11 +417,19 @@
 </section>
 <section id="settling-in" class="title-slide slide level1 unnumbered center">
 <h1>Settling In</h1>
-<p>Coming soon!</p>
+<ul>
+<li>Sit with the same group as last class.
+<ul>
+<li>If you missed class last week, please check in with me to get your (potentially) new group number!</li>
+</ul></li>
+<li>Locate and open today’s QMD</li>
+<li>Catch up on announcements and messages on Slack</li>
+<li>Check your Feedback Spreadsheet for recent updates</li>
+</ul>
 <p><br></p>
 </section>
 
-<section id="learning-goals" class="title-slide slide level1 unnumbered center">
+<section id="learning-goals" class="title-slide slide level1 unnumbered smaller center">
 <h1>Learning Goals</h1>
 <ul>
 <li>Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification</li>
@@ -437,8 +445,14 @@
 <!-- MY CODE -->
 </section>
 
+<section>
 <section id="notes-nonparametric-classification" class="title-slide slide level1 unnumbered center">
 <h1>Notes: Nonparametric Classification</h1>
+
+</section>
+<section id="where-are-we" class="slide level2 unnumbered smaller">
+<h2>Where Are We?</h2>
+<p><img data-src="images/MLdiagram3.jpg" style="width:90.0%"></p>
 <p><strong>CONTEXT</strong></p>
 <ul>
 <li><p><strong>world = supervised learning</strong><br>
@@ -449,28 +463,65 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 </ul>
 <p><strong>GOAL</strong></p>
 <p>Build and evaluate <strong>nonparametric</strong> classification models of some <strong>categorical</strong> outcome y.</p>
-<p><strong>LAND TYPE EXAMPLE</strong></p>
+</section>
+<section id="quick-recap" class="slide level2 unnumbered smaller">
+<h2>Quick Recap</h2>
+<p>How do we evaluate classification models?</p>
+<div class="fragment">
+<p>Binary Metrics:</p>
+<ul>
+<li>Accuracy (overall; compare to no information rate = frequency of largest class)</li>
+<li>Sensitivity (accuracy among Y = 1, true positive rate, recall)</li>
+<li>Specificity (accuracy among Y = 0, true negative rate)</li>
+<li>False Positive Rate = 1 - Specificity</li>
+<li>ROC AUC (accounts for many thresholds)
+<ul>
+<li>the probability that a randomly chosen case from the Y=1 class will receive, from the classifier, a higher predicted probability than a randomly chosen case from the Y = 0 class</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<p>More Binary Metrics [optional]:</p>
+<ul>
+<li>False Negative Rate = 1 - Sensitivity</li>
+<li>J Index = Sensitivity + Specificity - 1</li>
+<li>Balanced Accuracy = (Sens + Spec)/2</li>
+<li>Kappa (how much better your model is over using class frequencies)</li>
+<li>MCC (correlation between truth and prediction)</li>
+<li>Positive Predictive Value (accuracy among those we predicted Y = 1, precision)</li>
+<li>Precision-Recall AUC (accounts for many thresholds)</li>
+<li>F measure = <span class="math inline">\((1 + \beta^2) * precision*recall/((\beta^2*precision) +recall)\)</span> (chosen beta gives one or the other more weight)</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Multiclass Metrics:</p>
+<ul>
+<li>Accuracy</li>
+<li>Many binary metrics can be generalized to multiclass situations (optionally see <a href="https://yardstick.tidymodels.org/articles/multiclass.html" class="uri">https://yardstick.tidymodels.org/articles/multiclass.html</a>, <a href="https://www.evidentlyai.com/classification-metrics/multi-class-metrics" class="uri">https://www.evidentlyai.com/classification-metrics/multi-class-metrics</a>)</li>
+</ul>
+</div>
+</section>
+<section id="motivating-example" class="slide level2 unnumbered smaller">
+<h2>Motivating Example</h2>
 <p>We’ll continue to classify land type using metrics from aerial photographs:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Load packages</span></span>
-<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb1-4"><a href=""></a><span class="fu">library</span>(kknn)        <span class="co"># for KNN</span></span>
-<span id="cb1-5"><a href=""></a><span class="fu">library</span>(rpart.plot)  <span class="co"># for plotting trees</span></span>
-<span id="cb1-6"><a href=""></a><span class="fu">library</span>(class)       <span class="co"># for my plotting functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg"></p>
+<figcaption>Image Source: https://ncap.org.uk/sites/default/files/EK_land_use_0.jpg</figcaption>
+</figure>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># Load &amp; process data</span></span>
-<span id="cb2-2"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Our y variable has to be converted to a "factor" variable, not a character string</span></span>
-<span id="cb2-3"><a href=""></a>land <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/land_cover.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href=""></a>  <span class="fu">rename</span>(<span class="at">type =</span> class) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Load &amp; process data</span></span>
+<span id="cb1-2"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: Our y variable has to be converted to a "factor" variable, not a character string</span></span>
+<span id="cb1-3"><a href=""></a>land <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/land_cover.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href=""></a>  <span class="fu">rename</span>(<span class="at">type =</span> class) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># There are 9 land types! </span></span>
-<span id="cb3-2"><a href=""></a><span class="co"># Let's consider all of them (not just asphalt, grass, trees)</span></span>
-<span id="cb3-3"><a href=""></a>land <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href=""></a>  <span class="fu">count</span>(type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># There are 9 land types! </span></span>
+<span id="cb2-2"><a href=""></a><span class="co"># Let's consider all of them (not just asphalt, grass, trees)</span></span>
+<span id="cb2-3"><a href=""></a>land <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href=""></a>  <span class="fu">count</span>(type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       type   n
 1  asphalt   59
@@ -485,69 +536,73 @@ We want to model some output variable <span class="math inline">\(y\)</span> usi
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># There are 675 data points and 147 potential predictors of land type!</span></span>
-<span id="cb5-2"><a href=""></a><span class="fu">dim</span>(land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># There are 675 data points and 147 potential predictors of land type!</span></span>
+<span id="cb4-2"><a href=""></a><span class="fu">dim</span>(land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 675 148</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># For now: we'll consider Mean_G &amp; NDVI</span></span>
-<span id="cb7-2"><a href=""></a><span class="co"># (It's not easy to visually distinguish between 9 colors!)</span></span>
-<span id="cb7-3"><a href=""></a></span>
-<span id="cb7-4"><a href=""></a><span class="co"># Plot type vs Mean_G alone</span></span>
-<span id="cb7-5"><a href=""></a><span class="fu">ggplot</span>(land, <span class="fu">aes</span>(<span class="at">x =</span> Mean_G, <span class="at">fill =</span> type)) <span class="sc">+</span> </span>
-<span id="cb7-6"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb7-7"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
-<span id="cb7-8"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="co"># For now: we'll consider Mean_G &amp; NDVI</span></span>
+<span id="cb6-2"><a href=""></a><span class="co"># (It's not easy to visually distinguish between 9 colors!)</span></span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="co"># Plot type vs Mean_G alone</span></span>
+<span id="cb6-5"><a href=""></a><span class="fu">ggplot</span>(land, <span class="fu">aes</span>(<span class="at">x =</span> Mean_G, <span class="at">fill =</span> type)) <span class="sc">+</span> </span>
+<span id="cb6-6"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb6-7"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
+<span id="cb6-8"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Plot type vs NDVI alone</span></span>
-<span id="cb8-2"><a href=""></a><span class="fu">ggplot</span>(land, <span class="fu">aes</span>(<span class="at">x =</span> NDVI, <span class="at">fill =</span> type)) <span class="sc">+</span> </span>
-<span id="cb8-3"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb8-4"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Plot type vs NDVI alone</span></span>
+<span id="cb7-2"><a href=""></a><span class="fu">ggplot</span>(land, <span class="fu">aes</span>(<span class="at">x =</span> NDVI, <span class="at">fill =</span> type)) <span class="sc">+</span> </span>
+<span id="cb7-3"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
+<span id="cb7-5"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Finally consider both</span></span>
+<span id="cb8-2"><a href=""></a><span class="fu">ggplot</span>(land, <span class="fu">aes</span>(<span class="at">y =</span> Mean_G, <span class="at">x =</span> NDVI, <span class="at">color =</span> type)) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb8-4"><a href=""></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
 <span id="cb8-5"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># Finally consider both</span></span>
-<span id="cb9-2"><a href=""></a><span class="fu">ggplot</span>(land, <span class="fu">aes</span>(<span class="at">y =</span> Mean_G, <span class="at">x =</span> NDVI, <span class="at">color =</span> type)) <span class="sc">+</span> </span>
-<span id="cb9-3"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb9-4"><a href=""></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
-<span id="cb9-5"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><br><br></p>
-</section>
-
+</section></section>
+<section>
 <section id="small-group-discussion" class="title-slide slide level1 unnumbered center">
 <h1>Small Group Discussion</h1>
-<p><strong>EXAMPLE 1: KNN</strong></p>
-<p>Check out the classification regions for two KNN models of land <code>type</code> by <code>Mean_G</code> and <code>NDVI</code>: using K = 1 neighbor and using K = 16 neighbors. Though the KNN models were <em>built</em> using standardized predictors, the predictors are plotted on their original scales here.</p>
+<p>Discuss the following examples with your group.</p>
+</section>
+<section id="example-1-knn" class="slide level2 unnumbered smaller">
+<h2>Example 1: KNN</h2>
+<p>Check out the classification regions for two KNN models of land <code>type</code> by <code>Mean_G</code> and <code>NDVI</code>: using K = 1 neighbor and using K = 16 neighbors.</p>
+<p>Though the KNN models were <em>built</em> using standardized predictors, the predictors are plotted on their original scales here.</p>
 <center>
 <img src="images/knn_land.png">
 </center>
 <!-- ![](https://ajohns24.github.io/images/stat253/knn_land.png) -->
-<p>Follow-up:</p>
+<p>Discuss:</p>
 <ul>
 <li>What do KNN regression and classification have in common?</li>
 <li>How are they different?</li>
@@ -562,7 +617,9 @@ Solution:
 <li>In regression, y is predicted by averaging the y values of the neighbors. In classification, y is predicted by the most common y category of the neighbors.</li>
 </ul>
 </details>
-<p><strong>EXAMPLE 2: Pruned tree</strong></p>
+</section>
+<section id="example-2-pruned-tree" class="slide level2 unnumbered smaller">
+<h2>Example 2: Pruned tree</h2>
 <p>Next, consider a <strong>PRUNED classification tree</strong> of land <code>type</code> by <code>Mean_G</code> and <code>NDVI</code> that was pruned as follows:</p>
 <ul>
 <li>set maximum depth to 30</li>
@@ -577,7 +634,7 @@ Solution:
 <img src="images/trees_land_2.png">
 </center>
 <!-- ![](https://ajohns24.github.io/images/stat253/trees_land_2.png) -->
-<p>Follow-up:</p>
+<p>Discuss:</p>
 <ul>
 <li>What’s missing from the leaf nodes?</li>
 <li>Why did this happen?</li>
@@ -592,7 +649,9 @@ Solution:
 <li>This is because cars are similar to other groups with respect to NDVI and Mean_G (see the plot), and since we don’t have many car data points, other categories are prioritized in the splits.</li>
 </ul>
 </details>
-<p><strong>EXAMPLE 3: Unpruned tree</strong></p>
+</section>
+<section id="example-3-unpruned-tree" class="slide level2 unnumbered smaller">
+<h2>Example 3: Unpruned tree</h2>
 <p>Finally, consider a (mostly) <strong>UNPRUNED classification tree</strong> of land <code>type</code> by <code>Mean_G</code> and <code>NDVI</code> that was built using the following tuning parameters:</p>
 <ul>
 <li>set maximum depth to 30</li>
@@ -610,6 +669,7 @@ Solution:
 <img src="images/trees_land_3.png">
 </center>
 <!-- ![](https://ajohns24.github.io/images/stat253/trees_land_3.png) -->
+<p>Discuss:</p>
 <ul>
 <li>What happens to the length of the split branches the further down the tree we get? What does this mean?</li>
 <li>What are your thoughts about this tree?</li>
@@ -624,14 +684,38 @@ Solution:
 <li>It might be overfit to a dataset</li>
 </ul>
 </details>
-</section>
+</section></section>
+<section>
+<section id="new-concepts" class="title-slide slide level1 unnumbered center">
+<h1>New Concepts</h1>
 
+</section>
+<section id="gini-index" class="slide level2 unnumbered smaller">
+<h2>Gini Index</h2>
+<p><strong>Gini Index</strong>: Node Purity Measure</p>
+<p><span class="math display">\[G = p_1(1-p_1) + p_2(1-p_2) + \cdots + p_k(1-p_k)\]</span></p>
+<ul>
+<li>“probability of misclassifying a randomly selected case”</li>
+<li>Smaller signals “better” classifier</li>
+<li>Used to decide whether or not to split based on the cost-complexity parameter (default in rpart)</li>
+</ul>
+</section>
+<section id="information-index" class="slide level2 unnumbered smaller">
+<h2>Information Index</h2>
+<p><strong>Information/Entropy Index</strong>: Alternative to Gini</p>
+<p><span class="math display">\[I = -(p_1\log(p_1) + p_2\log(p_2) + \cdots + p_k\log(p_k))\]</span></p>
+<ul>
+<li>“measure of amount of uncertainty in the data”</li>
+<li>Smaller signals “better” classifier</li>
+<li>Used to decide whether or to split based on the cost-complexity parameter (option in rpart)</li>
+</ul>
+</section></section>
 <section>
 <section id="exercises" class="title-slide slide level1 unnumbered center">
 <h1>Exercises</h1>
 
 </section>
-<section id="part-1" class="slide level2 unnumbered scrollable">
+<section id="part-1" class="slide level2 unnumbered smaller scrollable">
 <h2>Part 1</h2>
 <p>Let’s focus on trees.</p>
 <p>We’ve explored some general ML themes already:</p>
@@ -661,38 +745,38 @@ KNN works in both settings. So do trees!</p></li>
 </ul>
 <p>Reflect on the code and pause to answer any questions (Q).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># STEP 1: tree specification</span></span>
-<span id="cb10-2"><a href=""></a><span class="co"># Q: WHAT IS NEW HERE?!</span></span>
-<span id="cb10-3"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-5"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-6"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),  </span>
-<span id="cb10-7"><a href=""></a>           <span class="at">min_n =</span> <span class="dv">2</span>, </span>
-<span id="cb10-8"><a href=""></a>           <span class="at">tree_depth =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># STEP 1: tree specification</span></span>
+<span id="cb9-2"><a href=""></a><span class="co"># Q: WHAT IS NEW HERE?!</span></span>
+<span id="cb9-3"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),  </span>
+<span id="cb9-7"><a href=""></a>           <span class="at">min_n =</span> <span class="dv">2</span>, </span>
+<span id="cb9-8"><a href=""></a>           <span class="at">tree_depth =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
-<span id="cb11-2"><a href=""></a><span class="co"># NOTHING IS NEW HERE &amp; THERE ARE NO PREPROCESSING STEPS!</span></span>
-<span id="cb11-3"><a href=""></a>variable_recipe_big <span class="ot">&lt;-</span> <span class="fu">recipe</span>(type <span class="sc">~</span> ., <span class="at">data =</span> land)</span>
-<span id="cb11-4"><a href=""></a>    </span>
-<span id="cb11-5"><a href=""></a><span class="co"># STEP 3: tree workflow</span></span>
-<span id="cb11-6"><a href=""></a><span class="co"># NOTHING IS NEW HERE!</span></span>
-<span id="cb11-7"><a href=""></a>tree_workflow_big <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-8"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe_big) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-9"><a href=""></a>  <span class="fu">add_model</span>(tree_spec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
+<span id="cb10-2"><a href=""></a><span class="co"># NOTHING IS NEW HERE &amp; THERE ARE NO PREPROCESSING STEPS!</span></span>
+<span id="cb10-3"><a href=""></a>variable_recipe_big <span class="ot">&lt;-</span> <span class="fu">recipe</span>(type <span class="sc">~</span> ., <span class="at">data =</span> land)</span>
+<span id="cb10-4"><a href=""></a>    </span>
+<span id="cb10-5"><a href=""></a><span class="co"># STEP 3: tree workflow</span></span>
+<span id="cb10-6"><a href=""></a><span class="co"># NOTHING IS NEW HERE!</span></span>
+<span id="cb10-7"><a href=""></a>tree_workflow_big <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe_big) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-9"><a href=""></a>  <span class="fu">add_model</span>(tree_spec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># STEP 4: Estimate 10 trees using a range of possible cost complexity values</span></span>
-<span id="cb12-2"><a href=""></a><span class="co"># cost_complexity is on the log10 scale (10^(-5) to 10^(0.1))</span></span>
-<span id="cb12-3"><a href=""></a><span class="co"># Q: BY WHAT CV METRIC ARE WE COMPARING THE TREES?</span></span>
-<span id="cb12-4"><a href=""></a><span class="co"># Q: WHY NOT USE CV MAE?</span></span>
-<span id="cb12-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb12-6"><a href=""></a>tree_models_big <span class="ot">&lt;-</span> tree_workflow_big <span class="sc">%&gt;%</span> </span>
-<span id="cb12-7"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb12-8"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="fl">0.1</span>)), <span class="at">levels =</span> <span class="dv">10</span>),</span>
-<span id="cb12-9"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(land, <span class="at">v =</span> <span class="dv">10</span>),</span>
-<span id="cb12-10"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
-<span id="cb12-11"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># STEP 4: Estimate 10 trees using a range of possible cost complexity values</span></span>
+<span id="cb11-2"><a href=""></a><span class="co"># cost_complexity is on the log10 scale (10^(-5) to 10^(0.1))</span></span>
+<span id="cb11-3"><a href=""></a><span class="co"># Q: BY WHAT CV METRIC ARE WE COMPARING THE TREES?</span></span>
+<span id="cb11-4"><a href=""></a><span class="co"># Q: WHY NOT USE CV MAE?</span></span>
+<span id="cb11-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb11-6"><a href=""></a>tree_models_big <span class="ot">&lt;-</span> tree_workflow_big <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb11-8"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="fl">0.1</span>)), <span class="at">levels =</span> <span class="dv">10</span>),</span>
+<span id="cb11-9"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(land, <span class="at">v =</span> <span class="dv">10</span>),</span>
+<span id="cb11-10"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
+<span id="cb11-11"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
@@ -710,31 +794,31 @@ Consider just 1 tree. At every single split, we must evaluate and compare <em>ev
 <p>Here, we’ll pick the <em>parsimonious tree</em> (which also happens to be the tree with the largest CV accuracy!).</p>
 <p>Run &amp; reflect upon the code below, then answer some follow-up questions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Compare the CV metrics for the 10 trees</span></span>
-<span id="cb13-2"><a href=""></a>tree_models_big <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span> </span>
-<span id="cb13-4"><a href=""></a>  <span class="fu">scale_x_continuous</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Compare the CV metrics for the 10 trees</span></span>
+<span id="cb12-2"><a href=""></a>tree_models_big <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span> </span>
+<span id="cb12-4"><a href=""></a>  <span class="fu">scale_x_continuous</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Pick the parsimonious parameter</span></span>
-<span id="cb14-2"><a href=""></a>parsimonious_param_big <span class="ot">&lt;-</span> tree_models_big <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href=""></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">"accuracy"</span>, <span class="fu">desc</span>(cost_complexity))</span>
-<span id="cb14-4"><a href=""></a>parsimonious_param_big</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Pick the parsimonious parameter</span></span>
+<span id="cb13-2"><a href=""></a>parsimonious_param_big <span class="ot">&lt;-</span> tree_models_big <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href=""></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">"accuracy"</span>, <span class="fu">desc</span>(cost_complexity))</span>
+<span id="cb13-4"><a href=""></a>parsimonious_param_big</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   cost_complexity .config              
             &lt;dbl&gt; &lt;chr&gt;                
 1         0.00681 Preprocessor1_Model06</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Finalize the tree with parsimonious cost complexity</span></span>
-<span id="cb16-2"><a href=""></a>big_tree <span class="ot">&lt;-</span> tree_workflow_big <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> parsimonious_param_big) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Finalize the tree with parsimonious cost complexity</span></span>
+<span id="cb15-2"><a href=""></a>big_tree <span class="ot">&lt;-</span> tree_workflow_big <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> parsimonious_param_big) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> land)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="a">
 <li>What is happening as the cost-complexity parameter <span class="math inline">\(\alpha\)</span> increases:
@@ -766,44 +850,44 @@ Solution:
 <h3 class="unnumbered" id="exercise-4-examine-the-tree">Exercise 4: Examine the tree</h3>
 <p>Let’s examine the final, tuned <code>big_tree</code> which models land <code>type</code> by all 147 predictors:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># This tree has a bunch of info</span></span>
-<span id="cb17-2"><a href=""></a><span class="co"># BUT: (1) it's tough to read; and (2) all branch lengths are the same (not proportional to their improvement)</span></span>
-<span id="cb17-3"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb17-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb17-5"><a href=""></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># This tree has a bunch of info</span></span>
+<span id="cb16-2"><a href=""></a><span class="co"># BUT: (1) it's tough to read; and (2) all branch lengths are the same (not proportional to their improvement)</span></span>
+<span id="cb16-3"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href=""></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-15-1.png" width="864"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-15-1.png" width="864"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># We can make it a little easier by playing around with</span></span>
-<span id="cb18-2"><a href=""></a><span class="co"># font size (cex) and removing some node details (type = 0)</span></span>
-<span id="cb18-3"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb18-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb18-5"><a href=""></a>  <span class="fu">rpart.plot</span>(<span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">type =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># We can make it a little easier by playing around with</span></span>
+<span id="cb17-2"><a href=""></a><span class="co"># font size (cex) and removing some node details (type = 0)</span></span>
+<span id="cb17-3"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href=""></a>  <span class="fu">rpart.plot</span>(<span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">type =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-15-2.png" width="864"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-15-2.png" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># This tree (1) is easier to read; and (2) plots branch lengths proportional to their improvement</span></span>
-<span id="cb19-2"><a href=""></a><span class="co"># But it has less info about classification accuracy</span></span>
-<span id="cb19-3"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb19-5"><a href=""></a>  <span class="fu">plot</span>()</span>
-<span id="cb19-6"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb19-7"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb19-8"><a href=""></a>  <span class="fu">text</span>(<span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># This tree (1) is easier to read; and (2) plots branch lengths proportional to their improvement</span></span>
+<span id="cb18-2"><a href=""></a><span class="co"># But it has less info about classification accuracy</span></span>
+<span id="cb18-3"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href=""></a>  <span class="fu">plot</span>()</span>
+<span id="cb18-6"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-8"><a href=""></a>  <span class="fu">text</span>(<span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-16-1.png" width="864"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-16-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -831,11 +915,11 @@ Solution:
 <p>The bigger the better!</p>
 <p>Check out the importance of our 147 predictors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># Check out just the 10 most important (for simplicity)</span></span>
-<span id="cb20-2"><a href=""></a>big_tree <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href=""></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Check out just the 10 most important (for simplicity)</span></span>
+<span id="cb19-2"><a href=""></a>big_tree <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href=""></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NDVI_40         NDVI      NDVI_60       Mean_G    Bright_40    Mean_G_40 
    140.81912    136.74372    128.66465    117.47329    110.15678     95.89161 
@@ -845,16 +929,16 @@ Solution:
 </div>
 <p>And plot these to help with comparison:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="co"># By default, this plots only 10 predictors</span></span>
-<span id="cb22-2"><a href=""></a><span class="co"># At most, it will plot only half of our predictors here</span></span>
-<span id="cb22-3"><a href=""></a><span class="co"># (I'm not sure what the max is in general!)</span></span>
-<span id="cb22-4"><a href=""></a><span class="fu">library</span>(vip)</span>
-<span id="cb22-5"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb22-6"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> <span class="dv">147</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># By default, this plots only 10 predictors</span></span>
+<span id="cb21-2"><a href=""></a><span class="co"># At most, it will plot only half of our predictors here</span></span>
+<span id="cb21-3"><a href=""></a><span class="co"># (I'm not sure what the max is in general!)</span></span>
+<span id="cb21-4"><a href=""></a><span class="fu">library</span>(vip)</span>
+<span id="cb21-5"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> <span class="dv">147</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-18-1.png" width="768"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-18-1.png" width="768"></p>
 </figure>
 </div>
 </div>
@@ -878,7 +962,7 @@ Solution:
 <p>Stepping back, our goal for building this tree was to classify land type at for a pixel in an image.</p>
 <p>As an example, suppose we have a pixel in an image like the first one in our data set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">head</span>(land, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">head</span>(land, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  type BrdIndx Area Round Bright Compact ShpIndx Mean_G Mean_R Mean_NIR  SD_G
 1 car     1.27   91  0.97 231.38    1.39    1.47 207.92 241.74   244.48 21.41
@@ -924,8 +1008,8 @@ Solution:
 </div>
 <p>Our tree correctly predicts that this is a car:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> <span class="fu">head</span>(land, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> <span class="fu">head</span>(land, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   .pred_class
@@ -936,7 +1020,7 @@ Solution:
 <p>But how good are the classifications overall?</p>
 <p>Let’s first consider the CV <em>overall accuracy rate</em>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>parsimonious_param_big</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>parsimonious_param_big</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   cost_complexity .config              
@@ -949,13 +1033,13 @@ Solution:
 <li>Calculate &amp; compare the tree’s CV overall accuracy rate to the <strong>no information rate</strong>: is the <code>big_tree</code> better than just always guessing the most common land type? You’ll need the following info:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>land <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href=""></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>land <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href=""></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 675</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>land <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href=""></a>  <span class="fu">count</span>(type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>land <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href=""></a>  <span class="fu">count</span>(type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       type   n
 1  asphalt   59
@@ -981,7 +1065,7 @@ Solution:
 <li>The tree’s is much better than the <strong>no information rate</strong> of 18% associated with always guessing “building”.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="dv">122</span><span class="sc">/</span><span class="dv">675</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="dv">122</span><span class="sc">/</span><span class="dv">675</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1807407</code></pre>
 </div>
@@ -996,11 +1080,11 @@ Solution:
 <p>To that end, let’s consider the <em>in-sample</em> confusion matrix (i.e.&nbsp;how well our tree classified the pixels in an image in our sample).</p>
 <p>NOTE: We could also get a CV version, but the code is long and the CV accuracy will do for now!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>in_sample_confusion <span class="ot">&lt;-</span> big_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb35-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> land) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-3"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> type, <span class="at">estimate =</span> .pred_class)</span>
-<span id="cb35-4"><a href=""></a></span>
-<span id="cb35-5"><a href=""></a>in_sample_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>in_sample_confusion <span class="ot">&lt;-</span> big_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> land) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> type, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb34-4"><a href=""></a></span>
+<span id="cb34-5"><a href=""></a>in_sample_confusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Truth
 Prediction  asphalt  building  car  concrete  grass  pool  shadow  soil  tree 
@@ -1014,16 +1098,16 @@ Prediction  asphalt  building  car  concrete  grass  pool  shadow  soil  tree
   soil             0         0    0         0      0     0       0    17     0
   tree             0         0    0         0      9     0       1     0    95</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># The mosaic plot of this matrix is too messy to be very useful here</span></span>
-<span id="cb37-2"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
-<span id="cb37-3"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span>    </span>
-<span id="cb37-4"><a href=""></a>  <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">rep</span>(<span class="fu">colnames</span>(in_sample_confusion<span class="sc">$</span>table), <span class="fu">ncol</span>(in_sample_confusion<span class="sc">$</span>table))) <span class="sc">+</span> </span>
-<span id="cb37-5"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
-<span id="cb37-6"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># The mosaic plot of this matrix is too messy to be very useful here</span></span>
+<span id="cb36-2"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span>    </span>
+<span id="cb36-4"><a href=""></a>  <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">rep</span>(<span class="fu">colnames</span>(in_sample_confusion<span class="sc">$</span>table), <span class="fu">ncol</span>(in_sample_confusion<span class="sc">$</span>table))) <span class="sc">+</span> </span>
+<span id="cb36-5"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#000000"</span>, <span class="st">"darkgray"</span>, <span class="st">"red"</span>, <span class="st">"#7570B3"</span>, <span class="st">"lightgreen"</span>, <span class="st">"blue"</span>, <span class="st">"#E6AB02"</span>, <span class="st">"brown"</span>, <span class="st">"#66A61E"</span>)) <span class="sc">+</span> </span>
+<span id="cb36-6"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-24-1.png" width="768"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-24-1.png" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1042,20 +1126,20 @@ Solution:
 </ol>
 </details>
 </section>
-<section id="part-2" class="slide level2 unnumbered scrollable">
+<section id="part-2" class="slide level2 unnumbered smaller scrollable">
 <h2>Part 2</h2>
 <p>Just like KNN, trees can be applied in both regression <em>and</em> classification settings.</p>
 <p>Thus trees add to our collection of <em>nonparametric</em> regression techniques, including KNN, LOESS, and GAM.</p>
 <p>To explore, we’ll use regression trees to model the <code>body_mass_g</code> of penguins by their <code>bill_length_mm</code> and <code>species</code>. <em>This is for demonstration purposes only!!!</em></p>
 <p>As the plot below demonstrates, this relationship isn’t complicated enough to justify using a nonparametric algorithm:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">data</span>(penguins)</span>
-<span id="cb38-2"><a href=""></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">y =</span> body_mass_g, <span class="at">x =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
-<span id="cb38-3"><a href=""></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">data</span>(penguins)</span>
+<span id="cb37-2"><a href=""></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">y =</span> body_mass_g, <span class="at">x =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb37-3"><a href=""></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1063,51 +1147,51 @@ Solution:
 <p>Run the following code to build a regression tree of this relationship.</p>
 <p>Pause to reflect upon the questions in the comments:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># CHUNK GOAL</span></span>
-<span id="cb39-2"><a href=""></a><span class="co"># Build a bunch of trees using different cost complexity parameters</span></span>
-<span id="cb39-3"><a href=""></a></span>
-<span id="cb39-4"><a href=""></a><span class="co"># STEP 1: regression tree specification</span></span>
-<span id="cb39-5"><a href=""></a><span class="co"># QUESTION: How does this differ from our classification tree specification?</span></span>
-<span id="cb39-6"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb39-7"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-8"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-9"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),  </span>
-<span id="cb39-10"><a href=""></a>           <span class="at">min_n =</span> <span class="dv">2</span>, </span>
-<span id="cb39-11"><a href=""></a>           <span class="at">tree_depth =</span> <span class="dv">20</span>)</span>
-<span id="cb39-12"><a href=""></a></span>
-<span id="cb39-13"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
-<span id="cb39-14"><a href=""></a><span class="co"># NOTHING IS NEW HERE!</span></span>
-<span id="cb39-15"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
-<span id="cb39-16"><a href=""></a></span>
-<span id="cb39-17"><a href=""></a><span class="co"># STEP 3: tree workflow</span></span>
-<span id="cb39-18"><a href=""></a><span class="co"># NOTHING IS NEW HERE!</span></span>
-<span id="cb39-19"><a href=""></a>tree_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb39-20"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-21"><a href=""></a>  <span class="fu">add_model</span>(tree_spec)</span>
-<span id="cb39-22"><a href=""></a></span>
-<span id="cb39-23"><a href=""></a><span class="co"># STEP 4: Estimate multiple trees using a range of possible cost complexity values</span></span>
-<span id="cb39-24"><a href=""></a><span class="co"># QUESTION: How do the CV metrics differ from our classification tree?</span></span>
-<span id="cb39-25"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb39-26"><a href=""></a>tree_models <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb39-27"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb39-28"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), <span class="at">levels =</span> <span class="dv">10</span>),</span>
-<span id="cb39-29"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(penguins, <span class="at">v =</span> <span class="dv">10</span>),</span>
-<span id="cb39-30"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
-<span id="cb39-31"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># CHUNK GOAL</span></span>
+<span id="cb38-2"><a href=""></a><span class="co"># Build a bunch of trees using different cost complexity parameters</span></span>
+<span id="cb38-3"><a href=""></a></span>
+<span id="cb38-4"><a href=""></a><span class="co"># STEP 1: regression tree specification</span></span>
+<span id="cb38-5"><a href=""></a><span class="co"># QUESTION: How does this differ from our classification tree specification?</span></span>
+<span id="cb38-6"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb38-7"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-8"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-9"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),  </span>
+<span id="cb38-10"><a href=""></a>           <span class="at">min_n =</span> <span class="dv">2</span>, </span>
+<span id="cb38-11"><a href=""></a>           <span class="at">tree_depth =</span> <span class="dv">20</span>)</span>
+<span id="cb38-12"><a href=""></a></span>
+<span id="cb38-13"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
+<span id="cb38-14"><a href=""></a><span class="co"># NOTHING IS NEW HERE!</span></span>
+<span id="cb38-15"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb38-16"><a href=""></a></span>
+<span id="cb38-17"><a href=""></a><span class="co"># STEP 3: tree workflow</span></span>
+<span id="cb38-18"><a href=""></a><span class="co"># NOTHING IS NEW HERE!</span></span>
+<span id="cb38-19"><a href=""></a>tree_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb38-20"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-21"><a href=""></a>  <span class="fu">add_model</span>(tree_spec)</span>
+<span id="cb38-22"><a href=""></a></span>
+<span id="cb38-23"><a href=""></a><span class="co"># STEP 4: Estimate multiple trees using a range of possible cost complexity values</span></span>
+<span id="cb38-24"><a href=""></a><span class="co"># QUESTION: How do the CV metrics differ from our classification tree?</span></span>
+<span id="cb38-25"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb38-26"><a href=""></a>tree_models <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb38-27"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb38-28"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), <span class="at">levels =</span> <span class="dv">10</span>),</span>
+<span id="cb38-29"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(penguins, <span class="at">v =</span> <span class="dv">10</span>),</span>
+<span id="cb38-30"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(mae)</span>
+<span id="cb38-31"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># CHUNK GOAL:</span></span>
-<span id="cb40-2"><a href=""></a><span class="co"># Finalize the tree using the parsimonious cost complexity parameter</span></span>
-<span id="cb40-3"><a href=""></a><span class="co"># NOTHING IS NEW HERE</span></span>
-<span id="cb40-4"><a href=""></a></span>
-<span id="cb40-5"><a href=""></a><span class="co"># Identify the parsimonious cost complexityparameter</span></span>
-<span id="cb40-6"><a href=""></a>parsimonious_param <span class="ot">&lt;-</span> tree_models <span class="sc">%&gt;%</span> </span>
-<span id="cb40-7"><a href=""></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">"mae"</span>, <span class="fu">desc</span>(cost_complexity))</span>
-<span id="cb40-8"><a href=""></a></span>
-<span id="cb40-9"><a href=""></a><span class="co"># Finalize the tree with parsimonious cost complexity</span></span>
-<span id="cb40-10"><a href=""></a>regression_tree <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb40-11"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> parsimonious_param) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-12"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># CHUNK GOAL:</span></span>
+<span id="cb39-2"><a href=""></a><span class="co"># Finalize the tree using the parsimonious cost complexity parameter</span></span>
+<span id="cb39-3"><a href=""></a><span class="co"># NOTHING IS NEW HERE</span></span>
+<span id="cb39-4"><a href=""></a></span>
+<span id="cb39-5"><a href=""></a><span class="co"># Identify the parsimonious cost complexityparameter</span></span>
+<span id="cb39-6"><a href=""></a>parsimonious_param <span class="ot">&lt;-</span> tree_models <span class="sc">%&gt;%</span> </span>
+<span id="cb39-7"><a href=""></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">"mae"</span>, <span class="fu">desc</span>(cost_complexity))</span>
+<span id="cb39-8"><a href=""></a></span>
+<span id="cb39-9"><a href=""></a><span class="co"># Finalize the tree with parsimonious cost complexity</span></span>
+<span id="cb39-10"><a href=""></a>regression_tree <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb39-11"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> parsimonious_param) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-12"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
@@ -1115,14 +1199,14 @@ Solution:
 <h3 class="unnumbered" id="exercise-8-regression-tree">Exercise 8: Regression tree</h3>
 <p>Check out the resulting regression tree:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="co"># This code is the same as for classification trees!</span></span>
-<span id="cb41-2"><a href=""></a>regression_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb41-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb41-4"><a href=""></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># This code is the same as for classification trees!</span></span>
+<span id="cb40-2"><a href=""></a>regression_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href=""></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1131,8 +1215,8 @@ Solution:
 <li>Use your tree (by “hand”) to predict the body mass for the 2 following penguins:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>new_penguins <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>), <span class="at">bill_length_mm =</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">45</span>))</span>
-<span id="cb42-2"><a href=""></a>new_penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>new_penguins <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>), <span class="at">bill_length_mm =</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">45</span>))</span>
+<span id="cb41-2"><a href=""></a>new_penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  species bill_length_mm
 1  Adelie             45
@@ -1143,8 +1227,8 @@ Solution:
 <li>Check your work in part a:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>regression_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>regression_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> new_penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   .pred species bill_length_mm
@@ -1157,17 +1241,17 @@ Solution:
 <li>Regression trees partition the data points into separate prediction regions. Check out this tree’s predictions (dark dots) and convince yourself that these are consistent with the tree:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>regression_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> penguins) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
-<span id="cb46-4"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb46-5"><a href=""></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> .pred, <span class="at">color =</span> species), <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb46-6"><a href=""></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span> </span>
-<span id="cb46-7"><a href=""></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>regression_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> penguins) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
+<span id="cb45-4"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb45-5"><a href=""></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> .pred, <span class="at">color =</span> species), <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb45-6"><a href=""></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> species) <span class="sc">+</span> </span>
+<span id="cb45-7"><a href=""></a>    <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L14-knn-trees-2_files/figure-html/unnamed-chunk-31-1.png" width="576"></p>
+<p><img data-src="L14-knn-trees-2_files/figure-revealjs/unnamed-chunk-31-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -1189,12 +1273,21 @@ Solution:
 <h3 class="unnumbered" id="exercise-9-visual-essay">Exercise 9: Visual essay</h3>
 <p>Check out this <a href="http://www.r2d3.us/visual-intro-to-machine-learning-part-1/">visual essay</a> on trees!</p>
 <h3 class="unnumbered" id="exercise-10-work-on-homework">Exercise 10: Work on Homework</h3>
-<p>With your remaining time, work on either Homework 5 (logistic regression) or 6 (trees…and forests, which we’ll discuss next week).</p>
+<p>With your remaining time, work on HW5.</p>
 <p><br></p>
 </section></section>
 <section id="wrapping-up" class="title-slide slide level1 unnumbered center">
 <h1>Wrapping Up</h1>
-<p>Coming soon!</p>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li><mark>IMPORTANT: If you are eligible to vote and have not already done so, please do!</mark> Polls close at 8 pm.</li>
+<li>Upcoming due dates:
+<ul>
+<li>HW5: due next week (Nov 13)</li>
+<li>HW4 Revisions: due next week (Nov 13)</li>
+<li>Quiz 2: two weeks from today (Nov 19)</li>
+</ul></li>
+</ul>
 <p><br></p>
 </section>
 
@@ -1207,88 +1300,88 @@ Solution:
 <h2>R code: KNN</h2>
 <p>Suppose we want to build a KNN model of some categorical response variable y using predictors x1 and x2 in our sample_data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># Load packages</span></span>
-<span id="cb47-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb47-3"><a href=""></a><span class="fu">library</span>(kknn)</span>
-<span id="cb47-4"><a href=""></a></span>
-<span id="cb47-5"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
-<span id="cb47-6"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb46-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb46-3"><a href=""></a><span class="fu">library</span>(kknn)</span>
+<span id="cb46-4"><a href=""></a></span>
+<span id="cb46-5"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
+<span id="cb46-6"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Make sure that y is a factor variable</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.factor</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.factor</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Build models for a variety of tuning parameters K</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="co"># STEP 1: KNN model specification</span></span>
-<span id="cb49-2"><a href=""></a>knn_spec <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb49-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-5"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>())</span>
-<span id="cb49-6"><a href=""></a></span>
-<span id="cb49-7"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
-<span id="cb49-8"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-9"><a href=""></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-10"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-11"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
-<span id="cb49-12"><a href=""></a></span>
-<span id="cb49-13"><a href=""></a><span class="co"># STEP 3: KNN workflow</span></span>
-<span id="cb49-14"><a href=""></a>knn_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb49-15"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-16"><a href=""></a>  <span class="fu">add_model</span>(knn_spec)</span>
-<span id="cb49-17"><a href=""></a></span>
-<span id="cb49-18"><a href=""></a><span class="co"># STEP 4: Estimate multiple KNN models using a range of possible K values</span></span>
-<span id="cb49-19"><a href=""></a><span class="fu">set.seed</span>(___)</span>
-<span id="cb49-20"><a href=""></a>knn_models <span class="ot">&lt;-</span> knn_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb49-21"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb49-22"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(___, ___)), <span class="at">levels =</span> ___),</span>
-<span id="cb49-23"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___),</span>
-<span id="cb49-24"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
-<span id="cb49-25"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="co"># STEP 1: KNN model specification</span></span>
+<span id="cb48-2"><a href=""></a>knn_spec <span class="ot">&lt;-</span> <span class="fu">nearest_neighbor</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-5"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>())</span>
+<span id="cb48-6"><a href=""></a></span>
+<span id="cb48-7"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
+<span id="cb48-8"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-9"><a href=""></a>  <span class="fu">step_nzv</span>(<span class="fu">all_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-10"><a href=""></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-11"><a href=""></a>  <span class="fu">step_normalize</span>(<span class="fu">all_numeric_predictors</span>())</span>
+<span id="cb48-12"><a href=""></a></span>
+<span id="cb48-13"><a href=""></a><span class="co"># STEP 3: KNN workflow</span></span>
+<span id="cb48-14"><a href=""></a>knn_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb48-15"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-16"><a href=""></a>  <span class="fu">add_model</span>(knn_spec)</span>
+<span id="cb48-17"><a href=""></a></span>
+<span id="cb48-18"><a href=""></a><span class="co"># STEP 4: Estimate multiple KNN models using a range of possible K values</span></span>
+<span id="cb48-19"><a href=""></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb48-20"><a href=""></a>knn_models <span class="ot">&lt;-</span> knn_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb48-21"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb48-22"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(___, ___)), <span class="at">levels =</span> ___),</span>
+<span id="cb48-23"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___),</span>
+<span id="cb48-24"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
+<span id="cb48-25"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Tuning K</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># Calculate CV accuracy for each KNN model</span></span>
-<span id="cb50-2"><a href=""></a>knn_models <span class="sc">%&gt;%</span> </span>
-<span id="cb50-3"><a href=""></a>  <span class="fu">collect_metrics</span>()</span>
-<span id="cb50-4"><a href=""></a></span>
-<span id="cb50-5"><a href=""></a><span class="co"># Plot CV accuracy (y-axis) for the KNN model from each K (x-axis)</span></span>
-<span id="cb50-6"><a href=""></a>knn_models <span class="sc">%&gt;%</span> </span>
-<span id="cb50-7"><a href=""></a>  <span class="fu">autoplot</span>()</span>
-<span id="cb50-8"><a href=""></a></span>
-<span id="cb50-9"><a href=""></a><span class="co"># Identify K which produced the highest (best) CV accuracy</span></span>
-<span id="cb50-10"><a href=""></a>best_K <span class="ot">&lt;-</span> <span class="fu">select_best</span>(knn_models, <span class="at">metric =</span> <span class="st">"accuracy"</span>)</span>
-<span id="cb50-11"><a href=""></a>best_K</span>
-<span id="cb50-12"><a href=""></a></span>
-<span id="cb50-13"><a href=""></a><span class="co"># Get the CV accuracy for KNN when using best_K</span></span>
-<span id="cb50-14"><a href=""></a>knn_models <span class="sc">%&gt;%</span> </span>
-<span id="cb50-15"><a href=""></a>  <span class="fu">collect_metrics</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb50-16"><a href=""></a>  <span class="fu">filter</span>(neighbors <span class="sc">==</span> best_K<span class="sc">$</span>neighbors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="co"># Calculate CV accuracy for each KNN model</span></span>
+<span id="cb49-2"><a href=""></a>knn_models <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href=""></a>  <span class="fu">collect_metrics</span>()</span>
+<span id="cb49-4"><a href=""></a></span>
+<span id="cb49-5"><a href=""></a><span class="co"># Plot CV accuracy (y-axis) for the KNN model from each K (x-axis)</span></span>
+<span id="cb49-6"><a href=""></a>knn_models <span class="sc">%&gt;%</span> </span>
+<span id="cb49-7"><a href=""></a>  <span class="fu">autoplot</span>()</span>
+<span id="cb49-8"><a href=""></a></span>
+<span id="cb49-9"><a href=""></a><span class="co"># Identify K which produced the highest (best) CV accuracy</span></span>
+<span id="cb49-10"><a href=""></a>best_K <span class="ot">&lt;-</span> <span class="fu">select_best</span>(knn_models, <span class="at">metric =</span> <span class="st">"accuracy"</span>)</span>
+<span id="cb49-11"><a href=""></a>best_K</span>
+<span id="cb49-12"><a href=""></a></span>
+<span id="cb49-13"><a href=""></a><span class="co"># Get the CV accuracy for KNN when using best_K</span></span>
+<span id="cb49-14"><a href=""></a>knn_models <span class="sc">%&gt;%</span> </span>
+<span id="cb49-15"><a href=""></a>  <span class="fu">collect_metrics</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb49-16"><a href=""></a>  <span class="fu">filter</span>(neighbors <span class="sc">==</span> best_K<span class="sc">$</span>neighbors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Finalizing the “best” KNN model</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>final_knn_model <span class="ot">&lt;-</span> knn_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> best_k) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-3"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a>final_knn_model <span class="ot">&lt;-</span> knn_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb50-2"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> best_k) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Use the KNN to make predictions / classifications</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span>
-<span id="cb52-2"><a href=""></a>final_knn_model <span class="sc">%&gt;%</span> </span>
-<span id="cb52-3"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span>
+<span id="cb51-2"><a href=""></a>final_knn_model <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
@@ -1302,21 +1395,21 @@ Solution:
 <h2>R code: trees</h2>
 <p>Suppose we want to build a tree of some categorical response variable y using predictors x1 and x2 in our sample_data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="co"># Load packages</span></span>
-<span id="cb53-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb53-3"><a href=""></a><span class="fu">library</span>(rpart)</span>
-<span id="cb53-4"><a href=""></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb53-5"><a href=""></a></span>
-<span id="cb53-6"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
-<span id="cb53-7"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb52-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb52-3"><a href=""></a><span class="fu">library</span>(rpart)</span>
+<span id="cb52-4"><a href=""></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb52-5"><a href=""></a></span>
+<span id="cb52-6"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
+<span id="cb52-7"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Make sure that y is a factor variable</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
-<span id="cb54-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.factor</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.factor</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
@@ -1324,137 +1417,137 @@ Solution:
 <p><strong>Build trees for a variety of tuning parameters</strong></p>
 <p>We’ll focus on optimizing the <code>cost_complexity</code> parameter, while setting <code>min_n</code> and <code>tree_depth</code> to fixed numbers. For example, setting <code>min_n</code> to 2 and <code>tree_depth</code> to 30 set only loose restrictions, letting <code>cost_complexity</code> do the pruning work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="co"># STEP 1: tree specification</span></span>
-<span id="cb55-2"><a href=""></a><span class="co"># If y is quantitative, change "classification" to "regression"</span></span>
-<span id="cb55-3"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb55-4"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-5"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-6"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),  </span>
-<span id="cb55-7"><a href=""></a>           <span class="at">min_n =</span> <span class="dv">2</span>, </span>
-<span id="cb55-8"><a href=""></a>           <span class="at">tree_depth =</span> <span class="dv">30</span>)</span>
-<span id="cb55-9"><a href=""></a></span>
-<span id="cb55-10"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
-<span id="cb55-11"><a href=""></a><span class="co"># There are no necessary preprocessing steps for trees!</span></span>
-<span id="cb55-12"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data)</span>
-<span id="cb55-13"><a href=""></a></span>
-<span id="cb55-14"><a href=""></a><span class="co"># STEP 3: tree workflow</span></span>
-<span id="cb55-15"><a href=""></a>tree_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb55-16"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-17"><a href=""></a>  <span class="fu">add_model</span>(tree_spec)</span>
-<span id="cb55-18"><a href=""></a></span>
-<span id="cb55-19"><a href=""></a><span class="co"># STEP 4: Estimate multiple trees using a range of possible cost complexity values</span></span>
-<span id="cb55-20"><a href=""></a><span class="co"># - If y is quantitative, change "accuracy" to "mae"</span></span>
-<span id="cb55-21"><a href=""></a><span class="co"># - cost_complexity is on the log10 scale (10^(-5) to 10^(0.1))</span></span>
-<span id="cb55-22"><a href=""></a><span class="co">#   I start with a range from -5 to 2 and then tweak</span></span>
-<span id="cb55-23"><a href=""></a><span class="fu">set.seed</span>(___)</span>
-<span id="cb55-24"><a href=""></a>tree_models <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb55-25"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb55-26"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(___, ___)), <span class="at">levels =</span> ___),</span>
-<span id="cb55-27"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___),</span>
-<span id="cb55-28"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
-<span id="cb55-29"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="co"># STEP 1: tree specification</span></span>
+<span id="cb54-2"><a href=""></a><span class="co"># If y is quantitative, change "classification" to "regression"</span></span>
+<span id="cb54-3"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb54-4"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-6"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="fu">tune</span>(),  </span>
+<span id="cb54-7"><a href=""></a>           <span class="at">min_n =</span> <span class="dv">2</span>, </span>
+<span id="cb54-8"><a href=""></a>           <span class="at">tree_depth =</span> <span class="dv">30</span>)</span>
+<span id="cb54-9"><a href=""></a></span>
+<span id="cb54-10"><a href=""></a><span class="co"># STEP 2: variable recipe</span></span>
+<span id="cb54-11"><a href=""></a><span class="co"># There are no necessary preprocessing steps for trees!</span></span>
+<span id="cb54-12"><a href=""></a>variable_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data)</span>
+<span id="cb54-13"><a href=""></a></span>
+<span id="cb54-14"><a href=""></a><span class="co"># STEP 3: tree workflow</span></span>
+<span id="cb54-15"><a href=""></a>tree_workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb54-16"><a href=""></a>  <span class="fu">add_recipe</span>(variable_recipe) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-17"><a href=""></a>  <span class="fu">add_model</span>(tree_spec)</span>
+<span id="cb54-18"><a href=""></a></span>
+<span id="cb54-19"><a href=""></a><span class="co"># STEP 4: Estimate multiple trees using a range of possible cost complexity values</span></span>
+<span id="cb54-20"><a href=""></a><span class="co"># - If y is quantitative, change "accuracy" to "mae"</span></span>
+<span id="cb54-21"><a href=""></a><span class="co"># - cost_complexity is on the log10 scale (10^(-5) to 10^(0.1))</span></span>
+<span id="cb54-22"><a href=""></a><span class="co">#   I start with a range from -5 to 2 and then tweak</span></span>
+<span id="cb54-23"><a href=""></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb54-24"><a href=""></a>tree_models <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb54-25"><a href=""></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb54-26"><a href=""></a>    <span class="at">grid =</span> <span class="fu">grid_regular</span>(<span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(___, ___)), <span class="at">levels =</span> ___),</span>
+<span id="cb54-27"><a href=""></a>    <span class="at">resamples =</span> <span class="fu">vfold_cv</span>(sample_data, <span class="at">v =</span> ___),</span>
+<span id="cb54-28"><a href=""></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(accuracy)</span>
+<span id="cb54-29"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Tuning cost complexity</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="co"># Plot the CV accuracy vs cost complexity for our trees</span></span>
-<span id="cb56-2"><a href=""></a><span class="co"># x-axis is on the original (not log10) scale</span></span>
-<span id="cb56-3"><a href=""></a>tree_models <span class="sc">%&gt;%</span> </span>
-<span id="cb56-4"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span> </span>
-<span id="cb56-5"><a href=""></a>  <span class="fu">scale_x_continuous</span>()</span>
-<span id="cb56-6"><a href=""></a></span>
-<span id="cb56-7"><a href=""></a><span class="co"># Identify cost complexity which produced the highest CV accuracy</span></span>
-<span id="cb56-8"><a href=""></a>best_cost <span class="ot">&lt;-</span> tree_models <span class="sc">%&gt;%</span> </span>
-<span id="cb56-9"><a href=""></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"accuracy"</span>)</span>
-<span id="cb56-10"><a href=""></a></span>
-<span id="cb56-11"><a href=""></a><span class="co"># Get the CV accuracy when using best_cost</span></span>
-<span id="cb56-12"><a href=""></a>tree_models <span class="sc">%&gt;%</span> </span>
-<span id="cb56-13"><a href=""></a>  <span class="fu">collect_metrics</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb56-14"><a href=""></a>  <span class="fu">filter</span>(cost_complexity <span class="sc">==</span> best_cost<span class="sc">$</span>cost_complexity)</span>
-<span id="cb56-15"><a href=""></a></span>
-<span id="cb56-16"><a href=""></a><span class="co"># Identify cost complexity which produced the parsimonious tree</span></span>
-<span id="cb56-17"><a href=""></a>parsimonious_cost <span class="ot">&lt;-</span> tree_models <span class="sc">%&gt;%</span> </span>
-<span id="cb56-18"><a href=""></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">"accuracy"</span>, <span class="fu">desc</span>(cost_complexity))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="co"># Plot the CV accuracy vs cost complexity for our trees</span></span>
+<span id="cb55-2"><a href=""></a><span class="co"># x-axis is on the original (not log10) scale</span></span>
+<span id="cb55-3"><a href=""></a>tree_models <span class="sc">%&gt;%</span> </span>
+<span id="cb55-4"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span> </span>
+<span id="cb55-5"><a href=""></a>  <span class="fu">scale_x_continuous</span>()</span>
+<span id="cb55-6"><a href=""></a></span>
+<span id="cb55-7"><a href=""></a><span class="co"># Identify cost complexity which produced the highest CV accuracy</span></span>
+<span id="cb55-8"><a href=""></a>best_cost <span class="ot">&lt;-</span> tree_models <span class="sc">%&gt;%</span> </span>
+<span id="cb55-9"><a href=""></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"accuracy"</span>)</span>
+<span id="cb55-10"><a href=""></a></span>
+<span id="cb55-11"><a href=""></a><span class="co"># Get the CV accuracy when using best_cost</span></span>
+<span id="cb55-12"><a href=""></a>tree_models <span class="sc">%&gt;%</span> </span>
+<span id="cb55-13"><a href=""></a>  <span class="fu">collect_metrics</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb55-14"><a href=""></a>  <span class="fu">filter</span>(cost_complexity <span class="sc">==</span> best_cost<span class="sc">$</span>cost_complexity)</span>
+<span id="cb55-15"><a href=""></a></span>
+<span id="cb55-16"><a href=""></a><span class="co"># Identify cost complexity which produced the parsimonious tree</span></span>
+<span id="cb55-17"><a href=""></a>parsimonious_cost <span class="ot">&lt;-</span> tree_models <span class="sc">%&gt;%</span> </span>
+<span id="cb55-18"><a href=""></a>  <span class="fu">select_by_one_std_err</span>(<span class="at">metric =</span> <span class="st">"accuracy"</span>, <span class="fu">desc</span>(cost_complexity))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Finalizing the tree</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="co"># Plug in best_cost or parsimonious_cost</span></span>
-<span id="cb57-2"><a href=""></a>final_tree <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
-<span id="cb57-3"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> ___) <span class="sc">%&gt;%</span> </span>
-<span id="cb57-4"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="co"># Plug in best_cost or parsimonious_cost</span></span>
+<span id="cb56-2"><a href=""></a>final_tree <span class="ot">&lt;-</span> tree_workflow <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href=""></a>  <span class="fu">finalize_workflow</span>(<span class="at">parameters =</span> ___) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-4"><a href=""></a>  <span class="fu">fit</span>(<span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Plot the tree</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># Tree with accuracy info in each node</span></span>
-<span id="cb58-2"><a href=""></a><span class="co"># Branches are NOT proportional to classification improvement</span></span>
-<span id="cb58-3"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb58-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb58-5"><a href=""></a>  <span class="fu">rpart.plot</span>()</span>
-<span id="cb58-6"><a href=""></a></span>
-<span id="cb58-7"><a href=""></a><span class="co"># Tree withOUT accuracy info in each node</span></span>
-<span id="cb58-8"><a href=""></a><span class="co"># Branches ARE proportional to classification improvement</span></span>
-<span id="cb58-9"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb58-10"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb58-11"><a href=""></a>  <span class="fu">plot</span>()</span>
-<span id="cb58-12"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb58-13"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb58-14"><a href=""></a>  <span class="fu">text</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="co"># Tree with accuracy info in each node</span></span>
+<span id="cb57-2"><a href=""></a><span class="co"># Branches are NOT proportional to classification improvement</span></span>
+<span id="cb57-3"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb57-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb57-5"><a href=""></a>  <span class="fu">rpart.plot</span>()</span>
+<span id="cb57-6"><a href=""></a></span>
+<span id="cb57-7"><a href=""></a><span class="co"># Tree withOUT accuracy info in each node</span></span>
+<span id="cb57-8"><a href=""></a><span class="co"># Branches ARE proportional to classification improvement</span></span>
+<span id="cb57-9"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb57-10"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb57-11"><a href=""></a>  <span class="fu">plot</span>()</span>
+<span id="cb57-12"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb57-13"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb57-14"><a href=""></a>  <span class="fu">text</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Use the tree to make predictions / classifications</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span>
-<span id="cb59-2"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb59-3"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)  </span>
-<span id="cb59-4"><a href=""></a></span>
-<span id="cb59-5"><a href=""></a><span class="co"># OR </span></span>
-<span id="cb59-6"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb59-7"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span>
+<span id="cb58-2"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)  </span>
+<span id="cb58-4"><a href=""></a></span>
+<span id="cb58-5"><a href=""></a><span class="co"># OR </span></span>
+<span id="cb58-6"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb58-7"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Examine variable importance</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="co"># Print the metrics</span></span>
-<span id="cb60-2"><a href=""></a>final_tree <span class="sc">%&gt;%</span></span>
-<span id="cb60-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb60-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>)</span>
-<span id="cb60-5"><a href=""></a></span>
-<span id="cb60-6"><a href=""></a><span class="co"># Plot the metrics</span></span>
-<span id="cb60-7"><a href=""></a><span class="co"># Plug in the number of top predictors you wish to plot</span></span>
-<span id="cb60-8"><a href=""></a><span class="co"># (The upper limit varies by application!)</span></span>
-<span id="cb60-9"><a href=""></a><span class="fu">library</span>(vip)</span>
-<span id="cb60-10"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb60-11"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="co"># Print the metrics</span></span>
+<span id="cb59-2"><a href=""></a>final_tree <span class="sc">%&gt;%</span></span>
+<span id="cb59-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb59-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>)</span>
+<span id="cb59-5"><a href=""></a></span>
+<span id="cb59-6"><a href=""></a><span class="co"># Plot the metrics</span></span>
+<span id="cb59-7"><a href=""></a><span class="co"># Plug in the number of top predictors you wish to plot</span></span>
+<span id="cb59-8"><a href=""></a><span class="co"># (The upper limit varies by application!)</span></span>
+<span id="cb59-9"><a href=""></a><span class="fu">library</span>(vip)</span>
+<span id="cb59-10"><a href=""></a>final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb59-11"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Evaluate the classifications using in-sample metrics</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="co"># Get the in-sample confusion matrix</span></span>
-<span id="cb61-2"><a href=""></a>in_sample_confusion <span class="ot">&lt;-</span> final_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb61-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
-<span id="cb61-4"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> type, <span class="at">estimate =</span> .pred_class)</span>
-<span id="cb61-5"><a href=""></a>in_sample_confusion</span>
-<span id="cb61-6"><a href=""></a></span>
-<span id="cb61-7"><a href=""></a><span class="co"># Plot the matrix using a mosaic plot</span></span>
-<span id="cb61-8"><a href=""></a><span class="co"># See exercise for what to do when there are more categories than colors in our pallette!</span></span>
-<span id="cb61-9"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
-<span id="cb61-10"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span>    </span>
-<span id="cb61-11"><a href=""></a>  <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">rep</span>(<span class="fu">colnames</span>(in_sample_confusion<span class="sc">$</span>table), <span class="fu">ncol</span>(in_sample_confusion<span class="sc">$</span>table))) <span class="sc">+</span> </span>
-<span id="cb61-12"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="co"># Get the in-sample confusion matrix</span></span>
+<span id="cb60-2"><a href=""></a>in_sample_confusion <span class="ot">&lt;-</span> final_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb60-3"><a href=""></a>  <span class="fu">augment</span>(<span class="at">new_data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-4"><a href=""></a>  <span class="fu">conf_mat</span>(<span class="at">truth =</span> type, <span class="at">estimate =</span> .pred_class)</span>
+<span id="cb60-5"><a href=""></a>in_sample_confusion</span>
+<span id="cb60-6"><a href=""></a></span>
+<span id="cb60-7"><a href=""></a><span class="co"># Plot the matrix using a mosaic plot</span></span>
+<span id="cb60-8"><a href=""></a><span class="co"># See exercise for what to do when there are more categories than colors in our pallette!</span></span>
+<span id="cb60-9"><a href=""></a>in_sample_confusion <span class="sc">%&gt;%</span> </span>
+<span id="cb60-10"><a href=""></a>  <span class="fu">autoplot</span>() <span class="sc">+</span>    </span>
+<span id="cb60-11"><a href=""></a>  <span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">rep</span>(<span class="fu">colnames</span>(in_sample_confusion<span class="sc">$</span>table), <span class="fu">ncol</span>(in_sample_confusion<span class="sc">$</span>table))) <span class="sc">+</span> </span>
+<span id="cb60-12"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="quarto-auto-generated-content">
 <p><img src="images/mac.png" class="slide-logo"></p>
@@ -1678,6 +1771,44 @@ Solution:
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
