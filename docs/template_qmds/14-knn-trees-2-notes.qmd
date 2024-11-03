@@ -56,7 +56,7 @@ library(class)       # for my plotting functions
 ```{r}
 # Load & process data
 # NOTE: Our y variable has to be converted to a "factor" variable, not a character string
-land <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/land_cover.csv") %>% 
+land <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/land_cover.csv") %>% 
   rename(type = class) %>% 
   mutate(type = as.factor(type))
 ```
@@ -118,22 +118,23 @@ ggplot(land, aes(y = Mean_G, x = NDVI, color = type)) +
 
 
 
-**EXAMPLE 1: KNN**
+## EXAMPLE 1: KNN
 
 Check out the classification regions for two KNN models of land `type` by `Mean_G` and `NDVI`: using K = 1 neighbor and using K = 16 neighbors.
 Though the KNN models were *built* using standardized predictors, the predictors are plotted on their original scales here.
 
-What questions do you have about...
 
-- the impact of K
-- how classifications are made within each neighborhood
-- anything else KNN related
+![](https://kegrinde.github.io/stat253_coursenotes/images/knn_land.png)
 
 
-![](https://ajohns24.github.io/images/stat253/knn_land.png)
+Discuss: 
 
-
-
+- What do KNN regression and classification have in common?
+- How are they different?
+- What questions do you have about...
+    - the impact of K
+    - how classifications are made within each neighborhood
+    - anything else KNN related
 
 
 
@@ -156,7 +157,7 @@ What questions do you have about...
 
 
 
-**EXAMPLE 2: Pruned tree**
+## EXAMPLE 2: Pruned tree
 
 Next, consider a **PRUNED classification tree** of land `type` by `Mean_G` and `NDVI` that was pruned as follows:
 
@@ -164,18 +165,19 @@ Next, consider a **PRUNED classification tree** of land `type` by `Mean_G` and `
 - set minimum number of data points per node to 2
 - tune the **cost complexity parameter**.
 
-What questions do you have about…
 
-- pruning trees
-- using trees to make classifications
-- anything else tree related
+![](https://kegrinde.github.io/stat253_coursenotes/images/trees_land_1.png)
 
-![](https://ajohns24.github.io/images/stat253/trees_land_1.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/trees_land_2.png)
 
-![](https://ajohns24.github.io/images/stat253/trees_land_2.png)
+Discuss: 
 
-
-
+- What’s missing from the leaf nodes?
+- Why did this happen?
+- What questions do you have about...
+    - pruning trees
+    - using trees to make classifications
+    - anything else tree related
 
 
 
@@ -191,7 +193,7 @@ What questions do you have about…
 
 
 
-**EXAMPLE 3: Unpruned tree**
+## EXAMPLE 3: Unpruned tree
 
 Finally, consider a (mostly) **UNPRUNED classification tree** of land `type` by `Mean_G` and `NDVI` that was built using the following tuning parameters:
 
@@ -202,15 +204,16 @@ Finally, consider a (mostly) **UNPRUNED classification tree** of land `type` by 
 
 Check out the classification regions defined by this tree:
 
-![](https://ajohns24.github.io/images/stat253/trees_land_4.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/trees_land_4.png)
 
 
 And the tree itself.
 This tree was plotted using a function that draws the length of each branch split to be proportional to its improvement to the classification accuracy.
 The labels are left off to just focus on structure:
 
-![](https://ajohns24.github.io/images/stat253/trees_land_3.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/trees_land_3.png)
 
+Dicsuss: 
 
 - What happens to the length of the split branches the further down the tree we get? What does this mean?
 - What are your thoughts about this tree?
@@ -358,13 +361,7 @@ We only built 10 trees above, and it took quite a bit of time. Why are trees com
 Just as with our other algorithms with tuning parameters, we can use the CV metrics to compare the 10 trees, and pick which one we prefer.
 Here, we'll pick the *parsimonious tree* (which also happens to be the tree with the largest CV accuracy!).
 
-Run & reflect upon the code below.
-
-You don't have to write anything out (this is largely review), but convince yourself that you could:
-
-- interpret the plot
-- i.d. where our parsimonious tree falls on this plot
-- explain what "parsimonious" means
+Run & reflect upon the code below, then answer some follow-up questions.
 
 ```{r}
 # Compare the CV metrics for the 10 trees
@@ -383,6 +380,21 @@ big_tree <- tree_workflow_big %>%
   fit(data = land)
 ```
 
+
+a. What is happening as the cost-complexity parameter $\alpha$ increases:        
+    - the tree is getting more *complicated* and the accuracy is *improving*
+    - the tree is getting more *complicated* and the accuracy is getting *worse*
+    - the tree is getting *simpler* and the accuracy is *improving*
+    - the tree is getting *simpler* and the accuracy is getting *worse*
+    
+b. What will our tree look like if we use a cost complexity parameter bigger than 0.4? As what category will this tree predict all images to be?
+
+c. CHALLENGE: For cost complexity parameters bigger than 0.4, the accuracy plateaus at roughly 18.1%. Where does this number come from?! NOTE: If you get stumped here, move on. We'll come back to this later.
+
+d. You don't have to write anything out (this is largely review), but convince yourself that you could:       
+    - interpret the plot
+    - i.d. where our parsimonious tree falls on this plot
+    - explain what "parsimonious" means
 
 
 
@@ -474,22 +486,18 @@ big_tree %>%
   vip(geom = "point", num_features = 147)
 ```
 
-a. What are the 3 most important predictors by this metric?
-
-
-
-
-b. Do these 3 predictors appear in our tree?
-
-
-
-
-c. *Why* do you think a predictor can have high importance but not appear in the tree? Name 2 reasons.
+a. What are the 3 most important predictors by this metric? Do these appear in our tree?
 
 
 
 
 
+b. *Why* do you think a predictor can have high importance but not appear in the tree? Name 2 reasons.
+
+
+
+
+c. If you could pick on 3 predictors to model land type, would you pick the 3 with the highest importance? Explain.
 
 
 
@@ -519,7 +527,13 @@ But how good are the classifications overall?
 Let's first consider the CV *overall accuracy rate*:   
 
 ```{r}
+# reminder of our chosen tuning parameter
 parsimonious_param_big
+
+# pull out metrics for just that value of tuning parameter
+tree_models_big %>%
+  collect_metrics() %>%
+  filter(cost_complexity == parsimonious_param_big$cost_complexity)
 ```
 
 a. *Interpret* 0.804, the CV overall accuracy rate for the `big_tree`.
@@ -740,12 +754,16 @@ Check out this [visual essay](http://www.r2d3.us/visual-intro-to-machine-learnin
 
 ## Exercise 10: Work on Homework
 
-With your remaining time, work on HW 5 (logistic regression) or HW 6 (KNN, trees)
+With your remaining time, work on HW5.
     
     
    
 
-
+\
+\
+\
+\
+\
 
 # R code: KNN
 
