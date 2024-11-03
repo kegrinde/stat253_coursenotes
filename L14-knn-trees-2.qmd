@@ -8,9 +8,6 @@ logo: "images/mac.png"
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 ```
 
-::: {.callout-warning}
-This page is currently under construction. Check back soon for updates!
-:::
 
 # Settling In {.unnumbered}
 
@@ -638,6 +635,9 @@ Consider just 1 tree. At every single split, we must evaluate and compare *every
 </details>
 
 
+\
+\
+
 ### Exercise 3: Compare and finalize the tree {-}
 
 
@@ -692,6 +692,8 @@ c. this is the no information rate (which we'll calculate below)
 
 
 
+\
+\
 
 ### Exercise 4: Examine the tree {-}
 
@@ -738,6 +740,8 @@ c. NDVI, Mean_G_40, Bright_100, ShpIndx_100 (roughly)
 </details>
     
 
+\
+\
 
 ### Exercise 5: Identifying useful predictors {-}
 
@@ -783,9 +787,12 @@ c. No. Given what we observed above, variable importance doesn't tell us about t
 </details>
 
 
+\
+\
+
 ### Exercise 6: How good is the tree?!? Part 1 {-}
 
-Stepping back, our goal for building this tree was to classify land type at for a pixel in an image.
+Stepping back, our goal for building this tree was to classify land type for a pixel in an image.
 
 As an example, suppose we have a pixel in an image like the first one in our data set:
     
@@ -805,10 +812,17 @@ But how good are the classifications overall?
 Let's first consider the CV *overall accuracy rate*:   
 
 ```{r eval=TRUE}
+# reminder of our chosen tuning parameter
 parsimonious_param_big
+
+# pull out metrics for just that value of tuning parameter
+tree_models_big %>%
+  collect_metrics() %>%
+  filter(cost_complexity == parsimonious_param_big$cost_complexity)
 ```
     
 a. *Interpret* 0.804, the CV overall accuracy rate for the `big_tree`.
+
 b. Calculate & compare the tree's CV overall accuracy rate to the **no information rate**: is the `big_tree` better than just always guessing the most common land type? You'll need the following info:       
 
 ```{r eval=TRUE}
@@ -825,7 +839,7 @@ c. Why can't we calculate, thus compare, the sensitivity & specificity of our tr
 <details>
 <summary>Solution:</summary>
 a. We estimate that our `big_tree` will correctly classify roughly 80% of *new* pixel in an image.
-b. The tree's is much better than the **no information rate** of 18% associated with always guessing "building".
+b. The tree's accuracy is much better than the **no information rate** of 18% associated with always guessing "building".
 
 ```{r eval=TRUE}
 122/675  
@@ -840,7 +854,7 @@ c. sensitivity & specificity measure the accuracy of classifications for **binar
 
 ### Exercise 7: How good is the tree?!? Part 2 {-}
 
-The above CV metric gives us a sense of the *overall* quality of using our tree to classify *new* a pixel in an image.
+The above CV metric gives us a sense of the *overall* quality of using our tree to classify a *new* pixel in an image.
 
 But it doesn't give any insight into the quality of classifications for any particular land type.
 
@@ -870,7 +884,7 @@ b. What land type was the *hardest* for the tree to classify? Why might this be?
 <details>
 <summary>Solution:</summary>
 a. 57 / (57 + 1 + 1) = 0.966
-b. soil. probably because it had the fewest data points.
+b. soil. probably because it had one of the smallest numbers of data points. and the predictor values of soil images must be similar to / hard to distinguish from the predictor values of other types of images. 
 </details>
 
 ## Part 2  {.unnumbered .smaller}
@@ -1000,11 +1014,16 @@ d. at least in this example, the regression tree greatly oversimplifies the rela
 </details>
 
 
+\
+\
+
 ### Exercise 9: Visual essay {-}
 
 Check out this [visual essay](http://www.r2d3.us/visual-intro-to-machine-learning-part-1/) on trees!
 
 
+\
+\
 
 ### Exercise 10: Work on Homework {-}
 
