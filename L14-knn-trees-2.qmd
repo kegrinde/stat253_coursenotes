@@ -734,7 +734,7 @@ c. Of the predictors used in the tree, which seem to be the most important?
 
 <details>
 <summary>Solution:</summary>
-a. Yes
+a. No. I see all of the land types captured by at least one of the leaf/terminal nodes. 
 b. No
 c. NDVI, Mean_G_40, Bright_100, ShpIndx_100 (roughly)
 </details>
