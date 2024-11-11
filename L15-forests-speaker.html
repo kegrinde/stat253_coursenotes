@@ -445,7 +445,7 @@
 </section>
 <section id="where-are-we" class="slide level2 unnumbered smaller">
 <h2>Where Are We?</h2>
-<p>Let’s check out the table of contents in our textbook…</p>
+<p>Let’s check out the table of contents in <a href="https://www.statlearning.com/">our textbook</a>…</p>
 <div class="fragment">
 <p>We’ve covered so far:</p>
 <ul>
@@ -531,7 +531,18 @@ We can use CV &amp; in-sample techniques to estimate the accuracy of our classif
 <p><a href="https://fivethirtyeight.com/videos/the-ultimate-halloween-candy-power-ranking/">fivethirtyeight article</a></p>
 <p><a href="http://walthickey.com/2017/10/18/whats-the-best-halloween-candy/">the experiment</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">head</span>(candy_rankings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(rpart)        <span class="co"># for building trees</span></span>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(rpart.plot)   <span class="co"># for plotting trees</span></span>
+<span id="cb1-5"><a href=""></a><span class="fu">library</span>(randomForest) <span class="co"># for bagging &amp; forests</span></span>
+<span id="cb1-6"><a href=""></a><span class="fu">library</span>(infer)        <span class="co"># for resampling</span></span>
+<span id="cb1-7"><a href=""></a></span>
+<span id="cb1-8"><a href=""></a><span class="fu">library</span>(fivethirtyeight)</span>
+<span id="cb1-9"><a href=""></a><span class="fu">data</span>(<span class="st">"candy_rankings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">head</span>(candy_rankings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 13
   competitorname chocolate fruity caramel peanutyalmondy nougat crispedricewafer
@@ -549,21 +560,21 @@ We can use CV &amp; in-sample techniques to estimate the accuracy of our classif
 <p><br></p>
 <p>Write R code to find out the following:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># What are the 6 most popular candies?</span></span>
-<span id="cb3-2"><a href=""></a></span>
-<span id="cb3-3"><a href=""></a></span>
-<span id="cb3-4"><a href=""></a><span class="co"># The least popular?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># What are the 6 most popular candies?</span></span>
+<span id="cb4-2"><a href=""></a></span>
+<span id="cb4-3"><a href=""></a></span>
+<span id="cb4-4"><a href=""></a><span class="co"># The least popular?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
 Solution:
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># What are the 6 most popular candies?</span></span>
-<span id="cb4-2"><a href=""></a><span class="do">## OPTION 1</span></span>
-<span id="cb4-3"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span> </span>
-<span id="cb4-4"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(winpercent)) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-5"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># What are the 6 most popular candies?</span></span>
+<span id="cb5-2"><a href=""></a><span class="do">## OPTION 1</span></span>
+<span id="cb5-3"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(winpercent)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 13
   competitorname chocolate fruity caramel peanutyalmondy nougat crispedricewafer
@@ -577,9 +588,9 @@ Solution:
 # ℹ 6 more variables: hard &lt;lgl&gt;, bar &lt;lgl&gt;, pluribus &lt;lgl&gt;,
 #   sugarpercent &lt;dbl&gt;, pricepercent &lt;dbl&gt;, winpercent &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="do">## OPTION 2</span></span>
-<span id="cb6-2"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href=""></a>  <span class="fu">slice_max</span>(winpercent, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="do">## OPTION 2</span></span>
+<span id="cb7-2"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href=""></a>  <span class="fu">slice_max</span>(winpercent, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 13
   competitorname chocolate fruity caramel peanutyalmondy nougat crispedricewafer
@@ -593,11 +604,11 @@ Solution:
 # ℹ 6 more variables: hard &lt;lgl&gt;, bar &lt;lgl&gt;, pluribus &lt;lgl&gt;,
 #   sugarpercent &lt;dbl&gt;, pricepercent &lt;dbl&gt;, winpercent &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># The least popular?</span></span>
-<span id="cb8-2"><a href=""></a><span class="do">## OPTION 1</span></span>
-<span id="cb8-3"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href=""></a>  <span class="fu">arrange</span>(winpercent) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># The least popular?</span></span>
+<span id="cb9-2"><a href=""></a><span class="do">## OPTION 1</span></span>
+<span id="cb9-3"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href=""></a>  <span class="fu">arrange</span>(winpercent) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 13
   competitorname chocolate fruity caramel peanutyalmondy nougat crispedricewafer
@@ -611,9 +622,9 @@ Solution:
 # ℹ 6 more variables: hard &lt;lgl&gt;, bar &lt;lgl&gt;, pluribus &lt;lgl&gt;,
 #   sugarpercent &lt;dbl&gt;, pricepercent &lt;dbl&gt;, winpercent &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="do">## OPTION 2</span></span>
-<span id="cb10-2"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href=""></a>  <span class="fu">slice_min</span>(winpercent, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="do">## OPTION 2</span></span>
+<span id="cb11-2"><a href=""></a>candy_rankings <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">slice_min</span>(winpercent, <span class="at">n =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 13
   competitorname chocolate fruity caramel peanutyalmondy nougat crispedricewafer
@@ -641,35 +652,35 @@ Solution:
 <li>make the candy name a row label, not a predictor</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>candy <span class="ot">&lt;-</span> candy_rankings <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">popularity =</span> <span class="fu">cut</span>(winpercent, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">100</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"med"</span>, <span class="st">"high"</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href=""></a>  <span class="fu">select</span>(<span class="sc">-</span>winpercent) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href=""></a>  <span class="fu">rename</span>(<span class="st">"price"</span> <span class="ot">=</span> pricepercent, <span class="st">"sugar"</span> <span class="ot">=</span> sugarpercent, <span class="st">"nutty"</span> <span class="ot">=</span> peanutyalmondy, <span class="st">"wafer"</span> <span class="ot">=</span> crispedricewafer) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href=""></a>  <span class="fu">column_to_rownames</span>(<span class="st">"competitorname"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>candy <span class="ot">&lt;-</span> candy_rankings <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">popularity =</span> <span class="fu">cut</span>(winpercent, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">100</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"med"</span>, <span class="st">"high"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href=""></a>  <span class="fu">select</span>(<span class="sc">-</span>winpercent) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href=""></a>  <span class="fu">rename</span>(<span class="st">"price"</span> <span class="ot">=</span> pricepercent, <span class="st">"sugar"</span> <span class="ot">=</span> sugarpercent, <span class="st">"nutty"</span> <span class="ot">=</span> peanutyalmondy, <span class="st">"wafer"</span> <span class="ot">=</span> crispedricewafer) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href=""></a>  <span class="fu">column_to_rownames</span>(<span class="st">"competitorname"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Our goal is to model candy <code>popularity</code> by all possible predictors in our data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># STEP 1: tree specification</span></span>
-<span id="cb13-2"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="dv">0</span>, <span class="at">min_n =</span> <span class="dv">2</span>, <span class="at">tree_depth =</span> <span class="dv">30</span>)</span>
-<span id="cb13-6"><a href=""></a></span>
-<span id="cb13-7"><a href=""></a><span class="co"># STEP 2: Build the tree! No tuning (hence no workflows) necessary.</span></span>
-<span id="cb13-8"><a href=""></a>original_tree <span class="ot">&lt;-</span> tree_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb13-9"><a href=""></a>  <span class="fu">fit</span>(popularity <span class="sc">~</span> ., <span class="at">data =</span> candy)</span>
-<span id="cb13-10"><a href=""></a></span>
-<span id="cb13-11"><a href=""></a><span class="co"># Plot the tree</span></span>
-<span id="cb13-12"><a href=""></a>original_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb13-13"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb13-14"><a href=""></a>  <span class="fu">plot</span>(<span class="at">margin =</span> <span class="dv">0</span>) </span>
-<span id="cb13-15"><a href=""></a>original_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb13-16"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb13-17"><a href=""></a>  <span class="fu">text</span>(<span class="at">cex =</span> <span class="fl">0.7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># STEP 1: tree specification</span></span>
+<span id="cb14-2"><a href=""></a>tree_spec <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href=""></a>  <span class="fu">set_args</span>(<span class="at">cost_complexity =</span> <span class="dv">0</span>, <span class="at">min_n =</span> <span class="dv">2</span>, <span class="at">tree_depth =</span> <span class="dv">30</span>)</span>
+<span id="cb14-6"><a href=""></a></span>
+<span id="cb14-7"><a href=""></a><span class="co"># STEP 2: Build the tree! No tuning (hence no workflows) necessary.</span></span>
+<span id="cb14-8"><a href=""></a>original_tree <span class="ot">&lt;-</span> tree_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb14-9"><a href=""></a>  <span class="fu">fit</span>(popularity <span class="sc">~</span> ., <span class="at">data =</span> candy)</span>
+<span id="cb14-10"><a href=""></a></span>
+<span id="cb14-11"><a href=""></a><span class="co"># Plot the tree</span></span>
+<span id="cb14-12"><a href=""></a>original_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb14-13"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-14"><a href=""></a>  <span class="fu">plot</span>(<span class="at">margin =</span> <span class="dv">0</span>) </span>
+<span id="cb14-15"><a href=""></a>original_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb14-16"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb14-17"><a href=""></a>  <span class="fu">text</span>(<span class="at">cex =</span> <span class="fl">0.7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L15-forests_files/figure-revealjs/unnamed-chunk-7-1.png" width="768"></p>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 </figure>
 </div>
 </div>
@@ -719,14 +730,14 @@ low bias, high variance
 </ul>
 <p>Take your resample:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Set the seed to YOUR phone number (just the numbers)</span></span>
-<span id="cb14-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
-<span id="cb14-3"><a href=""></a></span>
-<span id="cb14-4"><a href=""></a><span class="co"># Take a REsample of candies from our sample</span></span>
-<span id="cb14-5"><a href=""></a>my_candy <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(candy, <span class="at">size =</span> <span class="fu">nrow</span>(candy), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-6"><a href=""></a></span>
-<span id="cb14-7"><a href=""></a><span class="co"># Check it out</span></span>
-<span id="cb14-8"><a href=""></a><span class="fu">head</span>(my_candy, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Set the seed to YOUR phone number (just the numbers)</span></span>
+<span id="cb15-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb15-3"><a href=""></a></span>
+<span id="cb15-4"><a href=""></a><span class="co"># Take a REsample of candies from our sample</span></span>
+<span id="cb15-5"><a href=""></a>my_candy <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(candy, <span class="at">size =</span> <span class="fu">nrow</span>(candy), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-6"><a href=""></a></span>
+<span id="cb15-7"><a href=""></a><span class="co"># Check it out</span></span>
+<span id="cb15-8"><a href=""></a><span class="fu">head</span>(my_candy, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     chocolate fruity caramel nutty nougat wafer  hard   bar
 Snickers Crisper...1      TRUE  FALSE    TRUE  TRUE  FALSE  TRUE FALSE  TRUE
@@ -774,29 +785,30 @@ Thus, the probability that any one row is NOT chosen is about 1/3 and the probab
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Build your tree</span></span>
-<span id="cb16-2"><a href=""></a>my_tree <span class="ot">&lt;-</span> tree_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href=""></a>  <span class="fu">fit</span>(popularity <span class="sc">~</span> ., <span class="at">data =</span> my_candy)</span>
-<span id="cb16-4"><a href=""></a></span>
-<span id="cb16-5"><a href=""></a><span class="co"># Plot your tree</span></span>
-<span id="cb16-6"><a href=""></a>my_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb16-7"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb16-8"><a href=""></a>  <span class="fu">plot</span>(<span class="at">margin =</span> <span class="dv">0</span>) </span>
-<span id="cb16-9"><a href=""></a>my_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb16-10"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb16-11"><a href=""></a>  <span class="fu">text</span>(<span class="at">cex =</span> <span class="fl">0.7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># Build your tree</span></span>
+<span id="cb17-2"><a href=""></a>my_tree <span class="ot">&lt;-</span> tree_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href=""></a>  <span class="fu">fit</span>(popularity <span class="sc">~</span> ., <span class="at">data =</span> my_candy)</span>
+<span id="cb17-4"><a href=""></a></span>
+<span id="cb17-5"><a href=""></a><span class="co"># Plot your tree</span></span>
+<span id="cb17-6"><a href=""></a>my_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb17-7"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href=""></a>  <span class="fu">plot</span>(<span class="at">margin =</span> <span class="dv">0</span>) </span>
+<span id="cb17-9"><a href=""></a>my_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb17-10"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-11"><a href=""></a>  <span class="fu">text</span>(<span class="at">cex =</span> <span class="fl">0.7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Use your tree to classify Baby Ruth, the 7th candy in the original data.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>my_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> candy[<span class="dv">7</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>my_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> candy[<span class="dv">7</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Finally, share your results!</p>
 <p>Record your prediction and paste a picture of your tree into <a href="https://docs.google.com/document/d/1S3l0dN1vPhy6N_OOom8Z91HPe4X9f-V-_EC0e9_L0do/edit?usp=sharing">this document</a>.</p>
+<p><br></p>
 </section>
 <section id="example-6-using-our-forest" class="slide level2 unnumbered smaller scrollable">
 <h2>EXAMPLE 6: Using our FOREST</h2>
@@ -922,50 +934,50 @@ Given that forests are relatively computationally expensive, we’ll only build 
 </ul>
 <p>Fill in the below code to run this forest algorithm.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># There's randomness behind the splits!</span></span>
-<span id="cb18-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb18-3"><a href=""></a>    </span>
-<span id="cb18-4"><a href=""></a><span class="co"># STEP 1: Model Specification</span></span>
-<span id="cb18-5"><a href=""></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb18-6"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"___"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-7"><a href=""></a>  <span class="fu">___</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-8"><a href=""></a>  <span class="fu">___</span>(</span>
-<span id="cb18-9"><a href=""></a>    <span class="at">mtry =</span> <span class="cn">NULL</span>,</span>
-<span id="cb18-10"><a href=""></a>    <span class="at">trees =</span> <span class="dv">500</span>,</span>
-<span id="cb18-11"><a href=""></a>    <span class="at">min_n =</span> <span class="dv">2</span>,</span>
-<span id="cb18-12"><a href=""></a>    <span class="at">probability =</span> <span class="cn">FALSE</span>,    <span class="co"># Report classifications, not probability calculations</span></span>
-<span id="cb18-13"><a href=""></a>    <span class="at">importance =</span> <span class="st">"impurity"</span> <span class="co"># Use Gini index to measure variable importance</span></span>
-<span id="cb18-14"><a href=""></a>  )</span>
-<span id="cb18-15"><a href=""></a>    </span>
-<span id="cb18-16"><a href=""></a><span class="co"># STEP 2: Build the forest</span></span>
-<span id="cb18-17"><a href=""></a><span class="co"># There are no preprocessing steps or tuning, hence no need for a workflow!</span></span>
-<span id="cb18-18"><a href=""></a>candy_forest <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
-<span id="cb18-19"><a href=""></a>  <span class="fu">fit</span>(___, ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># There's randomness behind the splits!</span></span>
+<span id="cb19-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb19-3"><a href=""></a>    </span>
+<span id="cb19-4"><a href=""></a><span class="co"># STEP 1: Model Specification</span></span>
+<span id="cb19-5"><a href=""></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>()  <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"___"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-7"><a href=""></a>  <span class="fu">___</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href=""></a>  <span class="fu">___</span>(</span>
+<span id="cb19-9"><a href=""></a>    <span class="at">mtry =</span> <span class="cn">NULL</span>,</span>
+<span id="cb19-10"><a href=""></a>    <span class="at">trees =</span> <span class="dv">500</span>,</span>
+<span id="cb19-11"><a href=""></a>    <span class="at">min_n =</span> <span class="dv">2</span>,</span>
+<span id="cb19-12"><a href=""></a>    <span class="at">probability =</span> <span class="cn">FALSE</span>,    <span class="co"># Report classifications, not probability calculations</span></span>
+<span id="cb19-13"><a href=""></a>    <span class="at">importance =</span> <span class="st">"impurity"</span> <span class="co"># Use Gini index to measure variable importance</span></span>
+<span id="cb19-14"><a href=""></a>  )</span>
+<span id="cb19-15"><a href=""></a>    </span>
+<span id="cb19-16"><a href=""></a><span class="co"># STEP 2: Build the forest</span></span>
+<span id="cb19-17"><a href=""></a><span class="co"># There are no preprocessing steps or tuning, hence no need for a workflow!</span></span>
+<span id="cb19-18"><a href=""></a>candy_forest <span class="ot">&lt;-</span> ___ <span class="sc">%&gt;%</span> </span>
+<span id="cb19-19"><a href=""></a>  <span class="fu">fit</span>(___, ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <details>
 <summary>
 Solution:
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># There's randomness behind the splits!</span></span>
-<span id="cb19-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
-<span id="cb19-3"><a href=""></a>    </span>
-<span id="cb19-4"><a href=""></a><span class="co"># STEP 1: Model Specification</span></span>
-<span id="cb19-5"><a href=""></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb19-6"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-7"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-8"><a href=""></a>  <span class="fu">set_args</span>(</span>
-<span id="cb19-9"><a href=""></a>    <span class="at">mtry =</span> <span class="cn">NULL</span>,</span>
-<span id="cb19-10"><a href=""></a>    <span class="at">trees =</span> <span class="dv">500</span>,</span>
-<span id="cb19-11"><a href=""></a>    <span class="at">min_n =</span> <span class="dv">2</span>,</span>
-<span id="cb19-12"><a href=""></a>    <span class="at">probability =</span> <span class="cn">FALSE</span>, <span class="co"># give classifications, not probability calculations</span></span>
-<span id="cb19-13"><a href=""></a>    <span class="at">importance =</span> <span class="st">"impurity"</span> <span class="co"># use Gini index to measure variable importance</span></span>
-<span id="cb19-14"><a href=""></a>  )</span>
-<span id="cb19-15"><a href=""></a>    </span>
-<span id="cb19-16"><a href=""></a><span class="co"># STEP 2: Build the forest</span></span>
-<span id="cb19-17"><a href=""></a><span class="co"># There are no preprocessing steps or tuning, hence no need for a workflow!</span></span>
-<span id="cb19-18"><a href=""></a>candy_forest <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb19-19"><a href=""></a>  <span class="fu">fit</span>(popularity <span class="sc">~</span> ., <span class="at">data =</span> candy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># There's randomness behind the splits!</span></span>
+<span id="cb20-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb20-3"><a href=""></a>    </span>
+<span id="cb20-4"><a href=""></a><span class="co"># STEP 1: Model Specification</span></span>
+<span id="cb20-5"><a href=""></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>()  <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-7"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-8"><a href=""></a>  <span class="fu">set_args</span>(</span>
+<span id="cb20-9"><a href=""></a>    <span class="at">mtry =</span> <span class="cn">NULL</span>,</span>
+<span id="cb20-10"><a href=""></a>    <span class="at">trees =</span> <span class="dv">500</span>,</span>
+<span id="cb20-11"><a href=""></a>    <span class="at">min_n =</span> <span class="dv">2</span>,</span>
+<span id="cb20-12"><a href=""></a>    <span class="at">probability =</span> <span class="cn">FALSE</span>, <span class="co"># give classifications, not probability calculations</span></span>
+<span id="cb20-13"><a href=""></a>    <span class="at">importance =</span> <span class="st">"impurity"</span> <span class="co"># use Gini index to measure variable importance</span></span>
+<span id="cb20-14"><a href=""></a>  )</span>
+<span id="cb20-15"><a href=""></a>    </span>
+<span id="cb20-16"><a href=""></a><span class="co"># STEP 2: Build the forest</span></span>
+<span id="cb20-17"><a href=""></a><span class="co"># There are no preprocessing steps or tuning, hence no need for a workflow!</span></span>
+<span id="cb20-18"><a href=""></a>candy_forest <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb20-19"><a href=""></a>  <span class="fu">fit</span>(popularity <span class="sc">~</span> ., <span class="at">data =</span> candy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <p><br><br></p>
@@ -974,8 +986,8 @@ Solution:
 Use the forest to predict the <code>popularity</code> level for Baby Ruth. (Remember that its real <code>popularity</code> is “med”.)</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> candy[<span class="dv">7</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> candy[<span class="dv">7</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   .pred_class
@@ -983,6 +995,7 @@ Use the forest to predict the <code>popularity</code> level for Baby Ruth. (Reme
 1 med        </code></pre>
 </div>
 </div>
+<p><br><br></p>
 <ol start="4" type="1">
 <li><strong>Evaluating forests: concepts</strong></li>
 </ol>
@@ -1014,33 +1027,58 @@ Solution:
 <li>Report and interpret the estimated <code>OOB prediction error</code>.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>candy_forest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>candy_forest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+Ranger result
+
+Call:
+ ranger::ranger(x = maybe_data_frame(x), y = y, num.trees = ~500,      min.node.size = min_rows(~2, x), probability = ~FALSE, importance = ~"impurity",      num.threads = 1, verbose = FALSE, seed = sample.int(10^5,          1)) 
+
+Type:                             Classification 
+Number of trees:                  500 
+Sample size:                      85 
+Number of independent variables:  11 
+Mtry:                             3 
+Target node size:                 2 
+Variable importance mode:         impurity 
+Splitrule:                        gini 
+OOB prediction error:             40.00 % </code></pre>
+</div>
 </div>
 <ol start="2" type="a">
 <li>The <strong>test</strong> or <strong>OOB confusion matrix</strong> provides more detail. Use this to confirm the OOB prediction error from part a. HINT: Remember to calculate <em>error</em> (1 - accuracy), not <em>accuracy</em>.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: t() transposes the confusion matrix so that </span></span>
-<span id="cb23-2"><a href=""></a><span class="co"># the columns and rows are in the usual order</span></span>
-<span id="cb23-3"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
-<span id="cb23-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb23-5"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"confusion.matrix"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-6"><a href=""></a>  <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: t() transposes the confusion matrix so that </span></span>
+<span id="cb25-2"><a href=""></a><span class="co"># the columns and rows are in the usual order</span></span>
+<span id="cb25-3"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"confusion.matrix"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href=""></a>  <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         true
+predicted low med high
+     low    8   6    1
+     med   15  29    6
+     high   2   4   14</code></pre>
+</div>
 </div>
 <ol start="3" type="a">
 <li><p>Which level of candy popularity was least accurately classified by our forest?</p></li>
 <li><p>Check out the <strong>in-sample</strong> confusion matrix. In general, are the in-sample predictions better or worse than the OOB predictions?</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="co"># The cbind() includes the original candy data</span></span>
-<span id="cb24-2"><a href=""></a><span class="co"># alongside their predicted popularity levels</span></span>
-<span id="cb24-3"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
-<span id="cb24-4"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> candy) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-5"><a href=""></a>  <span class="fu">cbind</span>(candy) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-6"><a href=""></a>  <span class="fu">conf_mat</span>(</span>
-<span id="cb24-7"><a href=""></a>    <span class="at">truth =</span> popularity,</span>
-<span id="cb24-8"><a href=""></a>    <span class="at">estimate =</span> .pred_class</span>
-<span id="cb24-9"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="co"># The cbind() includes the original candy data</span></span>
+<span id="cb27-2"><a href=""></a><span class="co"># alongside their predicted popularity levels</span></span>
+<span id="cb27-3"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> candy) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-5"><a href=""></a>  <span class="fu">cbind</span>(candy) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-6"><a href=""></a>  <span class="fu">conf_mat</span>(</span>
+<span id="cb27-7"><a href=""></a>    <span class="at">truth =</span> popularity,</span>
+<span id="cb27-8"><a href=""></a>    <span class="at">estimate =</span> .pred_class</span>
+<span id="cb27-9"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Truth
 Prediction low med high
@@ -1058,19 +1096,19 @@ Solution:
 <li>.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="co"># APPROACH 1: # of MISclassifications / total # of classifications</span></span>
-<span id="cb26-2"><a href=""></a>(<span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span>) <span class="sc">/</span> (<span class="dv">8</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">14</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="co"># APPROACH 1: # of MISclassifications / total # of classifications</span></span>
+<span id="cb29-2"><a href=""></a>(<span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span>) <span class="sc">/</span> (<span class="dv">8</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">14</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># APPROACH 2: overall MISclassification rate = 1 - overall accuracy rate</span></span>
-<span id="cb28-2"><a href=""></a><span class="co"># overall accuracy rate</span></span>
-<span id="cb28-3"><a href=""></a>(<span class="dv">8</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">14</span>) <span class="sc">/</span> (<span class="dv">8</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">14</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="co"># APPROACH 2: overall MISclassification rate = 1 - overall accuracy rate</span></span>
+<span id="cb31-2"><a href=""></a><span class="co"># overall accuracy rate</span></span>
+<span id="cb31-3"><a href=""></a>(<span class="dv">8</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">14</span>) <span class="sc">/</span> (<span class="dv">8</span> <span class="sc">+</span> <span class="dv">29</span> <span class="sc">+</span> <span class="dv">14</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">4</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="co"># overall misclassification rate</span></span>
-<span id="cb30-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># overall misclassification rate</span></span>
+<span id="cb33-2"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4</code></pre>
 </div>
@@ -1086,16 +1124,28 @@ Solution:
 </ol>
 <p>Variable importance metrics, averaged over all trees, measure the strength of the 11 predictors in classifying candy <code>popularity</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="co"># Print the metrics</span></span>
-<span id="cb32-2"><a href=""></a>candy_forest <span class="sc">%&gt;%</span></span>
-<span id="cb32-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-5"><a href=""></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-6"><a href=""></a>    </span>
-<span id="cb32-7"><a href=""></a><span class="co"># Plot the metrics</span></span>
-<span id="cb32-8"><a href=""></a><span class="fu">library</span>(vip)</span>
-<span id="cb32-9"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
-<span id="cb32-10"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="co"># Print the metrics</span></span>
+<span id="cb35-2"><a href=""></a>candy_forest <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-5"><a href=""></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    sugar     price chocolate    fruity     nutty     wafer  pluribus       bar 
+9.4075750 9.0830343 5.0757837 2.8236876 2.2084982 2.1255274 1.8596475 1.8143452 
+  caramel      hard    nougat 
+1.6918086 1.3640697 0.9441936 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># Plot the metrics</span></span>
+<span id="cb37-2"><a href=""></a><span class="fu">library</span>(vip)</span>
+<span id="cb37-3"><a href=""></a>candy_forest <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <ol type="a">
 <li>If you’re a candy connoisseur, does this ranking make some contextual sense to you?<br>
@@ -1119,19 +1169,20 @@ Solution:
 <p>Just like any classification model, forests divide our data points into classification regions.</p>
 <p>Let’s explore this idea using some <em>simulated</em> data that illustrate some important contrasts.<sup>1</sup></p>
 <p>Import and plot the data:</p>
+<!-- note to self: change data source -->
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># Import data</span></span>
-<span id="cb33-2"><a href=""></a>simulated_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/circle_sim.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">as.factor</span>(class))</span>
-<span id="cb33-4"><a href=""></a>    </span>
-<span id="cb33-5"><a href=""></a><span class="co"># Plot data</span></span>
-<span id="cb33-6"><a href=""></a><span class="fu">ggplot</span>(simulated_data, <span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> class)) <span class="sc">+</span> </span>
-<span id="cb33-7"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb33-8"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># Import data</span></span>
+<span id="cb38-2"><a href=""></a>simulated_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://kegrinde.github.io/stat253_coursenotes/data/circle_sim.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">class =</span> <span class="fu">as.factor</span>(class))</span>
+<span id="cb38-4"><a href=""></a>    </span>
+<span id="cb38-5"><a href=""></a><span class="co"># Plot data</span></span>
+<span id="cb38-6"><a href=""></a><span class="fu">ggplot</span>(simulated_data, <span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> class)) <span class="sc">+</span> </span>
+<span id="cb38-7"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb38-8"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L15-forests_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1140,19 +1191,19 @@ Solution:
 <li>Below is a classification <strong>tree</strong> of <code>class</code> by <code>X1</code> and <code>X2</code>. What do you think its classification regions will look like?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="co"># Build the (default) tree</span></span>
-<span id="cb34-2"><a href=""></a>circle_tree <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-5"><a href=""></a>  <span class="fu">fit</span>(class <span class="sc">~</span> ., <span class="at">data =</span> simulated_data)</span>
-<span id="cb34-6"><a href=""></a></span>
-<span id="cb34-7"><a href=""></a>circle_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb34-8"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb34-9"><a href=""></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># Build the (default) tree</span></span>
+<span id="cb39-2"><a href=""></a>circle_tree <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-5"><a href=""></a>  <span class="fu">fit</span>(class <span class="sc">~</span> ., <span class="at">data =</span> simulated_data)</span>
+<span id="cb39-6"><a href=""></a></span>
+<span id="cb39-7"><a href=""></a>circle_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb39-8"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb39-9"><a href=""></a>  <span class="fu">rpart.plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L15-forests_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1161,37 +1212,51 @@ Solution:
 <li>Check your intuition. Were you right?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
-<span id="cb35-2"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
-<span id="cb35-3"><a href=""></a>examples <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X1 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>), <span class="at">X2 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-4"><a href=""></a>  <span class="fu">expand.grid</span>()</span>
-<span id="cb35-5"><a href=""></a></span>
-<span id="cb35-6"><a href=""></a>circle_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb35-7"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-8"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-9"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
-<span id="cb35-10"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb35-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"tree classification regions"</span>) <span class="sc">+</span> </span>
-<span id="cb35-12"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
+<span id="cb40-2"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
+<span id="cb40-3"><a href=""></a>examples <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X1 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>), <span class="at">X2 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href=""></a>  <span class="fu">expand.grid</span>()</span>
+<span id="cb40-5"><a href=""></a></span>
+<span id="cb40-6"><a href=""></a>circle_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb40-7"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-8"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-9"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
+<span id="cb40-10"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb40-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"tree classification regions"</span>) <span class="sc">+</span> </span>
+<span id="cb40-12"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <ol start="3" type="a">
 <li><p>If we built a <strong>forest</strong> model of <code>class</code> by <code>X1</code> and <code>X2</code>, what do you think the classification regions will look like?</p></li>
 <li><p>Check your intuition. Were you right?</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
-<span id="cb36-2"><a href=""></a><span class="co"># Build the forest</span></span>
-<span id="cb36-3"><a href=""></a>circle_forest <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb36-4"><a href=""></a>  <span class="fu">fit</span>(class <span class="sc">~</span> ., <span class="at">data =</span> simulated_data)</span>
-<span id="cb36-5"><a href=""></a></span>
-<span id="cb36-6"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
-<span id="cb36-7"><a href=""></a>circle_forest <span class="sc">%&gt;%</span> </span>
-<span id="cb36-8"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-9"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-10"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
-<span id="cb36-11"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb36-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"forest classification regions"</span>) <span class="sc">+</span> </span>
-<span id="cb36-13"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
+<span id="cb41-2"><a href=""></a><span class="co"># Build the forest</span></span>
+<span id="cb41-3"><a href=""></a>circle_forest <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href=""></a>  <span class="fu">fit</span>(class <span class="sc">~</span> ., <span class="at">data =</span> simulated_data)</span>
+<span id="cb41-5"><a href=""></a></span>
+<span id="cb41-6"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
+<span id="cb41-7"><a href=""></a>circle_forest <span class="sc">%&gt;%</span> </span>
+<span id="cb41-8"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-9"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-10"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
+<span id="cb41-11"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb41-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"forest classification regions"</span>) <span class="sc">+</span> </span>
+<span id="cb41-13"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <ol start="5" type="a">
 <li>Reflect on what you’ve observed here!</li>
@@ -1204,22 +1269,22 @@ Solution:
 <li>…</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
-<span id="cb37-2"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
-<span id="cb37-3"><a href=""></a>examples <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X1 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>), <span class="at">X2 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-4"><a href=""></a>  <span class="fu">expand.grid</span>()</span>
-<span id="cb37-5"><a href=""></a></span>
-<span id="cb37-6"><a href=""></a>circle_tree <span class="sc">%&gt;%</span> </span>
-<span id="cb37-7"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-8"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-9"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
-<span id="cb37-10"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb37-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"tree classification regions"</span>) <span class="sc">+</span> </span>
-<span id="cb37-12"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
+<span id="cb42-2"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
+<span id="cb42-3"><a href=""></a>examples <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X1 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>), <span class="at">X2 =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">100</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href=""></a>  <span class="fu">expand.grid</span>()</span>
+<span id="cb42-5"><a href=""></a></span>
+<span id="cb42-6"><a href=""></a>circle_tree <span class="sc">%&gt;%</span> </span>
+<span id="cb42-7"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-8"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-9"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
+<span id="cb42-10"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb42-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"tree classification regions"</span>) <span class="sc">+</span> </span>
+<span id="cb42-12"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L15-forests_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1228,23 +1293,23 @@ Solution:
 <li>…</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
-<span id="cb38-2"><a href=""></a><span class="co"># Build the forest</span></span>
-<span id="cb38-3"><a href=""></a>circle_forest <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb38-4"><a href=""></a>  <span class="fu">fit</span>(class <span class="sc">~</span> ., <span class="at">data =</span> simulated_data)</span>
-<span id="cb38-5"><a href=""></a></span>
-<span id="cb38-6"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
-<span id="cb38-7"><a href=""></a>circle_forest <span class="sc">%&gt;%</span> </span>
-<span id="cb38-8"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-9"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-10"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
-<span id="cb38-11"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb38-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"forest classification regions"</span>) <span class="sc">+</span> </span>
-<span id="cb38-13"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="co"># THIS IS ONLY DEMO CODE.</span></span>
+<span id="cb43-2"><a href=""></a><span class="co"># Build the forest</span></span>
+<span id="cb43-3"><a href=""></a>circle_forest <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb43-4"><a href=""></a>  <span class="fu">fit</span>(class <span class="sc">~</span> ., <span class="at">data =</span> simulated_data)</span>
+<span id="cb43-5"><a href=""></a></span>
+<span id="cb43-6"><a href=""></a><span class="co"># Plot the tree classification regions</span></span>
+<span id="cb43-7"><a href=""></a>circle_forest <span class="sc">%&gt;%</span> </span>
+<span id="cb43-8"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-9"><a href=""></a>  <span class="fu">cbind</span>(examples) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-10"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> X2, <span class="at">x =</span> X1, <span class="at">color =</span> .pred_class)) <span class="sc">+</span> </span>
+<span id="cb43-11"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb43-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"forest classification regions"</span>) <span class="sc">+</span> </span>
+<span id="cb43-13"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L15-forests_files/figure-revealjs/unnamed-chunk-24-1.png" width="960"></p>
+<p><img data-src="L15-forests_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1262,6 +1327,7 @@ Solution:
 <li>Check out group assignment 2 on Moodle. Next class, your group will pick what topic to explore.</li>
 <li>Work on homework.</li>
 </ul>
+<p><br><br></p>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>citation: https://daviddalpiaz.github.io/r4sl/ensemble-methods.html#tree-versus-ensemble-boundaries</p></li></ol></aside></section></section>
 <section id="wrapping-up" class="title-slide slide level1 unnumbered smaller center">
 <h1>Wrapping Up</h1>
@@ -1274,6 +1340,7 @@ Solution:
 <li>Coming soon: Quiz 2 (Nov 19), Group Assignment 2 (Nov 26)</li>
 </ul></li>
 </ul>
+<p><br><br></p>
 </section>
 
 <section id="deeper-learning-optional" class="title-slide slide level1 unnumbered center">
@@ -1297,27 +1364,28 @@ Solution:
 <li><p>Bagging typically helps decrease variance, but not bias. Thus it is useful in scenarios where other algorithms are unstable and overfit to the sample data.</p></li>
 <li><p>Boosting typically helps decrease bias, but not variance. Thus it is useful in scenarios where other algorithms are stable, but overly simple.</p></li>
 </ul>
+<p><br><br></p>
 </section>
 
 <section id="notes-r-code" class="title-slide slide level1 unnumbered center">
 <h1>Notes: R code</h1>
 <p>Suppose we want to build a forest or bagging algorithm of some categorical response variable <code>y</code> using predictors <code>x1</code> and <code>x2</code> in our <code>sample_data</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># Load packages</span></span>
-<span id="cb39-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb39-3"><a href=""></a><span class="fu">library</span>(rpart)</span>
-<span id="cb39-4"><a href=""></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb39-5"><a href=""></a></span>
-<span id="cb39-6"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
-<span id="cb39-7"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="co"># Load packages</span></span>
+<span id="cb44-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb44-3"><a href=""></a><span class="fu">library</span>(rpart)</span>
+<span id="cb44-4"><a href=""></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb44-5"><a href=""></a></span>
+<span id="cb44-6"><a href=""></a><span class="co"># Resolves package conflicts by preferring tidymodels functions</span></span>
+<span id="cb44-7"><a href=""></a><span class="fu">tidymodels_prefer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Make sure that y is a factor variable</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.factor</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="fu">as.factor</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
@@ -1334,72 +1402,72 @@ Solution:
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="co"># STEP 1: Model Specification</span></span>
-<span id="cb41-2"><a href=""></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb41-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb41-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-5"><a href=""></a>  <span class="fu">set_args</span>(</span>
-<span id="cb41-6"><a href=""></a>    <span class="at">mtry =</span> ___,</span>
-<span id="cb41-7"><a href=""></a>    <span class="at">trees =</span> <span class="dv">500</span>,</span>
-<span id="cb41-8"><a href=""></a>    <span class="at">min_n =</span> <span class="dv">2</span>,</span>
-<span id="cb41-9"><a href=""></a>    <span class="at">probability =</span> <span class="cn">FALSE</span>, <span class="co"># give classifications, not probability calculations</span></span>
-<span id="cb41-10"><a href=""></a>    <span class="at">importance =</span> <span class="st">"impurity"</span> <span class="co"># use Gini index to measure variable importance</span></span>
-<span id="cb41-11"><a href=""></a>  )</span>
-<span id="cb41-12"><a href=""></a></span>
-<span id="cb41-13"><a href=""></a><span class="co"># STEP 2: Build the forest or bagging model</span></span>
-<span id="cb41-14"><a href=""></a><span class="co"># There are no preprocessing steps or tuning, hence no need for a workflow!</span></span>
-<span id="cb41-15"><a href=""></a>ensemble_model <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
-<span id="cb41-16"><a href=""></a>  <span class="fu">fit</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="co"># STEP 1: Model Specification</span></span>
+<span id="cb46-2"><a href=""></a>rf_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>()  <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href=""></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href=""></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"ranger"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href=""></a>  <span class="fu">set_args</span>(</span>
+<span id="cb46-6"><a href=""></a>    <span class="at">mtry =</span> ___,</span>
+<span id="cb46-7"><a href=""></a>    <span class="at">trees =</span> <span class="dv">500</span>,</span>
+<span id="cb46-8"><a href=""></a>    <span class="at">min_n =</span> <span class="dv">2</span>,</span>
+<span id="cb46-9"><a href=""></a>    <span class="at">probability =</span> <span class="cn">FALSE</span>, <span class="co"># give classifications, not probability calculations</span></span>
+<span id="cb46-10"><a href=""></a>    <span class="at">importance =</span> <span class="st">"impurity"</span> <span class="co"># use Gini index to measure variable importance</span></span>
+<span id="cb46-11"><a href=""></a>  )</span>
+<span id="cb46-12"><a href=""></a></span>
+<span id="cb46-13"><a href=""></a><span class="co"># STEP 2: Build the forest or bagging model</span></span>
+<span id="cb46-14"><a href=""></a><span class="co"># There are no preprocessing steps or tuning, hence no need for a workflow!</span></span>
+<span id="cb46-15"><a href=""></a>ensemble_model <span class="ot">&lt;-</span> rf_spec <span class="sc">%&gt;%</span> </span>
+<span id="cb46-16"><a href=""></a>  <span class="fu">fit</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> sample_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Use the model to make predictions / classifications</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span>
-<span id="cb42-2"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># Put in a data.frame object with x1 and x2 values (at minimum)</span></span>
+<span id="cb47-2"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> ___)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Examine variable importance</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="co"># Print the metrics</span></span>
-<span id="cb43-2"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span></span>
-<span id="cb43-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb43-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-5"><a href=""></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb43-6"><a href=""></a></span>
-<span id="cb43-7"><a href=""></a><span class="co"># Plot the metrics</span></span>
-<span id="cb43-8"><a href=""></a><span class="co"># Plug in the number of top predictors you wish to plot</span></span>
-<span id="cb43-9"><a href=""></a><span class="co"># (The upper limit varies by application!)</span></span>
-<span id="cb43-10"><a href=""></a><span class="fu">library</span>(vip)</span>
-<span id="cb43-11"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
-<span id="cb43-12"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="co"># Print the metrics</span></span>
+<span id="cb48-2"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"variable.importance"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-5"><a href=""></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-6"><a href=""></a></span>
+<span id="cb48-7"><a href=""></a><span class="co"># Plot the metrics</span></span>
+<span id="cb48-8"><a href=""></a><span class="co"># Plug in the number of top predictors you wish to plot</span></span>
+<span id="cb48-9"><a href=""></a><span class="co"># (The upper limit varies by application!)</span></span>
+<span id="cb48-10"><a href=""></a><span class="fu">library</span>(vip)</span>
+<span id="cb48-11"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
+<span id="cb48-12"><a href=""></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">num_features =</span> ___)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
 </p>
 <p><strong>Evaluate the classifications</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="co"># Out-of-bag (OOB) prediction error</span></span>
-<span id="cb44-2"><a href=""></a>ensemble_model</span>
-<span id="cb44-3"><a href=""></a></span>
-<span id="cb44-4"><a href=""></a><span class="co"># OOB confusion matrix</span></span>
-<span id="cb44-5"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
-<span id="cb44-6"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb44-7"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"confusion.matrix"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-8"><a href=""></a>  <span class="fu">t</span>()</span>
-<span id="cb44-9"><a href=""></a></span>
-<span id="cb44-10"><a href=""></a><span class="co"># In-sample confusion matrix</span></span>
-<span id="cb44-11"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
-<span id="cb44-12"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-13"><a href=""></a>  <span class="fu">cbind</span>(sample_data) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-14"><a href=""></a>  <span class="fu">conf_mat</span>(</span>
-<span id="cb44-15"><a href=""></a>    <span class="at">truth =</span> y,</span>
-<span id="cb44-16"><a href=""></a>    <span class="at">estimate =</span> .pred_class</span>
-<span id="cb44-17"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="co"># Out-of-bag (OOB) prediction error</span></span>
+<span id="cb49-2"><a href=""></a>ensemble_model</span>
+<span id="cb49-3"><a href=""></a></span>
+<span id="cb49-4"><a href=""></a><span class="co"># OOB confusion matrix</span></span>
+<span id="cb49-5"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
+<span id="cb49-6"><a href=""></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb49-7"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"confusion.matrix"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-8"><a href=""></a>  <span class="fu">t</span>()</span>
+<span id="cb49-9"><a href=""></a></span>
+<span id="cb49-10"><a href=""></a><span class="co"># In-sample confusion matrix</span></span>
+<span id="cb49-11"><a href=""></a>ensemble_model <span class="sc">%&gt;%</span> </span>
+<span id="cb49-12"><a href=""></a>  <span class="fu">predict</span>(<span class="at">new_data =</span> sample_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-13"><a href=""></a>  <span class="fu">cbind</span>(sample_data) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-14"><a href=""></a>  <span class="fu">conf_mat</span>(</span>
+<span id="cb49-15"><a href=""></a>    <span class="at">truth =</span> y,</span>
+<span id="cb49-16"><a href=""></a>    <span class="at">estimate =</span> .pred_class</span>
+<span id="cb49-17"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="quarto-auto-generated-content">
 <p><img src="images/mac.png" class="slide-logo"></p>
@@ -1625,44 +1693,6 @@ Solution:
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

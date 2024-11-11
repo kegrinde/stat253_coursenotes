@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STAT 253: Statistical Machine Learning - 16&nbsp; Unit 4 - 5 Reflection</title>
+<title>STAT 253: Statistical Machine Learning - 16&nbsp; Classification Review</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./L13-knn-trees.html">Classification: Building Flexible Models (Unit 5)</a></li><li class="breadcrumb-item"><a href="./L16-review.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Unit 4 - 5 Reflection</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./L13-knn-trees.html">Classification: Building Flexible Models (Unit 5)</a></li><li class="breadcrumb-item"><a href="./L16-review.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification Review</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -311,7 +311,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./L16-review.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Unit 4 - 5 Reflection</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification Review</span></span></a>
   </div>
 </li>
       </ul>
@@ -355,9 +355,26 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
-  <li><a href="#review-reflection" id="toc-review-reflection" class="nav-link" data-scroll-target="#review-reflection">Review &amp; Reflection</a></li>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a>
+  <ul class="collapse">
+  <li><a href="#announcements" id="toc-announcements" class="nav-link" data-scroll-target="#announcements">Announcements</a></li>
+  </ul></li>
+  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a>
+  <ul class="collapse">
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
+  <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5">Question 5</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#part-1-starting-group-assignment-2" id="toc-part-1-starting-group-assignment-2" class="nav-link" data-scroll-target="#part-1-starting-group-assignment-2">Part 1: Starting Group Assignment 2</a></li>
+  <li><a href="#part-2-review-reflection" id="toc-part-2-review-reflection" class="nav-link" data-scroll-target="#part-2-review-reflection">Part 2: Review &amp; Reflection</a>
+  <ul class="collapse">
   <li><a href="#stat-253-concept-maps" id="toc-stat-253-concept-maps" class="nav-link" data-scroll-target="#stat-253-concept-maps">STAT 253 concept maps</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L16-review.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -365,9 +382,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./L13-knn-trees.html">Classification: Building Flexible Models (Unit 5)</a></li><li class="breadcrumb-item"><a href="./L16-review.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Unit 4 - 5 Reflection</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./L13-knn-trees.html">Classification: Building Flexible Models (Unit 5)</a></li><li class="breadcrumb-item"><a href="./L16-review.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification Review</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Unit 4 - 5 Reflection</span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Classification Review</span></h1>
 </div>
 
 
@@ -384,25 +401,110 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This page is currently under construction. Check back soon for updates!</p>
-</div>
-</div>
 <section id="settling-in" class="level1 unnumbered">
 <h1 class="unnumbered">Settling In</h1>
-<p>Coming soon!</p>
+<ul>
+<li>Sit with your assigned group</li>
+<li>Catch up on any announcements you’ve missed on Slack</li>
+<li>Open Group Assignment 2</li>
+</ul>
+<section id="announcements" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="announcements">Announcements</h2>
+<div class="incremental">
+<p>Upcoming Deadlines:</p>
+<ul class="incremental">
+<li>HW5: Wednesday, Nov 13
+<ul class="incremental">
+<li>See note on Moodle about <strong>LIMITED extension opportunities</strong></li>
+<li>Solutions will be posted by Saturday to help with studying for Quiz 2</li>
+</ul></li>
+<li>CP12: Thursday, Nov 14
+<ul class="incremental">
+<li>We will be starting our Unsupervised Learning unit on Thursday!</li>
+<li>This will be covered on Quiz 3, but <strong>not</strong> Quiz 2</li>
+</ul></li>
+<li>HW4 Revisions (if applicable): Friday, Nov 15</li>
+<li>Quiz 2: Tuesday, Nov 20
+<ul class="incremental">
+<li>Focus on <strong>classification</strong> (Units 4–5), though many concepts carry over</li>
+<li>Structure will be the same as Quiz 2 (Part 1 + Part 2)</li>
+</ul></li>
+<li>Group Assignment 2: Tuesday, Nov 26</li>
+</ul>
+</div>
 </section>
-<section id="review-reflection" class="level1 unnumbered">
-<h1 class="unnumbered">Review &amp; Reflection</h1>
+</section>
+<section id="small-group-discussion" class="level1 unnumbered">
+<h1 class="unnumbered">Small Group Discussion</h1>
+<p>Discuss Questions 1–5 with your group. Then, prepare to share answers, questions, etc. with the rest of the class.</p>
+<section id="question-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="question-1">Question 1</h2>
+<p>Trees vs Forests:</p>
+<ul>
+<li>What is the difference between a tree and a forest? (in ML, not nature)</li>
+<li>How do I predict the outcome of a new observation using a tree? What about a forest?</li>
+<li>What is a potential advantage of using a forest compared to a tree? What is a potential drawback?</li>
+</ul>
+</section>
+<section id="question-2" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="question-2">Question 2</h2>
+<p>Bagging vs Random Forests:</p>
+<ul>
+<li>How are these techniques similar?</li>
+<li>How do they differ?</li>
+</ul>
+</section>
+<section id="question-3" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="question-3">Question 3</h2>
+<p>CV vs OOB:</p>
+<ul>
+<li>What does OOB stand for?</li>
+<li>Why do we typically use OOB metrics instead of CV metrics when evaluating forests?</li>
+<li>Are these in-sample or out-of-sample metrics? Why does it matter?</li>
+</ul>
+</section>
+<section id="question-4" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="question-4">Question 4</h2>
+<p>Review the learning goals for Units 4 and 5 listed on the course webpage <a href="https://kegrinde.github.io/stat253_coursenotes/learning-objectives.html">here</a>.</p>
+<p>Rate your confidence about/current level of understanding for each of these items, on a scale of 1 to 5, where:</p>
+<ul>
+<li>1 = I have never heard of this</li>
+<li>5 = I could correctly answer a question about this right now, without notes</li>
+</ul>
+<p>Across your entire group:</p>
+<ul>
+<li>Which topic are you collectively most confident about?</li>
+<li>Least confident?</li>
+<li>Most split (ie some confident, some not)?</li>
+</ul>
+</section>
+<section id="question-5" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="question-5">Question 5</h2>
+<p>Discuss your study strategies:</p>
+<ul>
+<li>How did you study for Quiz 1?</li>
+<li>Is there anything you found to be particularly helpful?</li>
+<li>Is there anything you are planning to try differently for this next quiz?</li>
+</ul>
+</section>
+</section>
+<section id="exercises" class="level1 unnumbered">
+<h1 class="unnumbered">Exercises</h1>
+<section id="part-1-starting-group-assignment-2" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="part-1-starting-group-assignment-2">Part 1: Starting Group Assignment 2</h2>
+<ul>
+<li>Decide on what “adventure” you’d like to take for the Group Assignment 2.</li>
+<li>Reply <strong>in thread</strong> to my recent post on the #help-group-assignments channel so I know what you’ve picked.</li>
+<li>Get started on that adventure.
+<ul>
+<li>Get data on your local computers</li>
+<li>Set up communication avenues for asynchronous discussions</li>
+<li>Divide / delegate leadership on tasks</li>
+</ul></li>
+</ul>
+</section>
+<section id="part-2-review-reflection" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="part-2-review-reflection">Part 2: Review &amp; Reflection</h2>
 <p>STAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together. Though you won’t hand anything in, or work on this in class today, <strong>you’re strongly encouraged to complete this activity</strong>. This material is designed to help you reflect upon:</p>
 <ul>
 <li>ML concepts
@@ -415,12 +517,14 @@ Warning
 <p>Follow the links below and make a copy of the STAT 253 concept maps (or find and modify the copy you made while reviewing the regression unit).</p>
 <p>You’ll be given some relevant prompts below, but you should use these materials in <em>whatever way suits you</em>! Take notes, add more content, rearrange, etc.</p>
 <ul>
-<li><a href="https://docs.google.com/presentation/d/1Kto9AzJTb6GB4VzmkTl1F1ICzRRaQ4Ib5EVtpjIiyUY/edit?usp=sharing">STAT 253 concept maps</a></li>
-<li><a href="https://docs.google.com/document/d/1oMeKmcCAUN2SKF4tnH3bGIoGbP3EgggXRsNDMynq2sU/edit?usp=sharing">tidymodels code comparison</a></li>
+<li><a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 concept maps</a></li>
+<li><a href="https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing">tidymodels code comparison</a></li>
 </ul>
-</section>
-<section id="stat-253-concept-maps" class="level1 unnumbered">
-<h1 class="unnumbered">STAT 253 concept maps</h1>
+<p><br>
+<br>
+</p>
+<section id="stat-253-concept-maps" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="stat-253-concept-maps">STAT 253 concept maps</h3>
 <p>Review <strong>slides 3–5</strong> (classification) of the concept map, and mark up <strong>slides 1, 7, and 8</strong> with respect to the prompts below.</p>
 <p><br>
 <br>
@@ -495,9 +599,13 @@ Warning
 <p><strong>Algorithm comparisons</strong></p>
 <p>Use <em>page 8</em> to make other observations about the Unit 4-5 modeling algorithms and their connections.</p>
 </section>
+</section>
+</section>
 <section id="wrapping-up" class="level1 unnumbered">
 <h1 class="unnumbered">Wrapping Up</h1>
-<p>Coming soon!</p>
+<ul>
+<li>See reminders above and on the <a href="https://kegrinde.github.io/stat253_coursenotes/schedule.html">course schedule</a> about upcoming deadlines</li>
+</ul>
 
 
 </section>

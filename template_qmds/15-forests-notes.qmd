@@ -261,7 +261,7 @@ Take your resample:
     
 ```{r}
 # Set the seed to YOUR phone number (just the numbers)
-set.seed(___)
+set.seed(5678325)
 
 # Take a REsample of candies from our sample
 my_candy <- sample_n(candy, size = nrow(candy), replace = TRUE)

@@ -1,5 +1,5 @@
 ---
-title: "Unit 4 - 5 Reflection"
+title: "Classification Review"
 logo: "images/mac.png"
 ---
 
@@ -9,20 +9,106 @@ logo: "images/mac.png"
 knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 ```
 
-::: {.callout-warning}
-This page is currently under construction. Check back soon for updates!
-:::
-
 
 # Settling In {-}
 
-Coming soon!
+- Sit with your assigned group
+- Catch up on any announcements you've missed on Slack
+- Open Group Assignment 2
 
 
+## Announcements {.unnumbered .smaller}
 
-# Review & Reflection {-}
+::: {.incremental}
+Upcoming Deadlines: 
 
-STAT 253 is a survey course of statistical machine learning techniques and concepts. It's important to continuously reflect on these and how they fit together. Though you won't hand anything in, or work on this in class today, **you're strongly encouraged to complete this activity**. This material is designed to help you reflect upon:
+- HW5: Wednesday, Nov 13
+  - See note on Moodle about **LIMITED extension opportunities**
+  - Solutions will be posted by Saturday to help with studying for Quiz 2
+- CP12: Thursday, Nov 14
+  - We will be starting our Unsupervised Learning unit on Thursday!
+  - This will be covered on Quiz 3, but **not** Quiz 2
+- HW4 Revisions (if applicable): Friday, Nov 15
+- Quiz 2: Tuesday, Nov 20
+  - Focus on **classification** (Units 4--5), though many concepts carry over
+  - Structure will be the same as Quiz 2 (Part 1 + Part 2)
+- Group Assignment 2: Tuesday, Nov 26
+:::
+
+
+# Small Group Discussion {-}
+
+Discuss Questions 1--5 with your group. 
+Then, prepare to share answers, questions, etc. with the rest of the class. 
+
+## Question 1 {.unnumbered .smaller}
+
+Trees vs Forests: 
+
+- What is the difference between a tree and a forest? (in ML, not nature)
+- How do I predict the outcome of a new observation using a tree? What about a forest?
+- What is a potential advantage of using a forest compared to a tree? What is a potential drawback?
+
+
+## Question 2 {.unnumbered .smaller}
+
+Bagging vs Random Forests:
+
+- How are these techniques similar? 
+- How do they differ? 
+
+## Question 3 {.unnumbered .smaller}
+
+CV vs OOB:
+
+- What does OOB stand for? 
+- Why do we typically use OOB metrics instead of CV metrics when evaluating forests? 
+- Are these in-sample or out-of-sample metrics? Why does it matter? 
+
+## Question 4 {.unnumbered .smaller}
+
+Review the learning goals for Units 4 and 5 listed on the course webpage [here](https://kegrinde.github.io/stat253_coursenotes/learning-objectives.html).
+
+Rate your confidence about/current level of understanding for each of these items, on a scale of 1 to 5, where: 
+
+- 1 = I have never heard of this
+- 5 = I could correctly answer a question about this right now, without notes
+
+Across your entire group: 
+
+- Which topic are you collectively most confident about? 
+- Least confident? 
+- Most split (ie some confident, some not)? 
+
+
+## Question 5 {.unnumbered .smaller}
+
+Discuss your study strategies: 
+
+- How did you study for Quiz 1? 
+- Is there anything you found to be particularly helpful? 
+- Is there anything you are planning to try differently for this next quiz?
+
+
+# Exercises {-}
+
+## Part 1: Starting Group Assignment 2 {.unnumbered .smaller}
+
+- Decide on what "adventure" you’d like to take for the Group Assignment 2.
+- Reply **in thread** to my recent post on the #help-group-assignments channel so I know what you've picked.
+- Get started on that adventure.
+    - Get data on your local computers
+    - Set up communication avenues for asynchronous discussions
+    - Divide / delegate leadership on tasks
+    
+Please spend **AT LEAST** 20 minutes on these tasks before moving on to Part 2. 
+
+
+## Part 2: Review & Reflection {.unnumbered .smaller}
+
+STAT 253 is a survey course of statistical machine learning techniques and concepts. It's important to continuously reflect on these and how they fit together. 
+
+Though you won't hand anything in, **you're strongly encouraged to complete this activity**. This material is designed to help you reflect upon:
 
 - ML concepts
     - enduring, big picture concepts
@@ -33,22 +119,18 @@ Follow the links below and make a copy of the STAT 253 concept maps (or find and
 
 You'll be given some relevant prompts below, but you should use these materials in *whatever way suits you*! Take notes, add more content, rearrange, etc. 
 
-- [STAT 253 concept maps](https://docs.google.com/presentation/d/1Kto9AzJTb6GB4VzmkTl1F1ICzRRaQ4Ib5EVtpjIiyUY/edit?usp=sharing)
-- [tidymodels code comparison](https://docs.google.com/document/d/1oMeKmcCAUN2SKF4tnH3bGIoGbP3EgggXRsNDMynq2sU/edit?usp=sharing)
-
-
-
-
-
-# STAT 253 concept maps {-}
-
-Review __slides 3--5__ (classification) of the concept map, and mark up **slides 1, 7, and 8** with respect to the prompts below.
-
-
+- [STAT 253 concept maps](https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing)
+- [tidymodels code comparison](https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing)
 
 \
 \
 
+### STAT 253 concept maps {-}
+
+Review __slides 6--7__ (classification) of the concept map, and mark up **slides 1, 6, and 7** with respect to the prompts below.
+
+
+\
 
 **Enduring, big picture concepts**
 
@@ -62,22 +144,20 @@ IMPORTANT to your learning: Respond in your own words.
 - What is the "bias-variance tradeoff"?
 
 
-
-\
 \
 
 
 
 **Technical concepts**
 
-On *page 7*, identify some general themes for each model algorithm listed in the lefthand table:
+On *page 6*, identify some general themes for each model algorithm listed in the lefthand table:
 
 - What's the goal?
 - Is the algorithm parametric or nonparametric?
 - Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a **goldilocks problem**?
 - What are the key pros & cons of the algorithm?
 
-For each algorithm, you should also reflect upon the **important technical concepts** listed in the syllabus:
+For each algorithm, you should also reflect upon these **important technical concepts**:
 
 - Can you summarize the steps of this algorithm?
 - Is the algorithm parametric or nonparametric? (addressed above)
@@ -105,13 +185,12 @@ And what about narrowing down to **important predictors**?
     - multiclass outcome?
 
 \
-\
 
 
 
 **Model evaluation**
 
-On *page 7*, the righthand table lists some model evaluation metrics for *binary* classification algorithms. Do the following:
+On *page 6*, the righthand table lists some model evaluation metrics for *binary* classification algorithms. Do the following:
 
 - Define each metric. THINK: Could you calculate these metrics if given a confusion matrix?
 - Explain the steps of the CV algorithm.
@@ -121,14 +200,12 @@ On *page 7*, the righthand table lists some model evaluation metrics for *binary
 
 
 
-
-\
 \
 
 
 **Algorithm comparisons**
 
-Use *page 8* to make other observations about the Unit 4-5 modeling algorithms and their connections.
+Use *page 7* to make other observations about the Unit 4-5 modeling algorithms and their connections.
 
 
 
@@ -138,5 +215,4 @@ Use *page 8* to make other observations about the Unit 4-5 modeling algorithms a
 
 # Wrapping Up {-}
 
-Coming soon!
-    
+- See reminders above and on the [course schedule](https://kegrinde.github.io/stat253_coursenotes/schedule.html) about upcoming deadlines

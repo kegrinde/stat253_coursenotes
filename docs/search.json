@@ -2256,12 +2256,12 @@
   {
     "objectID": "L16-review.html",
     "href": "L16-review.html",
-    "title": "16  Unit 4 - 5 Reflection",
+    "title": "16  Classification Review",
     "section": "",
-    "text": "Warning\n\n\n\nThis page is currently under construction. Check back soon for updates!\n\n\n\nSettling In\nComing soon!\n\n\nReview & Reflection\nSTAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together. Though you won’t hand anything in, or work on this in class today, you’re strongly encouraged to complete this activity. This material is designed to help you reflect upon:\n\nML concepts\n\nenduring, big picture concepts\ntechnical concepts\ntidymodels code\n\n\nFollow the links below and make a copy of the STAT 253 concept maps (or find and modify the copy you made while reviewing the regression unit).\nYou’ll be given some relevant prompts below, but you should use these materials in whatever way suits you! Take notes, add more content, rearrange, etc.\n\nSTAT 253 concept maps\ntidymodels code comparison\n\n\n\nSTAT 253 concept maps\nReview slides 3–5 (classification) of the concept map, and mark up slides 1, 7, and 8 with respect to the prompts below.\n\n\n\nEnduring, big picture concepts\nIMPORTANT to your learning: Respond in your own words.\n\nWhen do we perform a supervised vs unsupervised learning algorithm?\nWithin supervised learning, when do we use a regression vs a classification algorithm?\nWhat is the importance of “model evaluation” and what questions does it address?\nWhat is “overfitting” and why is it bad?\nWhat is “cross-validation” and what problem is it trying to address?\nWhat is the “bias-variance tradeoff”?\n\n\n\n\nTechnical concepts\nOn page 7, identify some general themes for each model algorithm listed in the lefthand table:\n\nWhat’s the goal?\nIs the algorithm parametric or nonparametric?\nDoes the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a goldilocks problem?\nWhat are the key pros & cons of the algorithm?\n\nFor each algorithm, you should also reflect upon the important technical concepts listed in the syllabus:\n\nCan you summarize the steps of this algorithm?\nIs the algorithm parametric or nonparametric? (addressed above)\nWhat is the bias-variance tradeoff when working with or tuning this algorithm?\nIs it important to scale / pre-process our predictors before feeding them into this algorithm?\nIs this algorithm “computationally expensive”?\nCan you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?\n\nAnd some details:\n\nIf this algorithm is parametric, could you:\n\ninterpret its coefficients?\ncalculate / predict the probability of different y outcomes from these coefficients?\ncome up with a classification rule for a given probability cut-off?\n\nIf this algorithm is non-parametric:\n\nCould you implement the alghorithm “by hand” for a small sample of data points?\n\nIf this algorithm is a tree-based method:\n\nCould you explain the difference between in-sample, OOB, and CV metrics?\n\n\nAnd what about narrowing down to important predictors?\n\nWhat tools do we have to give us a sense of important predictors?\n\nbinary outcome?\nmulticlass outcome?\n\n\n\n\n\nModel evaluation\nOn page 7, the righthand table lists some model evaluation metrics for binary classification algorithms. Do the following:\n\nDefine each metric. THINK: Could you calculate these metrics if given a confusion matrix?\nExplain the steps of the CV algorithm.\n\n\n\n\nAlgorithm comparisons\nUse page 8 to make other observations about the Unit 4-5 modeling algorithms and their connections.\n\n\nWrapping Up\nComing soon!",
+    "text": "Settling In",
     "crumbs": [
       "Classification: Building Flexible Models (Unit 5)",
-      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Unit 4 - 5 Reflection</span>"
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
     ]
   },
   {
@@ -2361,6 +2361,94 @@
     "crumbs": [
       "Appendices",
       "STAT 155 Review"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#announcements",
+    "href": "L16-review.html#announcements",
+    "title": "16  Classification Review",
+    "section": "Announcements",
+    "text": "Announcements\n\nUpcoming Deadlines:\n\nHW5: Wednesday, Nov 13\n\nSee note on Moodle about LIMITED extension opportunities\nSolutions will be posted by Saturday to help with studying for Quiz 2\n\nCP12: Thursday, Nov 14\n\nWe will be starting our Unsupervised Learning unit on Thursday!\nThis will be covered on Quiz 3, but not Quiz 2\n\nHW4 Revisions (if applicable): Friday, Nov 15\nQuiz 2: Tuesday, Nov 20\n\nFocus on classification (Units 4–5), though many concepts carry over\nStructure will be the same as Quiz 2 (Part 1 + Part 2)\n\nGroup Assignment 2: Tuesday, Nov 26",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#question-1",
+    "href": "L16-review.html#question-1",
+    "title": "16  Classification Review",
+    "section": "Question 1",
+    "text": "Question 1\nTrees vs Forests:\n\nWhat is the difference between a tree and a forest? (in ML, not nature)\nHow do I predict the outcome of a new observation using a tree? What about a forest?\nWhat is a potential advantage of using a forest compared to a tree? What is a potential drawback?",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#question-2",
+    "href": "L16-review.html#question-2",
+    "title": "16  Classification Review",
+    "section": "Question 2",
+    "text": "Question 2\nBagging vs Random Forests:\n\nHow are these techniques similar?\nHow do they differ?",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#question-3",
+    "href": "L16-review.html#question-3",
+    "title": "16  Classification Review",
+    "section": "Question 3",
+    "text": "Question 3\nCV vs OOB:\n\nWhat does OOB stand for?\nWhy do we typically use OOB metrics instead of CV metrics when evaluating forests?\nAre these in-sample or out-of-sample metrics? Why does it matter?",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#question-4",
+    "href": "L16-review.html#question-4",
+    "title": "16  Classification Review",
+    "section": "Question 4",
+    "text": "Question 4\nReview the learning goals for Units 4 and 5 listed on the course webpage here.\nRate your confidence about/current level of understanding for each of these items, on a scale of 1 to 5, where:\n\n1 = I have never heard of this\n5 = I could correctly answer a question about this right now, without notes\n\nAcross your entire group:\n\nWhich topic are you collectively most confident about?\nLeast confident?\nMost split (ie some confident, some not)?",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#question-5",
+    "href": "L16-review.html#question-5",
+    "title": "16  Classification Review",
+    "section": "Question 5",
+    "text": "Question 5\nDiscuss your study strategies:\n\nHow did you study for Quiz 1?\nIs there anything you found to be particularly helpful?\nIs there anything you are planning to try differently for this next quiz?",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#part-1-starting-group-assignment-2",
+    "href": "L16-review.html#part-1-starting-group-assignment-2",
+    "title": "16  Classification Review",
+    "section": "Part 1: Starting Group Assignment 2",
+    "text": "Part 1: Starting Group Assignment 2\n\nDecide on what “adventure” you’d like to take for the Group Assignment 2.\nReply in thread to my recent post on the #help-group-assignments channel so I know what you’ve picked.\nGet started on that adventure.\n\nGet data on your local computers\nSet up communication avenues for asynchronous discussions\nDivide / delegate leadership on tasks",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
+    ]
+  },
+  {
+    "objectID": "L16-review.html#part-2-review-reflection",
+    "href": "L16-review.html#part-2-review-reflection",
+    "title": "16  Classification Review",
+    "section": "Part 2: Review & Reflection",
+    "text": "Part 2: Review & Reflection\nSTAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together. Though you won’t hand anything in, or work on this in class today, you’re strongly encouraged to complete this activity. This material is designed to help you reflect upon:\n\nML concepts\n\nenduring, big picture concepts\ntechnical concepts\ntidymodels code\n\n\nFollow the links below and make a copy of the STAT 253 concept maps (or find and modify the copy you made while reviewing the regression unit).\nYou’ll be given some relevant prompts below, but you should use these materials in whatever way suits you! Take notes, add more content, rearrange, etc.\n\nSTAT 253 concept maps\ntidymodels code comparison\n\n\n\n\n\nSTAT 253 concept maps\nReview slides 3–5 (classification) of the concept map, and mark up slides 1, 7, and 8 with respect to the prompts below.\n\n\n\nEnduring, big picture concepts\nIMPORTANT to your learning: Respond in your own words.\n\nWhen do we perform a supervised vs unsupervised learning algorithm?\nWithin supervised learning, when do we use a regression vs a classification algorithm?\nWhat is the importance of “model evaluation” and what questions does it address?\nWhat is “overfitting” and why is it bad?\nWhat is “cross-validation” and what problem is it trying to address?\nWhat is the “bias-variance tradeoff”?\n\n\n\n\nTechnical concepts\nOn page 7, identify some general themes for each model algorithm listed in the lefthand table:\n\nWhat’s the goal?\nIs the algorithm parametric or nonparametric?\nDoes the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a goldilocks problem?\nWhat are the key pros & cons of the algorithm?\n\nFor each algorithm, you should also reflect upon the important technical concepts listed in the syllabus:\n\nCan you summarize the steps of this algorithm?\nIs the algorithm parametric or nonparametric? (addressed above)\nWhat is the bias-variance tradeoff when working with or tuning this algorithm?\nIs it important to scale / pre-process our predictors before feeding them into this algorithm?\nIs this algorithm “computationally expensive”?\nCan you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?\n\nAnd some details:\n\nIf this algorithm is parametric, could you:\n\ninterpret its coefficients?\ncalculate / predict the probability of different y outcomes from these coefficients?\ncome up with a classification rule for a given probability cut-off?\n\nIf this algorithm is non-parametric:\n\nCould you implement the alghorithm “by hand” for a small sample of data points?\n\nIf this algorithm is a tree-based method:\n\nCould you explain the difference between in-sample, OOB, and CV metrics?\n\n\nAnd what about narrowing down to important predictors?\n\nWhat tools do we have to give us a sense of important predictors?\n\nbinary outcome?\nmulticlass outcome?\n\n\n\n\n\nModel evaluation\nOn page 7, the righthand table lists some model evaluation metrics for binary classification algorithms. Do the following:\n\nDefine each metric. THINK: Could you calculate these metrics if given a confusion matrix?\nExplain the steps of the CV algorithm.\n\n\n\n\nAlgorithm comparisons\nUse page 8 to make other observations about the Unit 4-5 modeling algorithms and their connections.",
+    "crumbs": [
+      "Classification: Building Flexible Models (Unit 5)",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Classification Review</span>"
     ]
   }
 ]
