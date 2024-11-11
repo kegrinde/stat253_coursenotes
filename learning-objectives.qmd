@@ -132,6 +132,8 @@ Specific learning objectives for our course topics are listed below. Use these t
 
 <br>
 
+**Unit 5**
+
 **Decision trees**
 
 -   Clearly describe the recursive binary splitting algorithm for tree building for both regression and classification
@@ -151,6 +153,8 @@ Specific learning objectives for our course topics are listed below. Use these t
 -   Explain the rationale behind the random forest variable importance measure and why it is biased towards quantitative predictors (in class)
 
 <br>
+
+**Unit 6**
 
 **Hierarchical clustering**
 
