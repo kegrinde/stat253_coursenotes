@@ -36,6 +36,9 @@ Upcoming Deadlines:
 :::
 
 
+\
+\
+
 # Small Group Discussion {-}
 
 Discuss Questions 1--5 with your group. 
@@ -89,6 +92,8 @@ Discuss your study strategies:
 - Is there anything you found to be particularly helpful? 
 - Is there anything you are planning to try differently for this next quiz?
 
+\
+\
 
 # Exercises {-}
 
@@ -210,7 +215,8 @@ Use *page 7* to make other observations about the Unit 4-5 modeling algorithms a
 
 
 
-
+\
+\
 
 
 # Wrapping Up {-}
