@@ -1,0 +1,109 @@
+# Motivating Question {.unnumbered}
+
+<center>
+<img src="images/MLDiagram5.jpg"/>
+</center>
+
+
+
+**GOALS**   
+
+Suppose we have a set of **feature** variables $(x_1,x_2,...,x_k)$ but NO outcome variable $y$. 
+
+Instead of our goal being to predict/classify/explain $y$, we might simply want to...    
+
+1. Examine the **structure** of our data.
+2. Utilize this examination as a **jumping off point** for further analysis.
+
+
+
+
+**UNSUPERVISED METHODS**
+
+- **Cluster analysis**    
+    - Focus: Structure among the *rows*, i.e. individual cases or data points.
+    - Goal: Identify and examine *clusters* or distinct groups of cases with respect to their features x.    
+    - Methods: hierarchical clustering & K-means clustering    
+
+
+- **Dimension reduction**    
+    - Focus: Structure among the *columns*, i.e. features x.
+    - Goal: *Combine* groups of correlated features x into a smaller set of *uncorrelated* features which preserve the majority of information in the data. (We'll discuss the motivation later!)
+    - Methods: Principal components
+
+
+\
+\
+\
+\
+
+
+
+**CLUSTERING vs DIMENSION REDUCTION EXAMPLE**
+
+
+![](images/restaurant_unsupervised_1.png)
+
+![](images/restaurant_unsupervised_2.png)
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+**CLUSTERING EXAMPLES**
+
+
+
+["Love Actually" analysis](http://varianceexplained.org/r/love-actually-network/)    
+
+<center>
+<img src="images/love_actually.png"/>
+</center>
+
+\
+\
+
+
+
+Machine learning about each other    
+    
+<!-- note to self: update with data for this term -->
+![](images/class_cluster.png)
+
+
+
+
+
+\
+\
+
+
+Identify genetic similarities among a group of patients
+    
+![](https://ajohns24.github.io/images/stat253/cluster_genetic.png)
+
+
+        
+
+\
+\
+
+
+[Cartograph.info](http://nokomis.macalester.edu/wmf_en/static/index.html)
+
+<center>
+<img src="images/cartograph.png"/>
+</center>
+
+<!-- ![](https://ajohns24.github.io/images/stat253/cartograph.png) -->
+
+
+
