@@ -9,9 +9,6 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 library(tidyverse)
 ```
 
-::: {.callout-warning}
-This page is under construction. Please check back soon for updates!
-:::
 
 # Settling In {-}
 
@@ -45,7 +42,7 @@ Content:
 
 
 
-# Learning Goals {-}
+## Learning Goals {.unnumbered .smaller}
 
 - Clearly describe / implement by hand the hierarchical clustering algorithm
 - Compare and contrast k-means and hierarchical clustering in their outputs and algorithms
