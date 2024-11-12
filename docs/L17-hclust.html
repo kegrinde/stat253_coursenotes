@@ -441,11 +441,43 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  <li><a href="#notes-hierarchical-cluster-analysis" id="toc-notes-hierarchical-cluster-analysis" class="nav-link" data-scroll-target="#notes-hierarchical-cluster-analysis">Notes: Hierarchical Cluster Analysis</a></li>
-  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
-  <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a></li>
+  <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a>
+  <ul class="collapse">
+  <li><a href="#quiz-2-reminders" id="toc-quiz-2-reminders" class="nav-link" data-scroll-target="#quiz-2-reminders">Quiz 2 Reminders</a></li>
+  </ul></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
+  <li><a href="#notes-unsupervised-learning" id="toc-notes-unsupervised-learning" class="nav-link" data-scroll-target="#notes-unsupervised-learning">Notes: Unsupervised Learning</a>
+  <ul class="collapse">
+  <li><a href="#context" id="toc-context" class="nav-link" data-scroll-target="#context">Context</a></li>
+  <li><a href="#unsupervised-methods" id="toc-unsupervised-methods" class="nav-link" data-scroll-target="#unsupervised-methods">Unsupervised Methods</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  </ul></li>
+  <li><a href="#notes-hierarchical-cluster-analysis" id="toc-notes-hierarchical-cluster-analysis" class="nav-link" data-scroll-target="#notes-hierarchical-cluster-analysis">Notes: Hierarchical Cluster Analysis</a>
+  <ul class="collapse">
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal">Goal</a></li>
+  <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm">Algorithm</a></li>
+  <li><a href="#dendrograms" id="toc-dendrograms" class="nav-link" data-scroll-target="#dendrograms">Dendrograms</a></li>
+  <li><a href="#measuring-distance" id="toc-measuring-distance" class="nav-link" data-scroll-target="#measuring-distance">Measuring Distance</a></li>
+  </ul></li>
+  <li><a href="#small-group-discussion" id="toc-small-group-discussion" class="nav-link" data-scroll-target="#small-group-discussion">Small Group Discussion</a>
+  <ul class="collapse">
+  <li><a href="#example-1-standardizing-the-features" id="toc-example-1-standardizing-the-features" class="nav-link" data-scroll-target="#example-1-standardizing-the-features">EXAMPLE 1: Standardizing the features</a></li>
+  <li><a href="#example-2-interpreting-a-dendrogram" id="toc-example-2-interpreting-a-dendrogram" class="nav-link" data-scroll-target="#example-2-interpreting-a-dendrogram">EXAMPLE 2: Interpreting a dendrogram</a></li>
+  <li><a href="#example-3-by-hand" id="toc-example-3-by-hand" class="nav-link" data-scroll-target="#example-3-by-hand">EXAMPLE 3: By Hand</a></li>
+  <li><a href="#example-4-explore-clusters" id="toc-example-4-explore-clusters" class="nav-link" data-scroll-target="#example-4-explore-clusters">EXAMPLE 4: Explore Clusters</a></li>
+  <li><a href="#example-5-details" id="toc-example-5-details" class="nav-link" data-scroll-target="#example-5-details">EXAMPLE 5: Details</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1-visualizing-structure" id="toc-exercise-1-visualizing-structure" class="nav-link" data-scroll-target="#exercise-1-visualizing-structure">Exercise 1: Visualizing structure</a></li>
+  <li><a href="#exercise-2-defining-making-meaning-from-clusters" id="toc-exercise-2-defining-making-meaning-from-clusters" class="nav-link" data-scroll-target="#exercise-2-defining-making-meaning-from-clusters">Exercise 2: Defining &amp; making meaning from clusters</a></li>
+  <li><a href="#exercise-3-sensitivity-analysis" id="toc-exercise-3-sensitivity-analysis" class="nav-link" data-scroll-target="#exercise-3-sensitivity-analysis">Exercise 3: Sensitivity analysis</a></li>
+  </ul></li>
+  <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
+  <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L17-hclust.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -471,21 +503,43 @@ window.Quarto = {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This page is under construction. Please check back soon for updates!</p>
-</div>
-</div>
-<section id="learning-goals" class="level1 unnumbered">
-<h1 class="unnumbered">Learning Goals</h1>
+<section id="settling-in" class="level1 unnumbered">
+<h1 class="unnumbered">Settling In</h1>
+<ul>
+<li>Sit wherever you want!</li>
+<li>Prepare to take notes (find the QMD for today in the usual spot)</li>
+<li>Catch up on any announcements you’ve missed on Slack</li>
+</ul>
+<section id="quiz-2-reminders" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="quiz-2-reminders">Quiz 2 Reminders</h2>
+<p>Part 1:</p>
+<ul>
+<li>on paper</li>
+<li>closed notes, closed people</li>
+<li>due by end of class</li>
+<li>you might be asked to interpret some R output, but you won’t have to write any code</li>
+</ul>
+<p>Part 2:</p>
+<ul>
+<li>on laptop</li>
+<li>open* notes, open** collaboration
+<ul>
+<li>*you can chat with any current STAT 253 student, but nobody else (including preceptors)</li>
+<li>*you can ask (in person), DM, or email me clarifying questions</li>
+<li>**you can use any materials from this STAT 253 course (from course webpage or Moodle or textbook), but no internet, ChatGPT, etc.</li>
+</ul></li>
+<li>designed to be finished during class, but you can hand in anytime with in 24 hours</li>
+</ul>
+<p>Content:</p>
+<ul>
+<li>Emphasis on Units 4–5</li>
+<li>…but some concepts from Units 1–3 carry over/remain important!</li>
+</ul>
+<p><br></p>
+</section>
+</section>
+<section id="learning-goals" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Learning Goals</h1>
 <ul>
 <li>Clearly describe / implement by hand the hierarchical clustering algorithm</li>
 <li>Compare and contrast k-means and hierarchical clustering in their outputs and algorithms</li>
@@ -498,23 +552,68 @@ Warning
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 <!-- more on categorical variables: https://www.r-bloggers.com/clustering-mixed-data-types-in-r/ -->
 <!-- NOTE: The bottom-up approach of hierarchical clustering is "agglomerative", vs "divisive" or "centroid-based" -->
+<p><br></p>
+</section>
+<section id="notes-unsupervised-learning" class="level1 unnumbered">
+<h1 class="unnumbered">Notes: Unsupervised Learning</h1>
+<section id="context" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="context">Context</h2>
+<p><img src="images/MLdiagram5.jpg" class="img-fluid" style="width:90.0%"></p>
+<p><strong>GOALS</strong></p>
+<p>Suppose we have a set of <strong>feature</strong> variables <span class="math inline">\((x_1,x_2,...,x_k)\)</span> but NO outcome variable <span class="math inline">\(y\)</span>.</p>
+<p>Instead of our goal being to predict/classify/explain <span class="math inline">\(y\)</span>, we might simply want to…</p>
+<ol type="1">
+<li>Examine the <strong>structure</strong> of our data.</li>
+<li>Utilize this examination as a <strong>jumping off point</strong> for further analysis.</li>
+</ol>
+</section>
+<section id="unsupervised-methods" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="unsupervised-methods">Unsupervised Methods</h2>
+<div class="incremental">
+<p>Cluster Analysis:</p>
+<ul class="incremental">
+<li>Focus: Structure among the <em>rows</em>, i.e.&nbsp;individual cases or data points.</li>
+<li>Goal: Identify and examine <em>clusters</em> or distinct groups of cases with respect to their features x.<br>
+</li>
+<li>Methods: hierarchical clustering &amp; K-means clustering</li>
+</ul>
+<p>Dimension Reduction:</p>
+<ul class="incremental">
+<li>Focus: Structure among the <em>columns</em>, i.e.&nbsp;features x.</li>
+<li>Goal: <em>Combine</em> groups of correlated features x into a smaller set of <em>uncorrelated</em> features which preserve the majority of information in the data. (We’ll discuss the motivation later!)</li>
+<li>Methods: Principal components</li>
+</ul>
+</div>
+</section>
+<section id="examples" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="examples">Examples</h2>
+<p>Remember this from the first day of class?</p>
+<!-- note to self: add clustering from Day 1 activity -->
+<p><img src="images/class_cluster_Fall2024.png" class="img-fluid" style="width:90.0%"></p>
+<p>For more examples, check out the Unit 5 Motivating Question page <a href="U05-motivation.html">here</a>.</p>
+<p><br> <br></p>
+</section>
 </section>
 <section id="notes-hierarchical-cluster-analysis" class="level1 unnumbered">
 <h1 class="unnumbered">Notes: Hierarchical Cluster Analysis</h1>
-<p><strong>Goal:</strong><br>
-Create a hierarchy of clusters where clusters consist of similar data points.</p>
-<p><strong>Algorithm:</strong><br>
-Suppose we have a set of p feature variables (<span class="math inline">\(x_1, x_2,..., x_p\)</span>) on each of n data points. Each data point starts as a leaf.</p>
+<p>Let’s recap the main ideas from the videos you watched before class today.</p>
+<section id="goal" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="goal">Goal</h2>
+<p>Create a hierarchy of clusters where clusters consist of similar data points.</p>
+</section>
+<section id="algorithm" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="algorithm">Algorithm</h2>
+<p>Suppose we have a set of p feature variables (<span class="math inline">\(x_1, x_2,..., x_p\)</span>) on each of n data points. Each data point starts as a leaf.</p>
 <ul>
 <li>Compute the Euclidean distance between all pairs of data points with respect to x.</li>
 <li>Fuse the 2 closest data points into a single cluster or branch.</li>
 <li>Continue to fuse the 2 closest clusters until all cases are in 1 cluster.</li>
 </ul>
-<p><br>
-<br>
-</p>
-<p><strong>Dendrograms (of or relating to trees)</strong></p>
-<p>The hierarchical clustering algorithm produces a <em>dendrogram</em>. To use a dendrogram:</p>
+<p>NOTE: This is referred to as an “agglomerative” algorithm.</p>
+</section>
+<section id="dendrograms" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="dendrograms">Dendrograms</h2>
+<p>The hierarchical clustering algorithm produces a <em>dendrogram</em> (of or relating to trees). To use a dendrogram:</p>
 <ul>
 <li>Start with the leaves at the bottom (unlike classification trees!). Each leaf represents a single case / row in our dataset.<br>
 </li>
@@ -524,25 +623,33 @@ Suppose we have a set of p feature variables (<span class="math inline">\(x_1, x
 </li>
 <li>The horizontal distance between 2 leaves does not reflect distance!</li>
 </ul>
-<p><br>
-<br>
-<br>
-<br>
-</p>
-<p><strong>Measuring distance between 2 clusters</strong><br>
-There are several <em>linkages</em> we can use to measure distance between 2 clusters / branches Unless specified otherwise, we’ll use the <strong>complete</strong> linkage method.</p>
+<!--
+\
+\
+\
+\
+-->
+</section>
+<section id="measuring-distance" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="measuring-distance">Measuring Distance</h2>
+<p>There are several <em>linkages</em> we can use to measure distance between 2 clusters / branches. Unless specified otherwise, we’ll use the <strong>complete</strong> linkage method.</p>
 <p><img src="images/linkages.png" class="img-fluid"></p>
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-</p>
+<!--
+\
+\
+\
+\
+\
+\
+-->
+<p><br> <br></p>
+</section>
 </section>
 <section id="small-group-discussion" class="level1 unnumbered">
 <h1 class="unnumbered">Small Group Discussion</h1>
-<p><strong>EXAMPLE 1: Standardizing the features</strong></p>
+<p>Open the QMD for today and work through Examples 1–5 with your table.</p>
+<section id="example-1-standardizing-the-features" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-1-standardizing-the-features">EXAMPLE 1: Standardizing the features</h2>
 <p>Let’s start by using hierarchical clustering to identify similar groups (and possible species!) of penguins with respect to their bill lengths (mm), bill depths (mm), and body masses (g).</p>
 <p>This algorithm relies on calculating the distances between each pair of penguins.</p>
 <p>Why is it important to first <em>standardize</em> our 3 features to the same scale (centered around a mean of 0 with standard deviation 1)?</p>
@@ -571,14 +678,16 @@ Solution:
 The features are on different scales. It’s important to standardize so that one feature doesn’t have more influence over the distance measure, simply due to its scale.
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 2: Interpreting a dendrogram</strong></p>
+</section>
+<section id="example-2-interpreting-a-dendrogram" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-2-interpreting-a-dendrogram">EXAMPLE 2: Interpreting a dendrogram</h2>
 <p>Check out the standardized data, heat map, and dendrogram for a sample of just 50 penguins.</p>
+<p><img src="images/penguin_example.png" class="img-fluid"></p>
 <ol type="a">
 <li>Is penguin 30 more similar to penguin 33 or 12?</li>
 <li>Identify and interpret the distance, calculated using the <em>complete</em> linkage, between penguins 30 and 33.</li>
 <li>Consider the far left penguin cluster on the dendrogram, starting with penguin 33 and ending with penguin 30. Use the heat map to describe what these penguins have in common.</li>
 </ol>
-<p><img src="images/penguin_example.png" class="img-fluid"></p>
 <details>
 <summary>
 Solution:
@@ -590,9 +699,11 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 3: BY HAND</strong></p>
+</section>
+<section id="example-3-by-hand" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-3-by-hand">EXAMPLE 3: By Hand</h2>
 <p>To really get the details, you’ll perform hierarchical clustering by hand for a small example.</p>
-<p>Use the <a href="https://docs.google.com/document/d/1PGEieB-OslxZiGpqtQvZKz6ZsRuS6iS-5ewmQgAMGY0/edit?usp=sharing">distributed piece of paper</a>.</p>
+<p>Ask Kelsey for a copy of the <a href="https://docs.google.com/document/d/1abptMI_GsEM-LbGAFBRHRFsW8yJC9iajzjAqjxaCgpg/edit?usp=sharing">paper handout</a>.</p>
 <p>Code for importing the data is here:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Record the data</span></span>
@@ -963,7 +1074,9 @@ Solution:
 </table>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 4: EXPLORE CLUSTERS</strong></p>
+</section>
+<section id="example-4-explore-clusters" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-4-explore-clusters">EXAMPLE 4: Explore Clusters</h2>
 <p>Now, let’s go back to a sample of 50 penguins.</p>
 <p>Run the 2 chunks below to build a shiny app that we’ll use to build some intuition for hierarchical clustering.</p>
 <ol type="a">
@@ -973,6 +1086,8 @@ Solution:
 <li>What are your thoughts about the 2-cluster solution? What happened?!</li>
 </ol>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
@@ -993,8 +1108,11 @@ Solution:
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">cluster =</span> <span class="fu">cutree</span>(penguin_cluster, <span class="at">k =</span> i)) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(clusters)</span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
@@ -1044,6 +1162,7 @@ Solution:
 <span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the shiny app!</span></span>
 <span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui_hc, <span class="at">server =</span> server_hc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <details>
 <summary>
@@ -1057,16 +1176,18 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 5: DETAILS</strong></p>
+</section>
+<section id="example-5-details" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="example-5-details">EXAMPLE 5: Details</h2>
 <ol type="a">
-<li><p>Is hierarchical clustering <strong>greedy</strong>?</p></li>
-<li><p>We learned in the video that, though they both produce tree-like output, the hierarchical clustering and classification tree algorithms are <em>not the same thing</em>! Similarly, though they both calculate distances between each pair of data points, the hierarchical clustering and KNN algorithms are <em>not the same thing</em>! Explain.</p></li>
-<li><p>This is a statement, not a question :). When all features x are quantitative or logical (TRUE/FALSE), we measure the similarity of 2 data points with respect to the Euclidean distance between their <em>standardized</em> x values. But if at least 1 feature x is a factor / categorical variable, we measure the similarity of 2 data points with respect to their Gower distance. The idea is similar to what we did in KNN (converting categorical x variables to dummies, and then standardizing), but the details are different. If you’re interested:</p>
-<p>::: {.cell}</p>
+<li>Is hierarchical clustering <strong>greedy</strong>?</li>
+<li>We learned in the video that, though they both produce tree-like output, the hierarchical clustering and classification tree algorithms are <em>not the same thing</em>! Similarly, though they both calculate distances between each pair of data points, the hierarchical clustering and KNN algorithms are <em>not the same thing</em>! Explain.</li>
+<li>[This is a statement, not a question :).] When all features x are quantitative or logical (TRUE/FALSE), we measure the similarity of 2 data points with respect to the Euclidean distance between their <em>standardized</em> x values. But if at least 1 feature x is a factor / categorical variable, we measure the similarity of 2 data points with respect to their Gower distance. The idea is similar to what we did in KNN (converting categorical x variables to dummies, and then standardizing), but the details are different. If you’re interested:</li>
+</ol>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>?daisy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p></li>
-</ol>
+</div>
 <details>
 <summary>
 Solution:
@@ -1075,57 +1196,86 @@ Solution:
 <li>Yes. See example 4.</li>
 <li>We don’t want different x scales to impact our calculations of distance, hence our sense of what data points are closest to each other.</li>
 </ol>
+<!-- note to self: I don't understand the answer to b? -->
 </details>
-<p><br></p>
+<p><br> <br></p>
+</section>
 </section>
 <section id="exercises" class="level1 unnumbered">
 <h1 class="unnumbered">Exercises</h1>
-<p><strong>Directions</strong></p>
-<p>These exercises are on Homework 7. If and when you complete these, go back to Activity 16 and follow the review prompts there for Quiz 2!</p>
-<ol type="1">
-<li><p><strong>Visualizing structure</strong><br>
-Our first goal will be to understand the similarities among different candies (i.e.&nbsp;the <em>rows</em> of our <code>candy_rankings</code> dataset) with respect to their ingredients, popularity, and other properties.</p>
-<p>::: {.cell}</p>
+<p>For the rest of class, work together on the exercises below. If you complete these, go back to the activity from our last class and follow the prompts there to review for Quiz 2.</p>
+<p>NOTE: these exercises will be on HW6.</p>
+<!--
+**Directions**    
+
+These exercises are on Homework 7. If and when you complete these, go back to Activity 16 and follow the review prompts there for Quiz 2!
+-->
+<section id="exercise-1-visualizing-structure" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-1-visualizing-structure">Exercise 1: Visualizing structure</h2>
+<p>Our first goal will be to understand the similarities among different candies (i.e.&nbsp;the <em>rows</em> of our <code>candy_rankings</code> dataset) with respect to their ingredients, popularity, and other properties.</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some packages &amp; data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fivethirtyeight)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"candy_rankings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p>
+</div>
 <ol type="a">
 <li>One variable in the dataset merely <em>identifies</em> or <em>labels</em> the candies, hence is not a candy <em>feature</em>. Convert this to a <em>row name</em>, instead of a column.</li>
 <li>Construct a heat map of your (standardized) candy features, setting <code>Colv = NA</code>.</li>
 <li>Construct a dendrogram of your (standardized) candy features using the <strong>complete</strong> linkage method. NOTE: Since all features are quantitative or logical here, do <em>not</em> use the <code>daisy()</code> code.</li>
 <li>How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.</li>
 <li>To what other candy are Nik L Nips most similar?</li>
-</ol></li>
-<li><p><strong>Defining &amp; making meaning from clusters</strong><br>
-For the purposes of consistency from student to student, let’s explore the possibility of there being <strong>4</strong> candy clusters.</p>
+</ol>
+</section>
+<section id="exercise-2-defining-making-meaning-from-clusters" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-2-defining-making-meaning-from-clusters">Exercise 2: Defining &amp; making meaning from clusters</h2>
+<p>For the purposes of consistency from student to student, let’s explore the possibility of there being <strong>4</strong> candy clusters.</p>
 <ol type="a">
 <li>Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. NOTE: There’s built-in code to do this!</li>
 <li>To get a sense for what makes the candies in each cluster “similar”, calculate the mean of each feature within each cluster. NOTES:
 <ul>
 <li>HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then <code>group_by()</code> and <code>summarize_all()</code> (which is like <code>summarize()</code> but performs a calculation on <em>all</em> columns).</li>
-<li>For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.<br>
-</li>
+<li>For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.</li>
 <li>The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram!</li>
 <li>LOOKING AHEAD: In a future activity, you’ll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!</li>
 </ul></li>
 <li>OPTIONAL: There’s no “right” number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?</li>
-</ol></li>
-<li><p><strong>Sensitivity analysis</strong><br>
-Our hierarchical cluster analysis above utilized <strong>complete linkage</strong>. That is, we measured the distance between two clusters by the <em>maximum</em> distance between any pair of candies in those clusters. This is merely one strategy. To determine how <em>sensitive</em> the clustering algorithm is to our choice of linkage, let’s consider 2 other strategies.</p>
+</ol>
+</section>
+<section id="exercise-3-sensitivity-analysis" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="exercise-3-sensitivity-analysis">Exercise 3: Sensitivity analysis</h2>
+<p>Our hierarchical cluster analysis above utilized <strong>complete linkage</strong>. That is, we measured the distance between two clusters by the <em>maximum</em> distance between any pair of candies in those clusters. This is merely one strategy. To determine how <em>sensitive</em> the clustering algorithm is to our choice of linkage, let’s consider 2 other strategies.</p>
 <ol type="a">
 <li>Construct a dendrogram using the <strong>centroid linkage</strong> approach (don’t try coloring clusters). Describe how the pattern differs from that of our original complete linkage dendrogram <strong>and</strong> explain why centroid linkage will often produce dendrograms that look like this.<br>
 </li>
 <li>Construct a dendrogram using the <strong>single linkage</strong> approach, <em>colored by 4 clusters</em>. Describe how the pattern differs from that of our original complete linkage dendrogram <strong>and</strong> explain why single linkage will often produce dendrograms that look like this. NOTE: Be sure to not use your cluster assignments from the previous exercise as features in this exercise!<br>
 </li>
 <li>The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? Explain.</li>
-<li>Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering do be done, using <em>complete</em> or <em>single</em> linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.</li>
-</ol></li>
+<li>Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering be done, using <em>complete</em> or <em>single</em> linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.</li>
 </ol>
+<p><br> <br></p>
+</section>
+</section>
+<section id="wrapping-up" class="level1 unnumbered smaller">
+<h1 class="unnumbered smaller">Wrapping Up</h1>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li>Upcoming due dates:
+<ul>
+<li>HW5: due yesterday (Nov 13); tomorrow is last day of extension window</li>
+<li>HW4 Revisions: due tomorrow (Nov 15)</li>
+<li>Quiz 2: next class (Nov 19)</li>
+<li>CP13: next week (Nov 21)</li>
+<li>Group Assignment 2: before Thanksgiving (Nov 26)</li>
+<li>HW6: after Thanksgiving (Dec 4)</li>
+</ul></li>
+</ul>
+<p><br> <br></p>
 </section>
 <section id="notes-r-code" class="level1 unnumbered">
 <h1 class="unnumbered">Notes: R code</h1>
+<section id="section" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="section"></h2>
 <p>The <code>tidymodels</code> package is built for <em>models</em> of some outcome variable y. We can’t use it for clustering.</p>
 <p>Instead, we’ll use a variety of new packages that use specialized, but short, syntax. Suppose we have a set of <code>sample_data</code> with multiple feature columns x, and (possibly) a column named <code>id</code> which labels each data point.</p>
 <div class="cell">
@@ -1190,6 +1340,7 @@ Our hierarchical cluster analysis above utilized <strong>complete linkage</stron
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

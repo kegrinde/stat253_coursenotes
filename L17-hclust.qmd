@@ -40,9 +40,9 @@ Content:
 - ...but some concepts from Units 1--3 carry over/remain important!
 
 
+<br>
 
-
-## Learning Goals {.unnumbered .smaller}
+# Learning Goals {.unnumbered .smaller}
 
 - Clearly describe / implement by hand the hierarchical clustering algorithm
 - Compare and contrast k-means and hierarchical clustering in their outputs and algorithms
@@ -147,7 +147,7 @@ genedata <- NCI60$data
 plot(hclust(dist(genedata)), xlab = "", main="")
 ```   
 
-
+<br>
 
 # Notes: Unsupervised Learning {-}
 
@@ -193,6 +193,8 @@ Remember this from the first day of class?
 
 For more examples, check out the Unit 5 Motivating Question page [here](U05-motivation.html).
 
+<br>
+<br>
 
 # Notes: Hierarchical Cluster Analysis {-}
 
@@ -248,17 +250,17 @@ There are several *linkages* we can use to measure distance between 2 clusters /
 
 
 
+<!--
+\
+\
+\
+\
+\
+\
+-->
 
-\
-\
-\
-\
-\
-\
-
-
-
-
+<br>
+<br>
 
 
 
@@ -328,7 +330,7 @@ c. That group generally has large bill length and body mass but small bill depth
 
 
 
-## EXAMPLE 3: BY HAND {.unnumbered .smaller}  
+## EXAMPLE 3: By Hand {.unnumbered .smaller}  
 
 To really get the details, you'll perform hierarchical clustering by hand for a small example.
 
@@ -489,7 +491,7 @@ The distance matrix below gives the current distance between our 2 clusters, (1 
 
 <br>
 
-## EXAMPLE 4: EXPLORE CLUSTERS {.unnumbered .smaller}  
+## EXAMPLE 4: Explore Clusters {.unnumbered .smaller}  
 
 Now, let's go back to a sample of 50 penguins.
 
@@ -589,7 +591,7 @@ d. yikes! this solution doesn't capture the more natural looking clusters in the
 <br>
 
 
-## EXAMPLE 5: DETAILS {.unnumbered .smaller}  
+## EXAMPLE 5: Details {.unnumbered .smaller}  
 
 a. Is hierarchical clustering **greedy**?
 b. We learned in the video that, though they both produce tree-like output, the hierarchical clustering and classification tree algorithms are *not the same thing*! Similarly, though they both calculate distances between each pair of data points, the hierarchical clustering and KNN algorithms are *not the same thing*! Explain.
@@ -610,6 +612,7 @@ b. We don't want different x scales to impact our calculations of distance, henc
 <!-- note to self: I don't understand the answer to b? -->
 
 </details>
+<br>
 <br>
 
 
@@ -646,11 +649,11 @@ library(fivethirtyeight)
 data("candy_rankings")
 ```       
   
-  a. One variable in the dataset merely *identifies* or *labels* the candies, hence is not a candy *feature*. Convert this to a *row name*, instead of a column.
-  b. Construct a heat map of your (standardized) candy features, setting `Colv = NA`.
-  c. Construct a dendrogram of your (standardized) candy features using the **complete** linkage method. NOTE: Since all features are quantitative or logical here, do *not* use the `daisy()` code.
-  d. How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.
-  e. To what other candy are Nik L Nips most similar?
+a. One variable in the dataset merely *identifies* or *labels* the candies, hence is not a candy *feature*. Convert this to a *row name*, instead of a column.
+b. Construct a heat map of your (standardized) candy features, setting `Colv = NA`.
+c. Construct a dendrogram of your (standardized) candy features using the **complete** linkage method. NOTE: Since all features are quantitative or logical here, do *not* use the `daisy()` code.
+d. How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.
+e. To what other candy are Nik L Nips most similar?
 
 
 
@@ -660,11 +663,11 @@ data("candy_rankings")
 For the purposes of consistency from student to student, let's explore the possibility of there being **4** candy clusters.
 
 a. Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. NOTE: There's built-in code to do this!
-b. To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster. NOTES:        
-        - HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then `group_by()` and `summarize_all()` (which is like `summarize()` but performs a calculation on *all* columns).
-        - For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.   
-        - The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram!
-        - LOOKING AHEAD: In a future activity, you'll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!
+b. To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster. NOTES:
+    - HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then `group_by()` and `summarize_all()` (which is like `summarize()` but performs a calculation on *all* columns).
+    - For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.
+    - The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram!
+    - LOOKING AHEAD: In a future activity, you'll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!
 c. OPTIONAL: There's no "right" number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?
     
     
@@ -680,10 +683,11 @@ Our hierarchical cluster analysis above utilized **complete linkage**. That is, 
 a. Construct a dendrogram using the **centroid linkage** approach (don't try coloring clusters). Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why centroid linkage will often produce dendrograms that look like this.    
 b. Construct a dendrogram using the **single linkage** approach, *colored by 4 clusters*.  Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why single linkage will often produce dendrograms that look like this. NOTE: Be sure to not use your cluster assignments from the previous exercise as features in this exercise!         
 c. The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? Explain.
-d. Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering do be done, using *complete* or *single* linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.
+d. Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering be done, using *complete* or *single* linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.
     
     
-
+<br>
+<br>
    
 
 # Wrapping Up {.unnumbered .smaller}
@@ -699,7 +703,8 @@ d. Suppose we were to cluster Mac students based on their interest in a variety 
 
 
 
-
+<br>
+<br>
 
 
 # Notes: R code {-}
