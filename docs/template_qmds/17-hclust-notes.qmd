@@ -73,7 +73,7 @@ Suppose we have a set of **feature** variables ($x_1,x_2,...,x_k$) but NO outcom
 ["Love Actually" analysis](http://varianceexplained.org/r/love-actually-network/)    
 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/love_actually.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/love_actually.png)
 
 
 
@@ -85,7 +85,7 @@ Suppose we have a set of **feature** variables ($x_1,x_2,...,x_k$) but NO outcom
 
 Machine learning about each other    
     
-![](https://bcheggeseth.github.io/253_spring_2024/images/class_cluster.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/class_cluster_Fall2024.png)
 
 
 
@@ -103,7 +103,7 @@ Machine learning about each other
 [Cartograph.info](http://nokomis.macalester.edu/wmf_en/static/index.html)
 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/cartograph.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/cartograph.png)
 
 
 
@@ -170,7 +170,7 @@ The hierarchical clustering algorithm produces a *dendrogram*.  To use a dendrog
 **Measuring distance between 2 clusters**       
 There are several *linkages* we can use to measure distance between 2 clusters / branches  Unless specified otherwise, we'll use the **complete** linkage method.    
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/linkages.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/linkages.png)
 
 
 
@@ -242,7 +242,7 @@ penguins %>%
 
 Check out the standardized data, heat map, and dendrogram for a sample of just 50 penguins.
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/penguin_example.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/penguin_example.png)
 
 
 a. Is penguin 30 more similar to penguin 33 or 12?
