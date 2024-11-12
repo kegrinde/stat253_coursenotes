@@ -1,0 +1,803 @@
+```{r 17_setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+```
+# (PART) Unsupervised Learning{-}
+# Motivating Question {-}
+<center>
+<img src="images/MLDiagram5.jpg"/>
+</center>
+
+
+
+**GOALS**   
+
+Suppose we have a set of **feature** variables $(x_1,x_2,...,x_k)$ but NO outcome variable $y$. 
+
+Instead of our goal being to predict/classify/explain $y$, we might simply want to...    
+
+1. Examine the **structure** of our data.
+2. Utilize this examination as a **jumping off point** for further analysis.
+
+
+
+
+
+**UNSUPERVISED METHODS**
+
+- **Cluster analysis**    
+    - Focus: Structure among the *rows*, i.e. individual cases or data points.
+    - Goal: Identify and examine *clusters* or distinct groups of cases with respect to their features x.    
+    - Methods: hierarchical clustering & K-means clustering    
+
+
+- **Dimension reduction**    
+    - Focus: Structure among the *columns*, i.e. features x.
+    - Goal: *Combine* groups of correlated features x into a smaller set of *uncorrelated* features which preserve the majority of information in the data. (We'll discuss the motivation later!)
+    - Methods: Principal components
+
+
+\
+\
+\
+\
+
+
+
+**CLUSTERING vs DIMENSION REDUCTION EXAMPLE**
+
+
+![](images/restaurant_unsupervised_1.png)
+
+![](images/restaurant_unsupervised_2.png)
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+**CLUSTERING EXAMPLES**
+
+
+
+
+
+["Love Actually" analysis](http://varianceexplained.org/r/love-actually-network/)    
+
+<center>
+<img src="images/love_actually.png"/>
+</center>
+
+
+
+
+\
+\
+
+
+
+Machine learning about each other    
+    
+![](images/class_cluster.png)
+
+
+
+\
+\
+
+
+
+Identify genetic similarities among a group of patients
+    
+![](https://ajohns24.github.io/images/stat253/cluster_genetic.png)
+ 
+        
+
+\
+\
+
+
+[Cartograph.info](http://nokomis.macalester.edu/wmf_en/static/index.html)
+
+<center>
+<img src="images/cartograph.png"/>
+</center>
+
+<!-- ![](https://ajohns24.github.io/images/stat253/cartograph.png) -->
+
+
+
+# Hierarchical Clustering
+
+## Learning Goals {-}
+
+- Clearly describe / implement by hand the hierarchical clustering algorithm
+- Compare and contrast k-means and hierarchical clustering in their outputs and algorithms
+- Interpret cuts of the dendrogram for single and complete linkage
+- Describe the rationale for how clustering algorithms work in terms of within-cluster variation
+- Describe the tradeoff of more vs. less clusters in terms of interpretability
+- Implement strategies for interpreting / contextualizing the clusters
+
+
+<br>
+
+
+<!-- don't overwrite the notes doc! The exercise sections are different -->
+
+<!-- more on categorical variables: https://www.r-bloggers.com/clustering-mixed-data-types-in-r/ -->
+
+<!-- NOTE: The bottom-up approach of hierarchical clustering is "agglomerative", vs "divisive" or "centroid-based" -->
+
+```{r eval = FALSE, echo = FALSE}
+# maybe use tidyclust package next time. it's a bit buggy right now
+
+# Do the hierarchical clustering 
+hc_spec <- hier_clust(linkage_method = "complete")
+
+# Note that there's no y variable in the recipe!
+variable_recipe <- recipe( ~ ., data = cluster_data) %>% 
+  step_dummy(all_nominal_predictors()) %>%
+  step_normalize(all_numeric_predictors())
+
+hier_wf <- workflow() %>%
+  add_recipe(variable_recipe) %>%
+  add_model(hc_spec)
+
+hier_fit <- hier_wf %>%
+  fit(data = cluster_data) 
+
+
+```
+
+
+
+
+```{r echo=FALSE, eval = FALSE, warning=FALSE, message =FALSE, fig.width=8, fig.height=7}
+# DO NOT PUT THIS IN STUDENT NOTES!
+# THIS RECREATES PLOTS IN EXAMPLE / WARM-UP SECTION
+library(palmerpenguins)
+data(penguins)
+
+set.seed(253)
+new_penguins <- sample_n(penguins, 50) %>% 
+    mutate(id = 1:50) %>% 
+    mutate(bill_length_mm = (bill_length_mm-mean(bill_length_mm))/sd(bill_length_mm), bill_depth_mm = (bill_depth_mm-mean(bill_depth_mm))/sd(bill_depth_mm), flipper_length_mm = (flipper_length_mm-mean(flipper_length_mm))/sd(flipper_length_mm), body_mass_g = (body_mass_g - mean(body_mass_g))/sd(body_mass_g))
+
+
+s3d <- scatterplot3d(new_penguins$bill_depth_mm, new_penguins$bill_length_mm, new_penguins$body_mass_g, ylab="bill_length_mm", zlab="body_mass_g", xlab="bill_depth_mm", type="n") 
+text(s3d$xyz.convert(new_penguins$bill_depth_mm, new_penguins$bill_length_mm, new_penguins$body_mass_g), labels=new_penguins$id, offset=0)
+
+
+# **HEAT MAP w/ DENDROGRAM**
+penguin_mat <- data.matrix(new_penguins %>% select(bill_length_mm, bill_depth_mm, body_mass_g))
+heatmap(penguin_mat, Colv=NA, scale="column", col=cm.colors(256), cexCol = 1, margins = c(7,2), cexRow = 1, keep.dendro = FALSE)
+
+# **JUST A DENDROGRAM**    
+sub_peng <- new_penguins %>% select(bill_length_mm, bill_depth_mm, body_mass_g)
+plot(hclust(dist(sub_peng)), cex = 1.5, cex.axis = 1.5, main = "", xlab = "", ylab = "", labels = new_penguins$id)
+
+# 3d plots w diff numbers of clusters
+par(mfrow = c(2,2))
+plot_data <- new_penguins %>% 
+  mutate(clust_2 = as.factor(cutree(hclust(dist(sub_peng)), 2))) %>% 
+  mutate(clust_3 = as.factor(cutree(hclust(dist(sub_peng)), 3))) %>% 
+  mutate(clust_4 = as.factor(cutree(hclust(dist(sub_peng)), 4))) %>% 
+  mutate(clust_9 = as.factor(cutree(hclust(dist(sub_peng)), 9)))
+
+scatterplot3d(plot_data$bill_depth_mm, plot_data$bill_length_mm, plot_data$body_mass_g, ylab="bill_length_mm", zlab="body_mass_g", xlab="bill_depth_mm", pch = 16, color = plot_data$clust_2)
+scatterplot3d(plot_data$bill_depth_mm, plot_data$bill_length_mm, plot_data$body_mass_g, ylab="bill_length_mm", zlab="body_mass_g", xlab="bill_depth_mm", pch = 16, color = plot_data$clust_3)
+scatterplot3d(plot_data$bill_depth_mm, plot_data$bill_length_mm, plot_data$body_mass_g, ylab="bill_length_mm", zlab="body_mass_g", xlab="bill_depth_mm", pch = 16, color = plot_data$clust_4)
+scatterplot3d(plot_data$bill_depth_mm, plot_data$bill_length_mm, plot_data$body_mass_g, ylab="bill_length_mm", zlab="body_mass_g", xlab="bill_depth_mm", pch = 16, color = plot_data$clust_9)
+```
+
+
+```{r echo = FALSE, eval = FALSE}
+library(ISLR)
+set.seed(2)
+dat <- College %>%
+  mutate(school = rownames(.)) %>% 
+  filter(school %in% c("Amherst College","Augsburg College","Barnard College","Beloit College","Brown University","Carnegie Mellon University","Claremont McKenna College","Carleton College","Colby College","Colorado College","Harvard University","University of California at Berkeley","University of Florida","University of Michigan at Ann Arbor","University of Minnesota Twin Cities","University of St. Thomas MN","University of Wisconsin at Madison","University of Washington","Yale University", "Macalester College")) %>%  
+  select(-Private) %>% 
+  column_to_rownames("school")
+  
+
+plot(hclust(dist(scale(dat))), cex = 1, cex.axis = 1, main = "", xlab = "", ylab = "")
+
+```
+
+
+```{r echo = FALSE, eval = FALSE, warning = FALSE, message = FALSE, fig.height = 5, fig.width = 8}
+library(ISLR)
+library(tree)
+data(NCI60)
+genedata <- NCI60$data
+plot(hclust(dist(genedata)), xlab = "", main="")
+```   
+
+
+
+
+
+
+
+
+## Notes: Hierarchical Cluster Analysis {-}
+
+
+**Goal:**       
+Create a hierarchy of clusters where clusters consist of similar data points.
+
+**Algorithm:**        
+Suppose we have a set of p feature variables ($x_1, x_2,..., x_p$) on each of n data points. Each data point starts as a leaf.
+
+- Compute the Euclidean distance between all pairs of data points with respect to x.
+- Fuse the 2 closest data points into a single cluster or branch. 
+- Continue to fuse the 2 closest clusters until all cases are in 1 cluster.
+
+
+
+
+
+\
+\
+
+
+**Dendrograms (of or relating to trees)**    
+
+The hierarchical clustering algorithm produces a *dendrogram*.  To use a dendrogram:    
+
+- Start with the leaves at the bottom (unlike classification trees!). Each leaf represents a single case / row in our dataset.    
+- Moving up the tree, fuse similar leaves into branches, fuse similar branches into bigger branches, fuse all branches into one big trunk (all cases).    
+- The more similar two cases, the sooner their branches will fuse. The height of the first fusion between two cases’ branches measures the “distance” between them.    
+- The horizontal distance between 2 leaves does not reflect distance!
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+**Measuring distance between 2 clusters**       
+There are several *linkages* we can use to measure distance between 2 clusters / branches  Unless specified otherwise, we'll use the **complete** linkage method.    
+
+
+![](images/linkages.png)
+
+
+
+
+
+
+
+
+\
+\
+\
+\
+\
+\
+
+
+
+
+
+
+
+
+
+## Small Group Discussion {-}
+
+
+
+
+**EXAMPLE 1: Standardizing the features**
+
+Let's start by using hierarchical clustering to identify similar groups (and possible species!) of penguins with respect to their bill lengths (mm), bill depths (mm), and body masses (g).
+
+This algorithm relies on calculating the distances between each pair of penguins.
+
+Why is it important to first *standardize* our 3 features to the same scale (centered around a mean of 0 with standard deviation 1)?
+
+```{r eval=TRUE}
+library(palmerpenguins)
+data("penguins")
+penguins %>% 
+  select(bill_length_mm, bill_depth_mm, body_mass_g) %>% 
+  head()
+```
+
+
+
+
+
+
+<details>
+<summary>Solution:</summary>
+The features are on different scales. It's important to standardize so that one feature doesn't have more influence over the distance measure, simply due to its scale.
+</details>
+<br>
+
+
+
+
+
+**EXAMPLE 2: Interpreting a dendrogram**
+
+Check out the standardized data, heat map, and dendrogram for a sample of just 50 penguins.
+
+a. Is penguin 30 more similar to penguin 33 or 12?
+b. Identify and interpret the distance, calculated using the *complete* linkage, between penguins 30 and 33.
+c. Consider the far left penguin cluster on the dendrogram, starting with penguin 33 and ending with penguin 30. Use the heat map to describe what these penguins have in common.
+
+
+![](images/penguin_example.png)
+
+
+
+
+
+<details>
+<summary>Solution:</summary>
+a. 33 -- 30 and 33 cluster together sooner than 30 and 12
+b. This clustering was done using the complete linkage method. Thus _at most_, the standardized difference in the bill length, bill depth, and body mass of penguins 30 and 33 is 2.
+c. That group generally has large bill length and body mass but small bill depth.
+</details>
+<br>
+
+
+
+
+
+**EXAMPLE 3: BY HAND**
+
+To really get the details, you'll perform hierarchical clustering by hand for a small example.
+
+Use the [distributed piece of paper](https://docs.google.com/document/d/1PGEieB-OslxZiGpqtQvZKz6ZsRuS6iS-5ewmQgAMGY0/edit?usp=sharing).
+
+Code for importing the data is here:
+
+```{r fig.width = 4, fig.height = 4, eval=TRUE}
+# Record the data
+penguins_small <- data.frame(
+  width = c(-1.3, -0.8, 0.2, 0.8, 1.0), 
+  length = c(0.6, 1.4, -1.0, -0.2, -0.7))
+
+# Plot the data
+ggplot(penguins_small, aes(x = width, y = length)) + 
+  geom_point() + 
+  geom_text(aes(label = c(1:5)), vjust = 1.5) + 
+  theme_minimal()
+
+# Calculate the distance between each pair of penguins
+round(dist(penguins_small), 2)
+```
+
+<details>
+<summary>Solution:</summary>
+
+**COMPLETE LINKAGE**
+
+
+
+```{r eval=TRUE}
+library(tree)
+penguin_cluster <- hclust(dist(penguins_small), method = "complete")
+plot(penguin_cluster)
+```
+
+__Step 1__
+
+The closest pair are 4 and 5 with a distance of 0.54
+
+              1       2       3            4       5
+------- ------- ------- ------- ------------ -------
+   1          0
+   2       0.94       0
+   3       2.19    2.60       0
+   4       2.25    2.26    1.00       0
+   5       2.64    2.77    0.85    __0.54__       0
+   
+
+
+__Step 2__  
+
+The distance matrix below gives the current distance between clusters 1, 2, 3, and (4 & 5) using complete linkage (the distance between 2 clusters is the maximum distance btwn any pair of penguins in the 2 clusters). By this, clusters or penguins 1 & 2 are the closest, with a distance of 0.94:
+
+              1       2       3   4 & 5
+------- ------- ------- ------- -------
+   1          0
+   2       0.94       0
+   3       2.19    2.60       0
+ 4 & 5     2.64    2.77    1.00       0
+
+
+
+__Step 3__  
+
+The distance matrix below gives the current distance between clusters (1 & 2), 3, and (4 & 5) using complete linkage. By this, clusters 3 and (4 & 5) are the closest, with a distance of 1:
+
+         1 & 2       3   4 & 5
+------- ------- ------- -------
+ 1 & 2        0
+   3       2.60       0
+ 4 & 5     2.77    1.00       0
+
+
+
+
+__Step 4__  
+
+The distance matrix below gives the current distance between our 2 clusters, (1 & 2) and (3 & 4 & 5) using complete linkage. The distance between them is 2.77 (hence the height of the final merge in our dendrogram):
+
+         1 & 2   3,4,5
+------- ------- -------
+ 1 & 2        0
+ 3,4,5     2.77       0
+
+
+\
+
+
+
+
+
+
+**SINGLE LINKAGE**
+
+
+
+```{r eval=TRUE}
+penguin_cluster <- hclust(dist(penguins_small), method = "single")
+plot(penguin_cluster)
+```
+
+__Step 1__
+
+The closest pair are 4 and 5 with a distance of 0.54
+
+              1       2       3            4       5
+------- ------- ------- ------- ------------ -------
+   1          0
+   2       0.94       0
+   3       2.19    2.60       0
+   4       2.25    2.26    1.00       0
+   5       2.64    2.77    0.85    __0.54__       0
+   
+
+
+__Step 2__  
+
+The distance matrix below gives the current distance between clusters 1, 2, 3, and (4 & 5) using single linkage (the distance between 2 clusters is the maximum distance btwn any pair of penguins in the 2 clusters). By this, penguin 3 is closest to the cluster of penguins 4 & 5, with a distance of 0.85:
+
+              1       2       3   4 & 5
+------- ------- ------- ------- -------
+   1          0
+   2       0.94       0
+   3       2.19    2.60       0
+ 4 & 5     2.25    2.26    0.85       0
+
+
+
+__Step 3__  
+
+The distance matrix below gives the current distance between clusters 1, 2, and (3, 4, 5) using single linkage. By this, clusters 1 and 2 are the closest, with a distance of 0.94:
+
+              1       2    3,4,5 
+------- ------- ------- --------
+   1          0
+   2       0.94       0
+ 3,4,5     2.19    2.26       0
+
+
+
+
+__Step 4__  
+
+The distance matrix below gives the current distance between our 2 clusters, (1 & 2) and (3 & 4 & 5) using single linkage. The distance between them is 2.19 (hence the height of the final merge in our dendrogram):
+
+         1 & 2   3,4,5
+------- ------- -------
+ 1 & 2        0
+ 3,4,5     2.19       0
+
+
+</details>
+
+
+<br>
+
+**EXAMPLE 4: EXPLORE CLUSTERS**
+
+Now, let's go back to a sample of 50 penguins.
+
+Run the 2 chunks below to build a shiny app that we'll use to build some intuition for hierarchical clustering.
+
+a. Put the slider at 9 clusters. These 9 clusters are represented in the dendrogram and scatterplot of the data. Do you think that 9 clusters is too many, too few, or just right?
+b. Now set the slider to 5. Simply take note of how the clusters appear in the data.
+c. Now sloooooowly set the slider to 4, then 3, then 2. Each time, notice what happens to the clusters in the data plot. Describe what you observe.
+d. What are your thoughts about the 2-cluster solution? What happened?!
+
+
+```{r}
+# Load the data
+library(tidyverse)
+set.seed(253)
+more_penguins <- penguins %>% 
+  sample_n(50) %>% 
+  select(bill_length_mm, bill_depth_mm) %>% 
+  na.omit()
+
+# Run hierarchical clustering
+penguin_cluster <- hclust(dist(scale(more_penguins)), method = "complete")
+
+# Record cluster assignments
+clusters <- more_penguins %>% 
+  mutate(k = rep(1, nrow(more_penguins)), cluster = rep(1, nrow(more_penguins)))
+for(i in 2:12){
+ clusters <- more_penguins %>% 
+  mutate(k = rep(i, nrow(more_penguins)), 
+         cluster = cutree(penguin_cluster, k = i)) %>% 
+  bind_rows(clusters)
+}
+```
+
+```{r eval = FALSE}
+library(shiny)
+library(factoextra)
+library(RColorBrewer)
+# Build the shiny server
+server_hc <- function(input, output) {
+  dend_plot <- reactive({ 
+    cols = brewer.pal(n= input$k_pick, "Set1")
+    fviz_dend(penguin_cluster, k = input$k_pick, k_colors = cols)
+})
+  
+  output$model_plot <- renderPlot({
+    cols = brewer.pal(n= input$k_pick, "Set1")
+    dend <- attributes(dend_plot())$dendrogram
+    tree_order <- order.dendrogram(dend)
+    clusters_k <- clusters %>% 
+      filter(k == input$k_pick) 
+    clusters_k <- clusters_k %>%
+      mutate(cluster = factor(cluster, levels = unique(clusters_k$cluster[tree_order])))
+    names(cols) = unique(clusters_k$cluster[tree_order])
+    
+    clusters_k %>% 
+      ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = factor(cluster))) + 
+        geom_point(size = 3) +
+      scale_color_manual(values = cols) + 
+        theme_minimal() + 
+        theme(legend.position = "none")
+  })
+  output$dendrogram <- renderPlot({
+   dend_plot()
+  })
+}
+
+# Build the shiny user interface
+ui_hc <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      h4("Pick the number of clusters:"), 
+      sliderInput("k_pick", "cluster number", min = 1, max = 9, value = 9, step = 1, round = TRUE)
+    ),
+    mainPanel(
+      plotOutput("dendrogram"),
+      plotOutput("model_plot")
+    )
+  )
+)
+
+
+# Run the shiny app!
+shinyApp(ui = ui_hc, server = server_hc)
+```
+<details>
+<summary>Solution:</summary>
+a. too many. they're very specific
+b. ....
+c. the clusters continue to merge as we go up the dendrogram. (eg: the 5-cluster solution is nested in the 4-cluster solution)
+d. yikes! this solution doesn't capture the more natural looking clusters in the data. this algorithm is greedy -- it makes the best decisions at each step, but the results aren't necessarily globally optimal. 
+</details>
+
+<br>
+
+
+**EXAMPLE 5: DETAILS**
+
+a. Is hierarchical clustering **greedy**?
+b. We learned in the video that, though they both produce tree-like output, the hierarchical clustering and classification tree algorithms are *not the same thing*! Similarly, though they both calculate distances between each pair of data points, the hierarchical clustering and KNN algorithms are *not the same thing*! Explain.
+c. This is a statement, not a question :). When all features x are quantitative or logical (TRUE/FALSE), we measure the similarity of 2 data points with respect to the Euclidean distance between their *standardized* x values. But if at least 1 feature x is a factor / categorical variable, we measure the similarity of 2 data points with respect to their Gower distance. The idea is similar to what we did in KNN (converting categorical x variables to dummies, and then standardizing), but the details are different. If you're interested: 
+    ```{r eval = FALSE}
+    library(cluster)
+    ?daisy
+    ```
+
+
+<details>
+<summary>Solution:</summary>
+
+a. Yes. See example 4.
+b. We don't want different x scales to impact our calculations of distance, hence our sense of what data points are closest to each other.
+
+
+</details>
+<br>
+
+
+
+
+
+
+
+## Exercises {-}
+
+
+
+**Directions**    
+
+These exercises are on Homework 7. If and when you complete these, go back to Activity 16 and follow the review prompts there for Quiz 2!
+
+
+    
+
+
+1. **Visualizing structure**        
+    Our first goal will be to understand the similarities among different candies (i.e. the *rows* of our `candy_rankings` dataset) with respect to their ingredients, popularity, and other properties.       
+    ```{r}
+    # Load some packages & data
+    library(tidyverse)
+    library(fivethirtyeight)
+    data("candy_rankings")
+    ```       
+    a. One variable in the dataset merely *identifies* or *labels* the candies, hence is not a candy *feature*. Convert this to a *row name*, instead of a column.
+    b. Construct a heat map of your (standardized) candy features, setting `Colv = NA`.
+    c. Construct a dendrogram of your (standardized) candy features using the **complete** linkage method. NOTE: Since all features are quantitative or logical here, do *not* use the `daisy()` code.
+    d. How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.
+    e. To what other candy are Nik L Nips most similar?
+
+
+
+
+2.  **Defining & making meaning from clusters**        
+    For the purposes of consistency from student to student, let's explore the possibility of there being **4** candy clusters.
+    a. Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. NOTE: There's built-in code to do this!
+    b. To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster. NOTES:        
+        - HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then `group_by()` and `summarize_all()` (which is like `summarize()` but performs a calculation on *all* columns).
+        - For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.   
+        - The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram!
+        - LOOKING AHEAD: In a future activity, you'll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!
+    c. OPTIONAL: There's no "right" number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?
+    
+    
+
+
+
+
+
+3.  **Sensitivity analysis**    
+    Our hierarchical cluster analysis above utilized **complete linkage**. That is, we measured the distance between two clusters by the *maximum* distance between any pair of candies in those clusters. This is merely one strategy. To determine how *sensitive* the clustering algorithm is to our choice of linkage, let's consider 2 other strategies.
+    a. Construct a dendrogram using the **centroid linkage** approach (don't try coloring clusters). Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why centroid linkage will often produce dendrograms that look like this.    
+    b. Construct a dendrogram using the **single linkage** approach, *colored by 4 clusters*.  Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why single linkage will often produce dendrograms that look like this. NOTE: Be sure to not use your cluster assignments from the previous exercise as features in this exercise!         
+    c. The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? Explain.
+    d. Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering do be done, using *complete* or *single* linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.
+    
+    
+
+   
+
+
+
+
+
+
+
+## Notes: R code {-}
+
+The `tidymodels` package is built for *models* of some outcome variable y.
+We can't use it for clustering.
+
+Instead, we'll use a variety of new packages that use specialized, but short, syntax.
+Suppose we have a set of `sample_data` with multiple feature columns x, and (possibly) a column named `id` which labels each data point.
+
+```{r eval = FALSE}
+# Install packages
+library(tidyverse)
+library(cluster)      # to build the hierarchical clustering algorithm
+library(factoextra)   # to draw the dendrograms
+```
+
+
+\
+\
+
+
+
+**PROCESS THE DATA**
+
+If there's a column that's an identifying variable or label, not a feature of the data points, convert it to a row name.
+
+```{r eval = FALSE}
+sample_data <- sample_data %>% 
+  column_to_rownames("id")
+```
+
+
+
+\
+\
+
+
+**RUN THE CLUSTERING ALGORITHM**
+
+
+```{r eval = FALSE}
+# Scenario 1: ALL features x are quantitative OR logical (TRUE/FALSE)
+# Use either a "complete", "single", "average", or "centroid" linkage_method
+hier_model <- hclust(dist(scale(sample_data)), method = ___)
+
+# Scenario 2: AT LEAST 1 feature x is a FACTOR (categorical)
+# Use either a "complete", "single", "average", or "centroid" linkage
+hier_model <- hclust(daisy(sample_data, metric = "gower"), method = ___)
+```
+
+
+
+
+\
+\
+
+
+
+
+**VISUALIZING THE CLUSTERING: HEAT MAPS AND DENDRODGRAMS**
+
+NOTE: Heat maps can be goofy if at least 1 x feature is categorical
+
+```{r eval = FALSE}
+# Heat maps: ordered by the id variable (not clustering)
+heatmap(scale(data.matrix(sample_data)), Colv = NA, Rowv = NA)
+
+# Heat maps: ordered by dendrogram / clustering
+heatmap(scale(data.matrix(sample_data)), Colv = NA)
+
+# Dendrogram (change font size w/ cex)
+fviz_dend(hier_model, cex = 1)
+fviz_dend(hier_model, horiz = TRUE, cex = 1)  # Plot the dendrogram horizontally to read longer labels
+```
+
+
+
+\
+\
+
+
+**DEFINING & PLOTTING CLUSTER ASSIGNMENTS**
+
+```{r eval = FALSE}
+# Assign each sample case to a cluster
+# You specify the number of clusters, k
+# We typically want to store this in a new dataset so that the cluster assignments aren't 
+# accidentally used as features in a later analysis!
+cluster_data <- sample_data %>% 
+  mutate(hier_cluster_k = as.factor(cutree(hier_model, k = ___)))
+         
+# Visualize the clusters on the dendrogram (change font size w/ cex)
+fviz_dend(hier_model, k = ___, cex = 1)
+fviz_dend(hier_model, k = ___, horiz = TRUE, cex = 1)  # Plot the dendrogram horizontally to read longer labels
+```
+
+

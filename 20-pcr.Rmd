@@ -1,0 +1,313 @@
+# Principal component regression
+
+Unsupervised & supervised learning are friends! 
+
+
+<!-- don't overwrite the notes doc! The exercise sections are different -->
+
+
+
+<!-- PCR vs partial least squares p237 -->
+<!-- unlike PCR, partial least squares i.d. new directions by also considering by which are associated with Y.  loadings of first direction defined by LS coefs, thus summarizes the most important LS predictors -->
+
+
+
+
+\
+
+
+## Notes {-}
+
+
+
+
+
+
+
+**CONTEXT**
+
+We've been distinguishing 2 broad areas in machine learning:
+
+- supervised learning: when we want to predict / classify some outcome y using predictors x
+- unsupervised learning: when we don't have any outcome variable y, only features x       
+    - clustering: examine structure among the rows with respect to x
+    - dimension reduction: examine & combine structure among the columns x
+    
+BUT sometimes we can combine these ideas.
+
+
+
+
+
+
+
+
+**CLUSTERING + REGRESSION**
+
+1. Use dimension reduction to visualize / summarize lots of features and notice interesting groups.       
+    Example: many physical characteristics of penguins, many characteristics of songs, etc
+    
+2. Use clustering to identify interesting groups.       
+    Example: types (species) of penguins, types (genres) of songs, etc
+
+3. These groups might then become our $y$ outcome variable in future analysis.        
+    Example: classify new songs as one of the "genres" we identified
+
+
+
+EXAMPLE: [K-means clustering + Classification of news articles](https://github.com/AustinKrause/nyt-article-summarizer)
+
+
+
+
+<br>
+
+
+
+**DIMENSION REDUCTION + REGRESSION: Dealing with lots of predictors**    
+
+Suppose we have an outcome variable $y$ (quantitative OR categorical) and lots of potential predictors $x_1, x_2, ..., x_p$.
+
+Perhaps we even have more predictors than data points ($p > n$)!
+
+This idea of measuring lots of things on a sample is common in genetics, image processing, video processing, or really any scenario where we can grab data on a bunch of different features at once.
+
+For simplicity, computational efficiency, avoiding overfitting, etc, it might benefit us to simplify our set of predictors.
+
+There are a few approaches:  
+
+- **variable selection (eg: using backward stepwise)**    
+    Simply kick out some of the predictors.
+    NOTE: This doesn't work when $p > n$.    
+    
+    
+- **regularization (eg: using LASSO)**    
+    Shrink the coefficients toward / to 0.
+    NOTE: This doesn't work when $p > n$.    
+    
+    
+- **feature extraction (eg: using PCA)**    
+    Identify & utilize only the most *salient* features of the original predictors.
+    Specifically, combine the original, possibly correlated predictors into a smaller set of uncorrelated predictors which retain most of the original information.
+    NOTE: This *does* work when $p > n$.        
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+**PRINCIPAL COMPONENT REGRESSION (PCR)**
+
+- **Step 1**    
+     Ignore $y$ for now.
+     Use PCA to combine the $p$ original, correlated predictors $x$ into a set of $p$ uncorrelated PCs.
+
+- **Step 2**        
+    Keep only the first $k$ PCs which retain a "sufficient" amount of information from the original predictors.    
+
+- **Step 3**    
+    Model $y$ by these first $k$ PCs.  
+    
+
+
+
+
+
+<br>
+
+
+
+**PCR vs PARTIAL LEAST SQUARES**
+
+When combining the original predictors $x$ into a smaller set of PCs, PCA *ignores* $y$. Thus PCA might not produce the strongest possible predictors of $y$.
+
+**Partial least squares** provides an alternative.
+
+Like PCA, it combines the original predictors into a smaller set of uncorrelated features, but considers which predictors are most associated with $y$ in the process.
+
+Chapter 6.3.2 provides an optional overview.
+
+
+
+
+
+
+
+
+ 
+<br>
+
+
+
+
+**EXAMPLE**    
+
+For each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.
+
+a. We have more potential predictors than data points ($p > n$).
+b. It's important to understand the specific relationships between y and x.
+c. The x are NOT very correlated.
+
+ 
+
+<details>
+<summary>Solution:</summary>
+a. 1. (typically) can't do variable selection, regularization when $p > n$.
+b. 2. The PCs lose the original meaning of the predictors
+c. 2. PCR wouldn't simplify things much (need a lot of PCs to retain info). 
+
+</details>
+
+
+
+## Exercises {-}
+
+
+- Make the most of your work time in class!
+- These exercises are on Homework 7.
+- **IMPORTANT:** Remember to set.seed(253) in exercises 4 and 5.
+- If you finish Homework 7, start group assignment 3.
+
+
+
+9. **Principal components regression (PCR)**    
+    Returning to the original `candy_rankings` data, our final goal will be to build a regression model of `winpercent`, the popularity of a candy.
+    Let's start with fresh data, in case anything has been overwritten in the previous exercises :):
+    ```{r}
+    library(fivethirtyeight)
+    data("candy_rankings")
+    candy_final <- candy_rankings %>% 
+      select(-competitorname) %>% 
+      mutate_if(is.logical, as.factor)
+    ```       
+    a. Build a PCR model of `winpercent`. In doing so:    
+        - Set the seed to 253.    
+        - Try utilizing 1 PC, 2 PCs, ..., up to 11 PCs (the number of original predictors)
+        - Calculate the 10-fold CV MAE for each model
+    b. Plot the CV MAE vs the number of PCs in each model.
+    c. Using the plot, argue for keeping only one PC in our final model.
+    d. Finalize the PCR model of `winpercent` using only one PC AND print its `tidy()` table of coefficients. HINT:        
+        `finalize_workflow(parameters = list(num_comp = 1))`
+    e. Report **and** interpret the 10-fold CV MAE for this model. HINT: `collect_metrics()`.
+
+
+\
+\
+
+
+10. **Comparison to LASSO regression**       
+    Next, consider 50 possible LASSO regression models of `winpercent`, starting from the 11 *original* predictors:       
+    ```{r}
+    library(tidymodels)
+    
+   # STEP 1: LASSO model specification
+    lasso_spec <- linear_reg() %>% 
+      set_mode("regression") %>% 
+      set_engine("glmnet") %>% 
+      set_args(mixture = 1, penalty = tune())
+    
+    # STEP 2: variable recipe
+    lasso_recipe <- recipe(winpercent ~ ., data = candy_final) %>% 
+      step_dummy(all_nominal_predictors())
+    
+    # STEP 3: workflow
+    lasso_workflow <- workflow() %>% 
+      add_recipe(lasso_recipe) %>% 
+      add_model(lasso_spec)
+      
+    # STEP 4: Estimate multiple LASSO models using a range of possible lambda values
+    set.seed(253)
+    lasso_models <- lasso_workflow %>% 
+      tune_grid(
+        grid = grid_regular(penalty(range = c(-5, 1)), levels = 50),
+        resamples = vfold_cv(candy_final, v = 10),
+        metrics = metric_set(mae)
+      )
+    ```
+    a. Finalize the LASSO: build a *parsimonious* LASSO model of `winpercent`.
+    b. Print a `tidy()` table of the LASSO coefficients AND report the number of the 11 original predictors that are utilized in this model.
+    c. Calculate **and** interpret the 10-fold CV MAE for this LASSO model.
+    d. Which model of `winpercent` would you use: the LASSO model or the PCR model? Provide an explanation that would apply to choosing between a LASSO and principal components model in general.           
+    
+
+
+
+
+
+
+\
+\
+\
+\
+
+
+
+
+
+
+
+## Notes: R code {-}
+
+
+Suppose we have a set of `sample_data` with multiple predictors x, a *quantitative* outcome y, and (possibly) a column named `data_id` which labels each data point.
+We could adjust this code if y were *categorical*.
+
+
+
+
+**RUN THE PCR algorithm**
+
+```{r eval = FALSE}
+library(tidymodels)
+library(tidyverse)
+
+# STEP 1: specify a linear regression model
+lm_spec <- linear_reg() %>% 
+  set_mode("regression") %>% 
+  set_engine("lm")
+
+# STEP 2: variable recipe
+# Add a pre-processing step that does PCA on the predictors
+# num_comp is the number of PCs to keep (we need to tune it!)
+pcr_recipe <- recipe(y ~ ., data = sample_data) %>% 
+  update_role(data_id, new_role = "id") %>%
+  step_dummy(all_nominal_predictors()) %>% 
+  step_normalize(all_predictors()) %>%
+  step_pca(all_predictors(), num_comp = tune())
+
+# STEP 3: workflow
+pcr_workflow <- workflow() %>% 
+  add_recipe(pcr_recipe) %>% 
+  add_model(lm_spec)
+  
+# STEP 4: Estimate multiple PCR models trying out different numbers of PCs to keep
+# For the range, the biggest number you can try is the number of predictors you started with
+# Put the same number in levels
+set.seed(___)
+pcr_models <- pcr_workflow %>% 
+  tune_grid(
+    grid = grid_regular(num_comp(range = c(1, ___)), levels = ___),
+    resamples = vfold_cv(sample_data, v = 10),
+    metrics = metric_set(mae)
+  )
+```
+
+
+**FOLLOW-UP**
+
+Processing and applying the results is the same as for our other `tidymodels` algorithms!
+
+
+
+
+
+
+
