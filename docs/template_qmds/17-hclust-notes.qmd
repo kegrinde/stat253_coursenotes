@@ -31,7 +31,8 @@ knitr::opts_chunk$set(
 
 # Context
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/MLdiagram5.jpg)
+
+![](https://kegrinde.github.io/stat253_coursenotes/images/MLDiagram5.jpg)
 
 
 
@@ -279,7 +280,7 @@ c. Consider the far left penguin cluster on the dendrogram, starting with pengui
 **EXAMPLE 3: BY HAND**
 
 To really get the details, you'll perform hierarchical clustering by hand for a small example.
-Use the [distributed piece of paper](https://docs.google.com/document/d/1PGEieB-OslxZiGpqtQvZKz6ZsRuS6iS-5ewmQgAMGY0/edit?usp=sharing).
+Ask Kelsey for a copy of the paper handout.
 
 Code for importing the data is here:
 
@@ -459,11 +460,11 @@ library(cluster)
 
 # Exercises
 
-Do exercises 1--3 on Homework 7.
+Do exercises 1--3 on HW6. Questions are available on the course webpage. 
 
 No code is provided in the exercises, so you'll need to use the R code reference section at the bottom of this activity.
 
-**If and when you complete these, go back to the review / concept map activity and follow the review prompts there!**
+**If and when you complete these, go back to the review / concept map activity from last class and follow the review prompts there!**
 
     
     

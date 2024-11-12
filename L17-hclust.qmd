@@ -153,7 +153,7 @@ plot(hclust(dist(genedata)), xlab = "", main="")
 
 ## Context {.unnumbered .smaller}
 
-![](images/MLdiagram5.jpg){width=90%}
+![](images/MLDiagram5.jpg){width=90%}
 
 **GOALS**   
 
