@@ -447,7 +447,7 @@ ul.task-list li input[type="checkbox"] {
 <li>This will be covered on Quiz 3, but <strong>not</strong> Quiz 2</li>
 </ul></li>
 <li>HW4 Revisions (if applicable): Friday, Nov 15</li>
-<li>Quiz 2: Tuesday, Nov 20
+<li>Quiz 2: Tuesday, Nov 19
 <ul class="incremental">
 <li>Focus on <strong>classification</strong> (Units 4–5), though many concepts carry over</li>
 <li>Structure will be the same as Quiz 2 (Part 1 + Part 2)</li>
@@ -641,6 +641,44 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+
+<script>
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+  // slide changes (different for each slide format).
+  (function () {
+    // dispatch for htmlwidgets
+    function fireSlideEnter() {
+      const event = window.document.createEvent("Event");
+      event.initEvent("slideenter", true, true);
+      window.document.dispatchEvent(event);
+    }
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+      fireSlideEnter();
+
+      // dispatch for shiny
+      if (window.jQuery) {
+        if (previousSlide) {
+          window.jQuery(previousSlide).trigger("hidden");
+        }
+        if (currentSlide) {
+          window.jQuery(currentSlide).trigger("shown");
+        }
+      }
+    }
+
+    // hookup for slidy
+    if (window.w3c_slidy) {
+      window.w3c_slidy.add_observer(function (slide_num) {
+        // slide_num starts at position 1
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+      });
+    }
+
+  })();
+</script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

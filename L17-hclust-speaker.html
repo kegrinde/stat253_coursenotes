@@ -433,9 +433,10 @@
 <li>Emphasis on Units 4–5</li>
 <li>…but some concepts from Units 1–3 carry over/remain important!</li>
 </ul>
-</section>
-<section id="learning-goals" class="slide level2 unnumbered smaller">
-<h2>Learning Goals</h2>
+<p><br></p>
+</section></section>
+<section id="learning-goals" class="title-slide slide level1 unnumbered smaller center">
+<h1>Learning Goals</h1>
 <ul>
 <li>Clearly describe / implement by hand the hierarchical clustering algorithm</li>
 <li>Compare and contrast k-means and hierarchical clustering in their outputs and algorithms</li>
@@ -448,7 +449,9 @@
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 <!-- more on categorical variables: https://www.r-bloggers.com/clustering-mixed-data-types-in-r/ -->
 <!-- NOTE: The bottom-up approach of hierarchical clustering is "agglomerative", vs "divisive" or "centroid-based" -->
-</section></section>
+<p><br></p>
+</section>
+
 <section>
 <section id="notes-unsupervised-learning" class="title-slide slide level1 unnumbered center">
 <h1>Notes: Unsupervised Learning</h1>
@@ -456,7 +459,7 @@
 </section>
 <section id="context" class="slide level2 unnumbered smaller scrollable">
 <h2>Context</h2>
-<p><img data-src="images/MLdiagram5.jpg" style="width:90.0%"></p>
+<p><img data-src="images/MLDiagram5.jpg" style="width:90.0%"></p>
 <p><strong>GOALS</strong></p>
 <p>Suppose we have a set of <strong>feature</strong> variables <span class="math inline">\((x_1,x_2,...,x_k)\)</span> but NO outcome variable <span class="math inline">\(y\)</span>.</p>
 <p>Instead of our goal being to predict/classify/explain <span class="math inline">\(y\)</span>, we might simply want to…</p>
@@ -489,6 +492,7 @@
 <!-- note to self: add clustering from Day 1 activity -->
 <p><img data-src="images/class_cluster_Fall2024.png" style="width:90.0%"></p>
 <p>For more examples, check out the Unit 5 Motivating Question page <a href="U05-motivation.html">here</a>.</p>
+<p><br> <br></p>
 </section></section>
 <section>
 <section id="notes-hierarchical-cluster-analysis" class="title-slide slide level1 unnumbered center">
@@ -532,13 +536,15 @@
 <h2>Measuring Distance</h2>
 <p>There are several <em>linkages</em> we can use to measure distance between 2 clusters / branches. Unless specified otherwise, we’ll use the <strong>complete</strong> linkage method.</p>
 <p><img data-src="images/linkages.png"></p>
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<br>
-</p>
+<!--
+\
+\
+\
+\
+\
+\
+-->
+<p><br> <br></p>
 </section></section>
 <section>
 <section id="small-group-discussion" class="title-slide slide level1 unnumbered center">
@@ -598,7 +604,7 @@ Solution:
 <p><br></p>
 </section>
 <section id="example-3-by-hand" class="slide level2 unnumbered smaller">
-<h2>EXAMPLE 3: BY HAND</h2>
+<h2>EXAMPLE 3: By Hand</h2>
 <p>To really get the details, you’ll perform hierarchical clustering by hand for a small example.</p>
 <p>Ask Kelsey for a copy of the <a href="https://docs.google.com/document/d/1abptMI_GsEM-LbGAFBRHRFsW8yJC9iajzjAqjxaCgpg/edit?usp=sharing">paper handout</a>.</p>
 <p>Code for importing the data is here:</p>
@@ -616,7 +622,7 @@ Solution:
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L17-hclust_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
+<p><img data-src="L17-hclust_files/figure-html/unnamed-chunk-6-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -642,7 +648,7 @@ Solution:
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L17-hclust_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+<p><img data-src="L17-hclust_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -810,7 +816,7 @@ Solution:
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L17-hclust_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+<p><img data-src="L17-hclust_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -973,7 +979,7 @@ Solution:
 <p><br></p>
 </section>
 <section id="example-4-explore-clusters" class="slide level2 unnumbered smaller scrollable">
-<h2>EXAMPLE 4: EXPLORE CLUSTERS</h2>
+<h2>EXAMPLE 4: Explore Clusters</h2>
 <p>Now, let’s go back to a sample of 50 penguins.</p>
 <p>Run the 2 chunks below to build a shiny app that we’ll use to build some intuition for hierarchical clustering.</p>
 <ol type="a">
@@ -1075,7 +1081,7 @@ Solution:
 <p><br></p>
 </section>
 <section id="example-5-details" class="slide level2 unnumbered smaller scrollable">
-<h2>EXAMPLE 5: DETAILS</h2>
+<h2>EXAMPLE 5: Details</h2>
 <ol type="a">
 <li>Is hierarchical clustering <strong>greedy</strong>?</li>
 <li>We learned in the video that, though they both produce tree-like output, the hierarchical clustering and classification tree algorithms are <em>not the same thing</em>! Similarly, though they both calculate distances between each pair of data points, the hierarchical clustering and KNN algorithms are <em>not the same thing</em>! Explain.</li>
@@ -1095,7 +1101,7 @@ Solution:
 </ol>
 <!-- note to self: I don't understand the answer to b? -->
 </details>
-<p><br></p>
+<p><br> <br></p>
 </section></section>
 <section>
 <section id="exercises" class="title-slide slide level1 unnumbered center">
@@ -1130,9 +1136,13 @@ These exercises are on Homework 7. If and when you complete these, go back to Ac
 <p>For the purposes of consistency from student to student, let’s explore the possibility of there being <strong>4</strong> candy clusters.</p>
 <ol type="a">
 <li>Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. NOTE: There’s built-in code to do this!</li>
-<li>To get a sense for what makes the candies in each cluster “similar”, calculate the mean of each feature within each cluster. NOTES:<br>
-- HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then <code>group_by()</code> and <code>summarize_all()</code> (which is like <code>summarize()</code> but performs a calculation on <em>all</em> columns). - For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.<br>
-- The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram! - LOOKING AHEAD: In a future activity, you’ll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!</li>
+<li>To get a sense for what makes the candies in each cluster “similar”, calculate the mean of each feature within each cluster. NOTES:
+<ul>
+<li>HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then <code>group_by()</code> and <code>summarize_all()</code> (which is like <code>summarize()</code> but performs a calculation on <em>all</em> columns).</li>
+<li>For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.</li>
+<li>The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram!</li>
+<li>LOOKING AHEAD: In a future activity, you’ll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!</li>
+</ul></li>
 <li>OPTIONAL: There’s no “right” number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?</li>
 </ol>
 </section>
@@ -1145,8 +1155,9 @@ These exercises are on Homework 7. If and when you complete these, go back to Ac
 <li>Construct a dendrogram using the <strong>single linkage</strong> approach, <em>colored by 4 clusters</em>. Describe how the pattern differs from that of our original complete linkage dendrogram <strong>and</strong> explain why single linkage will often produce dendrograms that look like this. NOTE: Be sure to not use your cluster assignments from the previous exercise as features in this exercise!<br>
 </li>
 <li>The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? Explain.</li>
-<li>Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering do be done, using <em>complete</em> or <em>single</em> linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.</li>
+<li>Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering be done, using <em>complete</em> or <em>single</em> linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.</li>
 </ol>
+<p><br> <br></p>
 </section></section>
 <section id="wrapping-up" class="title-slide slide level1 unnumbered smaller center">
 <h1>Wrapping Up</h1>
@@ -1162,6 +1173,7 @@ These exercises are on Homework 7. If and when you complete these, go back to Ac
 <li>HW6: after Thanksgiving (Dec 4)</li>
 </ul></li>
 </ul>
+<p><br> <br></p>
 </section>
 
 <section>
@@ -1455,44 +1467,6 @@ These exercises are on Homework 7. If and when you complete these, go back to Ac
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

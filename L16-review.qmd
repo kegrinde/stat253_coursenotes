@@ -29,7 +29,7 @@ Upcoming Deadlines:
   - We will be starting our Unsupervised Learning unit on Thursday!
   - This will be covered on Quiz 3, but **not** Quiz 2
 - HW4 Revisions (if applicable): Friday, Nov 15
-- Quiz 2: Tuesday, Nov 20
+- Quiz 2: Tuesday, Nov 19
   - Focus on **classification** (Units 4--5), though many concepts carry over
   - Structure will be the same as Quiz 2 (Part 1 + Part 2)
 - Group Assignment 2: Tuesday, Nov 26
