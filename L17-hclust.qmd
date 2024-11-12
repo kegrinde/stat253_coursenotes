@@ -13,6 +13,37 @@ library(tidyverse)
 This page is under construction. Please check back soon for updates!
 :::
 
+# Settling In {-}
+
+- Sit wherever you want!
+- Prepare to take notes (find the QMD for today in the usual spot)
+- Catch up on any announcements you've missed on Slack
+
+## Quiz 2 Reminders {.unnumbered .smaller}
+
+Part 1: 
+
+- on paper
+- closed notes, closed people
+- due by end of class
+- you might be asked to interpret some R output, but you won't have to write any code
+
+Part 2: 
+
+- on laptop
+- open* notes, open** collaboration
+  - *you can chat with any current STAT 253 student, but nobody else (including preceptors)
+  - *you can ask (in person), DM, or email me clarifying questions
+  - **you can use any materials from this STAT 253 course (from course webpage or Moodle or textbook), but no internet, ChatGPT, etc.
+- designed to be finished during class, but you can hand in anytime with in 24 hours
+
+Content: 
+
+- Emphasis on Units 4--5
+- ...but some concepts from Units 1--3 carry over/remain important!
+
+
+
 
 # Learning Goals {-}
 
@@ -121,35 +152,75 @@ plot(hclust(dist(genedata)), xlab = "", main="")
 
 
 
+# Notes: Unsupervised Learning {-}
+
+## Context {.unnumbered .smaller}
+
+![](images/MLdiagram5.jpg){width=90%}
+
+**GOALS**   
+
+Suppose we have a set of **feature** variables $(x_1,x_2,...,x_k)$ but NO outcome variable $y$. 
+
+Instead of our goal being to predict/classify/explain $y$, we might simply want to...    
+
+1. Examine the **structure** of our data.
+2. Utilize this examination as a **jumping off point** for further analysis.
 
 
+## Unsupervised Methods {.unnumbered .smaller}
 
+::: {.incremental}
+
+Cluster Analysis: 
+
+- Focus: Structure among the *rows*, i.e. individual cases or data points.
+- Goal: Identify and examine *clusters* or distinct groups of cases with respect to their features x.    
+- Methods: hierarchical clustering & K-means clustering    
+
+Dimension Reduction: 
+
+- Focus: Structure among the *columns*, i.e. features x.
+- Goal: *Combine* groups of correlated features x into a smaller set of *uncorrelated* features which preserve the majority of information in the data. (We'll discuss the motivation later!)
+- Methods: Principal components
+
+:::
+
+## Examples {.unnumbered .smaller}
+
+Remember this from the first day of class? 
+
+<!-- note to self: add clustering from Day 1 activity -->
+![](images/class_cluster_Fall2024.png){width=90%}
+
+
+For more examples, check out the Unit 5 Motivating Question page [here](U05-motivation.html).
 
 
 # Notes: Hierarchical Cluster Analysis {-}
 
+Let's recap the main ideas from the videos you watched before class today.
 
-**Goal:**       
+## Goal {.unnumbered .smaller}
+
+     
 Create a hierarchy of clusters where clusters consist of similar data points.
 
-**Algorithm:**        
+
+## Algorithm {.unnumbered .smaller}
+
 Suppose we have a set of p feature variables ($x_1, x_2,..., x_p$) on each of n data points. Each data point starts as a leaf.
 
 - Compute the Euclidean distance between all pairs of data points with respect to x.
 - Fuse the 2 closest data points into a single cluster or branch. 
 - Continue to fuse the 2 closest clusters until all cases are in 1 cluster.
 
+NOTE: This is referred to as an "agglomerative" algorithm.
 
 
+## Dendrograms {.unnumbered .smaller}   
 
-
-\
-\
-
-
-**Dendrograms (of or relating to trees)**    
-
-The hierarchical clustering algorithm produces a *dendrogram*.  To use a dendrogram:    
+The hierarchical clustering algorithm produces a *dendrogram* (of or relating to trees).  To use a dendrogram:    
 
 - Start with the leaves at the bottom (unlike classification trees!). Each leaf represents a single case / row in our dataset.    
 - Moving up the tree, fuse similar leaves into branches, fuse similar branches into bigger branches, fuse all branches into one big trunk (all cases).    
@@ -159,16 +230,17 @@ The hierarchical clustering algorithm produces a *dendrogram*.  To use a dendrog
 
 
 
-
+<!--
 \
 \
 \
 \
+-->
 
 
+## Measuring Distance {.unnumbered .smaller}  
 
-**Measuring distance between 2 clusters**       
-There are several *linkages* we can use to measure distance between 2 clusters / branches  Unless specified otherwise, we'll use the **complete** linkage method.    
+There are several *linkages* we can use to measure distance between 2 clusters / branches.  Unless specified otherwise, we'll use the **complete** linkage method.    
 
 
 ![](images/linkages.png)
@@ -197,10 +269,10 @@ There are several *linkages* we can use to measure distance between 2 clusters /
 
 # Small Group Discussion {-}
 
+Open the QMD for today and work through Examples 1--5 with your table.
 
 
-
-**EXAMPLE 1: Standardizing the features**
+## EXAMPLE 1: Standardizing the features {.unnumbered .smaller}  
 
 Let's start by using hierarchical clustering to identify similar groups (and possible species!) of penguins with respect to their bill lengths (mm), bill depths (mm), and body masses (g).
 
@@ -231,16 +303,17 @@ The features are on different scales. It's important to standardize so that one 
 
 
 
-**EXAMPLE 2: Interpreting a dendrogram**
+## EXAMPLE 2: Interpreting a dendrogram {.unnumbered .smaller}  
 
 Check out the standardized data, heat map, and dendrogram for a sample of just 50 penguins.
+
+![](images/penguin_example.png)
 
 a. Is penguin 30 more similar to penguin 33 or 12?
 b. Identify and interpret the distance, calculated using the *complete* linkage, between penguins 30 and 33.
 c. Consider the far left penguin cluster on the dendrogram, starting with penguin 33 and ending with penguin 30. Use the heat map to describe what these penguins have in common.
 
 
-![](images/penguin_example.png)
 
 
 
@@ -258,15 +331,18 @@ c. That group generally has large bill length and body mass but small bill depth
 
 
 
-**EXAMPLE 3: BY HAND**
+## EXAMPLE 3: BY HAND {.unnumbered .smaller}  
 
 To really get the details, you'll perform hierarchical clustering by hand for a small example.
 
-Use the [distributed piece of paper](https://docs.google.com/document/d/1PGEieB-OslxZiGpqtQvZKz6ZsRuS6iS-5ewmQgAMGY0/edit?usp=sharing).
+Ask Kelsey for a copy of the [paper handout](https://docs.google.com/document/d/1abptMI_GsEM-LbGAFBRHRFsW8yJC9iajzjAqjxaCgpg/edit?usp=sharing). 
 
 Code for importing the data is here:
 
-```{r fig.width = 4, fig.height = 4, eval=TRUE}
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| eval: true
 # Record the data
 penguins_small <- data.frame(
   width = c(-1.3, -0.8, 0.2, 0.8, 1.0), 
@@ -416,7 +492,7 @@ The distance matrix below gives the current distance between our 2 clusters, (1 
 
 <br>
 
-**EXAMPLE 4: EXPLORE CLUSTERS**
+## EXAMPLE 4: EXPLORE CLUSTERS {.unnumbered .smaller}  
 
 Now, let's go back to a sample of 50 penguins.
 
@@ -429,6 +505,7 @@ d. What are your thoughts about the 2-cluster solution? What happened?!
 
 
 ```{r}
+#| code-fold: true
 # Load the data
 library(tidyverse)
 set.seed(253)
@@ -451,7 +528,9 @@ for(i in 2:12){
 }
 ```
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
+#| code-fold: true
 library(shiny)
 library(factoextra)
 library(RColorBrewer)
@@ -513,15 +592,16 @@ d. yikes! this solution doesn't capture the more natural looking clusters in the
 <br>
 
 
-**EXAMPLE 5: DETAILS**
+## EXAMPLE 5: DETAILS {.unnumbered .smaller}  
 
 a. Is hierarchical clustering **greedy**?
 b. We learned in the video that, though they both produce tree-like output, the hierarchical clustering and classification tree algorithms are *not the same thing*! Similarly, though they both calculate distances between each pair of data points, the hierarchical clustering and KNN algorithms are *not the same thing*! Explain.
-c. This is a statement, not a question :). When all features x are quantitative or logical (TRUE/FALSE), we measure the similarity of 2 data points with respect to the Euclidean distance between their *standardized* x values. But if at least 1 feature x is a factor / categorical variable, we measure the similarity of 2 data points with respect to their Gower distance. The idea is similar to what we did in KNN (converting categorical x variables to dummies, and then standardizing), but the details are different. If you're interested: 
-    ```{r eval = FALSE}
-    library(cluster)
-    ?daisy
-    ```
+c. [This is a statement, not a question :).] When all features x are quantitative or logical (TRUE/FALSE), we measure the similarity of 2 data points with respect to the Euclidean distance between their *standardized* x values. But if at least 1 feature x is a factor / categorical variable, we measure the similarity of 2 data points with respect to their Gower distance. The idea is similar to what we did in KNN (converting categorical x variables to dummies, and then standardizing), but the details are different. If you're interested: 
+
+```{r eval = FALSE}
+library(cluster)
+?daisy
+```
 
 
 <details>
@@ -530,6 +610,7 @@ c. This is a statement, not a question :). When all features x are quantitative 
 a. Yes. See example 4.
 b. We don't want different x scales to impact our calculations of distance, hence our sense of what data points are closest to each other.
 
+<!-- note to self: I don't understand the answer to b? -->
 
 </details>
 <br>
@@ -542,42 +623,52 @@ b. We don't want different x scales to impact our calculations of distance, henc
 
 # Exercises {-}
 
+For the rest of class, work together on the exercises below. 
+If you complete these, go back to the activity from our last class and follow the 
+prompts there to review for Quiz 2. 
 
+NOTE: these exercises will be on HW6. 
 
+<!--
 **Directions**    
 
 These exercises are on Homework 7. If and when you complete these, go back to Activity 16 and follow the review prompts there for Quiz 2!
-
+-->
 
     
 
 
-1. **Visualizing structure**        
-    Our first goal will be to understand the similarities among different candies (i.e. the *rows* of our `candy_rankings` dataset) with respect to their ingredients, popularity, and other properties.       
-    ```{r}
-    # Load some packages & data
-    library(tidyverse)
-    library(fivethirtyeight)
-    data("candy_rankings")
-    ```       
-    a. One variable in the dataset merely *identifies* or *labels* the candies, hence is not a candy *feature*. Convert this to a *row name*, instead of a column.
-    b. Construct a heat map of your (standardized) candy features, setting `Colv = NA`.
-    c. Construct a dendrogram of your (standardized) candy features using the **complete** linkage method. NOTE: Since all features are quantitative or logical here, do *not* use the `daisy()` code.
-    d. How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.
-    e. To what other candy are Nik L Nips most similar?
+## Exercise 1: Visualizing structure {.unnumbered .smaller}
+
+Our first goal will be to understand the similarities among different candies (i.e. the *rows* of our `candy_rankings` dataset) with respect to their ingredients, popularity, and other properties.     
+
+```{r}
+# Load some packages & data
+library(tidyverse)
+library(fivethirtyeight)
+data("candy_rankings")
+```       
+  
+  a. One variable in the dataset merely *identifies* or *labels* the candies, hence is not a candy *feature*. Convert this to a *row name*, instead of a column.
+  b. Construct a heat map of your (standardized) candy features, setting `Colv = NA`.
+  c. Construct a dendrogram of your (standardized) candy features using the **complete** linkage method. NOTE: Since all features are quantitative or logical here, do *not* use the `daisy()` code.
+  d. How many natural clusters do there appear to be among the candies? There are multiple reasonable answers, and you can give more than 1.
+  e. To what other candy are Nik L Nips most similar?
 
 
 
 
-2.  **Defining & making meaning from clusters**        
-    For the purposes of consistency from student to student, let's explore the possibility of there being **4** candy clusters.
-    a. Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. NOTE: There's built-in code to do this!
-    b. To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster. NOTES:        
+## Exercise 2: Defining & making meaning from clusters {.unnumbered .smaller}  
+
+For the purposes of consistency from student to student, let's explore the possibility of there being **4** candy clusters.
+
+a. Re-plot your dendrogram, coloring the different leaves and branches according to their cluster assignment. NOTE: There's built-in code to do this!
+b. To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster. NOTES:        
         - HINT: First add a column to your dataset which indicates the cluster assignment for each candy. Then `group_by()` and `summarize_all()` (which is like `summarize()` but performs a calculation on *all* columns).
         - For TRUE/FALSE features, the mean indicates the proportion of candies that are TRUE.   
         - The cluster labels (1, 2, 3, 4) are not necessarily in the same order of the clusters in the dendrogram!
         - LOOKING AHEAD: In a future activity, you'll be asked to identify appropriate cluster labels and to describe each cluster. Do not write about that yet (your thoughts will evolve throughout the analysis), but start keeping it in mind!
-    c. OPTIONAL: There's no "right" number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?
+c. OPTIONAL: There's no "right" number of clusters here! Repeat parts a and b using 3 clusters. How, if at all, does this change your candy insights?
     
     
 
@@ -585,17 +676,29 @@ These exercises are on Homework 7. If and when you complete these, go back to Ac
 
 
 
-3.  **Sensitivity analysis**    
-    Our hierarchical cluster analysis above utilized **complete linkage**. That is, we measured the distance between two clusters by the *maximum* distance between any pair of candies in those clusters. This is merely one strategy. To determine how *sensitive* the clustering algorithm is to our choice of linkage, let's consider 2 other strategies.
-    a. Construct a dendrogram using the **centroid linkage** approach (don't try coloring clusters). Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why centroid linkage will often produce dendrograms that look like this.    
-    b. Construct a dendrogram using the **single linkage** approach, *colored by 4 clusters*.  Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why single linkage will often produce dendrograms that look like this. NOTE: Be sure to not use your cluster assignments from the previous exercise as features in this exercise!         
-    c. The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? Explain.
-    d. Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering do be done, using *complete* or *single* linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.
+## Exercise 3: Sensitivity analysis {.unnumbered .smaller}   
+
+Our hierarchical cluster analysis above utilized **complete linkage**. That is, we measured the distance between two clusters by the *maximum* distance between any pair of candies in those clusters. This is merely one strategy. To determine how *sensitive* the clustering algorithm is to our choice of linkage, let's consider 2 other strategies.
+
+a. Construct a dendrogram using the **centroid linkage** approach (don't try coloring clusters). Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why centroid linkage will often produce dendrograms that look like this.    
+b. Construct a dendrogram using the **single linkage** approach, *colored by 4 clusters*.  Describe how the pattern differs from that of our original complete linkage dendrogram **and** explain why single linkage will often produce dendrograms that look like this. NOTE: Be sure to not use your cluster assignments from the previous exercise as features in this exercise!         
+c. The appropriate linkage choice depends upon our clustering goals. Suppose we want to identify 4 candy clusters, and want the candies in each cluster to be quite similar. What linkage better suits this goal: complete or single? Explain.
+d. Suppose we were to cluster Mac students based on their interest in a variety of activities (eg: data, basketball, piano, cooking, etc), and then threw a party for each cluster. If you were to attend such a party, how would you prefer the clustering do be done, using *complete* or *single* linkage? Justify your choice. NOTE: There is no wrong answer, but there is wrong justification.
     
     
 
    
 
+# Wrapping Up {.unnumbered .smaller}
+
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- Upcoming due dates: 
+  - HW5: due yesterday (Nov 13); tomorrow is last day of extension window
+  - HW4 Revisions: due tomorrow (Nov 15)
+  - Quiz 2: next class (Nov 19)
+  - CP13: next week (Nov 21)
+  - Group Assignment 2: before Thanksgiving (Nov 26)
+  - HW6: after Thanksgiving (Dec 4)
 
 
 
@@ -603,6 +706,8 @@ These exercises are on Homework 7. If and when you complete these, go back to Ac
 
 
 # Notes: R code {-}
+
+## {.unnumbered .smaller}
 
 The `tidymodels` package is built for *models* of some outcome variable y.
 We can't use it for clustering.

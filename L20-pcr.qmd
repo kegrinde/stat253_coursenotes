@@ -1,5 +1,11 @@
 # Principal component regression
 
+```{r 20_setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(tidyverse)
+```
+
 Unsupervised & supervised learning are friends! 
 
 

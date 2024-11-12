@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="L16-review_files/libs/clipboard/clipboard.min.js"></script>
-<script src="L16-review_files/libs/quarto-html/tabby.min.js"></script>
-<script src="L16-review_files/libs/quarto-html/popper.min.js"></script>
-<script src="L16-review_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="L16-review_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="L16-review_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="L16-review_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="L16-review_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="L18-kmeans_files/libs/clipboard/clipboard.min.js"></script>
+<script src="L18-kmeans_files/libs/quarto-html/tabby.min.js"></script>
+<script src="L18-kmeans_files/libs/quarto-html/popper.min.js"></script>
+<script src="L18-kmeans_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="L18-kmeans_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="L18-kmeans_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="L18-kmeans_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="L18-kmeans_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
-  <title>Classification Review</title>
+  <title>l18-kmeans</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="L16-review_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="L16-review_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="L18-kmeans_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="L18-kmeans_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -28,14 +28,79 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="L16-review_files/libs/revealjs/dist/theme/quarto.css">
-  <link href="L16-review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="L16-review_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="L16-review_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="L16-review_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="L16-review_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="L16-review_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="L18-kmeans_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="L18-kmeans_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="L18-kmeans_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="L18-kmeans_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="L18-kmeans_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="L18-kmeans_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="L18-kmeans_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -327,254 +392,361 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Classification Review</h1>
 
-<div class="quarto-title-authors">
-</div>
-
-</section>
 <section>
-<section id="settling-in" class="title-slide slide level1 unnumbered center">
-<h1>Settling In</h1>
-<ul>
-<li>Sit with your assigned group</li>
-<li>Catch up on any announcements you’ve missed on Slack</li>
-<li>Open Group Assignment 2</li>
-</ul>
+<section id="k-means-clustering" class="title-slide slide level1 center">
+<h1>K-Means Clustering</h1>
+<!-- don't overwrite the notes doc! The exercise sections are different -->
 </section>
-<section id="announcements" class="slide level2 unnumbered smaller">
-<h2>Announcements</h2>
+<section id="context" class="slide level2 unnumbered scrollable">
+<h2>Context</h2>
+<center>
+<img src="images/MLDiagram5.jpg">
+</center>
+<p><br>
+<br>
+</p>
+<p><strong>GOALS</strong></p>
+<p>Suppose we have a set of <strong>feature</strong> variables <span class="math inline">\((x_1,x_2,...,x_p)\)</span> but NO outcome variable <span class="math inline">\(y\)</span>.</p>
+<p>Thus instead of our goal being to predict/classify/explain y, we might simply want to…</p>
+<ol type="1">
+<li><strong>Do a cluster analysis:</strong> Examine the <strong>structure</strong> among the <em>rows</em>, i.e.&nbsp;individual cases or data points, of our data.</li>
+<li>Utilize this examination as a <strong>jumping off point</strong> for further analysis.</li>
+</ol>
+<p>Techniques: hierarchical clustering &amp; <strong>K-means clustering</strong></p>
+<p><br>
+<br>
+</p>
+<p><strong>EXAMPLE</strong></p>
+<p>K-means is the clustering technique behind <a href="http://nokomis.macalester.edu/wmf_en/static/index.html">Cartograph.info</a></p>
+<center>
+<img src="images/cartograph.png">
+</center>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section>
+<section id="notes-k-means-clustering" class="slide level2 unnumbered scrollable">
+<h2>Notes: K-means Clustering</h2>
+<p><strong>Drawbacks of hierarchical clustering</strong></p>
+<ol type="1">
+<li><p><strong>can be computationally expensive</strong>: we have to calculate the distance between each pair of objects in our sample to start the algorithm</p></li>
+<li><p><strong>greedy algorithm</strong>: This algorithm makes the best local decision of which clusters to fuse at each step in the dendrogram. Once clusters are fused they remain fused throughout the dendrogram. <em>However</em>, meaningful clusters may not always be hierarchical or nested.</p></li>
+</ol>
+<p><br>
+<br>
+</p>
+<p><strong>K-means Clustering</strong></p>
+<p><strong>Goal:</strong><br>
+Split cases into K non-overlapping, homogeneous clusters or groups of cases noted as <span class="math inline">\(C_1, C_2,..., C_k\)</span> which minimize the total <strong>within_cluster variance</strong>:</p>
+<p><span class="math display">\[\sum_{k=1}^K W(C_k)\]</span></p>
+<p>where each <span class="math inline">\(W(\cdot)\)</span> measures the within-cluster variance of each <span class="math inline">\(C_k\)</span>:</p>
+<p><span class="math display">\[W(C_k) = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})\]</span></p>
+<p>Specifically, <span class="math inline">\(W(C_k)\)</span> is the average squared distance between all pairs of cases in cluster <span class="math inline">\(C_k\)</span>.</p>
+<p><strong>Algorithm:</strong></p>
+<ol start="0" type="1">
+<li><p><strong>Pick K</strong><br>
+Appropriate values of K are context dependent and can be deduced from prior knowledge, data, or the results of hierarchical clustering. Try multiple!</p></li>
+<li><p><strong>Initialization</strong><br>
+Randomly select the location of <span class="math inline">\(K\)</span> centroids. Assign each case to the nearest centroid. This random composition defines the first set of clusters <span class="math inline">\(C_1\)</span> through <span class="math inline">\(C_K\)</span>.</p></li>
+<li><p><strong>Centroid calculation</strong><br>
+Calculate the <strong>centroid</strong>, ie. average location of the cases <span class="math inline">\(x\)</span> in each <span class="math inline">\(C_i\)</span>.</p></li>
+<li><p><strong>Cluster assignment</strong><br>
+Re-assign each case to the <span class="math inline">\(C_i\)</span> with the nearest centroid.</p></li>
+<li><p><strong>Repeat!</strong><br>
+Iterate between steps 2 and 3 until the clusters stabilize, ie. the cluster centroids do not change much from iteration to iteration.</p></li>
+</ol>
+<p><br>
+</p>
+</section>
+<section id="small-group-discussion" class="slide level2 unnumbered scrollable">
+<h2>Small Group Discussion</h2>
+<p><strong>EXAMPLE 1: revisit the hierarchical algorithm</strong></p>
+<p>Recall the hierarchical algorithm.</p>
+<ul>
+<li>Each data point starts as a leaf.</li>
+<li>Compute the Euclidean distance between all pairs of data points with respect to their features x.</li>
+<li>Fuse the 2 closest data points into a single cluster or branch.</li>
+<li>Continue to fuse the 2 closest clusters until all cases are in 1 cluster.</li>
+</ul>
+<p>Revisit screenshots from the shiny app to explore the results of this algorithm. Why can the “greediness” of this algorithm sometimes produce strange results?</p>
+<p><img data-src="images/hierarchical-shiny-1.png"> <img data-src="images/hierarchical-shiny-2.png"> <img data-src="images/hierarchical-shiny-3.png"></p>
+<details>
+<summary>
+Solution:
+</summary>
+Clusters are hierarchical / nested. Once we combine two clusters, we can’t separate them.
+</details>
+<p><br><br></p>
+<p><strong>EXAMPLE 2: Interact with the K-Means algorithm</strong></p>
+<p>Here’s the idea and more details are above:</p>
+<ol type="1">
+<li><p><strong>Initialization</strong></p>
+<ul>
+<li>Pick K, the number of clusters to build.</li>
+<li>Randomly select the location of K centroids.</li>
+<li>Assign each data point to the nearest centroid.</li>
+</ul></li>
+<li><p><strong>Centroid calculation</strong><br>
+Calculate the <strong>centroid</strong> of each cluster.</p></li>
+<li><p><strong>Cluster assignment</strong><br>
+Re-assign each data point to the cluster with the nearest centroid.</p></li>
+<li><p><strong>Repeat! Iterate!</strong><br>
+Iterate between steps 2 and 3 until the clusters stabilize.</p></li>
+</ol>
+<p>Naftali Harris made a really nice <a href="https://www.naftaliharris.com/blog/visualizing-k-means-clustering/">interactive app</a> for playing around with this algorithm.</p>
+<ul>
+<li>“How to pick the initial centroids?”: Select “I’ll Choose”<br>
+</li>
+<li>“What kind of data would you like?”: Select “Gaussian Mixture”</li>
+</ul>
+<p>You’ll notice 3 natural clusters.</p>
+<p>To understand how and if K-means clustering with K = 3 might detect these clusters, play around:</p>
+<ul>
+<li>Initialization &amp; centroid calculation: Click on 3 locations (not on the clusters themselves!) to define starting points for the K = 3 cluster centroids.</li>
+<li>Cluster assignment: Click “GO!” to assign data points to the nearest centroid.</li>
+<li>Centroid calculation: Click “Update Centroids” to recalculate the centroids of the new clusters.</li>
+<li>Cluster assignment: Click “Reassign points” to reassign data points to the nearest centroid.</li>
+<li>Repeat until your clusters stop changing.</li>
+</ul>
+<p><strong>Challenge:</strong></p>
+<p>Can you identify a set of initial centroids that result in reasonable final clusters? What about a set of initial centroids that <em>don’t</em> result in reasonable final clusters?</p>
+<p><br>
+<br>
+</p>
+<details>
+<summary>
+Solution:
+</summary>
+<a href="https://drive.google.com/open?id=1l3shq_t7dSLdzUt4UCcVI0cIOvHdba7x">example of a good K-means outcome</a><br>
+<a href="https://drive.google.com/open?id=1uL0eMkmR5Tuhxe4bbHlsVwLew1QemQ88">example of a bad K-means outcome</a>
+</details>
+<p><br><br></p>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+<p><strong>EXAMPLE 3: K-means vs K-means</strong></p>
+<p>Let’s do K-means clustering in R using our penguin data:</p>
+<p>We’ll cluster these penguins based on their bill lengths and depths:</p>
+<div class="cell">
+<div class="cell-output-display">
 <div>
-<p>Upcoming Deadlines:</p>
-<ul>
-<li class="fragment">HW5: Wednesday, Nov 13
-<ul>
-<li class="fragment">See note on Moodle about <strong>LIMITED extension opportunities</strong></li>
-<li class="fragment">Solutions will be posted by Saturday to help with studying for Quiz 2</li>
-</ul></li>
-<li class="fragment">CP12: Thursday, Nov 14
-<ul>
-<li class="fragment">We will be starting our Unsupervised Learning unit on Thursday!</li>
-<li class="fragment">This will be covered on Quiz 3, but <strong>not</strong> Quiz 2</li>
-</ul></li>
-<li class="fragment">HW4 Revisions (if applicable): Friday, Nov 15</li>
-<li class="fragment">Quiz 2: Tuesday, Nov 20
-<ul>
-<li class="fragment">Focus on <strong>classification</strong> (Units 4–5), though many concepts carry over</li>
-<li class="fragment">Structure will be the same as Quiz 2 (Part 1 + Part 2)</li>
-</ul></li>
-<li class="fragment">Group Assignment 2: Tuesday, Nov 26</li>
-</ul>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+</figure>
 </div>
+</div>
+</div>
+<ol type="a">
+<li><p>Run the K-means algorithm using K = 3. We didn’t set the seed for hierarchical clustering. Why do we have to set the seed for K-means? Why do we have to scale the data?</p>
+<p>::: {.cell} ::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"> ::: :::</p></li>
+<li><p>Let’s repeat the K-means algorithm with K = 3. BUT let’s use a different seed. How did the results change and why is this possible?</p>
+<p>::: {.cell} ::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"> ::: :::</p></li>
+<li><p>In practice, why should we try out a <em>variety</em> of seeds?</p></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>The initial centroids are randomly selected. K-means algorithm assigns data point to clusters using distances (we don’t want these assignments to be skewed by the scales of features x).</li>
+<li>The 2 runs of the K-means started out with different initial centroids and this was enough to produce different results!</li>
+<li>Make sure our results aren’t overly sensitive to / skewed by the random centroids we happened to start with.</li>
+</ol>
+</details>
+<p><br><br></p>
+<p><strong>EXAMPLE 4: IMPACT OF K</strong></p>
+<p>To implement K-means clustering we must choose an appropriate K! Use the following example to discuss the goldilocks challenge of picking K.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-5-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-5-2.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<details>
+<summary>
+Solution:
+</summary>
+<p>When K is too small, we can end up with big and overly general clusters. When K is too big, we can end up with small clusters that are too local / lose the general patterns.</p>
+</details>
+<p><br><br></p>
+<p><strong>EXAMPLE 5: hierarchical vs K-means</strong></p>
+<p>Let’s compare and contrast the results of the hierarchical and K-means algorithms.</p>
+<p>To this end, let’s use both to identify <strong>2</strong> penguin clusters:</p>
+<ol type="a">
+<li><p>Do the clusters defined by the two algorithms agree? NOTE: the actual cluster numbers are arbitrary.</p>
+<p>::: {.cell} ::: {.cell-output .cell-output-stdout}</p>
+<pre><code># A tibble: 6 × 4
+  bill_length_mm bill_depth_mm hier_cluster kmeans_cluster
+           &lt;dbl&gt;         &lt;dbl&gt; &lt;fct&gt;        &lt;fct&gt;         
+1           50.7          15   1            1             
+2           37.6          19.1 2            2             
+3           35.5          16.2 1            2             
+4           51.3          19.9 2            1             
+5           50.4          15.3 1            1             
+6           40.9          16.8 2            2             </code></pre>
+<p>::: :::</p></li>
+<li><p>Plot the cluster assignments. Which algorithm produces seemingly better clusters?</p>
+<p>::: {.cell} ::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"> :::</p>
+<p>::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-8-2.png" width="960"> ::: :::</p></li>
+</ol>
+<details>
+<summary>
+Solution:
+</summary>
+<ol type="a">
+<li>no</li>
+<li>K-means is better. The hierarchical clusters are odd – it fused two penguins early on, and could not unfuse them later.</li>
+</ol>
+</details>
+<p><br><br></p>
+<p><strong>EXAMPLE 6: Pros &amp; Cons</strong></p>
+<p>Name 1 pro and 2 drawbacks of the K-means algorithm.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<ul>
+<li>Pro: not greedy</li>
+<li>Cons:
+<ul>
+<li>We have to pre-specify the number of clusters we’re interested in.</li>
+<li>We can get different results based on where we put the first centroids.</li>
+</ul></li>
+</ul>
+</details>
+<p><br><br> <br></p>
+<p><strong>Bonus</strong></p>
+<p>Choosing <span class="math inline">\(K\)</span> - Average Silhouette</p>
+<p>Goal: Choose <span class="math inline">\(K\)</span> that maximizes the distance between clusters and minimizes distance within clusters</p>
+<p><span class="math display">\[a(i) = \frac{1}{|C_I|} \sum_{j\in C_I, i\not=j} ||\mathbf{x}_i - \mathbf{x_j}||^2\]</span> <span class="math display">\[ = \text{ avg. within cluster variance or distance from point i}\]</span></p>
+<p><span class="math display">\[b(i) = \min_{J\not=I}\frac{1}{|C_J|} \sum_{j\in C_J} ||\mathbf{x}_i - \mathbf{x_j}||^2\]</span> <span class="math display">\[=\text{ min avg. variance / distance from point i to points in another cluster}\]</span></p>
+<p>Silhouette for point <span class="math inline">\(i\)</span> (<span class="math inline">\(-1\leq s(i) \leq 1\)</span>):</p>
+<p><span class="math display">\[s(i) = \frac{b(i) - a(i)}{\max\{a(i),b(i)\}}\]</span> <span class="math display">\[ = \text{relative difference in within and between distance}\]</span> <span class="math display">\[ = \text{measure of how tightly clustered a group of points is relative to other groups }\]</span></p>
+<p><strong>Properties of Silhouette</strong></p>
+<ul>
+<li><p>If <span class="math inline">\(b(i) &gt;&gt; a(i)\)</span> (distance to other clusters is far relative to distance within cluster), <span class="math inline">\(s(i) = 1\)</span>. This means it is an appropriate cluster.</p></li>
+<li><p>If <span class="math inline">\(b(i) &lt;&lt; a(i)\)</span>, point <span class="math inline">\(i\)</span> is more similar to the neighboring cluster than its own (not great), <span class="math inline">\(s(i) = -1\)</span>.</p></li>
+<li><p>If <span class="math inline">\(b(i) = a(i)\)</span>, then <span class="math inline">\(s(i) = 0\)</span>. It is more of a flip of a coin of which cluster point i should be in (on the border between 2).</p></li>
+</ul>
+<p>We plot the average silhouette, <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n s(i)\)</span>, and choose <span class="math inline">\(K\)</span> that maximizes the average silhouette.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb2-2"><a href=""></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(penguins), kmeans, <span class="at">method=</span><span class="st">'silhouette'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercises" class="slide level2 unnumbered scrollable">
+<h2>Exercises</h2>
+<p><strong>NOTE:</strong> These exercises are on Homework 7.</p>
+<ol start="4" type="1">
+<li><strong>Choosing K</strong><br>
+You’ve already run the hierarchical clustering algorithm for the candy data. Let’s try K-means! The first step is to <strong>pick K</strong>. So how do we choose?
+<ol type="a">
+<li>Run and store a K-means algorithm using K = 2. Set the seed to 253.<br>
+</li>
+<li>One strategy for evaluating our choice of K is to calculate the total squared distance of each candy from its assigned centroid: the <code>total within- cluster sum of squares</code>. Report this value for your algorithm from part a.<br>
+</li>
+<li>Next, calculate the total sum of squared distances for each K in 1, 2, …, n where <em>you</em> pick a reasonable n.&nbsp;Don’t print them, rather, construct a plot of these distances by K.<br>
+</li>
+<li>Based on this plot, which values of K seem reasonable? Explain.</li>
+</ol></li>
+</ol>
 <p><br>
 <br>
 </p>
-</section></section>
-<section>
-<section id="small-group-discussion" class="title-slide slide level1 unnumbered center">
-<h1>Small Group Discussion</h1>
-<p>Discuss Questions 1–5 with your group. Then, prepare to share answers, questions, etc. with the rest of the class.</p>
-</section>
-<section id="question-1" class="slide level2 unnumbered smaller">
-<h2>Question 1</h2>
-<p>Trees vs Forests:</p>
-<ul>
-<li>What is the difference between a tree and a forest? (in ML, not nature)</li>
-<li>How do I predict the outcome of a new observation using a tree? What about a forest?</li>
-<li>What is a potential advantage of using a forest compared to a tree? What is a potential drawback?</li>
-</ul>
-</section>
-<section id="question-2" class="slide level2 unnumbered smaller">
-<h2>Question 2</h2>
-<p>Bagging vs Random Forests:</p>
-<ul>
-<li>How are these techniques similar?</li>
-<li>How do they differ?</li>
-</ul>
-</section>
-<section id="question-3" class="slide level2 unnumbered smaller">
-<h2>Question 3</h2>
-<p>CV vs OOB:</p>
-<ul>
-<li>What does OOB stand for?</li>
-<li>Why do we typically use OOB metrics instead of CV metrics when evaluating forests?</li>
-<li>Are these in-sample or out-of-sample metrics? Why does it matter?</li>
-</ul>
-</section>
-<section id="question-4" class="slide level2 unnumbered smaller">
-<h2>Question 4</h2>
-<p>Review the learning goals for Units 4 and 5 listed on the course webpage <a href="https://kegrinde.github.io/stat253_coursenotes/learning-objectives.html">here</a>.</p>
-<p>Rate your confidence about/current level of understanding for each of these items, on a scale of 1 to 5, where:</p>
-<ul>
-<li>1 = I have never heard of this</li>
-<li>5 = I could correctly answer a question about this right now, without notes</li>
-</ul>
-<p>Across your entire group:</p>
-<ul>
-<li>Which topic are you collectively most confident about?</li>
-<li>Least confident?</li>
-<li>Most split (ie some confident, some not)?</li>
-</ul>
-</section>
-<section id="question-5" class="slide level2 unnumbered smaller">
-<h2>Question 5</h2>
-<p>Discuss your study strategies:</p>
-<ul>
-<li>How did you study for Quiz 1?</li>
-<li>Is there anything you found to be particularly helpful?</li>
-<li>Is there anything you are planning to try differently for this next quiz?</li>
-</ul>
+<ol start="5" type="1">
+<li><strong>A final K-means model</strong>
+<ol type="a">
+<li>Another strategy for identifying a reasonable number of clusters K for K-means is to do hierarchical clustering, and use the dendrogram to suggest K. Given our earlier choice of using 4 clusters from the dendrogram, run the K-means algorithm using K = 4. Set the seed to 253.<br>
+</li>
+<li>To get a sense for what makes the candies in each cluster “similar”, calculate the mean of each feature within each cluster.</li>
+</ol></li>
+</ol>
 <p><br>
 <br>
 </p>
-</section></section>
-<section>
-<section id="exercises" class="title-slide slide level1 unnumbered center">
-<h1>Exercises</h1>
-
+<ol start="6" type="1">
+<li><strong>Final clustering reflection</strong>
+<ol type="a">
+<li>Do your K-means and hierarchical approaches lead to similar conclusions? (What’s the same? What’s different?)<br>
+</li>
+<li>Though K-means is more computationally efficient and less greedy, what’s one pro of hierarchical clustering?<br>
+</li>
+<li>Bringing it all together across your various hierarchical and K-means clustering outcomes, offer a set of final conclusions. Specifically, write out a label for each final cluster that communicates its unique properties (eg: “big penguins”, “really big penguins”, and “small penguins with long bills”). NOTE: Focus on the K-means results.</li>
+</ol></li>
+</ol>
 </section>
-<section id="part-1-starting-group-assignment-2" class="slide level2 unnumbered smaller">
-<h2>Part 1: Starting Group Assignment 2</h2>
-<ul>
-<li>Decide on what “adventure” you’d like to take for the Group Assignment 2.</li>
-<li>Reply <strong>in thread</strong> to my recent post on the #help-group-assignments channel so I know what you’ve picked.</li>
-<li>Get started on that adventure.
-<ul>
-<li>Get data on your local computers</li>
-<li>Set up communication avenues for asynchronous discussions</li>
-<li>Divide / delegate leadership on tasks</li>
-</ul></li>
-</ul>
-<p>Please spend <strong>AT LEAST</strong> 20 minutes on these tasks before moving on to Part 2.</p>
-</section>
-<section id="part-2-review-reflection" class="slide level2 unnumbered smaller">
-<h2>Part 2: Review &amp; Reflection</h2>
-<p>STAT 253 is a survey course of statistical machine learning techniques and concepts. It’s important to continuously reflect on these and how they fit together.</p>
-<p>Though you won’t hand anything in, <strong>you’re strongly encouraged to complete this activity</strong>. This material is designed to help you reflect upon:</p>
-<ul>
-<li>ML concepts
-<ul>
-<li>enduring, big picture concepts</li>
-<li>technical concepts</li>
-<li><code>tidymodels</code> code</li>
-</ul></li>
-</ul>
-<p>Follow the links below and make a copy of the STAT 253 concept maps (or find and modify the copy you made while reviewing the regression unit).</p>
-<p>You’ll be given some relevant prompts below, but you should use these materials in <em>whatever way suits you</em>! Take notes, add more content, rearrange, etc.</p>
-<ul>
-<li><a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 concept maps</a></li>
-<li><a href="https://docs.google.com/document/d/1zkaaZpNNxYwZBssOsy9GW32nuLuKDedrgRVtq9ldRKk/edit?usp=sharing">tidymodels code comparison</a></li>
-</ul>
+<section id="r-code" class="slide level2 unnumbered">
+<h2>R code</h2>
+<p>The <code>tidymodels</code> package is built for <em>models</em> of some outcome variable y. We can’t use it for clustering.</p>
+<p>Instead, we’ll use a variety of new packages that use specialized, but short, syntax.</p>
+<p>Suppose we have a set of <code>sample_data</code> with multiple feature columns x, and (possibly) a column named <code>id</code> which labels each data point.</p>
+<p><br>
+</p>
+<p><strong>PROCESS THE DATA</strong></p>
+<p>If there’s a column that’s an identifying variable or label, not a feature of the data points, convert it to a row name.</p>
+<p>K-means can’t handle NA values! There are a couple options.</p>
+<p>IF you have at least 1 <em>categorical</em> / factor feature, you’ll need to pre-process the data even further. You should NOT do this if you have <em>quantitative</em> and/or <em>logical</em> features.</p>
 <p><br>
 <br>
 </p>
-<h3 class="unnumbered" id="stat-253-concept-maps">STAT 253 concept maps</h3>
-<p>Review <strong>slides 6–7</strong> (classification) of the concept map, and mark up <strong>slides 1, 6, and 7</strong> with respect to the prompts below.</p>
-<p><br>
-</p>
-<p><strong>Enduring, big picture concepts</strong></p>
-<p>IMPORTANT to your learning: Respond in your own words.</p>
-<ul>
-<li>When do we perform a supervised vs unsupervised learning algorithm?</li>
-<li>Within supervised learning, when do we use a regression vs a classification algorithm?</li>
-<li>What is the importance of “model evaluation” and what questions does it address?</li>
-<li>What is “overfitting” and why is it bad?</li>
-<li>What is “cross-validation” and what problem is it trying to address?</li>
-<li>What is the “bias-variance tradeoff”?</li>
-</ul>
-<p><br>
-</p>
-<p><strong>Technical concepts</strong></p>
-<p>On <em>page 6</em>, identify some general themes for each model algorithm listed in the lefthand table:</p>
-<ul>
-<li>What’s the goal?</li>
-<li>Is the algorithm parametric or nonparametric?</li>
-<li>Does the algorithm have any tuning parameters? What are they, how do we tune them, and how is this a <strong>goldilocks problem</strong>?</li>
-<li>What are the key pros &amp; cons of the algorithm?</li>
-</ul>
-<p>For each algorithm, you should also reflect upon these <strong>important technical concepts</strong>:</p>
-<ul>
-<li>Can you summarize the steps of this algorithm?</li>
-<li>Is the algorithm parametric or nonparametric? (addressed above)</li>
-<li>What is the bias-variance tradeoff when working with or tuning this algorithm?</li>
-<li>Is it important to scale / pre-process our predictors before feeding them into this algorithm?</li>
-<li>Is this algorithm “computationally expensive”?</li>
-<li>Can you interpret the technical (RStudio) output for this algorithm? (eg: CV plots, etc)?</li>
-</ul>
-<p>And some <strong>details</strong>:</p>
-<ul>
-<li>If this algorithm is parametric, could you:
-<ul>
-<li>interpret its coefficients?</li>
-<li>calculate / predict the probability of different y outcomes from these coefficients?</li>
-<li>come up with a classification rule for a given probability cut-off?</li>
-</ul></li>
-<li>If this algorithm is non-parametric:
-<ul>
-<li>Could you implement the alghorithm “by hand” for a small sample of data points?</li>
-</ul></li>
-<li>If this algorithm is a tree-based method:
-<ul>
-<li>Could you explain the difference between in-sample, OOB, and CV metrics?</li>
-</ul></li>
-</ul>
-<p>And what about narrowing down to <strong>important predictors</strong>?</p>
-<ul>
-<li>What tools do we have to give us a sense of important predictors?
-<ul>
-<li>binary outcome?</li>
-<li>multiclass outcome?</li>
-</ul></li>
-</ul>
-<p><br>
-</p>
-<p><strong>Model evaluation</strong></p>
-<p>On <em>page 6</em>, the righthand table lists some model evaluation metrics for <em>binary</em> classification algorithms. Do the following:</p>
-<ul>
-<li>Define each metric. THINK: Could you calculate these metrics if given a confusion matrix?</li>
-<li>Explain the steps of the CV algorithm.</li>
-</ul>
-<p><br>
-</p>
-<p><strong>Algorithm comparisons</strong></p>
-<p>Use <em>page 7</em> to make other observations about the Unit 4-5 modeling algorithms and their connections.</p>
+<p><strong>RUN THE K-MEANS ALGORITHM FOR SPECIFIC K</strong></p>
 <p><br>
 <br>
 </p>
-</section></section>
-<section id="wrapping-up" class="title-slide slide level1 unnumbered center">
-<h1>Wrapping Up</h1>
-<ul>
-<li>See reminders above and on the <a href="https://kegrinde.github.io/stat253_coursenotes/schedule.html">course schedule</a> about upcoming deadlines</li>
-</ul>
+<p><strong>TUNING K-MEANS: TRY A BUNCH OF K</strong></p>
+<p>Calculate the total within-cluster sum of squares (SS) for each possible number of clusters K from 1 to n.</p>
+<p><br>
+<br>
+</p>
+<p><strong>DEFINING CLUSTER ASSIGNMENTS</strong></p>
 <div class="quarto-auto-generated-content">
-<p><img src="images/mac.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="L16-review_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="L16-review_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="L16-review_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="L16-review_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="L18-kmeans_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -590,7 +762,7 @@
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'multiplex': {"secret":"17298895852468836250","id":"8e4f46371230071f","url":"https://reveal-multiplex.glitch.me/"},
+'multiplex': {"secret":"17313742114029191198","id":"7c7902b9eee20eb0","url":"https://reveal-multiplex.glitch.me/"},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -770,6 +942,44 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
