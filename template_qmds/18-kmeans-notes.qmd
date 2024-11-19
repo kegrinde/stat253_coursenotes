@@ -29,12 +29,6 @@ knitr::opts_chunk$set(
 
 # Context
 
-<center>
-<img src="images/MLDiagram5.jpg"/>
-</center>
-
-
-
 **GOALS**   
 
 Suppose we have a set of **feature** variables $(x_1,x_2,...,x_p)$ but NO outcome variable $y$.
@@ -54,17 +48,9 @@ Techniques: hierarchical clustering & **K-means clustering**
 
 K-means is the clustering technique behind [Cartograph.info](http://nokomis.macalester.edu/wmf_en/static/index.html)
 
-<center>
-<img src="images/cartograph.png"/>
-</center>
-
-
 
 
 # Notes: K-means Clustering
-
-
-
 
 **Drawbacks of hierarchical clustering**    
 
@@ -85,7 +71,7 @@ $$\sum_{k=1}^K W(C_k)$$
 
 where each $W(\cdot)$ measures the within-cluster variance of each $C_k$:
 
-$$W(C_k) = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
+$$W(C_k) = \frac{1}{\text{no. of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
 
 Specifically, $W(C_k)$ is the average squared distance between all pairs of cases in cluster $C_k$.    
 
@@ -135,11 +121,11 @@ Revisit screenshots from the shiny app to explore the results of this algorithm.
 Why can the "greediness" of this algorithm sometimes produce strange results?
 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/hierarchical_shiny_1.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/hierarchical-shiny-1.png)
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/hierarchical_shiny_2.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/hierarchical-shiny-2.png)
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/hierarchical_shiny_3.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/hierarchical-shiny-3.png)
 
 
 
@@ -311,7 +297,7 @@ penguins_sub %>%
 
 
 
-
+<br>
 
 
 **EXAMPLE 5: hierarchical vs K-means**
@@ -374,7 +360,7 @@ Name 1 pro and 2 drawbacks of the K-means algorithm.
 
 
 
-
+<br>
 
 **Bonus**
 
@@ -424,7 +410,7 @@ fviz_nbclust(scale(penguins), kmeans, method='silhouette')
 
 # Exercises
 
-Complete exercises 4--6 in Homework 7.
+Complete exercises 4--6 in the homework.
 
 No code is provided in the exercises, so you'll need to use the R code reference section at the bottom of this activity.
 
@@ -433,7 +419,7 @@ No code is provided in the exercises, so you'll need to use the R code reference
 
 
 
-# R code
+# Notes: R code
 
 The `tidymodels` package is built for *models* of some outcome variable y.
 We can't use it for clustering.
