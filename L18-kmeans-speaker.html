@@ -10,7 +10,7 @@
 <link href="L18-kmeans_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
-  <title>l18-kmeans</title>
+  <title>K-Means Clustering</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -392,20 +392,40 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">K-Means Clustering</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="settling-in" class="title-slide slide level1 unnumbered center">
+<h1>Settling In</h1>
+<!-- don't overwrite the notes doc! The exercise sections are different -->
+<ul>
+<li>Sit somewhere new!</li>
+<li>Fill out the <a href="https://forms.gle/JSSREQqBKpvXXXey8">Group 3 Feedback Survey</a> (Moodle &gt; Surveys)</li>
+<li>Prepare to take notes (find the QMD for today in the usual spot)</li>
+<li>Catch up on any announcements you’ve missed on Slack</li>
+</ul>
+</section>
 
 <section>
-<section id="k-means-clustering" class="title-slide slide level1 center">
-<h1>K-Means Clustering</h1>
-<!-- don't overwrite the notes doc! The exercise sections are different -->
+<section id="notes-k-means-clustering" class="title-slide slide level1 unnumbered center">
+<h1>Notes: K-Means Clustering</h1>
+
 </section>
-<section id="context" class="slide level2 unnumbered scrollable">
+<section id="context" class="slide level2 unnumbered smaller scrollable">
 <h2>Context</h2>
+<p><img data-src="images/MLDiagram5.jpg" style="width:90.0%"></p>
+<!--
 <center>
-<img src="images/MLDiagram5.jpg">
+<img src="images/MLDiagram5.jpg"/>
 </center>
-<p><br>
-<br>
-</p>
+
+\
+\
+-->
 <p><strong>GOALS</strong></p>
 <p>Suppose we have a set of <strong>feature</strong> variables <span class="math inline">\((x_1,x_2,...,x_p)\)</span> but NO outcome variable <span class="math inline">\(y\)</span>.</p>
 <p>Thus instead of our goal being to predict/classify/explain y, we might simply want to…</p>
@@ -414,56 +434,85 @@
 <li>Utilize this examination as a <strong>jumping off point</strong> for further analysis.</li>
 </ol>
 <p>Techniques: hierarchical clustering &amp; <strong>K-means clustering</strong></p>
-<p><br>
-<br>
-</p>
-<p><strong>EXAMPLE</strong></p>
-<p>K-means is the clustering technique behind <a href="http://nokomis.macalester.edu/wmf_en/static/index.html">Cartograph.info</a></p>
-<center>
-<img src="images/cartograph.png">
-</center>
-<p><br>
-<br>
-<br>
-<br>
-</p>
 </section>
-<section id="notes-k-means-clustering" class="slide level2 unnumbered scrollable">
-<h2>Notes: K-means Clustering</h2>
-<p><strong>Drawbacks of hierarchical clustering</strong></p>
+<section id="example" class="slide level2 unnumbered smaller">
+<h2>EXAMPLE</h2>
+<p>K-means is the clustering technique behind <a href="http://nokomis.macalester.edu/wmf_en/static/index.html">Cartograph.info</a></p>
+<p><img data-src="images/cartograph.png" style="width:80.0%"></p>
+<!--
+<center>
+<img src="images/cartograph.png"/>
+</center>
+
+
+
+\
+\
+\
+\
+-->
+</section>
+<section id="drawbacks-of-hierarchical-clustering" class="slide level2 unnumbered smaller scrollable">
+<h2>Drawbacks of hierarchical clustering</h2>
+<div>
 <ol type="1">
-<li><p><strong>can be computationally expensive</strong>: we have to calculate the distance between each pair of objects in our sample to start the algorithm</p></li>
-<li><p><strong>greedy algorithm</strong>: This algorithm makes the best local decision of which clusters to fuse at each step in the dendrogram. Once clusters are fused they remain fused throughout the dendrogram. <em>However</em>, meaningful clusters may not always be hierarchical or nested.</p></li>
+<li class="fragment"><p><strong>can be computationally expensive</strong>: we have to calculate the distance between each pair of objects in our sample to start the algorithm</p></li>
+<li class="fragment"><p><strong>greedy algorithm</strong>: This algorithm makes the best local decision of which clusters to fuse at each step in the dendrogram. Once clusters are fused they remain fused throughout the dendrogram. <em>However</em>, meaningful clusters may not always be hierarchical or nested.</p></li>
 </ol>
-<p><br>
-<br>
-</p>
-<p><strong>K-means Clustering</strong></p>
-<p><strong>Goal:</strong><br>
-Split cases into K non-overlapping, homogeneous clusters or groups of cases noted as <span class="math inline">\(C_1, C_2,..., C_k\)</span> which minimize the total <strong>within_cluster variance</strong>:</p>
-<p><span class="math display">\[\sum_{k=1}^K W(C_k)\]</span></p>
-<p>where each <span class="math inline">\(W(\cdot)\)</span> measures the within-cluster variance of each <span class="math inline">\(C_k\)</span>:</p>
-<p><span class="math display">\[W(C_k) = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})\]</span></p>
+</div>
+</section>
+<section id="k-means-clustering-goal" class="slide level2 unnumbered smaller">
+<h2>K-means Clustering: Goal</h2>
+<p>Split cases into <span class="math inline">\(K\)</span> non-overlapping, homogeneous clusters or groups of cases noted as <span class="math inline">\(C_1, C_2,..., C_K\)</span> which minimize the total <strong>within cluster variance</strong>: <span class="math display">\[\sum_{k=1}^K W(C_k)\]</span></p>
+<div class="fragment">
+<p>where each <span class="math inline">\(W(\cdot)\)</span> measures the within-cluster variance of each cluster, <span class="math inline">\(C_k\)</span>:</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[W(C_k)= \frac{1}{ |C_k|} \sum_{\mathbf{x_i},\mathbf{x_j}\in C_k} ||\mathbf{x_i}-\mathbf{x_j}||^2\]</span></p>
+<p><span class="math display">\[ = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})\]</span></p>
+</div>
+<div class="fragment">
 <p>Specifically, <span class="math inline">\(W(C_k)\)</span> is the average squared distance between all pairs of cases in cluster <span class="math inline">\(C_k\)</span>.</p>
-<p><strong>Algorithm:</strong></p>
+<!--
+**Goal:**     
+Split cases into K non-overlapping, homogeneous clusters or groups of cases noted as $C_1, C_2,..., C_k$ which  minimize the total **within_cluster variance**:
+
+$$\sum_{k=1}^K W(C_k)$$
+
+where each $W(\cdot)$ measures the within-cluster variance of each $C_k$:
+
+$$W(C_k) = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
+
+Specifically, $W(C_k)$ is the average squared distance between all pairs of cases in cluster $C_k$.  
+-->
+</div>
+</section>
+<section id="k-means-clustering-algorithm" class="slide level2 unnumbered smaller scrollable">
+<h2>K-means Clustering: Algorithm</h2>
+<div>
 <ol start="0" type="1">
-<li><p><strong>Pick K</strong><br>
+<li class="fragment"><p><strong>Pick K</strong><br>
 Appropriate values of K are context dependent and can be deduced from prior knowledge, data, or the results of hierarchical clustering. Try multiple!</p></li>
-<li><p><strong>Initialization</strong><br>
+<li class="fragment"><p><strong>Initialization</strong><br>
 Randomly select the location of <span class="math inline">\(K\)</span> centroids. Assign each case to the nearest centroid. This random composition defines the first set of clusters <span class="math inline">\(C_1\)</span> through <span class="math inline">\(C_K\)</span>.</p></li>
-<li><p><strong>Centroid calculation</strong><br>
+<li class="fragment"><p><strong>Centroid calculation</strong><br>
 Calculate the <strong>centroid</strong>, ie. average location of the cases <span class="math inline">\(x\)</span> in each <span class="math inline">\(C_i\)</span>.</p></li>
-<li><p><strong>Cluster assignment</strong><br>
+<li class="fragment"><p><strong>Cluster assignment</strong><br>
 Re-assign each case to the <span class="math inline">\(C_i\)</span> with the nearest centroid.</p></li>
-<li><p><strong>Repeat!</strong><br>
+<li class="fragment"><p><strong>Repeat!</strong><br>
 Iterate between steps 2 and 3 until the clusters stabilize, ie. the cluster centroids do not change much from iteration to iteration.</p></li>
 </ol>
+</div>
 <p><br>
 </p>
+</section></section>
+<section>
+<section id="small-group-discussion" class="title-slide slide level1 unnumbered center">
+<h1>Small Group Discussion</h1>
+
 </section>
-<section id="small-group-discussion" class="slide level2 unnumbered scrollable">
-<h2>Small Group Discussion</h2>
-<p><strong>EXAMPLE 1: revisit the hierarchical algorithm</strong></p>
+<section id="example-1-revisit-the-hierarchical-algorithm" class="slide level2 unnumbered smaller">
+<h2>EXAMPLE 1: revisit the hierarchical algorithm</h2>
 <p>Recall the hierarchical algorithm.</p>
 <ul>
 <li>Each data point starts as a leaf.</li>
@@ -480,7 +529,9 @@ Solution:
 Clusters are hierarchical / nested. Once we combine two clusters, we can’t separate them.
 </details>
 <p><br><br></p>
-<p><strong>EXAMPLE 2: Interact with the K-Means algorithm</strong></p>
+</section>
+<section id="example-2-interact-with-the-k-means-algorithm" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 2: Interact with the K-Means algorithm</h2>
 <p>Here’s the idea and more details are above:</p>
 <ol type="1">
 <li><p><strong>Initialization</strong></p>
@@ -496,12 +547,16 @@ Re-assign each data point to the cluster with the nearest centroid.</p></li>
 <li><p><strong>Repeat! Iterate!</strong><br>
 Iterate between steps 2 and 3 until the clusters stabilize.</p></li>
 </ol>
+<p><br>
+</p>
 <p>Naftali Harris made a really nice <a href="https://www.naftaliharris.com/blog/visualizing-k-means-clustering/">interactive app</a> for playing around with this algorithm.</p>
 <ul>
 <li>“How to pick the initial centroids?”: Select “I’ll Choose”<br>
 </li>
 <li>“What kind of data would you like?”: Select “Gaussian Mixture”</li>
 </ul>
+<p><br>
+</p>
 <p>You’ll notice 3 natural clusters.</p>
 <p>To understand how and if K-means clustering with K = 3 might detect these clusters, play around:</p>
 <ul>
@@ -511,10 +566,14 @@ Iterate between steps 2 and 3 until the clusters stabilize.</p></li>
 <li>Cluster assignment: Click “Reassign points” to reassign data points to the nearest centroid.</li>
 <li>Repeat until your clusters stop changing.</li>
 </ul>
-<p><strong>Challenge:</strong></p>
-<p>Can you identify a set of initial centroids that result in reasonable final clusters? What about a set of initial centroids that <em>don’t</em> result in reasonable final clusters?</p>
 <p><br>
-<br>
+</p>
+<p><strong>Challenge:</strong></p>
+<ul>
+<li>Can you identify a set of initial centroids that result in reasonable final clusters?</li>
+<li>What about a set of initial centroids that <em>don’t</em> result in reasonable final clusters?</li>
+</ul>
+<p><br>
 </p>
 <details>
 <summary>
@@ -524,15 +583,30 @@ Solution:
 <a href="https://drive.google.com/open?id=1uL0eMkmR5Tuhxe4bbHlsVwLew1QemQ88">example of a bad K-means outcome</a>
 </details>
 <p><br><br></p>
-<p><br>
-<br>
-<br>
-<br>
-</p>
-<p><strong>EXAMPLE 3: K-means vs K-means</strong></p>
+</section>
+<section id="example-3-k-means-vs-k-means" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 3: K-means vs K-means</h2>
 <p>Let’s do K-means clustering in R using our penguin data:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">data</span>(penguins)</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a><span class="co"># For demo only, take a sample of 50 penguins</span></span>
+<span id="cb1-6"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb1-7"><a href=""></a>penguins <span class="ot">&lt;-</span> <span class="fu">sample_n</span>(penguins, <span class="dv">50</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href=""></a>  <span class="fu">select</span>(bill_length_mm, bill_depth_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <p>We’ll cluster these penguins based on their bill lengths and depths:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href=""></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -542,11 +616,55 @@ Solution:
 </div>
 </div>
 <ol type="a">
-<li><p>Run the K-means algorithm using K = 3. We didn’t set the seed for hierarchical clustering. Why do we have to set the seed for K-means? Why do we have to scale the data?</p>
-<p>::: {.cell} ::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"> ::: :::</p></li>
-<li><p>Let’s repeat the K-means algorithm with K = 3. BUT let’s use a different seed. How did the results change and why is this possible?</p>
-<p>::: {.cell} ::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"> ::: :::</p></li>
-<li><p>In practice, why should we try out a <em>variety</em> of seeds?</p></li>
+<li>Run the K-means algorithm using K = 3. We didn’t set the seed for hierarchical clustering. Why do we have to set the seed for K-means? Why do we have to scale the data?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Run the K-means algorithm</span></span>
+<span id="cb3-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb3-3"><a href=""></a>kmeans_3_round_1 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(penguins), <span class="at">centers =</span> <span class="dv">3</span>) </span>
+<span id="cb3-4"><a href=""></a>    </span>
+<span id="cb3-5"><a href=""></a><span class="co"># Plot the cluster assignments</span></span>
+<span id="cb3-6"><a href=""></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">kmeans_cluster =</span> <span class="fu">as.factor</span>(kmeans_3_round_1<span class="sc">$</span>cluster)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> kmeans_cluster)) <span class="sc">+</span> </span>
+<span id="cb3-9"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb3-10"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb3-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"K-means with K = 3 (round 1)"</span>) <span class="sc">+</span> </span>
+<span id="cb3-12"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Let’s repeat the K-means algorithm with K = 3. BUT let’s use a different seed. How did the results change and why is this possible?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># Run the K-means algorithm using a seed of 8</span></span>
+<span id="cb4-2"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">8</span>)</span>
+<span id="cb4-3"><a href=""></a>kmeans_3_round_2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(penguins), <span class="at">centers =</span> <span class="dv">3</span>) </span>
+<span id="cb4-4"><a href=""></a>    </span>
+<span id="cb4-5"><a href=""></a><span class="co"># Plot the cluster assignments</span></span>
+<span id="cb4-6"><a href=""></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">kmeans_cluster =</span> <span class="fu">as.factor</span>(kmeans_3_round_2<span class="sc">$</span>cluster)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> kmeans_cluster)) <span class="sc">+</span> </span>
+<span id="cb4-9"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb4-10"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb4-11"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"K-means with K = 3 (round 2)"</span>) <span class="sc">+</span> </span>
+<span id="cb4-12"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="a">
+<li>In practice, why should we try out a <em>variety</em> of seeds?</li>
 </ol>
 <details>
 <summary>
@@ -559,9 +677,28 @@ Solution:
 </ol>
 </details>
 <p><br><br></p>
-<p><strong>EXAMPLE 4: IMPACT OF K</strong></p>
+</section>
+<section id="example-4-impact-of-k" class="slide level2 unnumbered smaller">
+<h2>EXAMPLE 4: Impact of K</h2>
 <p>To implement K-means clustering we must choose an appropriate K! Use the following example to discuss the goldilocks challenge of picking K.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>penguins_sub <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">select</span>(bill_length_mm, bill_depth_mm) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href=""></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb5-4"><a href=""></a></span>
+<span id="cb5-5"><a href=""></a><span class="co"># Run K-means</span></span>
+<span id="cb5-6"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb5-7"><a href=""></a>k_2  <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(penguins_sub), <span class="at">centers =</span> <span class="dv">2</span>)</span>
+<span id="cb5-8"><a href=""></a>k_20 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(penguins_sub), <span class="at">centers =</span> <span class="dv">20</span>)</span>
+<span id="cb5-9"><a href=""></a></span>
+<span id="cb5-10"><a href=""></a>penguins_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb5-11"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">cluster_2 =</span> <span class="fu">as.factor</span>(k_2<span class="sc">$</span>cluster)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-12"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> cluster_2)) <span class="sc">+</span> </span>
+<span id="cb5-13"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb5-14"><a href=""></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"K = 2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -569,6 +706,15 @@ Solution:
 </figure>
 </div>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>penguins_sub <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">cluster_20 =</span> <span class="fu">as.factor</span>(k_20<span class="sc">$</span>cluster)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> cluster_20)) <span class="sc">+</span> </span>
+<span id="cb6-4"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb6-5"><a href=""></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"K = 20"</span>) <span class="sc">+</span> </span>
+<span id="cb6-6"><a href=""></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">rainbow</span>(<span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -584,12 +730,33 @@ Solution:
 <p>When K is too small, we can end up with big and overly general clusters. When K is too big, we can end up with small clusters that are too local / lose the general patterns.</p>
 </details>
 <p><br><br></p>
-<p><strong>EXAMPLE 5: hierarchical vs K-means</strong></p>
-<p>Let’s compare and contrast the results of the hierarchical and K-means algorithms.</p>
-<p>To this end, let’s use both to identify <strong>2</strong> penguin clusters:</p>
+</section>
+<section id="example-5-hierarchical-vs-k-means" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 5: hierarchical vs K-means</h2>
+<p>Let’s compare and contrast the results of the hierarchical and K-means algorithms. To this end, let’s use both to identify <strong>2</strong> penguin clusters:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Run hierarchical algorithm</span></span>
+<span id="cb7-2"><a href=""></a>hier_alg <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(penguins)))</span>
+<span id="cb7-3"><a href=""></a></span>
+<span id="cb7-4"><a href=""></a><span class="co"># Run K-means</span></span>
+<span id="cb7-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">253</span>)</span>
+<span id="cb7-6"><a href=""></a>kmeans_alg <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(penguins), <span class="at">centers =</span> <span class="dv">2</span>) </span>
+<span id="cb7-7"><a href=""></a></span>
+<span id="cb7-8"><a href=""></a><span class="co"># Include the clustering assignments</span></span>
+<span id="cb7-9"><a href=""></a>cluster_data <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-11"><a href=""></a>    <span class="at">hier_cluster =</span> <span class="fu">as.factor</span>(<span class="fu">cutree</span>(hier_alg, <span class="dv">2</span>)),</span>
+<span id="cb7-12"><a href=""></a>    <span class="at">kmeans_cluster =</span> <span class="fu">as.factor</span>(kmeans_alg<span class="sc">$</span>cluster))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <ol type="a">
-<li><p>Do the clusters defined by the two algorithms agree? NOTE: the actual cluster numbers are arbitrary.</p>
-<p>::: {.cell} ::: {.cell-output .cell-output-stdout}</p>
+<li>Do the clusters defined by the two algorithms agree? NOTE: the actual cluster numbers are arbitrary.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">head</span>(cluster_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   bill_length_mm bill_depth_mm hier_cluster kmeans_cluster
            &lt;dbl&gt;         &lt;dbl&gt; &lt;fct&gt;        &lt;fct&gt;         
@@ -599,11 +766,44 @@ Solution:
 4           51.3          19.9 2            1             
 5           50.4          15.3 1            1             
 6           40.9          16.8 2            2             </code></pre>
-<p>::: :::</p></li>
-<li><p>Plot the cluster assignments. Which algorithm produces seemingly better clusters?</p>
-<p>::: {.cell} ::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"> :::</p>
-<p>::: {.cell-output-display} <img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-8-2.png" width="960"> ::: :::</p></li>
+</div>
+</div>
+<p>&nbsp;</p>
+<ol start="2" type="a">
+<li>Plot the cluster assignments. Which algorithm produces seemingly better clusters?</li>
 </ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">ggplot</span>(cluster_data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> hier_cluster)) <span class="sc">+</span> </span>
+<span id="cb10-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"hiearchical results"</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb10-5"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">ggplot</span>(cluster_data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> kmeans_cluster)) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb11-4"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"K-means results"</span>) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="L18-kmeans_files/figure-revealjs/unnamed-chunk-8-2.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 <details>
 <summary>
 Solution:
@@ -614,7 +814,9 @@ Solution:
 </ol>
 </details>
 <p><br><br></p>
-<p><strong>EXAMPLE 6: Pros &amp; Cons</strong></p>
+</section>
+<section id="example-6-pros-cons" class="slide level2 unnumbered smaller">
+<h2>EXAMPLE 6: Pros &amp; Cons</h2>
 <p>Name 1 pro and 2 drawbacks of the K-means algorithm.</p>
 <details>
 <summary>
@@ -630,23 +832,30 @@ Solution:
 </ul>
 </details>
 <p><br><br> <br></p>
-<p><strong>Bonus</strong></p>
+</section>
+<section id="bonus" class="slide level2 unnumbered smaller">
+<h2>Bonus</h2>
 <p>Choosing <span class="math inline">\(K\)</span> - Average Silhouette</p>
 <p>Goal: Choose <span class="math inline">\(K\)</span> that maximizes the distance between clusters and minimizes distance within clusters</p>
 <p><span class="math display">\[a(i) = \frac{1}{|C_I|} \sum_{j\in C_I, i\not=j} ||\mathbf{x}_i - \mathbf{x_j}||^2\]</span> <span class="math display">\[ = \text{ avg. within cluster variance or distance from point i}\]</span></p>
 <p><span class="math display">\[b(i) = \min_{J\not=I}\frac{1}{|C_J|} \sum_{j\in C_J} ||\mathbf{x}_i - \mathbf{x_j}||^2\]</span> <span class="math display">\[=\text{ min avg. variance / distance from point i to points in another cluster}\]</span></p>
+<div class="fragment">
 <p>Silhouette for point <span class="math inline">\(i\)</span> (<span class="math inline">\(-1\leq s(i) \leq 1\)</span>):</p>
 <p><span class="math display">\[s(i) = \frac{b(i) - a(i)}{\max\{a(i),b(i)\}}\]</span> <span class="math display">\[ = \text{relative difference in within and between distance}\]</span> <span class="math display">\[ = \text{measure of how tightly clustered a group of points is relative to other groups }\]</span></p>
+</div>
+<div class="fragment">
 <p><strong>Properties of Silhouette</strong></p>
 <ul>
 <li><p>If <span class="math inline">\(b(i) &gt;&gt; a(i)\)</span> (distance to other clusters is far relative to distance within cluster), <span class="math inline">\(s(i) = 1\)</span>. This means it is an appropriate cluster.</p></li>
 <li><p>If <span class="math inline">\(b(i) &lt;&lt; a(i)\)</span>, point <span class="math inline">\(i\)</span> is more similar to the neighboring cluster than its own (not great), <span class="math inline">\(s(i) = -1\)</span>.</p></li>
 <li><p>If <span class="math inline">\(b(i) = a(i)\)</span>, then <span class="math inline">\(s(i) = 0\)</span>. It is more of a flip of a coin of which cluster point i should be in (on the border between 2).</p></li>
 </ul>
+</div>
+<div class="fragment">
 <p>We plot the average silhouette, <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n s(i)\)</span>, and choose <span class="math inline">\(K\)</span> that maximizes the average silhouette.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb2-2"><a href=""></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(penguins), kmeans, <span class="at">method=</span><span class="st">'silhouette'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb12-2"><a href=""></a><span class="fu">fviz_nbclust</span>(<span class="fu">scale</span>(penguins), kmeans, <span class="at">method=</span><span class="st">'silhouette'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -655,10 +864,15 @@ Solution:
 </div>
 </div>
 </div>
+</div>
+</section></section>
+<section>
+<section id="exercises" class="title-slide slide level1 unnumbered center">
+<h1>Exercises</h1>
+<p>For the rest of the class, work together on Ex 4–6 on HW6 (QMD on Moodle).</p>
 </section>
-<section id="exercises" class="slide level2 unnumbered scrollable">
-<h2>Exercises</h2>
-<p><strong>NOTE:</strong> These exercises are on Homework 7.</p>
+<section id="section" class="slide level2 unnumbered smaller scrollable">
+<h2></h2>
 <ol start="4" type="1">
 <li><strong>Choosing K</strong><br>
 You’ve already run the hierarchical clustering algorithm for the candy data. Let’s try K-means! The first step is to <strong>pick K</strong>. So how do we choose?
@@ -673,7 +887,6 @@ You’ve already run the hierarchical clustering algorithm for the candy data. L
 </ol></li>
 </ol>
 <p><br>
-<br>
 </p>
 <ol start="5" type="1">
 <li><strong>A final K-means model</strong>
@@ -684,7 +897,6 @@ You’ve already run the hierarchical clustering algorithm for the candy data. L
 </ol></li>
 </ol>
 <p><br>
-<br>
 </p>
 <ol start="6" type="1">
 <li><strong>Final clustering reflection</strong>
@@ -696,32 +908,98 @@ You’ve already run the hierarchical clustering algorithm for the candy data. L
 <li>Bringing it all together across your various hierarchical and K-means clustering outcomes, offer a set of final conclusions. Specifically, write out a label for each final cluster that communicates its unique properties (eg: “big penguins”, “really big penguins”, and “small penguins with long bills”). NOTE: Focus on the K-means results.</li>
 </ol></li>
 </ol>
+</section></section>
+<section id="wrapping-up" class="title-slide slide level1 unnumbered center">
+<h1>Wrapping Up</h1>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li>Upcoming due dates:
+<ul>
+<li>HW5 Revisions: next Monday (Nov 25)</li>
+<li>CP14 (<strong>last one!!</strong>): before next class (Nov 21)</li>
+<li>Group Assignment 2: before break (Nov 26)</li>
+<li>HW6 (<strong>last one!!</strong>): after break (Dec 4)</li>
+</ul></li>
+</ul>
 </section>
-<section id="r-code" class="slide level2 unnumbered">
-<h2>R code</h2>
+
+<section>
+<section id="notes-r-code" class="title-slide slide level1 unnumbered center">
+<h1>Notes: R code</h1>
+
+</section>
+<section id="section-1" class="slide level2 unnumbered smaller">
+<h2></h2>
 <p>The <code>tidymodels</code> package is built for <em>models</em> of some outcome variable y. We can’t use it for clustering.</p>
 <p>Instead, we’ll use a variety of new packages that use specialized, but short, syntax.</p>
 <p>Suppose we have a set of <code>sample_data</code> with multiple feature columns x, and (possibly) a column named <code>id</code> which labels each data point.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># Install packages</span></span>
+<span id="cb13-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb13-3"><a href=""></a><span class="fu">library</span>(cluster)      <span class="co"># to build the hierarchichal clustering algorithm</span></span>
+<span id="cb13-4"><a href=""></a><span class="fu">library</span>(factoextra)   <span class="co"># to draw the dendrograms</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 </p>
 <p><strong>PROCESS THE DATA</strong></p>
 <p>If there’s a column that’s an identifying variable or label, not a feature of the data points, convert it to a row name.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href=""></a>  <span class="fu">column_to_rownames</span>(<span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>K-means can’t handle NA values! There are a couple options.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="co"># Omit missing cases (this can be bad if there are a lot of missing points!)</span></span>
+<span id="cb15-2"><a href=""></a>sample_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(sample_data)</span>
+<span id="cb15-3"><a href=""></a></span>
+<span id="cb15-4"><a href=""></a><span class="co"># Impute the missing cases</span></span>
+<span id="cb15-5"><a href=""></a><span class="fu">library</span>(VIM)</span>
+<span id="cb15-6"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href=""></a>  VIM<span class="sc">::</span><span class="fu">kNN</span>(<span class="at">imp_var =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>IF you have at least 1 <em>categorical</em> / factor feature, you’ll need to pre-process the data even further. You should NOT do this if you have <em>quantitative</em> and/or <em>logical</em> features.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Turn categorical features into dummy variables</span></span>
+<span id="cb16-2"><a href=""></a>sample_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span> <span class="dv">1</span>, sample_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>RUN THE K-MEANS ALGORITHM FOR SPECIFIC K</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># K-means clustering</span></span>
+<span id="cb17-2"><a href=""></a><span class="fu">set.seed</span>(___)</span>
+<span id="cb17-3"><a href=""></a>kmeans_model <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(sample_data), <span class="at">centers =</span> ___)</span>
+<span id="cb17-4"><a href=""></a></span>
+<span id="cb17-5"><a href=""></a></span>
+<span id="cb17-6"><a href=""></a><span class="co"># Get the "the total within- cluster sum of squares"</span></span>
+<span id="cb17-7"><a href=""></a><span class="co"># This is the total squared distance of each case from its assigned centroid</span></span>
+<span id="cb17-8"><a href=""></a>kmeans_model<span class="sc">$</span>tot.withinss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>TUNING K-MEANS: TRY A BUNCH OF K</strong></p>
 <p>Calculate the total within-cluster sum of squares (SS) for each possible number of clusters K from 1 to n.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># You pick n!!!</span></span>
+<span id="cb18-2"><a href=""></a><span class="fu">tibble</span>(<span class="at">K =</span> <span class="dv">1</span><span class="sc">:</span>n) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">SS =</span> <span class="fu">map</span>(K, <span class="sc">~</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(sample_data), <span class="at">centers =</span> .x)<span class="sc">$</span>tot.withinss)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href=""></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(SS))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>DEFINING CLUSTER ASSIGNMENTS</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Assign each sample case to a cluster</span></span>
+<span id="cb19-2"><a href=""></a><span class="co"># We typically want to store this in a new dataset so that the cluster assignments aren't </span></span>
+<span id="cb19-3"><a href=""></a><span class="co"># accidentally used as features in a later analysis!</span></span>
+<span id="cb19-4"><a href=""></a>cluster_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">kmeans_cluster_k =</span> kmeans_model<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="quarto-auto-generated-content">
+<p><img src="images/mac.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
 </div>

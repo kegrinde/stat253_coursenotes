@@ -1,22 +1,38 @@
-# K-Means Clustering
+---
+title: "K-Means Clustering"
+logo: "images/mac.png"
+---
 
+```{r 18_setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(tidyverse)
+```
 
+# Settling In {-}
 
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 
 
+- Sit somewhere new!
+- Fill out the [Group 3 Feedback Survey](https://forms.gle/JSSREQqBKpvXXXey8) (Moodle > Surveys)
+- Prepare to take notes (find the QMD for today in the usual spot)
+- Catch up on any announcements you've missed on Slack
 
-## Context {-}
+# Notes: K-Means Clustering {-}
 
+## Context {.unnumbered .smaller}
 
+![](images/MLDiagram5.jpg){width=90%}
 
+<!--
 <center>
 <img src="images/MLDiagram5.jpg"/>
 </center>
 
 \
 \
-
+-->
 
 
 **GOALS**   
@@ -33,16 +49,13 @@ Techniques: hierarchical clustering & **K-means clustering**
 
 
 
-\
-\
-
-
-
-
-**EXAMPLE**
+## EXAMPLE {.unnumbered .smaller}
 
 K-means is the clustering technique behind [Cartograph.info](http://nokomis.macalester.edu/wmf_en/static/index.html)
 
+![](images/cartograph.png){width=80%}
+
+<!--
 <center>
 <img src="images/cartograph.png"/>
 </center>
@@ -53,27 +66,38 @@ K-means is the clustering technique behind [Cartograph.info](http://nokomis.maca
 \
 \
 \
+-->
 
 
 
+## Drawbacks of hierarchical clustering {.unnumbered .smaller}
 
-## Notes: K-means Clustering {-}
-
-
-
-
-**Drawbacks of hierarchical clustering**    
-
+::: {.incremental}
 1. **can be computationally expensive**: we have to calculate the distance between each pair of objects in our sample to start the algorithm
 
 2. **greedy algorithm**: This algorithm makes the best local decision of which clusters to fuse at each step in the dendrogram.  Once clusters are fused they remain fused throughout the dendrogram. _However_, meaningful clusters may not always be hierarchical or nested.
+:::
 
 
-\
-\
+## K-means Clustering: Goal {.unnumbered .smaller}
 
-**K-means Clustering**   
+Split cases into $K$ non-overlapping, homogeneous clusters or groups of cases noted as $C_1, C_2,..., C_K$ which minimize the total **within cluster variance**: $$\sum_{k=1}^K W(C_k)$$
 
+. . .
+
+where each $W(\cdot)$ measures the within-cluster variance of each cluster, $C_k$:
+
+. . .
+
+$$W(C_k)= \frac{1}{ |C_k|} \sum_{\mathbf{x_i},\mathbf{x_j}\in C_k} ||\mathbf{x_i}-\mathbf{x_j}||^2$$
+
+$$ = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
+
+. . .
+
+Specifically, $W(C_k)$ is the average squared distance between all pairs of cases in cluster $C_k$.
+
+<!--
 **Goal:**     
 Split cases into K non-overlapping, homogeneous clusters or groups of cases noted as $C_1, C_2,..., C_k$ which  minimize the total **within_cluster variance**:
 
@@ -83,10 +107,12 @@ where each $W(\cdot)$ measures the within-cluster variance of each $C_k$:
 
 $$W(C_k) = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
 
-Specifically, $W(C_k)$ is the average squared distance between all pairs of cases in cluster $C_k$.    
+Specifically, $W(C_k)$ is the average squared distance between all pairs of cases in cluster $C_k$.  
+-->
 
-**Algorithm:**    
+## K-means Clustering: Algorithm {.unnumbered .smaller}
 
+::: {.incremental}
 0. **Pick K**    
     Appropriate values of K are context dependent and can be deduced from prior knowledge, data, or the results of hierarchical clustering.  Try multiple!  
 
@@ -102,7 +128,7 @@ Specifically, $W(C_k)$ is the average squared distance between all pairs of case
 4. **Repeat!**    
     Iterate between steps 2 and 3 until the clusters stabilize, ie. the cluster centroids do not change much from iteration to iteration.    
 
-
+:::
 
 
 
@@ -128,10 +154,10 @@ Specifically, $W(C_k)$ is the average squared distance between all pairs of case
 
 
 
-## Small Group Discussion {-}
+# Small Group Discussion {-}
 
 
-**EXAMPLE 1: revisit the hierarchical algorithm**
+## EXAMPLE 1: revisit the hierarchical algorithm {.unnumbered .smaller}
 
 Recall the hierarchical algorithm.
 
@@ -160,9 +186,7 @@ Clusters are hierarchical / nested. Once we combine two clusters, we can't separ
 
 
 
-
-
-**EXAMPLE 2: Interact with the K-Means algorithm**
+## EXAMPLE 2: Interact with the K-Means algorithm {.unnumbered .smaller}
 
 Here's the idea and more details are above:
 
@@ -180,12 +204,14 @@ Here's the idea and more details are above:
 4. **Repeat! Iterate!**    
     Iterate between steps 2 and 3 until the clusters stabilize.  
 
-
+\
 
 Naftali Harris made a really nice [interactive app](https://www.naftaliharris.com/blog/visualizing-k-means-clustering/) for playing around with this algorithm.    
 
 - "How to pick the initial centroids?":  Select "I'll Choose"    
 - "What kind of data would you like?":  Select "Gaussian Mixture"
+
+\
 
 You'll notice 3 natural clusters.
 
@@ -195,18 +221,16 @@ To understand how and if K-means clustering with K = 3 might detect these cluste
 - Cluster assignment: Click "GO!" to assign data points to the nearest centroid.
 - Centroid calculation: Click "Update Centroids" to recalculate the centroids of the new clusters.
 - Cluster assignment: Click "Reassign points" to reassign data points to the nearest centroid.
-- Repeat until your clusters stop changing.    
+- Repeat until your clusters stop changing.  
+
+\
 
 **Challenge:**    
 
-Can you identify a set of initial centroids that result in reasonable final clusters?
-What about a set of initial centroids that *don't* result in reasonable final clusters?
-
-
+- Can you identify a set of initial centroids that result in reasonable final clusters?
+- What about a set of initial centroids that *don't* result in reasonable final clusters?
 
 \
-\
-
 
 <details>
 <summary>Solution:</summary>
@@ -220,28 +244,13 @@ What about a set of initial centroids that *don't* result in reasonable final cl
 
 
 
-
-
-
-
-
-
-
-
-\
-\
-\
-\
-
-
-
-
-
-**EXAMPLE 3: K-means vs K-means**
+## EXAMPLE 3: K-means vs K-means {.unnumbered .smaller}
 
 Let's do K-means clustering in R using our penguin data:
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 library(tidyverse)
 library(palmerpenguins)
 data(penguins)
@@ -254,7 +263,9 @@ penguins <- sample_n(penguins, 50) %>%
 
 We'll cluster these penguins based on their bill lengths and depths:
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) + 
   geom_point() 
 ```
@@ -262,40 +273,41 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
 a. Run the K-means algorithm using K = 3. We didn't set the seed for hierarchical clustering. Why do we have to set the seed for K-means? Why do we have to scale the data?
 
 
-    ```{r eval=TRUE}
-    # Run the K-means algorithm
-    set.seed(253)
-    kmeans_3_round_1 <- kmeans(scale(penguins), centers = 3) 
+```{r}
+#| eval: true
+# Run the K-means algorithm
+set.seed(253)
+kmeans_3_round_1 <- kmeans(scale(penguins), centers = 3) 
     
-    # Plot the cluster assignments
-    penguins %>% 
-      mutate(kmeans_cluster = as.factor(kmeans_3_round_1$cluster)) %>%
-      ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = kmeans_cluster)) + 
-        geom_point(size = 3) + 
-        theme(legend.position = "none") + 
-        labs(title = "K-means with K = 3 (round 1)") + 
-        theme_minimal()
-    ```
+# Plot the cluster assignments
+penguins %>% 
+  mutate(kmeans_cluster = as.factor(kmeans_3_round_1$cluster)) %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = kmeans_cluster)) + 
+  geom_point(size = 3) + 
+  theme(legend.position = "none") + 
+  labs(title = "K-means with K = 3 (round 1)") + 
+  theme_minimal()
+```
 
 b. Let's repeat the K-means algorithm with K = 3. BUT let's use a different seed. How did the results change and why is this possible?        
 
-    ```{r eval=TRUE}
-    # Run the K-means algorithm using a seed of 8
-    set.seed(8)
-    kmeans_3_round_2 <- kmeans(scale(penguins), centers = 3) 
+```{r}
+#| eval: true
+# Run the K-means algorithm using a seed of 8
+set.seed(8)
+kmeans_3_round_2 <- kmeans(scale(penguins), centers = 3) 
     
-    # Plot the cluster assignments
-    penguins %>% 
-      mutate(kmeans_cluster = as.factor(kmeans_3_round_2$cluster)) %>%
-      ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = kmeans_cluster)) + 
-        geom_point(size = 3) + 
-        theme(legend.position = "none") + 
-        labs(title = "K-means with K = 3 (round 2)") + 
-        theme_minimal()
-    ```
+# Plot the cluster assignments
+penguins %>% 
+  mutate(kmeans_cluster = as.factor(kmeans_3_round_2$cluster)) %>%
+  ggplot(aes(x = bill_length_mm, y = bill_depth_mm, color = kmeans_cluster)) + 
+  geom_point(size = 3) + 
+  theme(legend.position = "none") + 
+  labs(title = "K-means with K = 3 (round 2)") + 
+  theme_minimal()
+```
     
 c.  In practice, why should we try out a *variety* of seeds?
-
 
 
 <details>
@@ -308,13 +320,15 @@ c. Make sure our results aren't overly sensitive to / skewed by the random centr
 
 
 
-**EXAMPLE 4: IMPACT OF K**
+## EXAMPLE 4: Impact of K {.unnumbered .smaller}
 
 To implement K-means clustering we must choose an appropriate K!
 Use the following example to discuss the goldilocks challenge of picking K.
 
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 penguins_sub <- penguins %>%
   select(bill_length_mm, bill_depth_mm) %>% 
   na.omit()
@@ -340,7 +354,6 @@ penguins_sub %>%
 
 
 
-
 <details>
 <summary>Solution:</summary>
 When K is too small, we can end up with big and overly general clusters.
@@ -351,13 +364,14 @@ When K is too big, we can end up with small clusters that are too local / lose t
 
 
 
-**EXAMPLE 5: hierarchical vs K-means**
+## EXAMPLE 5: hierarchical vs K-means {.unnumbered .smaller}
 
 Let's compare and contrast the results of the hierarchical and K-means algorithms.
-
 To this end, let's use both to identify **2** penguin clusters:
 
-```{r eval=TRUE}
+```{r}
+#| eval: true
+#| code-fold: true
 # Run hierarchical algorithm
 hier_alg <- hclust(dist(scale(penguins)))
 
@@ -374,33 +388,35 @@ cluster_data <- penguins %>%
 
 
 
+a. Do the clusters defined by the two algorithms agree? NOTE: the actual cluster numbers are arbitrary.  
 
-a. Do the clusters defined by the two algorithms agree? NOTE: the actual cluster numbers are arbitrary.    
-    ```{r}
-    head(cluster_data)
-    ```
-    
+```{r}
+#| eval: true
+head(cluster_data)
+```
+
+\    
     
 b. Plot the cluster assignments. Which algorithm produces seemingly better clusters?   
-    ```{r}
-    ggplot(cluster_data, aes(x = bill_length_mm, y = bill_depth_mm, color = hier_cluster)) + 
-      geom_point(size = 3) + 
-      labs(title = "hiearchical results") +
-      theme(legend.position = "none") + 
-      theme_minimal()
+
+```{r}
+#| code-fold: true
+#| eval: true
+ggplot(cluster_data, aes(x = bill_length_mm, y = bill_depth_mm, color = hier_cluster)) + 
+  geom_point(size = 3) + 
+  labs(title = "hiearchical results") +
+  theme(legend.position = "none") + 
+  theme_minimal()
     
-    ggplot(cluster_data, aes(x = bill_length_mm, y = bill_depth_mm, color = kmeans_cluster)) + 
-      geom_point(size = 3) + 
-      theme(legend.position = "none") + 
-      labs(title = "K-means results") + 
-      theme_minimal()
-    ```
+ggplot(cluster_data, aes(x = bill_length_mm, y = bill_depth_mm, color = kmeans_cluster)) + 
+  geom_point(size = 3) + 
+  theme(legend.position = "none") + 
+  labs(title = "K-means results") + 
+  theme_minimal()
+```
     
 
     
-
-
-
 
 <details>
 <summary>Solution:</summary>
@@ -415,7 +431,7 @@ b. K-means is better. The hierarchical clusters are odd -- it fused two penguins
 
 
 
-**EXAMPLE 6: Pros & Cons**
+## EXAMPLE 6: Pros & Cons {.unnumbered .smaller}
 
 Name 1 pro and 2 drawbacks of the K-means algorithm.
 
@@ -432,7 +448,7 @@ Name 1 pro and 2 drawbacks of the K-means algorithm.
 <br>
 
 
-**Bonus**
+## Bonus {.unnumbered .smaller}
 
 Choosing $K$ - Average Silhouette
 
@@ -448,7 +464,7 @@ $$ = \text{ avg. within cluster variance or distance from point i}$$
 $$b(i) = \min_{J\not=I}\frac{1}{|C_J|} \sum_{j\in C_J} ||\mathbf{x}_i - \mathbf{x_j}||^2$$
 $$=\text{ min avg. variance / distance from point i to points in another cluster}$$
 
-
+. . .
 
 Silhouette for point $i$ ($-1\leq s(i) \leq 1$):
 
@@ -456,6 +472,7 @@ $$s(i) = \frac{b(i) - a(i)}{\max\{a(i),b(i)\}}$$
 $$ = \text{relative difference in within and between distance}$$
 $$ = \text{measure of how tightly clustered a group of points is relative to other groups }$$
 
+. . .
 
 **Properties of Silhouette**
 
@@ -465,6 +482,8 @@ $$ = \text{measure of how tightly clustered a group of points is relative to oth
 
 - If $b(i) = a(i)$, then $s(i) = 0$. It is more of a flip of a coin of which cluster point i should be in (on the border between 2). 
 
+
+. . .
 
 We plot the average silhouette, $\frac{1}{n}\sum_{i=1}^n s(i)$, and choose $K$ that maximizes the average silhouette.
 
@@ -479,10 +498,11 @@ fviz_nbclust(scale(penguins), kmeans, method='silhouette')
 
 
 
-## Exercises {-}
+# Exercises {-}
 
-**NOTE:** These exercises are on Homework 7.
+For the rest of the class, work together on Ex 4--6 on HW6 (QMD on Moodle).
 
+## {.unnumbered .smaller}
 
 4. **Choosing K**    
     You've already run the hierarchical clustering algorithm for the candy data. Let's try K-means! The first step is to **pick K**. So how do we choose?    
@@ -493,7 +513,6 @@ fviz_nbclust(scale(penguins), kmeans, method='silhouette')
 
     
 \
-\
 
 
 
@@ -502,7 +521,6 @@ fviz_nbclust(scale(penguins), kmeans, method='silhouette')
     b. To get a sense for what makes the candies in each cluster "similar", calculate the mean of each feature within each cluster.
   
 
-\
 \
 
 
@@ -517,10 +535,19 @@ fviz_nbclust(scale(penguins), kmeans, method='silhouette')
 
 
 
+# Wrapping Up {-}
+
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- Upcoming due dates: 
+  - HW5 Revisions: next Monday (Nov 25)
+  - CP14 (**last one!!**): before next class (Nov 21)
+  - Group Assignment 2: before break (Nov 26)
+  - HW6 (**last one!!**): after break (Dec 4)
 
 
+# Notes: R code {-}
 
-## R code {-}
+## {.unnumbered .smaller}
 
 The `tidymodels` package is built for *models* of some outcome variable y.
 We can't use it for clustering.
