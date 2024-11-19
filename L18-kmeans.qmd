@@ -91,7 +91,7 @@ where each $W(\cdot)$ measures the within-cluster variance of each cluster, $C_k
 
 $$W(C_k)= \frac{1}{ |C_k|} \sum_{\mathbf{x_i},\mathbf{x_j}\in C_k} ||\mathbf{x_i}-\mathbf{x_j}||^2$$
 
-$$ = \frac{1}{\text{# of cases in $C_k$}} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
+$$= \frac{1}{\text{no. of cases in }C_k} (\text{total Euclidean distance}^2 \text{ btwn all pairs in $C_k$})$$
 
 . . .
 

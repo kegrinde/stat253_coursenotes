@@ -58,6 +58,7 @@ book:
       chapters: 
         - U05-motivation.qmd
         - L17-hclust.qmd
+        - L18-kmeans.qmd
   appendices:
     - r_rstudio.qmd
     - r_resources.qmd
