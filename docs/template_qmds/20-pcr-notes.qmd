@@ -132,6 +132,13 @@ Chapter 6.3.2 provides an optional overview.
 
 
 
+
+
+
+
+
+# Small Group Discussion
+
 **EXAMPLE**    
 
 For each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors $x$: (1) PCR; or (2) variable selection or regularization.
@@ -153,13 +160,11 @@ c. The $x$ are NOT very correlated.
 
 
 
-
-
 # Exercises
 
 - Make the most of your work time in class!
-- Do exercises 9 and 10 in Homework 7.
-- If you finish Homework 7, start group assignment 3.
+- Do exercises 9 and 10 in HW6.
+- If you finish HW6, start Group Assignment 3.
 
 
 
@@ -169,7 +174,7 @@ c. The $x$ are NOT very correlated.
 
 
 
-# R code
+# Notes: R code
 
 
 Suppose we have a set of `sample_data` with multiple predictors x, a *quantitative* outcome y, and (possibly) a column named `data_id` which labels each data point.

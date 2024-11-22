@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 # Context
 
-
+![](https://kegrinde.github.io/stat253_coursenotes/images/MLDiagram6.jpg)
 
 **CONTEXT**
 
@@ -77,7 +77,7 @@ Especially when we have a *lot* of features, dimension reduction helps:
 **PRINCIPAL COMPONENT ANALYSIS (PCA)**    
 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/pca_flow.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/pca_flow.png)
 
 
 
@@ -103,7 +103,7 @@ Check out this article ["Genes mirror geography in Europe"](https://www.ncbi.nlm
 Thus we have high dimensional data with 3,000 rows (n) and 500,000 columns (p), thus p > n.
 We can capture much of the geographic relationship by reducing these 500,000 features to just 2 principal components! 
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/pca_geography.png)
+![](https://kegrinde.github.io/stat253_coursenotes/images/pca_geography.png)
 
 
 
@@ -185,7 +185,7 @@ Keep only the subset of PCs which retain "enough" of the variability / informati
 
 Recall the Australian weather data from Homework 2 (image: http://toursmaps.com/wp-content/uploads/2017/09/australia-map-google-_0.jpg):
 
-![](https://bcheggeseth.github.io/253_spring_2024/images/australia-map.jpg)
+![](https://kegrinde.github.io/stat253_coursenotes/images/australia-map.jpg)
 
 
 ```{r}
@@ -226,7 +226,7 @@ rownames(weather_data) <- rownames(weather_temp)
 If your VIM package doesn't work, import the processed data from here:
 
 ```{r eval = FALSE}
-weather_data <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/weatherAUS_processed_subset.csv") %>% 
+weather_data <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/weatherAUS_processed_subset.csv") %>% 
   column_to_rownames("Location")
 ```
 
@@ -363,24 +363,24 @@ a. Use the loadings below to specify the formula for the first PC:
     
     PC1 = ___*Temp9am + ___*MinTemp + ___*WindSpeed9am
   
-    ```{r}
-    pca_small %>% 
-      pluck("rotation")
-    ```
+```{r}
+pca_small %>% 
+  pluck("rotation")
+```
 
 
 b. For just the first city, confirm that its PC1 coordinate or **score** can be calculated from its original coordinates using the formula in part a: 
     
-    ```{r}
-    # Original (standardized) coordinates
-    scale(small_example) %>% 
-      head(1)
+```{r}
+# Original (standardized) coordinates
+scale(small_example) %>% 
+  head(1)
     
-    # PC coordinates
-    pca_small %>% 
-      pluck("x") %>% 
-      head(1)
-    ```
+# PC coordinates
+pca_small %>% 
+  pluck("x") %>% 
+  head(1)
+```
     
 
 
@@ -627,7 +627,7 @@ A **score plot** maps out the scores of the first, and most important, 2 PCs for
 PC1 is on the x-axis and PC2 on the y-axis.
 Again, since these PCs are linear combinations of all original features (only 3 here), a score plot can provide a 2-dimensional visualization of high dimensional data!
 
-Question: Unless you're familiar with Australian geography, it might be tough to ascertain any meaningful patterns here. Looking back to the map, and recalling the key information captured by PC1 and PC2, does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?   
+**Question:** Unless you're familiar with Australian geography, it might be tough to ascertain any meaningful patterns here. Looking back to the map, and recalling the key information captured by PC1 and PC2, does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?   
 
 
 ```{r fig.width = 6, fig.height = 6}
@@ -669,27 +669,29 @@ pca_weather %>%
 ```
 
 a. Suppose we wanted to retain at least 80% of the information in the original 18 features. What's the smallest number of PCs we need to keep? *Thus how much can we reduce the original dimensions?*
-    ```{r}
-    # Cumulative % of variance explained (in numbers)
-    pca_weather %>% 
-      tidy(matrix = "eigenvalues")
-    ```
+
+```{r}
+# Cumulative % of variance explained (in numbers)
+pca_weather %>% 
+  tidy(matrix = "eigenvalues")
+```
+
+```{r}
+# Cumulative % of variance explained (plot)
+pca_weather %>% 
+  tidy(matrix = "eigenvalues") %>% 
+  rbind(0) %>% 
+  ggplot(aes(y = cumulative, x = PC)) + 
+  geom_point(size = 2) +
+  geom_line() + 
+  labs(y = "CUMULATIVE % of variance explained")
+```
     
-    ```{r}
-    # Cumulative % of variance explained (plot)
-    pca_weather %>% 
-      tidy(matrix = "eigenvalues") %>% 
-      rbind(0) %>% 
-      ggplot(aes(y = cumulative, x = PC)) + 
-        geom_point(size = 2) + 
-        geom_line() + 
-        labs(y = "CUMULATIVE % of variance explained")
-    ```
-    
 
 
 
-b. Check out some plots of the loadings in the more important PCs. Describe the general properties of the first 2 PCs. What original features do they most capture?        
+b. Check out some plots of the loadings in the more important PCs. Describe the general properties of the first 2 PCs. What original features do they most capture?      
+
 ```{r fig.width = 8, fig.height = 6}
 # Plot the loadings for first 5 PCs
 # We have to use a different color palette -- we need enough colors for our 18 features
@@ -742,7 +744,7 @@ b. What are the drawbacks of PCA? When might you hesitate to use it?
 
 # Exercises {-}
 
-Do exercises 7 and 8 in Homework 7.
+Do exercises 7 and 8 in HW6.
 
 The R code section below will be handy.
 
