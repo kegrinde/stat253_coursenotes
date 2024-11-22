@@ -1,0 +1,21 @@
+---
+title: "Unsupervised Learning Review"
+logo: "images/mac.png"
+---
+
+```{r 21_setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(tidyverse)
+```
+
+::: {.callout-warning}
+this page is under construction! please check back soon for updates
+:::
+
+
+# Settling In {-}
+
+# Exercises {-}
+
+# Wrapping Up {-}

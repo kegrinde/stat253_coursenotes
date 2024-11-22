@@ -1,4 +1,7 @@
-# Principal component regression
+---
+title: "Principal Component Regression"
+logo: "images/mac.png"
+---
 
 ```{r 20_setup}
 #| include: false
@@ -6,7 +9,13 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 library(tidyverse)
 ```
 
+::: {.callout-warning}
+this page is under construction! please check back soon for updates
+:::
+
 Unsupervised & supervised learning are friends! 
+
+# Settling In {-}
 
 
 <!-- don't overwrite the notes doc! The exercise sections are different -->

@@ -1,6 +1,19 @@
-# Principal component analysis
+---
+title: "Principal Component Analysis"
+logo: "images/mac.png"
+---
 
+```{r 19_setup}
+#| include: false
+knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
+library(tidyverse)
+```
 
+::: {.callout-warning}
+this page is under construction! please check back soon for updates
+:::
+
+# Settling In {-}
 
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 

@@ -59,6 +59,9 @@ book:
         - U05-motivation.qmd
         - L17-hclust.qmd
         - L18-kmeans.qmd
+        - L19-pca.qmd
+        - L20-pcr.qmd
+        - L21-review.qmd
   appendices:
     - r_rstudio.qmd
     - r_resources.qmd
