@@ -9,11 +9,6 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 library(tidyverse)
 ```
 
-::: {.callout-warning}
-this page is under construction! please check back soon for updates
-:::
-
-# Settling In {-}
 
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 
@@ -51,21 +46,23 @@ head(as.matrix(weather_data) %*% as.matrix(pca_small$rotation)) -->
 
 
 
+# Settling In {-}
+
+- Sit with your NEW group and introduce yourselves
+- Prepare to take notes (find the QMD template in the usual spot)
+- Catch up on any announcements you've missed on Slack
+
+\
+\
+\
 \
 
+# Notes: PCA {-}
 
-## Context {-}
+## Context {.unnumbered .smaller}
 
+![](images/MLDiagram6.jpg){width=90%}
 
-
-<center>
-<img src="images/MLDiagram6.jpg"/>
-</center>
-
-
-
-
-**CONTEXT**
 
 In **unsupervised learning** we don't have any y outcome variable, we're just exploring the structure of our data.
 This can be divided into 2 types of tasks:
@@ -81,14 +78,10 @@ This can be divided into 2 types of tasks:
 
 
 
-\
-\
-\
-\
 
 
 
-**DIMENSION REDUCTION MOTIVATION**    
+## Dimension Reduction Motivation {.unnumbered .smaller}
 
 Especially when we have a *lot* of features, dimension reduction helps:
 
@@ -100,16 +93,7 @@ Especially when we have a *lot* of features, dimension reduction helps:
 
 
 
-\
-\
-\
-\
-
-
-
-
-
-**PRINCIPAL COMPONENT ANALYSIS (PCA)**    
+## Principal Component Analysis (PCA) {-} 
 
 
 ![](images/pca_flow.png)
@@ -120,21 +104,7 @@ Especially when we have a *lot* of features, dimension reduction helps:
 
 
 
-\
-\
-\
-\
-
-
-
-
-
-
-
-
-
-
-**INSPIRATION**
+## Example {.unnumbered .smaller}
 
 PCA is pretty cool.
 
@@ -149,39 +119,31 @@ We can capture much of the geographic relationship by reducing these 500,000 fea
 
 
 
-\
-\
-\
-\
+## PCA Details {.unnumbered .smaller}
 
-
-
-## Notes: Principal Component Analysis {-}
-
+::: {.content-visible when-profile="book"}
+**NOTE**
 
 The section here provides a general overview of the PCA algorithm.
-
 The details require linear algebra, which is not a pre-req for this course.
-
 If you're curious, more details are provided in the Deeper Learning section below.
 
 <br>
 
 
-
-
-
-
 **PRINCIPAL COMPONENT ANALYSIS**    
+:::
 
 Suppose we start with high dimensional data with p *correlated* features: $x_1$, $x_2$, ..., $x_p$.
+
+. . .
 
 We want to turn these into a *smaller* set of k < p features or *principal components* $PC_1$, $PC_2$, …., $PC_k$ that: 
 
 - are *uncorrelated* (i.e. each contain *unique* information)
 - preserve the majority of information or variability in the original data
 
-
+. . .
 
 **Step 1**    
 Define the p principal components as **linear combinations** of the original x features.
@@ -194,11 +156,13 @@ PC_2 & = a_{21} x_1 + a_{22} x_2 + \cdots + a_{2p} x_p \\
 PC_p & = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 \end{split}$$    
 
+. . .
+
 The **first PC** $PC_1$ is the direction of maximal variability -- it retains the greatest variability or information in the original data.
 
 The subsequent PCs are defined to have maximal variation among the directions orthogonal to /  perpendicular to / uncorrelated with the previously constructed PCs.    
 
-\
+. . .
 
 
 **Step 2**    
@@ -218,23 +182,32 @@ Keep only the subset of PCs which retain "enough" of the variability / informati
 
 
 
-## Small Group Discussion {-}
 
-Recall the Australian weather data from Homework 2 (image: http://toursmaps.com/wp-content/uploads/2017/09/australia-map-google-_0.jpg):
+# Small Group Discussion {-}
 
-![](images/australia-map.jpg)
+## Data Details {.unnumbered .smaller}
 
+Recall the Australian weather data from earlier this semester:
 
-
+![image source: http://toursmaps.com/wp-content/uploads/2017/09/australia-map-google-_0.jpg](images/australia-map.jpg)
 
 
 ```{r}
+#| code-fold: true
+#| eval: true
 # Import the data and load some packages
 library(tidyverse)
 library(rattle)
 data(weatherAUS)
+head(weatherAUS)
+```
 
-# Note that this has missing values
+. . .
+
+Note that the data has some missing values:
+
+```{r}
+#| eval: true
 colSums(is.na(weatherAUS))
 ```
 
@@ -243,9 +216,12 @@ PCA cannot handle missing values.
 
 We *could* simply eliminate days with any missing values, but this would kick out a lot of useful info.
 
+. . .
+
 Instead, we'll use KNN to *impute* the missing values using the `VIM` package.
 
 ```{r}
+#| eval: true
 # If your VIM package works, use this chunk to process the data
 library(VIM)
 
@@ -265,23 +241,26 @@ weather_data <- data.frame(model.matrix(~ . - 1, data = weather_temp))
 rownames(weather_data) <- rownames(weather_temp)
 ```
 
+<!-- data from Brianna are almost identical to above, but one entry is different? -->
+
+::: {.content-visible when-profile="book"}
 If your VIM package doesn't work, import the processed data from here:
 
-```{r eval = FALSE}
-weather_data <- read.csv("https://bcheggeseth.github.io/253_spring_2024/data/weatherAUS_processed_subset.csv") %>% 
+```{r}
+#| eval: false
+weather_data <- read.csv("https://kegrinde.github.io/stat253_coursenotes/data/weatherAUS_processed_subset.csv") %>% 
   column_to_rownames("Location")
 ```
+:::
 
 
-\
-\
 
-
-**EXAMPLE 1: Research goals**
+## EXAMPLE 1: Research goals {.unnumbered .smaller}
 
 Check out the `weather_data`:
 
 ```{r}
+#| eval: true
 head(weather_data)
 ```
 
@@ -297,12 +276,14 @@ b. How can we *combine* these correlated weather features into a smaller set? (f
 </details>
 <br>
 
-**EXAMPLE 2: Starting small**
+## EXAMPLE 2: Starting small {.unnumbered .smaller}
 
 Let's start with just 3 *correlated* features:
 $x_1$ (Temp9am), $x_2$ (MinTemp), and $x_3$ (WindSpeed9am)
 
 ```{r fig.width = 5, fig.height = 5}
+#| eval: true
+#| code-fold: true
 small_example <- weather_data %>% 
   select(Temp9am, MinTemp, WindSpeed9am)
 
@@ -327,11 +308,12 @@ b. Maybe 2? PC1 might contain strong info about the temp features and PC2 might 
 
 
 
-**EXAMPLE 3: Defining the PCs**
+## EXAMPLE 3: Defining the PCs {.unnumbered .smaller}
 
 Perform a PCA on the `small_example` data:
 
 ```{r}
+#| eval: true
 # This code is nice and short!
 # scale = TRUE, center = TRUE first standardizes the features
 pca_small <- prcomp(small_example, scale = TRUE, center = TRUE)
@@ -340,6 +322,7 @@ pca_small <- prcomp(small_example, scale = TRUE, center = TRUE)
 This creates 3 PCs which are each different *combinations* of the (standardized) original features:
 
 ```{r}
+#| eval: true
 # Original (standardized) features
 scale(small_example) %>% 
   head()
@@ -364,6 +347,8 @@ $PC_3 = a_{31}x_1 + a_{32}x_2 + a_{33}x_3$
 And these linear combinations are defined so that the PCs are *uncorrelated*, thus each contain *unique* weather information about the cities!
 
 ```{r fig.width = 5, fig.height = 5}
+#| eval: true
+#| code-fold: true
 pca_small %>% 
   pluck("x") %>% 
   pairs()
@@ -376,6 +361,7 @@ a. Use the loadings below to specify the formula for the first PC.
     PC1 = ___*Temp9am + ___*MinTemp + ___*WindSpeed9am
   
 ```{r}
+#| eval: true
 pca_small %>% 
   pluck("rotation")
 ```
@@ -384,6 +370,7 @@ pca_small %>%
 b. For just the first city, confirm that its PC1 coordinate or **score** can be calculated from its original coordinates using the formula in part a: 
     
 ```{r}
+#| eval: true
 # Original (standardized) coordinates
 scale(small_example) %>% 
   head(1)
@@ -411,11 +398,13 @@ b.
 
 
 
-**EXAMPLE 4: Examining the components of each PC (part 1)**
+## EXAMPLE 4: Examining the components of each PC (part 1) {.unnumbered .smaller}
 
 Plots can help us interpret the above numerical loadings, hence the important components of each PC.
 
-```{r fig.width = 8}
+```{r fig.width = 10}
+#| eval: true
+#| code-fold: true
 # Plot the loadings for all 3 PCs
 library(reshape2)
 melt(pca_small$rotation[, 1:3]) %>% 
@@ -425,7 +414,11 @@ melt(pca_small$rotation[, 1:3]) %>%
     labs(y = "loadings", x = "original features", fill = "original features")
 ```
 
+
+::: {.content-visible when-profile="book"}
 ```{r fig.width = 8}
+#| eval: true
+#| code-fold: true
 # Focus on the 1st PC (this will be helpful when we have more PCs!)
 melt(pca_small$rotation) %>%
   filter(Var2 == "PC1") %>% 
@@ -433,18 +426,12 @@ melt(pca_small$rotation) %>%
     geom_bar(stat = "identity") +
     labs(y = "loadings", x = "original features", fill = "original features")
 ```
-
+:::
 
 
 a. Which features contribute the most, either positively or negatively, to the first PC?
 
 b. What about the second PC?
-
-
-
-
-
-
 
 
 
@@ -455,7 +442,8 @@ b. PC2 is driven primarily by WindSpeed9am (positively)
 </details>
 <br>
 
-**EXAMPLE 5: Examining the components of each PC (part 2)**
+
+## EXAMPLE 5: Examining the components of each PC (part 2) {.unnumbered .smaller}
 
 When we have a lot of features x, the above plots get messy.
 A **loadings plot** or **correlation circle** is another way to visualize PC1 and PC2 (the most important PCs):
@@ -469,6 +457,8 @@ It is powerful in that it can provide a 2-dimensional visualization of high dime
   
 
 ```{r fig.width = 6, fig.height = 6}
+#| eval: true
+#| code-fold: true
 library(factoextra)
 fviz_pca_var(pca_small, repel = TRUE)
 ```
@@ -491,11 +481,12 @@ c. WindSpeed9am contributes to PC2
 
 
 
-**EXAMPLE 6: Examining the amount of information captured by each PC (numerical metrics)**
+## EXAMPLE 6: Examining the amount of information captured by each PC (numerical metrics) {.unnumbered .smaller}
 
 Now that we better understand the *structures* of the PCs, let's examine the relative amount of information they each capture from the original set of features:
 
 ```{r}
+#| eval: true
 # Load package for tidy table
 library(tidymodels)
 
@@ -551,11 +542,13 @@ c. 97.3%
 
 
 
-**EXAMPLE 7: Examining the amount of information captured by each PC (SCREE plots)**
+## EXAMPLE 7: Examining the amount of information captured by each PC (SCREE plots) {.unnumbered .smaller}
 
 Especially when we start with lots of features, graphical summaries of the above tidy summary can help understand the variation captured by the PCs:
 
 ```{r}
+#| eval: true
+#| code-fold: true
 # SCREE PLOT: % of variance explained by each PC
 pca_small %>% 
   tidy(matrix = "eigenvalues") %>% 
@@ -566,6 +559,8 @@ pca_small %>%
 ```
     
 ```{r}
+#| eval: true
+#| code-fold: true
 # Cumulative % of variance explained
 pca_small %>% 
   tidy(matrix = "eigenvalues") %>% 
@@ -584,9 +579,6 @@ Thus by how much can we reduce the dimensions of our dataset?
 
 
 
-    
-
-
 <details>
 <summary>Solution:</summary>
 2 (maybe 1). The first 2 PCs account for nearly 100% of the variance. (The first PC alone also accounts for a lot, and maybe enough depending upon our research goals.)
@@ -594,36 +586,38 @@ Thus by how much can we reduce the dimensions of our dataset?
 <br>
 
 
-**EXAMPLE 8: Examining the new PC coordinates of the data points (score plots)**
+## EXAMPLE 8: Examining the new PC coordinates of the data points (score plots) {.unnumbered .smaller}
 
 Finally, now that we better understand the "meaning" of our 3 new PCs, let's explore their outcomes for each city (row) in the dataset.
+
+::: {.content-visible when-profile="book"}
 The below **scores** provide the new coordinates with respect to the 3 PCs:
 
 ```{r}
+#| eval: true
 pca_small %>% 
   pluck("x") %>% 
   head()
 ```
+:::
 
 A **score plot** maps out the scores of the first, and most important, 2 PCs for each city.
 PC1 is on the x-axis and PC2 on the y-axis.
 
+::: {.content-visible when-profile="book"}
 Again, since these PCs are linear combinations of all original features (only 3 here), a score plot can provide a 2-dimensional visualization of high dimensional data!
+:::
 
-Question: Unless you're familiar with Australian geography, it might be tough to ascertain any meaningful patterns here. 
-
+**Question:** Unless you're familiar with Australian geography, it might be tough to ascertain any meaningful patterns here. 
 Looking back to the map, and recalling the key information captured by PC1 and PC2, does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?
 
 
 ```{r fig.width = 6, fig.height = 6}
+#| eval: true
+#| code-fold: true
 # Score plot: plot PC1 scores (x-axis) vs PC2 scores (y-axis) of all data points
 fviz_pca_ind(pca_small, repel = TRUE)
 ```
-
-
-
-
-
 
 
 
@@ -638,17 +632,19 @@ will vary. it's not obvious to me personally! Some students have shared that mor
 
 
 
-**EXAMPLE 9: PCA using all features**
+## EXAMPLE 9: PCA using all features {.unnumbered .smaller}
 
 Repeat the PCA using all 18 original features in the `weather_data`, our goal being to reduce the dimensions of this dataset while still maintaining a "sufficient" amount of the original information!
 
 ```{r}
+#| eval: true
 pca_weather <- prcomp(weather_data, scale = TRUE, center = TRUE)
 ```
 
 This produces 18 *uncorrelated* PCs that are linear combinations of the original (standardized) features:
 
 ```{r}
+#| eval: true
 pca_weather %>% 
   pluck("x") %>% 
   head()
@@ -657,12 +653,14 @@ pca_weather %>%
 a. Suppose we wanted to retain at least 80% of the information in the original 18 features. What's the smallest number of PCs we need to keep? *Thus how much can we reduce the original dimensions?*
 
 ```{r}
+#| eval: true
 # Cumulative % of variance explained (in numbers)
 pca_weather %>% 
   tidy(matrix = "eigenvalues")
 ```
     
 ```{r}
+#| eval: true
 # Cumulative % of variance explained (plot)
 pca_weather %>% 
   tidy(matrix = "eigenvalues") %>% 
@@ -678,6 +676,7 @@ pca_weather %>%
 b. Check out some plots of the loadings in the more important PCs. Describe the general properties of the first 2 PCs. What original features do they most capture?        
 
 ```{r fig.width = 8, fig.height = 6}
+#| eval: true
 # Plot the loadings for first 5 PCs  
 # We have to use a different color palette -- we need enough colors for our 18 features
 pca_weather$rotation %>% as.data.frame() %>% select(PC1:PC5) %>% rownames_to_column(var = 'Variable') %>% pivot_longer(PC1:PC5 ,names_to = 'PC', values_to = 'Value') %>% 
@@ -692,6 +691,7 @@ pca_weather$rotation %>% as.data.frame() %>% select(PC1:PC5) %>% rownames_to_col
 ```
     
 ```{r fig.width = 6, fig.height = 6}
+#| eval: true
 # Loadings plot: first 2 PCs
 fviz_pca_var(pca_weather, repel = TRUE)
 ```
@@ -700,6 +700,7 @@ fviz_pca_var(pca_weather, repel = TRUE)
 c. Finally, check out the **score plot** for the first 2 PCs. Does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?       
 
 ```{r fig.width = 6, fig.height = 6}
+#| eval: true
 fviz_pca_ind(pca_weather, repel = TRUE)
 ```
     
@@ -714,7 +715,7 @@ c. again, not obvious to me!
 
 
 
-**EXAMPLE 10: Drawbacks**
+## EXAMPLE 10: Drawbacks {.unnumbered .smaller}
 
 a. In what kind of scenario would you be relieved to have PCA as a tool?    
 b. What are the drawbacks of PCA? When might you hesitate to use it?
@@ -729,16 +730,18 @@ b. if we're specifically interested in the original features (and don't want to 
 
 </details>
 
+\
+\
+\
+\
 
-## Exercises {-}
+# Exercises {-}
 
+**NOTE** 
 
-**NOTES:**
+These exercises are on HW6. The R code section below will be handy.
 
-- These exercises are on Homework 7. The R code section below will be handy.
-
-
-
+## {.unnumbered .smaller}
 
 
 7.  **PCA Part 1**    
@@ -765,9 +768,27 @@ b. if we're specifically interested in the original features (and don't want to 
     
 
 
+\
+\
+\
+\
 
+# Wrapping Up {.unnumbered .smaller}
 
-## Notes: R code {-}
+- As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions
+- Upcoming due dates: 
+  - Group Assignment 2: due **TONIGHT**
+  - HW6 (**last one!!**): due Wednesday after break (Dec 4)
+  - Quiz 2 Revisions: bring to class Thursday after break (Dec 5)
+
+\
+\
+\
+\
+
+# Notes: R code {-}
+
+## {.unnumbered .smaller}
 
 Suppose we have a set of `sample_data` with multiple feature columns x, and (possibly) a column named `id` which labels each data point.
 
@@ -918,15 +939,15 @@ fviz_pca_ind(pca_results, repel = TRUE)
 
 
 
-## Deeper learning (OPTIONAL) {-}
+# Deeper learning (OPTIONAL) {-}
 
 
 **ALTERNATIVES TO PCA**
 
 For more dimension reduction techniques, check out:
 
-- https://juliasilge.com/blog/billboard-100/
-- https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/
+- [https://juliasilge.com/blog/billboard-100/](https://juliasilge.com/blog/billboard-100/)
+- [https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/](https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/)
 
 
 \
@@ -967,7 +988,7 @@ where $U$ is an $n \times n$ matrix of orthogonal *left singular vectors* of $X$
 
 $$X^TX = W \Sigma^T U^T U \Sigma W^T = W \Sigma^2 W^T$$
 
-Further resource: https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/
+Further resource: [https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/](https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/)
 
 
 

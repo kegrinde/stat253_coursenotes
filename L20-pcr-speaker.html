@@ -10,7 +10,7 @@
 <link href="L20-pcr_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
-  <title>l20-pcr</title>
+  <title>Principal Component Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -392,11 +392,33 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Principal Component Regression</h1>
 
-<section>
-<section id="principal-component-regression" class="title-slide slide level1 center">
-<h1>Principal component regression</h1>
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section class="slide level2">
+
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>this page is under construction! please check back soon for updates</p>
+</div>
+</div>
+</div>
 <p>Unsupervised &amp; supervised learning are friends!</p>
+</section>
+<section>
+<section id="settling-in" class="title-slide slide level1 unnumbered center">
+<h1>Settling In</h1>
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 <!-- PCR vs partial least squares p237 -->
 <!-- unlike PCR, partial least squares i.d. new directions by also considering by which are associated with Y.  loadings of first direction defined by LS coefs, thus summarizes the most important LS predictors -->
@@ -602,6 +624,7 @@ Next, consider 50 possible LASSO regression models of <code>winpercent</code>, s
 <p><strong>FOLLOW-UP</strong></p>
 <p>Processing and applying the results is the same as for our other <code>tidymodels</code> algorithms!</p>
 <div class="quarto-auto-generated-content">
+<p><img src="images/mac.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
 </div>
@@ -822,44 +845,6 @@ Next, consider 50 possible LASSO regression models of <code>winpercent</code>, s
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {

@@ -10,7 +10,7 @@
 <link href="L19-pca_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.555">
 
-  <title>l19-pca</title>
+  <title>Principal Component Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="L19-pca_files/libs/revealjs/dist/theme/quarto.css">
   <link href="L19-pca_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -327,10 +392,15 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Principal Component Analysis</h1>
 
-<section>
-<section id="principal-component-analysis" class="title-slide slide level1 center">
-<h1>Principal component analysis</h1>
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section class="slide level2">
+
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 <!-- NOTE: reading references rape, assault, etc :/ -->
 <!-- > **READING**     -->
@@ -352,15 +422,29 @@ head(as.matrix(weather_data) %*% as.matrix(pca_small$rotation)) -->
 <!-- ggplot(data.frame(scores), aes(x = PC1, y = PC2)) +  -->
 <!--   geom_point() + -->
 <!--   theme(text = element_text(size = 16)) -->
+</section>
+<section id="settling-in" class="title-slide slide level1 unnumbered center">
+<h1>Settling In</h1>
+<ul>
+<li>Sit with your NEW group and introduce yourselves</li>
+<li>Prepare to take notes (find the QMD template in the usual spot)</li>
+<li>Catch up on any announcements you’ve missed on Slack</li>
+</ul>
 <p><br>
+<br>
+<br>
+<br>
 </p>
 </section>
-<section id="context" class="slide level2 unnumbered">
+
+<section>
+<section id="notes-pca" class="title-slide slide level1 unnumbered center">
+<h1>Notes: PCA</h1>
+
+</section>
+<section id="context" class="slide level2 unnumbered smaller">
 <h2>Context</h2>
-<center>
-<img src="images/MLDiagram6.jpg">
-</center>
-<p><strong>CONTEXT</strong></p>
+<p><img data-src="images/MLDiagram6.jpg" style="width:90.0%"></p>
 <p>In <strong>unsupervised learning</strong> we don’t have any y outcome variable, we’re just exploring the structure of our data. This can be divided into 2 types of tasks:</p>
 <ul>
 <li><strong>clustering</strong>
@@ -374,54 +458,38 @@ head(as.matrix(weather_data) %*% as.matrix(pca_small$rotation)) -->
 <li>METHODS: principal components analysis (and many others, including singular value decomposition (SVD), Uniform Manifold Approximation and Projection (UMAP))</li>
 </ul></li>
 </ul>
-<p><br>
-<br>
-<br>
-<br>
-</p>
-<p><strong>DIMENSION REDUCTION MOTIVATION</strong></p>
+</section>
+<section id="dimension-reduction-motivation" class="slide level2 unnumbered smaller">
+<h2>Dimension Reduction Motivation</h2>
 <p>Especially when we have a <em>lot</em> of features, dimension reduction helps:</p>
 <ul>
 <li>identify patterns among the features</li>
 <li>conserve computational resources</li>
 <li><strong>feature engineering</strong>: create salient features to use in regression &amp; classification (will discuss next class)</li>
 </ul>
-<p><br>
-<br>
-<br>
-<br>
-</p>
-<p><strong>PRINCIPAL COMPONENT ANALYSIS (PCA)</strong></p>
+</section>
+<section id="principal-component-analysis-pca" class="slide level2 unnumbered">
+<h2>Principal Component Analysis (PCA)</h2>
 <p><img data-src="images/pca_flow.png"></p>
-<p><br>
-<br>
-<br>
-<br>
-</p>
-<p><strong>INSPIRATION</strong></p>
+</section>
+<section id="example" class="slide level2 unnumbered smaller">
+<h2>Example</h2>
 <p>PCA is pretty cool.</p>
 <p>Check out this article <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2735096/">“Genes mirror geography in Europe”</a> which examined more than 500,000 DNA sites on 3,000 Europeans.</p>
 <p>Thus we have high dimensional data with 3,000 rows (n) and 500,000 columns (p), thus p &gt; n. We can capture much of the geographic relationship by reducing these 500,000 features to just 2 principal components!</p>
 <p><img data-src="images/pca_geography.png"></p>
-<p><br>
-<br>
-<br>
-<br>
-</p>
 </section>
-<section id="notes-principal-component-analysis" class="slide level2 unnumbered">
-<h2>Notes: Principal Component Analysis</h2>
-<p>The section here provides a general overview of the PCA algorithm.</p>
-<p>The details require linear algebra, which is not a pre-req for this course.</p>
-<p>If you’re curious, more details are provided in the Deeper Learning section below.</p>
-<p><br></p>
-<p><strong>PRINCIPAL COMPONENT ANALYSIS</strong></p>
+<section id="pca-details" class="slide level2 unnumbered smaller">
+<h2>PCA Details</h2>
 <p>Suppose we start with high dimensional data with p <em>correlated</em> features: <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, …, <span class="math inline">\(x_p\)</span>.</p>
+<div class="fragment">
 <p>We want to turn these into a <em>smaller</em> set of k &lt; p features or <em>principal components</em> <span class="math inline">\(PC_1\)</span>, <span class="math inline">\(PC_2\)</span>, …., <span class="math inline">\(PC_k\)</span> that:</p>
 <ul>
 <li>are <em>uncorrelated</em> (i.e.&nbsp;each contain <em>unique</em> information)</li>
 <li>preserve the majority of information or variability in the original data</li>
 </ul>
+</div>
+<div class="fragment">
 <p><strong>Step 1</strong><br>
 Define the p principal components as <strong>linear combinations</strong> of the original x features. These combinations are specified by <strong>loadings</strong> or coefficients a:</p>
 <p><span class="math display">\[\begin{split}
@@ -430,10 +498,12 @@ PC_2 &amp; = a_{21} x_1 + a_{22} x_2 + \cdots + a_{2p} x_p \\
 \vdots &amp; \\
 PC_p &amp; = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 \end{split}\]</span></p>
+</div>
+<div class="fragment">
 <p>The <strong>first PC</strong> <span class="math inline">\(PC_1\)</span> is the direction of maximal variability – it retains the greatest variability or information in the original data.</p>
 <p>The subsequent PCs are defined to have maximal variation among the directions orthogonal to / perpendicular to / uncorrelated with the previously constructed PCs.</p>
-<p><br>
-</p>
+</div>
+<div class="fragment">
 <p><strong>Step 2</strong></p>
 <p>Keep only the subset of PCs which retain “enough” of the variability / information in the original dataset.</p>
 <p><br>
@@ -441,12 +511,52 @@ PC_p &amp; = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 <br>
 <br>
 </p>
+</div>
+</section></section>
+<section>
+<section id="small-group-discussion" class="title-slide slide level1 unnumbered center">
+<h1>Small Group Discussion</h1>
+
 </section>
-<section id="small-group-discussion" class="slide level2 unnumbered scrollable">
-<h2>Small Group Discussion</h2>
-<p>Recall the Australian weather data from Homework 2 (image: http://toursmaps.com/wp-content/uploads/2017/09/australia-map-google-_0.jpg):</p>
+<section id="data-details" class="slide level2 unnumbered smaller">
+<h2>Data Details</h2>
+<p>Recall the Australian weather data from earlier this semester:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
 <p><img data-src="images/australia-map.jpg"></p>
+<figcaption>image source: http://toursmaps.com/wp-content/uploads/2017/09/australia-map-google-_0.jpg</figcaption>
+</figure>
+</div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Import the data and load some packages</span></span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(rattle)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">data</span>(weatherAUS)</span>
+<span id="cb1-5"><a href=""></a><span class="fu">head</span>(weatherAUS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 24
+  Date       Location MinTemp MaxTemp Rainfall Evaporation Sunshine WindGustDir
+  &lt;date&gt;     &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;ord&gt;      
+1 2008-12-01 Albury      13.4    22.9      0.6          NA       NA W          
+2 2008-12-02 Albury       7.4    25.1      0            NA       NA WNW        
+3 2008-12-03 Albury      12.9    25.7      0            NA       NA WSW        
+4 2008-12-04 Albury       9.2    28        0            NA       NA NE         
+5 2008-12-05 Albury      17.5    32.3      1            NA       NA W          
+6 2008-12-06 Albury      14.6    29.7      0.2          NA       NA WNW        
+# ℹ 16 more variables: WindGustSpeed &lt;dbl&gt;, WindDir9am &lt;ord&gt;, WindDir3pm &lt;ord&gt;,
+#   WindSpeed9am &lt;dbl&gt;, WindSpeed3pm &lt;dbl&gt;, Humidity9am &lt;int&gt;,
+#   Humidity3pm &lt;int&gt;, Pressure9am &lt;dbl&gt;, Pressure3pm &lt;dbl&gt;, Cloud9am &lt;int&gt;,
+#   Cloud3pm &lt;int&gt;, Temp9am &lt;dbl&gt;, Temp3pm &lt;dbl&gt;, RainToday &lt;fct&gt;,
+#   RISK_MM &lt;dbl&gt;, RainTomorrow &lt;fct&gt;</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Note that the data has some missing values:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(weatherAUS))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Date      Location       MinTemp       MaxTemp      Rainfall 
             0             0          3285          3085          5930 
@@ -462,14 +572,36 @@ PC_p &amp; = a_{p1} x_1 + a_{p2} x_2 + \cdots + a_{pp} x_p \\
 </div>
 <p>PCA cannot handle missing values.</p>
 <p>We <em>could</em> simply eliminate days with any missing values, but this would kick out a lot of useful info.</p>
+</div>
+<div class="fragment">
 <p>Instead, we’ll use KNN to <em>impute</em> the missing values using the <code>VIM</code> package.</p>
-<p>If your VIM package doesn’t work, import the processed data from here:</p>
-<p><br>
-<br>
-</p>
-<p><strong>EXAMPLE 1: Research goals</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="co"># If your VIM package works, use this chunk to process the data</span></span>
+<span id="cb5-2"><a href=""></a><span class="fu">library</span>(VIM)</span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a><span class="co"># It would be better to impute before filtering &amp; selecting</span></span>
+<span id="cb5-5"><a href=""></a><span class="co"># BUT it's very computationally expensive in this case</span></span>
+<span id="cb5-6"><a href=""></a>weather_temp <span class="ot">&lt;-</span> weatherAUS <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href=""></a>  <span class="fu">filter</span>(Date <span class="sc">==</span> <span class="st">"2008-12-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href=""></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Date, <span class="sc">-</span>RainTomorrow, <span class="sc">-</span>Temp3pm, <span class="sc">-</span>WindGustDir, <span class="sc">-</span>WindDir9am, <span class="sc">-</span>WindDir3pm) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href=""></a>  VIM<span class="sc">::</span><span class="fu">kNN</span>(<span class="at">imp_var =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-10"><a href=""></a></span>
+<span id="cb5-11"><a href=""></a><span class="co"># Now convert Location to the row name (not a feature)</span></span>
+<span id="cb5-12"><a href=""></a>weather_temp <span class="ot">&lt;-</span> weather_temp <span class="sc">%&gt;%</span> </span>
+<span id="cb5-13"><a href=""></a>  <span class="fu">column_to_rownames</span>(<span class="st">"Location"</span>) </span>
+<span id="cb5-14"><a href=""></a></span>
+<span id="cb5-15"><a href=""></a><span class="co"># Create a new data frame that processes logical and factor features into dummy variables</span></span>
+<span id="cb5-16"><a href=""></a>weather_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> weather_temp))</span>
+<span id="cb5-17"><a href=""></a><span class="fu">rownames</span>(weather_data) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(weather_temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- data from Brianna are almost identical to above, but one entry is different? -->
+</div>
+</section>
+<section id="example-1-research-goals" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 1: Research goals</h2>
 <p>Check out the <code>weather_data</code>:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">head</span>(weather_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           MinTemp MaxTemp Rainfall Evaporation Sunshine WindGustSpeed
 Albury        13.4    22.9      0.6         7.4     10.1            44
@@ -515,13 +647,22 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 2: Starting small</strong></p>
+</section>
+<section id="example-2-starting-small" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 2: Starting small</h2>
 <p>Let’s start with just 3 <em>correlated</em> features: <span class="math inline">\(x_1\)</span> (Temp9am), <span class="math inline">\(x_2\)</span> (MinTemp), and <span class="math inline">\(x_3\)</span> (WindSpeed9am)</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>small_example <span class="ot">&lt;-</span> weather_data <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href=""></a>  <span class="fu">select</span>(Temp9am, MinTemp, WindSpeed9am)</span>
+<span id="cb8-3"><a href=""></a></span>
+<span id="cb8-4"><a href=""></a><span class="fu">pairs</span>(small_example)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-5-1.png" width="480"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
 </figure>
 </div>
 </div>
@@ -541,10 +682,20 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 3: Defining the PCs</strong></p>
+</section>
+<section id="example-3-defining-the-pcs" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 3: Defining the PCs</h2>
 <p>Perform a PCA on the <code>small_example</code> data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># This code is nice and short!</span></span>
+<span id="cb9-2"><a href=""></a><span class="co"># scale = TRUE, center = TRUE first standardizes the features</span></span>
+<span id="cb9-3"><a href=""></a>pca_small <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(small_example, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">center =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>This creates 3 PCs which are each different <em>combinations</em> of the (standardized) original features:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># Original (standardized) features</span></span>
+<span id="cb10-2"><a href=""></a><span class="fu">scale</span>(small_example) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Temp9am     MinTemp WindSpeed9am
 Albury     -0.49164877 -0.10016777    0.5179183
@@ -554,6 +705,10 @@ Sydney      0.72917948  0.62193718   -1.8645059
 Wollongong -0.93419901 -0.77069379    0.5179183
 Canberra   -0.03383817 -0.06578182    1.3120597</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># PCs</span></span>
+<span id="cb12-2"><a href=""></a>pca_small <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"x"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  PC1         PC2         PC3
 Albury     -0.6119817  0.27733759 -0.26182765
@@ -570,10 +725,16 @@ Canberra   -0.6683498  1.12907017  0.07404101</code></pre>
 <p><span class="math inline">\(PC_3 = a_{31}x_1 + a_{32}x_2 + a_{33}x_3\)</span></p>
 <p>And these linear combinations are defined so that the PCs are <em>uncorrelated</em>, thus each contain <em>unique</em> weather information about the cities!</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>pca_small <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"x"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href=""></a>  <span class="fu">pairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-8-1.png" width="480"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-9-1.png" width="480"></p>
 </figure>
 </div>
 </div>
@@ -583,6 +744,8 @@ Canberra   -0.6683498  1.12907017  0.07404101</code></pre>
 <p>PC1 = ___*Temp9am + ___*MinTemp + ___*WindSpeed9am</p></li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>pca_small <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"rotation"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    PC1       PC2         PC3
 Temp9am       0.6312659 0.2967160  0.71656333
@@ -594,10 +757,17 @@ WindSpeed9am -0.4618725 0.8860440  0.03999775</code></pre>
 <li>For just the first city, confirm that its PC1 coordinate or <strong>score</strong> can be calculated from its original coordinates using the formula in part a:</li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># Original (standardized) coordinates</span></span>
+<span id="cb17-2"><a href=""></a><span class="fu">scale</span>(small_example) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href=""></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Temp9am    MinTemp WindSpeed9am
 Albury -0.4916488 -0.1001678    0.5179183</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># PC coordinates</span></span>
+<span id="cb19-2"><a href=""></a>pca_small <span class="sc">%&gt;%</span>   </span>
+<span id="cb19-3"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"x"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href=""></a>  <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              PC1       PC2        PC3
 Albury -0.6119817 0.2773376 -0.2618276</code></pre>
@@ -612,28 +782,32 @@ Solution:
 <li></li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>(<span class="fl">0.6312659</span> <span class="sc">*</span> <span class="sc">-</span><span class="fl">0.4916488</span>)  <span class="sc">+</span> (<span class="fl">0.6230387</span> <span class="sc">*</span> <span class="sc">-</span><span class="fl">0.1001678</span>) <span class="sc">-</span> (<span class="fl">0.4618725</span> <span class="sc">*</span> <span class="fl">0.5179183</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.6119818</code></pre>
 </div>
 </div>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 4: Examining the components of each PC (part 1)</strong></p>
+</section>
+<section id="example-4-examining-the-components-of-each-pc-part-1" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 4: Examining the components of each PC (part 1)</h2>
 <p>Plots can help us interpret the above numerical loadings, hence the important components of each PC.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Plot the loadings for all 3 PCs</span></span>
+<span id="cb23-2"><a href=""></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb23-3"><a href=""></a><span class="fu">melt</span>(pca_small<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> value, <span class="at">fill =</span> Var1)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href=""></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href=""></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> Var2) <span class="sc">+</span> </span>
+<span id="cb23-7"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"loadings"</span>, <span class="at">x =</span> <span class="st">"original features"</span>, <span class="at">fill =</span> <span class="st">"original features"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-12-1.png" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-13-1.png" width="768"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -652,7 +826,9 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 5: Examining the components of each PC (part 2)</strong></p>
+</section>
+<section id="example-5-examining-the-components-of-each-pc-part-2" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 5: Examining the components of each PC (part 2)</h2>
 <p>When we have a lot of features x, the above plots get messy. A <strong>loadings plot</strong> or <strong>correlation circle</strong> is another way to visualize PC1 and PC2 (the most important PCs):</p>
 <ul>
 <li>each <em>arrow</em> represents a feature x</li>
@@ -662,10 +838,15 @@ Solution:
 </ul>
 <p>It is powerful in that it can provide a 2-dimensional visualization of high dimensional data (just 3 dimensions in our small example here)!</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb24-2"><a href=""></a><span class="fu">fviz_pca_var</span>(pca_small, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-14-1.png" width="576"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -686,9 +867,19 @@ Solution:
 </ol>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 6: Examining the amount of information captured by each PC (numerical metrics)</strong></p>
+</section>
+<section id="example-6-examining-the-amount-of-information-captured-by-each-pc-numerical-metrics" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 6: Examining the amount of information captured by each PC (numerical metrics)</h2>
 <p>Now that we better understand the <em>structures</em> of the PCs, let’s examine the relative amount of information they each capture from the original set of features:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="co"># Load package for tidy table</span></span>
+<span id="cb25-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb25-3"><a href=""></a></span>
+<span id="cb25-4"><a href=""></a><span class="co"># Measure information captured by each PC</span></span>
+<span id="cb25-5"><a href=""></a><span class="co"># Calculate variance from standard deviation</span></span>
+<span id="cb25-6"><a href=""></a>pca_small <span class="sc">%&gt;%</span> </span>
+<span id="cb25-7"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-8"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">var =</span> std.dev<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
      PC std.dev percent cumulative    var
@@ -719,6 +910,7 @@ Solution:
 <li>75.3%</li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fl">2.26</span> <span class="sc">/</span> (<span class="fl">2.26</span> <span class="sc">+</span> <span class="fl">0.660</span> <span class="sc">+</span> <span class="fl">0.0805</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7532078</code></pre>
 </div>
@@ -728,28 +920,52 @@ Solution:
 <li>97.3%</li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fl">0.753</span> <span class="sc">+</span> <span class="fl">0.220</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.973</code></pre>
 </div>
 </div>
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 7: Examining the amount of information captured by each PC (SCREE plots)</strong></p>
+</section>
+<section id="example-7-examining-the-amount-of-information-captured-by-each-pc-scree-plots" class="slide level2 unnumbered smaller">
+<h2>EXAMPLE 7: Examining the amount of information captured by each PC (SCREE plots)</h2>
 <p>Especially when we start with lots of features, graphical summaries of the above tidy summary can help understand the variation captured by the PCs:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="co"># SCREE PLOT: % of variance explained by each PC</span></span>
+<span id="cb31-2"><a href=""></a>pca_small <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> percent, <span class="at">x =</span> PC)) <span class="sc">+</span> </span>
+<span id="cb31-5"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb31-6"><a href=""></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb31-7"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"% of variance explained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="co"># Cumulative % of variance explained</span></span>
+<span id="cb32-2"><a href=""></a>pca_small <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href=""></a>  <span class="fu">rbind</span>(<span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> cumulative, <span class="at">x =</span> PC)) <span class="sc">+</span> </span>
+<span id="cb32-6"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb32-7"><a href=""></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb32-8"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"CUMULATIVE % of variance explained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -763,28 +979,22 @@ Solution:
 2 (maybe 1). The first 2 PCs account for nearly 100% of the variance. (The first PC alone also accounts for a lot, and maybe enough depending upon our research goals.)
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 8: Examining the new PC coordinates of the data points (score plots)</strong></p>
-<p>Finally, now that we better understand the “meaning” of our 3 new PCs, let’s explore their outcomes for each city (row) in the dataset. The below <strong>scores</strong> provide the new coordinates with respect to the 3 PCs:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>                  PC1         PC2         PC3
-Albury     -0.6119817  0.27733759 -0.26182765
-Newcastle   0.6944764 -1.15487603  0.22381760
-Penrith     0.7312569 -0.09374376  0.30573078
-Sydney      1.7089610 -1.21413476  0.01482615
-Wollongong -1.3091122 -0.09282229 -0.11200583
-Canberra   -0.6683498  1.12907017  0.07404101</code></pre>
-</div>
-</div>
+</section>
+<section id="example-8-examining-the-new-pc-coordinates-of-the-data-points-score-plots" class="slide level2 unnumbered smaller">
+<h2>EXAMPLE 8: Examining the new PC coordinates of the data points (score plots)</h2>
+<p>Finally, now that we better understand the “meaning” of our 3 new PCs, let’s explore their outcomes for each city (row) in the dataset.</p>
 <p>A <strong>score plot</strong> maps out the scores of the first, and most important, 2 PCs for each city. PC1 is on the x-axis and PC2 on the y-axis.</p>
-<p>Again, since these PCs are linear combinations of all original features (only 3 here), a score plot can provide a 2-dimensional visualization of high dimensional data!</p>
-<p>Question: Unless you’re familiar with Australian geography, it might be tough to ascertain any meaningful patterns here.</p>
-<p>Looking back to the map, and recalling the key information captured by PC1 and PC2, does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?</p>
+<p><strong>Question:</strong> Unless you’re familiar with Australian geography, it might be tough to ascertain any meaningful patterns here. Looking back to the map, and recalling the key information captured by PC1 and PC2, does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="co"># Score plot: plot PC1 scores (x-axis) vs PC2 scores (y-axis) of all data points</span></span>
+<span id="cb33-2"><a href=""></a><span class="fu">fviz_pca_ind</span>(pca_small, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-23-1.png" width="576"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-24-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -796,10 +1006,18 @@ Solution:
 will vary. it’s not obvious to me personally! Some students have shared that more northern (warmer) cities tend to be “clustered”. Ditto southern (cooler) cities.
 </details>
 <p><br></p>
-<p><strong>EXAMPLE 9: PCA using all features</strong></p>
+</section>
+<section id="example-9-pca-using-all-features" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 9: PCA using all features</h2>
 <p>Repeat the PCA using all 18 original features in the <code>weather_data</code>, our goal being to reduce the dimensions of this dataset while still maintaining a “sufficient” amount of the original information!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>pca_weather <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(weather_data, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">center =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>This produces 18 <em>uncorrelated</em> PCs that are linear combinations of the original (standardized) features:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>pca_weather <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"x"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3"><a href=""></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  PC1        PC2         PC3         PC4         PC5        PC6
 Albury     -0.4347320  0.6310084 -0.00249586  1.58334640 -0.75416235  0.5584570
@@ -835,6 +1053,9 @@ Canberra   -0.03666081 -2.911212e-16</code></pre>
 <li>Suppose we wanted to retain at least 80% of the information in the original 18 features. What’s the smallest number of PCs we need to keep? <em>Thus how much can we reduce the original dimensions?</em></li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="co"># Cumulative % of variance explained (in numbers)</span></span>
+<span id="cb37-2"><a href=""></a>pca_weather <span class="sc">%&gt;%</span> </span>
+<span id="cb37-3"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 4
       PC  std.dev percent cumulative
@@ -860,10 +1081,17 @@ Canberra   -0.03666081 -2.911212e-16</code></pre>
 </div>
 </div>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="co"># Cumulative % of variance explained (plot)</span></span>
+<span id="cb39-2"><a href=""></a>pca_weather <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-4"><a href=""></a>  <span class="fu">rbind</span>(<span class="dv">0</span>) <span class="sc">%&gt;%</span>     </span>
+<span id="cb39-5"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> cumulative, <span class="at">x =</span> PC)) <span class="sc">+</span> </span>
+<span id="cb39-6"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb39-7"><a href=""></a>  <span class="fu">geom_line</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -872,19 +1100,32 @@ Canberra   -0.03666081 -2.911212e-16</code></pre>
 <li>Check out some plots of the loadings in the more important PCs. Describe the general properties of the first 2 PCs. What original features do they most capture?</li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="co"># Plot the loadings for first 5 PCs  </span></span>
+<span id="cb40-2"><a href=""></a><span class="co"># We have to use a different color palette -- we need enough colors for our 18 features</span></span>
+<span id="cb40-3"><a href=""></a>pca_weather<span class="sc">$</span>rotation <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(PC1<span class="sc">:</span>PC5) <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">'Variable'</span>) <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(PC1<span class="sc">:</span>PC5 ,<span class="at">names_to =</span> <span class="st">'PC'</span>, <span class="at">values_to =</span> <span class="st">'Value'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Variable, <span class="at">y =</span> Value, <span class="at">fill =</span> Variable)) <span class="sc">+</span></span>
+<span id="cb40-5"><a href=""></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href=""></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> PC) <span class="sc">+</span> </span>
+<span id="cb40-7"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"loadings"</span>, <span class="at">x =</span> <span class="st">"original features"</span>, <span class="at">fill =</span> <span class="st">"original features"</span>) <span class="sc">+</span> </span>
+<span id="cb40-8"><a href=""></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">rainbow</span>(<span class="dv">18</span>)) <span class="sc">+</span> </span>
+<span id="cb40-9"><a href=""></a>    <span class="fu">theme</span>(<span class="at">axis.title.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb40-10"><a href=""></a>        <span class="at">axis.text.x=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb40-11"><a href=""></a>        <span class="at">axis.ticks.x=</span><span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-28-1.png" width="768"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-29-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="co"># Loadings plot: first 2 PCs</span></span>
+<span id="cb41-2"><a href=""></a><span class="fu">fviz_pca_var</span>(pca_weather, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-29-1.png" width="576"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-30-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -893,10 +1134,11 @@ Canberra   -0.03666081 -2.911212e-16</code></pre>
 <li>Finally, check out the <strong>score plot</strong> for the first 2 PCs. Does there appear to be any geographical explanation of which cities are similar with respect to their PC1 and PC2 scores?</li>
 </ol>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">fviz_pca_ind</span>(pca_weather, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="L19-pca_files/figure-revealjs/unnamed-chunk-30-1.png" width="576"></p>
+<p><img data-src="L19-pca_files/figure-html/unnamed-chunk-31-1.png" width="576"></p>
 </figure>
 </div>
 </div>
@@ -911,7 +1153,9 @@ Solution:
 <li>again, not obvious to me!</li>
 </ol>
 </details>
-<p><strong>EXAMPLE 10: Drawbacks</strong></p>
+</section>
+<section id="example-10-drawbacks" class="slide level2 unnumbered smaller scrollable">
+<h2>EXAMPLE 10: Drawbacks</h2>
 <ol type="a">
 <li>In what kind of scenario would you be relieved to have PCA as a tool?<br>
 </li>
@@ -926,13 +1170,20 @@ Solution:
 <li><p>if we’re specifically interested in the original features (and don’t want to combine them into tough to interpret PCs)</p></li>
 </ol>
 </details>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section></section>
+<section>
+<section id="exercises" class="title-slide slide level1 unnumbered center">
+<h1>Exercises</h1>
+<p><strong>NOTE</strong></p>
+<p>These exercises are on HW6. The R code section below will be handy.</p>
 </section>
-<section id="exercises" class="slide level2 unnumbered scrollable">
-<h2>Exercises</h2>
-<p><strong>NOTES:</strong></p>
-<ul>
-<li>These exercises are on Homework 7. The R code section below will be handy.</li>
-</ul>
+<section id="section" class="slide level2 unnumbered smaller scrollable">
+<h2></h2>
 <ol start="7" type="1">
 <li><strong>PCA Part 1</strong><br>
 There are quite a few features in the <code>candy_rankings</code> data. Let’s do some dimension reduction. NOTE: One of the challenges of continuing to analyze the dataset using different techniques is that these techniques work differently, thus can require differently structured data. With this in mind, take care at the beginning this exercise to ensure that you’re working with the original data (without any clustering info in it).
@@ -961,32 +1212,144 @@ There are quite a few features in the <code>candy_rankings</code> data. Let’s 
 <li>Point out at least 2 original features that contribute most strongly (positively or negatively) to the first principal component. If you notice any theme to these features, say so.</li>
 </ol></li>
 </ol>
+<p><br>
+<br>
+<br>
+<br>
+</p>
+</section></section>
+<section id="wrapping-up" class="title-slide slide level1 unnumbered smaller center">
+<h1>Wrapping Up</h1>
+<ul>
+<li>As usual, take time after class to finish any remaining exercises, check solutions, reflect on key concepts from today, and come to office hours with questions</li>
+<li>Upcoming due dates:
+<ul>
+<li>Group Assignment 2: due <strong>TONIGHT</strong></li>
+<li>HW6 (<strong>last one!!</strong>): due Wednesday after break (Dec 4)</li>
+<li>Quiz 2 Revisions: bring to class Thursday after break (Dec 5)</li>
+</ul></li>
+</ul>
+<p><br>
+<br>
+<br>
+<br>
+</p>
 </section>
-<section id="notes-r-code" class="slide level2 unnumbered">
-<h2>Notes: R code</h2>
+
+<section>
+<section id="notes-r-code" class="title-slide slide level1 unnumbered center">
+<h1>Notes: R code</h1>
+
+</section>
+<section id="section-1" class="slide level2 unnumbered smaller">
+<h2></h2>
 <p>Suppose we have a set of <code>sample_data</code> with multiple feature columns x, and (possibly) a column named <code>id</code> which labels each data point.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="co"># Install packages</span></span>
+<span id="cb43-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 </p>
 <p><strong>PROCESS THE DATA</strong></p>
 <p>If there’s a column that’s an identifying variable or label, not a feature of the data points, convert it to a row name.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href=""></a>  <span class="fu">column_to_rownames</span>(<span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>PCA can’t handle NA values! There are a couple options.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="co"># Omit missing cases (this can be bad if there are a lot of missing points!)</span></span>
+<span id="cb45-2"><a href=""></a>sample_data <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(sample_data)</span>
+<span id="cb45-3"><a href=""></a></span>
+<span id="cb45-4"><a href=""></a><span class="co"># Impute the missing cases</span></span>
+<span id="cb45-5"><a href=""></a><span class="fu">library</span>(VIM)</span>
+<span id="cb45-6"><a href=""></a>sample_data <span class="ot">&lt;-</span> sample_data <span class="sc">%&gt;%</span></span>
+<span id="cb45-7"><a href=""></a>  VIM<span class="sc">::</span><span class="fu">kNN</span>(<span class="at">imp_var =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>IF you have at least 1 <em>categorical</em> / factor feature, you’ll need to pre-process the data even further. You should NOT do this if you have <em>quantitative</em> and/or <em>logical</em> features.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="co"># Turn categorical features into dummy variables</span></span>
+<span id="cb46-2"><a href=""></a>sample_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> . <span class="sc">-</span> <span class="dv">1</span>, sample_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>RUN THE PCA</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># scale = TRUE, center = TRUE first standardizes the features</span></span>
+<span id="cb47-2"><a href=""></a>pca_results <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(sample_data, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">center =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>CHECK OUT THE PCs</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="co"># Get the loadings which define the PCs</span></span>
+<span id="cb48-2"><a href=""></a>pca_results <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"rotation"</span>)</span>
+<span id="cb48-4"><a href=""></a></span>
+<span id="cb48-5"><a href=""></a><span class="co"># Plot loadings for first "k" PCs (you pick k)</span></span>
+<span id="cb48-6"><a href=""></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb48-7"><a href=""></a><span class="fu">melt</span>(pca_results<span class="sc">$</span>rotation[, <span class="dv">1</span><span class="sc">:</span>k]) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-8"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> value, <span class="at">fill =</span> Var1)) <span class="sc">+</span></span>
+<span id="cb48-9"><a href=""></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb48-10"><a href=""></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> Var2) <span class="sc">+</span> </span>
+<span id="cb48-11"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"loadings"</span>, <span class="at">x =</span> <span class="st">"original features"</span>, <span class="at">fill =</span> <span class="st">"original features"</span>)</span>
+<span id="cb48-12"><a href=""></a></span>
+<span id="cb48-13"><a href=""></a><span class="co"># Plot loadings for just the first PC</span></span>
+<span id="cb48-14"><a href=""></a><span class="fu">melt</span>(pca_results<span class="sc">$</span>rotation) <span class="sc">%&gt;%</span></span>
+<span id="cb48-15"><a href=""></a>  <span class="fu">filter</span>(Var2 <span class="sc">==</span> <span class="st">"PC1"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-16"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> value, <span class="at">fill =</span> Var1)) <span class="sc">+</span></span>
+<span id="cb48-17"><a href=""></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb48-18"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"loadings"</span>, <span class="at">x =</span> <span class="st">"original features"</span>, <span class="at">fill =</span> <span class="st">"original features"</span>)</span>
+<span id="cb48-19"><a href=""></a></span>
+<span id="cb48-20"><a href=""></a><span class="co"># Loadings plot for first 2 PCs</span></span>
+<span id="cb48-21"><a href=""></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb48-22"><a href=""></a><span class="fu">fviz_pca_var</span>(pca_results, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>EXAMINE AMOUNT OF VARIABILITY / INFORMATION CAPTURED BY EACH PC</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="co"># Load package for tidy table</span></span>
+<span id="cb49-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb49-3"><a href=""></a></span>
+<span id="cb49-4"><a href=""></a><span class="co"># Numerical summaries: Measure information captured by each PC</span></span>
+<span id="cb49-5"><a href=""></a>pca_results <span class="sc">%&gt;%</span> </span>
+<span id="cb49-6"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>)</span>
+<span id="cb49-7"><a href=""></a></span>
+<span id="cb49-8"><a href=""></a><span class="co"># Graphical summary 1: SCREE PLOT</span></span>
+<span id="cb49-9"><a href=""></a><span class="co"># Plot % of variance explained by each PC</span></span>
+<span id="cb49-10"><a href=""></a>pca_results <span class="sc">%&gt;%</span> </span>
+<span id="cb49-11"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-12"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> percent, <span class="at">x =</span> PC)) <span class="sc">+</span> </span>
+<span id="cb49-13"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb49-14"><a href=""></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb49-15"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"% of variance explained"</span>)</span>
+<span id="cb49-16"><a href=""></a></span>
+<span id="cb49-17"><a href=""></a><span class="co"># Graphical summary 2: Plot cumulative % of variance explained by each PC</span></span>
+<span id="cb49-18"><a href=""></a>pca_results <span class="sc">%&gt;%</span> </span>
+<span id="cb49-19"><a href=""></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">"eigenvalues"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-20"><a href=""></a>  <span class="fu">rbind</span>(<span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-21"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> cumulative, <span class="at">x =</span> PC)) <span class="sc">+</span> </span>
+<span id="cb49-22"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb49-23"><a href=""></a>    <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb49-24"><a href=""></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"CUMULATIVE % of variance explained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 </p>
 <p><strong>EXAMINE THE SCORES, i.e PC COORDINATES FOR THE DATA POINTS</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="co"># Numerical summary: check out the scores</span></span>
+<span id="cb50-2"><a href=""></a>pca_results <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href=""></a>  <span class="fu">pluck</span>(<span class="st">"x"</span>)</span>
+<span id="cb50-4"><a href=""></a></span>
+<span id="cb50-5"><a href=""></a><span class="co"># Graphical summary: Score plot</span></span>
+<span id="cb50-6"><a href=""></a><span class="co"># Plot PC1 scores (x-axis) vs PC2 scores (y-axis) of all data points</span></span>
+<span id="cb50-7"><a href=""></a><span class="fu">fviz_pca_ind</span>(pca_results, <span class="at">repel =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><br>
 <br>
 <br>
@@ -994,14 +1357,14 @@ There are quite a few features in the <code>candy_rankings</code> data. Let’s 
 <br>
 <br>
 </p>
-</section>
-<section id="deeper-learning-optional" class="slide level2 unnumbered">
-<h2>Deeper learning (OPTIONAL)</h2>
+</section></section>
+<section id="deeper-learning-optional" class="title-slide slide level1 unnumbered center">
+<h1>Deeper learning (OPTIONAL)</h1>
 <p><strong>ALTERNATIVES TO PCA</strong></p>
 <p>For more dimension reduction techniques, check out:</p>
 <ul>
-<li>https://juliasilge.com/blog/billboard-100/</li>
-<li>https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/</li>
+<li><a href="https://juliasilge.com/blog/billboard-100/">https://juliasilge.com/blog/billboard-100/</a></li>
+<li><a href="https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/">https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/</a></li>
 </ul>
 <p><br>
 <br>
@@ -1028,13 +1391,14 @@ The eigenvalues in <span class="math inline">\(\Lambda\)</span> measure the rela
 <p><span class="math display">\[X = U \Sigma W^T\]</span></p>
 <p>where <span class="math inline">\(U\)</span> is an <span class="math inline">\(n \times n\)</span> matrix of orthogonal <em>left singular vectors</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(\Sigma\)</span> is an <span class="math inline">\(n \times p\)</span> diagonal matrix of <em>singular values</em>. Then <span class="math inline">\(W\)</span> still provides the principal components and the diagonal of <span class="math inline">\(\Sigma^2\)</span> is equivalent to the diagonal of <span class="math inline">\(\Lambda\)</span> since by the SVD,</p>
 <p><span class="math display">\[X^TX = W \Sigma^T U^T U \Sigma W^T = W \Sigma^2 W^T\]</span></p>
-<p>Further resource: https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/</p>
+<p>Further resource: <a href="https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/">https://www.hackerearth.com/blog/developers/principal-component-analysis-with-linear-algebra/</a></p>
 <div class="quarto-auto-generated-content">
+<p><img src="images/mac.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p><a href="https://kegrinde.github.io/stat253_coursenotes" class="uri">https://kegrinde.github.io/stat253_coursenotes</a></p>
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
@@ -1250,44 +1614,6 @@ The eigenvalues in <span class="math inline">\(\Lambda\)</span> measure the rela
         ]
       });
     </script>
-    
-    <script>
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-      // slide changes (different for each slide format).
-      (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
-          const event = window.document.createEvent("Event");
-          event.initEvent("slideenter", true, true);
-          window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
-
-          // dispatch for shiny
-          if (window.jQuery) {
-            if (previousSlide) {
-              window.jQuery(previousSlide).trigger("hidden");
-            }
-            if (currentSlide) {
-              window.jQuery(currentSlide).trigger("shown");
-            }
-          }
-        }
-
-        // hookup for slidy
-        if (window.w3c_slidy) {
-          window.w3c_slidy.add_observer(function (slide_num) {
-            // slide_num starts at position 1
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-          });
-        }
-
-      })();
-    </script>
-
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
