@@ -17,5 +17,5 @@ xfun::file_string("schedule_table.html")
 ```
 ````
 
-**Note: this page is currently under construction! More dates coming soon.**
+<!--**Note: this page is currently under construction! More dates coming soon.**-->
 
