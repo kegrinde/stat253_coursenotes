@@ -13,6 +13,7 @@ library(tidyverse)
 this page is under construction! please check back soon for updates
 :::
 
+<!-- pull from BH work day slides + AJ "wrap-up" section of book -->
 
 # Settling In {-}
 

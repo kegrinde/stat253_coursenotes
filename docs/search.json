@@ -2947,33 +2947,99 @@
     ]
   },
   {
-    "objectID": "L20-pcr.html#notes",
-    "href": "L20-pcr.html#notes",
+    "objectID": "L20-pcr.html#announcements",
+    "href": "L20-pcr.html#announcements",
     "title": "20  Principal Component Regression",
-    "section": "Notes",
-    "text": "Notes\nCONTEXT\nWe’ve been distinguishing 2 broad areas in machine learning:\n\nsupervised learning: when we want to predict / classify some outcome y using predictors x\nunsupervised learning: when we don’t have any outcome variable y, only features x\n\nclustering: examine structure among the rows with respect to x\ndimension reduction: examine & combine structure among the columns x\n\n\nBUT sometimes we can combine these ideas.\nCLUSTERING + REGRESSION\n\nUse dimension reduction to visualize / summarize lots of features and notice interesting groups.\nExample: many physical characteristics of penguins, many characteristics of songs, etc\nUse clustering to identify interesting groups.\nExample: types (species) of penguins, types (genres) of songs, etc\nThese groups might then become our \\(y\\) outcome variable in future analysis.\nExample: classify new songs as one of the “genres” we identified\n\nEXAMPLE: K-means clustering + Classification of news articles\n\nDIMENSION REDUCTION + REGRESSION: Dealing with lots of predictors\nSuppose we have an outcome variable \\(y\\) (quantitative OR categorical) and lots of potential predictors \\(x_1, x_2, ..., x_p\\).\nPerhaps we even have more predictors than data points (\\(p &gt; n\\))!\nThis idea of measuring lots of things on a sample is common in genetics, image processing, video processing, or really any scenario where we can grab data on a bunch of different features at once.\nFor simplicity, computational efficiency, avoiding overfitting, etc, it might benefit us to simplify our set of predictors.\nThere are a few approaches:\n\nvariable selection (eg: using backward stepwise)\nSimply kick out some of the predictors. NOTE: This doesn’t work when \\(p &gt; n\\).\nregularization (eg: using LASSO)\nShrink the coefficients toward / to 0. NOTE: This doesn’t work when \\(p &gt; n\\).\nfeature extraction (eg: using PCA)\nIdentify & utilize only the most salient features of the original predictors. Specifically, combine the original, possibly correlated predictors into a smaller set of uncorrelated predictors which retain most of the original information. NOTE: This does work when \\(p &gt; n\\).\n\n\nPRINCIPAL COMPONENT REGRESSION (PCR)\n\nStep 1\nIgnore \\(y\\) for now. Use PCA to combine the \\(p\\) original, correlated predictors \\(x\\) into a set of \\(p\\) uncorrelated PCs.\nStep 2\nKeep only the first \\(k\\) PCs which retain a “sufficient” amount of information from the original predictors.\nStep 3\nModel \\(y\\) by these first \\(k\\) PCs.\n\n\nPCR vs PARTIAL LEAST SQUARES\nWhen combining the original predictors \\(x\\) into a smaller set of PCs, PCA ignores \\(y\\). Thus PCA might not produce the strongest possible predictors of \\(y\\).\nPartial least squares provides an alternative.\nLike PCA, it combines the original predictors into a smaller set of uncorrelated features, but considers which predictors are most associated with \\(y\\) in the process.\nChapter 6.3.2 provides an optional overview.\n\nEXAMPLE\nFor each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.\n\nWe have more potential predictors than data points (\\(p &gt; n\\)).\nIt’s important to understand the specific relationships between y and x.\nThe x are NOT very correlated.\n\n\n\nSolution:\n\n\n\n(typically) can’t do variable selection, regularization when \\(p &gt; n\\).\n\n\nThe PCs lose the original meaning of the predictors\n\n\nPCR wouldn’t simplify things much (need a lot of PCs to retain info).",
+    "section": "Announcements",
+    "text": "Announcements\nQuiz 3 is coming up next week!\n\nFormat: same as Quizzes 1 and 2\nContent: cumulative, but focus on unsupervised learning\nStudy Tips:\n\nUse the course Learning Goals as a study guide\nFill out the STAT 253 Concepts Maps (slides 10–12)\nWork on Group Assignment 3 (instructions on Moodle)\nReview old CPs, HWs, and in-class exercises",
     "crumbs": [
       "Unsupervised Learning (Unit 6)",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
     ]
   },
   {
-    "objectID": "L20-pcr.html#exercises",
-    "href": "L20-pcr.html#exercises",
+    "objectID": "L20-pcr.html#context",
+    "href": "L20-pcr.html#context",
     "title": "20  Principal Component Regression",
-    "section": "Exercises",
-    "text": "Exercises\n\nMake the most of your work time in class!\nThese exercises are on Homework 7.\nIMPORTANT: Remember to set.seed(253) in exercises 4 and 5.\nIf you finish Homework 7, start group assignment 3.\n\n\nPrincipal components regression (PCR)\nReturning to the original candy_rankings data, our final goal will be to build a regression model of winpercent, the popularity of a candy. Let’s start with fresh data, in case anything has been overwritten in the previous exercises :):\n::: {.cell}\nlibrary(fivethirtyeight)\ndata(\"candy_rankings\")\ncandy_final &lt;- candy_rankings %&gt;% \n  select(-competitorname) %&gt;% \n  mutate_if(is.logical, as.factor)\n:::\n\nBuild a PCR model of winpercent. In doing so:\n\nSet the seed to 253.\n\nTry utilizing 1 PC, 2 PCs, …, up to 11 PCs (the number of original predictors)\nCalculate the 10-fold CV MAE for each model\n\nPlot the CV MAE vs the number of PCs in each model.\nUsing the plot, argue for keeping only one PC in our final model.\nFinalize the PCR model of winpercent using only one PC AND print its tidy() table of coefficients. HINT:\nfinalize_workflow(parameters = list(num_comp = 1))\nReport and interpret the 10-fold CV MAE for this model. HINT: collect_metrics().\n\n\n\n\n\n\nComparison to LASSO regression\nNext, consider 50 possible LASSO regression models of winpercent, starting from the 11 original predictors:\n\nlibrary(tidymodels)\n\n   # STEP 1: LASSO model specification\nlasso_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"glmnet\") %&gt;% \n  set_args(mixture = 1, penalty = tune())\n\n# STEP 2: variable recipe\nlasso_recipe &lt;- recipe(winpercent ~ ., data = candy_final) %&gt;% \n  step_dummy(all_nominal_predictors())\n\n# STEP 3: workflow\nlasso_workflow &lt;- workflow() %&gt;% \n  add_recipe(lasso_recipe) %&gt;% \n  add_model(lasso_spec)\n\n# STEP 4: Estimate multiple LASSO models using a range of possible lambda values\nset.seed(253)\nlasso_models &lt;- lasso_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(penalty(range = c(-5, 1)), levels = 50),\n    resamples = vfold_cv(candy_final, v = 10),\n    metrics = metric_set(mae)\n  )\n\n\nFinalize the LASSO: build a parsimonious LASSO model of winpercent.\nPrint a tidy() table of the LASSO coefficients AND report the number of the 11 original predictors that are utilized in this model.\nCalculate and interpret the 10-fold CV MAE for this LASSO model.\nWhich model of winpercent would you use: the LASSO model or the PCR model? Provide an explanation that would apply to choosing between a LASSO and principal components model in general.",
+    "section": "Context",
+    "text": "Context\nWe’ve been distinguishing 2 broad areas in machine learning:\n\nsupervised learning: when we want to predict / classify some outcome y using predictors x\nunsupervised learning: when we don’t have any outcome variable y, only features x\n\nclustering: examine structure among the rows with respect to x\ndimension reduction: examine & combine structure among the columns x\n\n\n. . .\nBUT sometimes we can combine these ideas.",
     "crumbs": [
       "Unsupervised Learning (Unit 6)",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
     ]
   },
   {
-    "objectID": "L20-pcr.html#notes-r-code",
-    "href": "L20-pcr.html#notes-r-code",
+    "objectID": "L20-pcr.html#combining-forces-clustering-regression",
+    "href": "L20-pcr.html#combining-forces-clustering-regression",
     "title": "20  Principal Component Regression",
-    "section": "Notes: R code",
-    "text": "Notes: R code\nSuppose we have a set of sample_data with multiple predictors x, a quantitative outcome y, and (possibly) a column named data_id which labels each data point. We could adjust this code if y were categorical.\nRUN THE PCR algorithm\n\nlibrary(tidymodels)\nlibrary(tidyverse)\n\n# STEP 1: specify a linear regression model\nlm_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\")\n\n# STEP 2: variable recipe\n# Add a pre-processing step that does PCA on the predictors\n# num_comp is the number of PCs to keep (we need to tune it!)\npcr_recipe &lt;- recipe(y ~ ., data = sample_data) %&gt;% \n  update_role(data_id, new_role = \"id\") %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;% \n  step_normalize(all_predictors()) %&gt;%\n  step_pca(all_predictors(), num_comp = tune())\n\n# STEP 3: workflow\npcr_workflow &lt;- workflow() %&gt;% \n  add_recipe(pcr_recipe) %&gt;% \n  add_model(lm_spec)\n  \n# STEP 4: Estimate multiple PCR models trying out different numbers of PCs to keep\n# For the range, the biggest number you can try is the number of predictors you started with\n# Put the same number in levels\nset.seed(___)\npcr_models &lt;- pcr_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(num_comp(range = c(1, ___)), levels = ___),\n    resamples = vfold_cv(sample_data, v = 10),\n    metrics = metric_set(mae)\n  )\n\nFOLLOW-UP\nProcessing and applying the results is the same as for our other tidymodels algorithms!",
+    "section": "Combining Forces: Clustering + Regression",
+    "text": "Combining Forces: Clustering + Regression\n\n\nUse dimension reduction to visualize / summarize lots of features and notice interesting groups.\nExample: many physical characteristics of penguins, many characteristics of songs, etc\nUse clustering to identify interesting groups.\nExample: types (species) of penguins, types (genres) of songs, etc\nThese groups might then become our \\(y\\) outcome variable in future analysis.\nExample: classify new songs as one of the “genres” we identified\n\n\nEXAMPLE: K-means clustering + Classification of news articles",
+    "crumbs": [
+      "Unsupervised Learning (Unit 6)",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
+    ]
+  },
+  {
+    "objectID": "L20-pcr.html#dimension-reduction-regression-dealing-with-lots-of-predictors",
+    "href": "L20-pcr.html#dimension-reduction-regression-dealing-with-lots-of-predictors",
+    "title": "20  Principal Component Regression",
+    "section": "Dimension Reduction + Regression: Dealing with lots of predictors",
+    "text": "Dimension Reduction + Regression: Dealing with lots of predictors\nSuppose we have an outcome variable \\(y\\) (quantitative OR categorical) and lots of potential predictors \\(x_1, x_2, ..., x_p\\).\nPerhaps we even have more predictors than data points (\\(p &gt; n\\))!\n. . .\nThis idea of measuring lots of things on a sample is common in genetics, image processing, video processing, or really any scenario where we can grab data on a bunch of different features at once.\nFor simplicity, computational efficiency, avoiding overfitting, etc, it might benefit us to simplify our set of predictors.\n. . .\nThere are a few approaches:\n\nvariable selection (eg: using backward stepwise)\nSimply kick out some of the predictors. NOTE: This doesn’t work when \\(p &gt; n\\).\nregularization (eg: using LASSO)\nShrink the coefficients toward / to 0. NOTE: This doesn’t work when \\(p &gt; n\\).\nfeature extraction (eg: using PCA)\nIdentify & utilize only the most salient features of the original predictors. Specifically, combine the original, possibly correlated predictors into a smaller set of uncorrelated predictors which retain most of the original information. NOTE: This does work when \\(p &gt; n\\).",
+    "crumbs": [
+      "Unsupervised Learning (Unit 6)",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
+    ]
+  },
+  {
+    "objectID": "L20-pcr.html#principal-component-regression-pcr",
+    "href": "L20-pcr.html#principal-component-regression-pcr",
+    "title": "20  Principal Component Regression",
+    "section": "Principal Component Regression (PCR)",
+    "text": "Principal Component Regression (PCR)\n\nStep 1\nIgnore \\(y\\) for now. Use PCA to combine the \\(p\\) original, correlated predictors \\(x\\) into a set of \\(p\\) uncorrelated PCs.\nStep 2\nKeep only the first \\(k\\) PCs which retain a “sufficient” amount of information from the original predictors.\nStep 3\nModel \\(y\\) by these first \\(k\\) PCs.",
+    "crumbs": [
+      "Unsupervised Learning (Unit 6)",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
+    ]
+  },
+  {
+    "objectID": "L20-pcr.html#pcr-vs-partial-least-squares",
+    "href": "L20-pcr.html#pcr-vs-partial-least-squares",
+    "title": "20  Principal Component Regression",
+    "section": "PCR vs Partial Least Squares",
+    "text": "PCR vs Partial Least Squares\nWhen combining the original predictors \\(x\\) into a smaller set of PCs, PCA ignores \\(y\\). Thus PCA might not produce the strongest possible predictors of \\(y\\).\nPartial least squares provides an alternative.\nLike PCA, it combines the original predictors into a smaller set of uncorrelated features, but considers which predictors are most associated with \\(y\\) in the process.\nChapter 6.3.2 in ISLR provides an optional overview.",
+    "crumbs": [
+      "Unsupervised Learning (Unit 6)",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
+    ]
+  },
+  {
+    "objectID": "L20-pcr.html#example-1",
+    "href": "L20-pcr.html#example-1",
+    "title": "20  Principal Component Regression",
+    "section": "EXAMPLE 1",
+    "text": "EXAMPLE 1\nFor each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.\n\nWe have more potential predictors than data points (\\(p &gt; n\\)).\nIt’s important to understand the specific relationships between y and x.\nThe x are NOT very correlated.\n\n\n\nSolution:\n\n\n\n(typically) can’t do variable selection, regularization when \\(p &gt; n\\).\n\n\nThe PCs lose the original meaning of the predictors\n\n\nPCR wouldn’t simplify things much (need a lot of PCs to retain info).",
+    "crumbs": [
+      "Unsupervised Learning (Unit 6)",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
+    ]
+  },
+  {
+    "objectID": "L20-pcr.html#section",
+    "href": "L20-pcr.html#section",
+    "title": "20  Principal Component Regression",
+    "section": "",
+    "text": "Principal components regression (PCR)\nReturning to the original candy_rankings data, our final goal will be to build a regression model of winpercent, the popularity of a candy. Let’s start with fresh data, in case anything has been overwritten in the previous exercises :):\n\n\nlibrary(fivethirtyeight)\ndata(\"candy_rankings\")\ncandy_final &lt;- candy_rankings %&gt;% \n  select(-competitorname) %&gt;% \n  mutate_if(is.logical, as.factor)\n\n\nBuild a PCR model of winpercent. In doing so:\n\nSet the seed to 253.\n\nTry utilizing 1 PC, 2 PCs, …, up to 11 PCs (the number of original predictors)\nCalculate the 10-fold CV MAE for each model\n\nPlot the CV MAE vs the number of PCs in each model.\nUsing the plot, argue for keeping only one PC in our final model.\nFinalize the PCR model of winpercent using only one PC AND print its tidy() table of coefficients. HINT:\nfinalize_workflow(parameters = list(num_comp = 1))\nReport and interpret the 10-fold CV MAE for this model. HINT: collect_metrics().\n\n\n\n\n\nComparison to LASSO regression\nNext, consider 50 possible LASSO regression models of winpercent, starting from the 11 original predictors:\n\n\nlibrary(tidymodels)\n    \n# STEP 1: LASSO model specification\nlasso_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"glmnet\") %&gt;% \n  set_args(mixture = 1, penalty = tune())\n    \n# STEP 2: variable recipe\nlasso_recipe &lt;- recipe(winpercent ~ ., data = candy_final) %&gt;% \n  step_dummy(all_nominal_predictors())\n    \n# STEP 3: workflow\nlasso_workflow &lt;- workflow() %&gt;% \n  add_recipe(lasso_recipe) %&gt;% \n  add_model(lasso_spec)\n      \n# STEP 4: Estimate multiple LASSO models using a range of possible lambda values\nset.seed(253)\nlasso_models &lt;- lasso_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(penalty(range = c(-5, 1)), levels = 50),\n    resamples = vfold_cv(candy_final, v = 10),\n    metrics = metric_set(mae)\n)\n\n\nFinalize the LASSO: build a parsimonious LASSO model of winpercent.\nPrint a tidy() table of the LASSO coefficients AND report the number of the 11 original predictors that are utilized in this model.\nCalculate and interpret the 10-fold CV MAE for this LASSO model.\nWhich model of winpercent would you use: the LASSO model or the PCR model? Provide an explanation that would apply to choosing between a LASSO and principal components model in general.",
+    "crumbs": [
+      "Unsupervised Learning (Unit 6)",
+      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
+    ]
+  },
+  {
+    "objectID": "L20-pcr.html#section-1",
+    "href": "L20-pcr.html#section-1",
+    "title": "20  Principal Component Regression",
+    "section": "",
+    "text": "Suppose we have a set of sample_data with multiple predictors x, a quantitative outcome y, and (possibly) a column named data_id which labels each data point. We could adjust this code if y were categorical.\nRUN THE PCR algorithm\n\nlibrary(tidymodels)\nlibrary(tidyverse)\n\n# STEP 1: specify a linear regression model\nlm_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"lm\")\n\n# STEP 2: variable recipe\n# Add a pre-processing step that does PCA on the predictors\n# num_comp is the number of PCs to keep (we need to tune it!)\npcr_recipe &lt;- recipe(y ~ ., data = sample_data) %&gt;% \n  update_role(data_id, new_role = \"id\") %&gt;%\n  step_dummy(all_nominal_predictors()) %&gt;% \n  step_normalize(all_predictors()) %&gt;%\n  step_pca(all_predictors(), num_comp = tune())\n\n# STEP 3: workflow\npcr_workflow &lt;- workflow() %&gt;% \n  add_recipe(pcr_recipe) %&gt;% \n  add_model(lm_spec)\n  \n# STEP 4: Estimate multiple PCR models trying out different numbers of PCs to keep\n# For the range, the biggest number you can try is the number of predictors you started with\n# Put the same number in levels\nset.seed(___)\npcr_models &lt;- pcr_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(num_comp(range = c(1, ___)), levels = ___),\n    resamples = vfold_cv(sample_data, v = 10),\n    metrics = metric_set(mae)\n  )\n\nFOLLOW-UP\nProcessing and applying the results is the same as for our other tidymodels algorithms!",
     "crumbs": [
       "Unsupervised Learning (Unit 6)",
       "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
@@ -3087,127 +3153,6 @@
     "crumbs": [
       "Appendices",
       "STAT 155 Review"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#announcements",
-    "href": "L20-pcr.html#announcements",
-    "title": "20  Principal Component Regression",
-    "section": "Announcements",
-    "text": "Announcements\nQuiz 3 is coming up next week!\n\nFormat: same as Quizzes 1 and 2\nContent: cumulative, but focus on unsupervised learning\nStudy Tips:\n\nUse the course Learning Goals as a study guide\nSTAT 253 Concepts Maps (slides 10–12)\nWork on Group Assignment 3 (link coming soon!)",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#context",
-    "href": "L20-pcr.html#context",
-    "title": "20  Principal Component Regression",
-    "section": "Context",
-    "text": "Context\nWe’ve been distinguishing 2 broad areas in machine learning:\n\nsupervised learning: when we want to predict / classify some outcome y using predictors x\nunsupervised learning: when we don’t have any outcome variable y, only features x\n\nclustering: examine structure among the rows with respect to x\ndimension reduction: examine & combine structure among the columns x\n\n\n. . .\nBUT sometimes we can combine these ideas.",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#clustering-regression",
-    "href": "L20-pcr.html#clustering-regression",
-    "title": "20  Principal Component Regression",
-    "section": "Clustering + Regression",
-    "text": "Clustering + Regression\n\nUse dimension reduction to visualize / summarize lots of features and notice interesting groups.\nExample: many physical characteristics of penguins, many characteristics of songs, etc\nUse clustering to identify interesting groups.\nExample: types (species) of penguins, types (genres) of songs, etc\nThese groups might then become our \\(y\\) outcome variable in future analysis.\nExample: classify new songs as one of the “genres” we identified\n\nEXAMPLE: K-means clustering + Classification of news articles\n\nDIMENSION REDUCTION + REGRESSION: Dealing with lots of predictors\nSuppose we have an outcome variable \\(y\\) (quantitative OR categorical) and lots of potential predictors \\(x_1, x_2, ..., x_p\\).\nPerhaps we even have more predictors than data points (\\(p &gt; n\\))!\nThis idea of measuring lots of things on a sample is common in genetics, image processing, video processing, or really any scenario where we can grab data on a bunch of different features at once.\nFor simplicity, computational efficiency, avoiding overfitting, etc, it might benefit us to simplify our set of predictors.\nThere are a few approaches:\n\nvariable selection (eg: using backward stepwise)\nSimply kick out some of the predictors. NOTE: This doesn’t work when \\(p &gt; n\\).\nregularization (eg: using LASSO)\nShrink the coefficients toward / to 0. NOTE: This doesn’t work when \\(p &gt; n\\).\nfeature extraction (eg: using PCA)\nIdentify & utilize only the most salient features of the original predictors. Specifically, combine the original, possibly correlated predictors into a smaller set of uncorrelated predictors which retain most of the original information. NOTE: This does work when \\(p &gt; n\\).\n\n\nPRINCIPAL COMPONENT REGRESSION (PCR)\n\nStep 1\nIgnore \\(y\\) for now. Use PCA to combine the \\(p\\) original, correlated predictors \\(x\\) into a set of \\(p\\) uncorrelated PCs.\nStep 2\nKeep only the first \\(k\\) PCs which retain a “sufficient” amount of information from the original predictors.\nStep 3\nModel \\(y\\) by these first \\(k\\) PCs.\n\n\nPCR vs PARTIAL LEAST SQUARES\nWhen combining the original predictors \\(x\\) into a smaller set of PCs, PCA ignores \\(y\\). Thus PCA might not produce the strongest possible predictors of \\(y\\).\nPartial least squares provides an alternative.\nLike PCA, it combines the original predictors into a smaller set of uncorrelated features, but considers which predictors are most associated with \\(y\\) in the process.\nChapter 6.3.2 provides an optional overview.\n\nEXAMPLE\nFor each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.\n\nWe have more potential predictors than data points (\\(p &gt; n\\)).\nIt’s important to understand the specific relationships between y and x.\nThe x are NOT very correlated.\n\n\n\nSolution:\n\n\n\n(typically) can’t do variable selection, regularization when \\(p &gt; n\\).\n\n\nThe PCs lose the original meaning of the predictors\n\n\nPCR wouldn’t simplify things much (need a lot of PCs to retain info).",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#combining-forces-clustering-regression",
-    "href": "L20-pcr.html#combining-forces-clustering-regression",
-    "title": "20  Principal Component Regression",
-    "section": "Combining Forces: Clustering + Regression",
-    "text": "Combining Forces: Clustering + Regression\n\n\nUse dimension reduction to visualize / summarize lots of features and notice interesting groups.\nExample: many physical characteristics of penguins, many characteristics of songs, etc\nUse clustering to identify interesting groups.\nExample: types (species) of penguins, types (genres) of songs, etc\nThese groups might then become our \\(y\\) outcome variable in future analysis.\nExample: classify new songs as one of the “genres” we identified\n\n\nEXAMPLE: K-means clustering + Classification of news articles",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#dimension-reduction-regression-dealing-with-lots-of-predictors",
-    "href": "L20-pcr.html#dimension-reduction-regression-dealing-with-lots-of-predictors",
-    "title": "20  Principal Component Regression",
-    "section": "Dimension Reduction + Regression: Dealing with lots of predictors",
-    "text": "Dimension Reduction + Regression: Dealing with lots of predictors\nSuppose we have an outcome variable \\(y\\) (quantitative OR categorical) and lots of potential predictors \\(x_1, x_2, ..., x_p\\).\nPerhaps we even have more predictors than data points (\\(p &gt; n\\))!\n. . .\nThis idea of measuring lots of things on a sample is common in genetics, image processing, video processing, or really any scenario where we can grab data on a bunch of different features at once.\nFor simplicity, computational efficiency, avoiding overfitting, etc, it might benefit us to simplify our set of predictors.\n. . .\nThere are a few approaches:\n\nvariable selection (eg: using backward stepwise)\nSimply kick out some of the predictors. NOTE: This doesn’t work when \\(p &gt; n\\).\nregularization (eg: using LASSO)\nShrink the coefficients toward / to 0. NOTE: This doesn’t work when \\(p &gt; n\\).\nfeature extraction (eg: using PCA)\nIdentify & utilize only the most salient features of the original predictors. Specifically, combine the original, possibly correlated predictors into a smaller set of uncorrelated predictors which retain most of the original information. NOTE: This does work when \\(p &gt; n\\).",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#principal-component-regression-pcr",
-    "href": "L20-pcr.html#principal-component-regression-pcr",
-    "title": "20  Principal Component Regression",
-    "section": "Principal Component Regression (PCR)",
-    "text": "Principal Component Regression (PCR)\n\nStep 1\nIgnore \\(y\\) for now. Use PCA to combine the \\(p\\) original, correlated predictors \\(x\\) into a set of \\(p\\) uncorrelated PCs.\nStep 2\nKeep only the first \\(k\\) PCs which retain a “sufficient” amount of information from the original predictors.\nStep 3\nModel \\(y\\) by these first \\(k\\) PCs.",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#pcr-vs-partial-least-squares",
-    "href": "L20-pcr.html#pcr-vs-partial-least-squares",
-    "title": "20  Principal Component Regression",
-    "section": "PCR vs Partial Least Squares",
-    "text": "PCR vs Partial Least Squares\nWhen combining the original predictors \\(x\\) into a smaller set of PCs, PCA ignores \\(y\\). Thus PCA might not produce the strongest possible predictors of \\(y\\).\nPartial least squares provides an alternative.\nLike PCA, it combines the original predictors into a smaller set of uncorrelated features, but considers which predictors are most associated with \\(y\\) in the process.\nChapter 6.3.2 in ISLR provides an optional overview.",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#exampple",
-    "href": "L20-pcr.html#exampple",
-    "title": "20  Principal Component Regression",
-    "section": "20.1 Exampple",
-    "text": "20.1 Exampple\nFor each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.\n\nWe have more potential predictors than data points (\\(p &gt; n\\)).\nIt’s important to understand the specific relationships between y and x.\nThe x are NOT very correlated.\n\n\n\nSolution:\n\n\n\n(typically) can’t do variable selection, regularization when \\(p &gt; n\\).\n\n\nThe PCs lose the original meaning of the predictors\n\n\nPCR wouldn’t simplify things much (need a lot of PCs to retain info).",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#example",
-    "href": "L20-pcr.html#example",
-    "title": "20  Principal Component Regression",
-    "section": "20.1 Example",
-    "text": "20.1 Example\nFor each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.\n\nWe have more potential predictors than data points (\\(p &gt; n\\)).\nIt’s important to understand the specific relationships between y and x.\nThe x are NOT very correlated.\n\n\n\nSolution:\n\n\n\n(typically) can’t do variable selection, regularization when \\(p &gt; n\\).\n\n\nThe PCs lose the original meaning of the predictors\n\n\nPCR wouldn’t simplify things much (need a lot of PCs to retain info).",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#example-1",
-    "href": "L20-pcr.html#example-1",
-    "title": "20  Principal Component Regression",
-    "section": "EXAMPLE 1",
-    "text": "EXAMPLE 1\nFor each scenario below, indicate which would (typically) be preferable in modeling y by a large set of predictors x: (1) PCR; or (2) variable selection or regularization.\n\nWe have more potential predictors than data points (\\(p &gt; n\\)).\nIt’s important to understand the specific relationships between y and x.\nThe x are NOT very correlated.\n\n\n\nSolution:\n\n\n\n(typically) can’t do variable selection, regularization when \\(p &gt; n\\).\n\n\nThe PCs lose the original meaning of the predictors\n\n\nPCR wouldn’t simplify things much (need a lot of PCs to retain info).",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
-    ]
-  },
-  {
-    "objectID": "L20-pcr.html#section",
-    "href": "L20-pcr.html#section",
-    "title": "20  Principal Component Regression",
-    "section": "",
-    "text": "Principal components regression (PCR)\nReturning to the original candy_rankings data, our final goal will be to build a regression model of winpercent, the popularity of a candy. Let’s start with fresh data, in case anything has been overwritten in the previous exercises :):\n\n\nlibrary(fivethirtyeight)\ndata(\"candy_rankings\")\ncandy_final &lt;- candy_rankings %&gt;% \n  select(-competitorname) %&gt;% \n  mutate_if(is.logical, as.factor)\n\n\nBuild a PCR model of winpercent. In doing so:\n\nSet the seed to 253.\n\nTry utilizing 1 PC, 2 PCs, …, up to 11 PCs (the number of original predictors)\nCalculate the 10-fold CV MAE for each model\n\nPlot the CV MAE vs the number of PCs in each model.\nUsing the plot, argue for keeping only one PC in our final model.\nFinalize the PCR model of winpercent using only one PC AND print its tidy() table of coefficients. HINT:\nfinalize_workflow(parameters = list(num_comp = 1))\nReport and interpret the 10-fold CV MAE for this model. HINT: collect_metrics().\n\n\n\n\n\nComparison to LASSO regression\nNext, consider 50 possible LASSO regression models of winpercent, starting from the 11 original predictors:\n\n\nlibrary(tidymodels)\n    \n# STEP 1: LASSO model specification\nlasso_spec &lt;- linear_reg() %&gt;% \n  set_mode(\"regression\") %&gt;% \n  set_engine(\"glmnet\") %&gt;% \n  set_args(mixture = 1, penalty = tune())\n    \n# STEP 2: variable recipe\nlasso_recipe &lt;- recipe(winpercent ~ ., data = candy_final) %&gt;% \n  step_dummy(all_nominal_predictors())\n    \n# STEP 3: workflow\nlasso_workflow &lt;- workflow() %&gt;% \n  add_recipe(lasso_recipe) %&gt;% \n  add_model(lasso_spec)\n      \n# STEP 4: Estimate multiple LASSO models using a range of possible lambda values\nset.seed(253)\nlasso_models &lt;- lasso_workflow %&gt;% \n  tune_grid(\n    grid = grid_regular(penalty(range = c(-5, 1)), levels = 50),\n    resamples = vfold_cv(candy_final, v = 10),\n    metrics = metric_set(mae)\n)\n\n\nFinalize the LASSO: build a parsimonious LASSO model of winpercent.\nPrint a tidy() table of the LASSO coefficients AND report the number of the 11 original predictors that are utilized in this model.\nCalculate and interpret the 10-fold CV MAE for this LASSO model.\nWhich model of winpercent would you use: the LASSO model or the PCR model? Provide an explanation that would apply to choosing between a LASSO and principal components model in general.",
-    "crumbs": [
-      "Unsupervised Learning (Unit 6)",
-      "<span class='chapter-number'>20</span>  <span class='chapter-title'>Principal Component Regression</span>"
     ]
   }
 ]

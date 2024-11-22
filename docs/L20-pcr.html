@@ -486,7 +486,10 @@ window.Quarto = {
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
-  <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a></li>
+  <li><a href="#notes-r-code" id="toc-notes-r-code" class="nav-link" data-scroll-target="#notes-r-code">Notes: R code</a>
+  <ul class="collapse">
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L20-pcr.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
@@ -518,17 +521,17 @@ window.Quarto = {
 <ul>
 <li>Sit with the same group as last class
 <ul>
-<li>If you missed our last class, check in with me to get your new group number</li>
-<li>Re-introduce yourselves (especially if anyone missed last class)</li>
+<li>If you were gone: check in with me to get your new group number</li>
+<li>Re-introduce yourselves!</li>
 </ul></li>
-<li>Prepare to take notes (find the QMD template in the usual spot)</li>
+<li>Prepare to take notes</li>
 <li>Catch up on any announcements you’ve missed on Slack</li>
 </ul>
 <!-- don't overwrite the notes doc! The exercise sections are different -->
 <!-- PCR vs partial least squares p237 -->
 <!-- unlike PCR, partial least squares i.d. new directions by also considering by which are associated with Y.  loadings of first direction defined by LS coefs, thus summarizes the most important LS predictors -->
-<section id="announcements" class="level2 unnumbered smaller">
-<h2 class="unnumbered smaller anchored" data-anchor-id="announcements">Announcements</h2>
+<section id="announcements" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="announcements">Announcements</h2>
 <p>Quiz 3 is coming up next week!</p>
 <ul>
 <li>Format: same as Quizzes 1 and 2</li>
@@ -536,10 +539,35 @@ window.Quarto = {
 <li>Study Tips:
 <ul>
 <li>Use the course <a href="https://kegrinde.github.io/stat253_coursenotes/learning-objectives.html">Learning Goals</a> as a study guide</li>
-<li><a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 Concepts Maps</a> (slides 10–12)</li>
-<li>Work on Group Assignment 3 (link coming soon!)</li>
+<li>Fill out the <a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 Concepts Maps</a> (slides 10–12)</li>
+<li>Work on Group Assignment 3 (instructions on Moodle)</li>
+<li>Review old CPs, HWs, and in-class exercises</li>
 </ul></li>
 </ul>
+<!--
+## Q&A {.unnumbered .smaller}
+
+What questions do you have about: 
+
+- hierarchical clustering
+  - algorithm steps
+  - dendrogram construction
+  - dendrogram to clusters (how to choose K)
+  - 4 different definitions of distance between clusters & impacts on dendrogram
+  - how to gain insight from clusters
+  - pros and cons
+- kmeans clustering
+  - algorithm steps
+  - how to choose K
+  - how to gain insight from clusters
+  - pros and cons
+- PCA
+  - conceptual understanding of algorithm (matrix math is optional but highly encouraged)
+  - implementation steps in R
+  - loadings - what they mean
+  - scores - what they mean
+
+-->
 <p><br>
 <br>
 </p>
@@ -751,6 +779,8 @@ Next, consider 50 possible LASSO regression models of <code>winpercent</code>, s
 </section>
 <section id="notes-r-code" class="level1 unnumbered">
 <h1 class="unnumbered">Notes: R code</h1>
+<section id="section-1" class="level2 unnumbered smaller">
+<h2 class="unnumbered smaller anchored" data-anchor-id="section-1"></h2>
 <p>Suppose we have a set of <code>sample_data</code> with multiple predictors x, a <em>quantitative</em> outcome y, and (possibly) a column named <code>data_id</code> which labels each data point. We could adjust this code if y were <em>categorical</em>.</p>
 <p><strong>RUN THE PCR algorithm</strong></p>
 <div class="cell">
@@ -795,6 +825,7 @@ Next, consider 50 possible LASSO regression models of <code>winpercent</code>, s
 </p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
