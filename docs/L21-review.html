@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -403,7 +437,26 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#settling-in" id="toc-settling-in" class="nav-link active" data-scroll-target="#settling-in">Settling In</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a></li>
+  <li><a href="#end-of-course-survey" id="toc-end-of-course-survey" class="nav-link" data-scroll-target="#end-of-course-survey">End-of-Course Survey</a></li>
+  <li><a href="#preparing-for-quiz-3" id="toc-preparing-for-quiz-3" class="nav-link" data-scroll-target="#preparing-for-quiz-3">Preparing for Quiz 3</a>
+  <ul class="collapse">
+  <li><a href="#reminders" id="toc-reminders" class="nav-link" data-scroll-target="#reminders">Reminders</a></li>
+  <li><a href="#exercises-mini-group-assignment-3" id="toc-exercises-mini-group-assignment-3" class="nav-link" data-scroll-target="#exercises-mini-group-assignment-3">Exercises: (Mini) Group Assignment 3</a>
+  <ul class="collapse">
+  <li><a href="#goals" id="toc-goals" class="nav-link" data-scroll-target="#goals">Goals</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#data-context-and-prep" id="toc-data-context-and-prep" class="nav-link" data-scroll-target="#data-context-and-prep">Data Context and Prep</a></li>
+  <li><a href="#clustering-analysis" id="toc-clustering-analysis" class="nav-link" data-scroll-target="#clustering-analysis">Clustering Analysis</a></li>
+  <li><a href="#dimension-reduction" id="toc-dimension-reduction" class="nav-link" data-scroll-target="#dimension-reduction">Dimension Reduction</a></li>
+  </ul></li>
+  <li><a href="#additional-review-questions" id="toc-additional-review-questions" class="nav-link" data-scroll-target="#additional-review-questions">Additional Review Questions</a>
+  <ul class="collapse">
+  <li><a href="#part-1-enduring-big-picture-concepts" id="toc-part-1-enduring-big-picture-concepts" class="nav-link" data-scroll-target="#part-1-enduring-big-picture-concepts">Part 1: enduring, big picture concepts</a></li>
+  <li><a href="#part-2-supervised-learning" id="toc-part-2-supervised-learning" class="nav-link" data-scroll-target="#part-2-supervised-learning">Part 2: supervised learning</a></li>
+  <li><a href="#part-3-unsupervised-learning" id="toc-part-3-unsupervised-learning" class="nav-link" data-scroll-target="#part-3-unsupervised-learning">Part 3: unsupervised learning</a></li>
+  <li><a href="#part-4-supervised-unsupervised" id="toc-part-4-supervised-unsupervised" class="nav-link" data-scroll-target="#part-4-supervised-unsupervised">Part 4: supervised + unsupervised</a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#wrapping-up" id="toc-wrapping-up" class="nav-link" data-scroll-target="#wrapping-up">Wrapping Up</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/kegrinde/stat253_coursenotes/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/kegrinde/stat253_coursenotes/blob/main/L21-review.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
@@ -430,28 +483,301 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-warning callout-titled">
+<!-- pull from BH work day slides + AJ "wrap-up" section of book -->
+<section id="settling-in" class="level1 unnumbered">
+<h1 class="unnumbered">Settling In</h1>
+<ul>
+<li>Sit with the same group as last class (if you were gone: check with me to get your new group number)</li>
+<li>Hand in your Quiz 2 Revisions</li>
+<li>Check Slack for recent announcements and other posts</li>
+<li>Prepare to take notes (create a new Quarto document — I don’t have a template for you today)</li>
+</ul>
+</section>
+<section id="end-of-course-survey" class="level1 unnumbered">
+<h1 class="unnumbered">End-of-Course Survey</h1>
+<p>Just as you rely on feedback and suggestions from me (on assignments, in office hours, etc.) to help guide your learning, I likewise rely on <em>your</em> feedback to help me improve my courses and become a better teacher in general.</p>
+<p>This is especially true for me this semester given that this was my first time teaching STAT 253!</p>
+<p>I would <strong>GREATLY</strong> appreciate hearing your thoughts on what worked well for you in this class, and what you think could be improved. To that end, please take ~15 minutes to fill out the End-of-Course Survey to share your thoughts. FYI: Your responses to this survey are anonymous, and I will not have access to them until after final grades have been submitted.</p>
+<p>You can access this survey in two ways:</p>
+<ul>
+<li>Find the link in the email you got about end-of-course surveys</li>
+<li>Go to <a href="https://moodle.macalester.edu/">Moodle</a> (the general homepage, not the specific page for this class) &gt; find the link to EvaluationKit &gt; find the survey for this class</li>
+</ul>
+</section>
+<section id="preparing-for-quiz-3" class="level1 unnumbered">
+<h1 class="unnumbered">Preparing for Quiz 3</h1>
+<section id="reminders" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="reminders">Reminders</h2>
+<ul>
+<li>During class time next Tuesday (December 10)</li>
+<li>Format: same as Quizzes 1 and 2</li>
+<li>Content: cumulative, but focus on unsupervised learning</li>
+<li>Study Tips:
+<ul>
+<li>Use the course <a href="https://kegrinde.github.io/stat253_coursenotes/learning-objectives.html">Learning Goals</a> as a study guide</li>
+<li>Fill out the <a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 Concepts Maps</a> (slides 10–12)</li>
+<li>Review old CPs, HWs, and in-class exercises</li>
+<li>Work on Group Assignment 3 (today!)</li>
+</ul></li>
+</ul>
+<p>NOTE: because you are taking the quiz during our last in-person meeting, there will not be an opportunity for revisions.</p>
+<p><br>
+<br>
+<br>
+</p>
+</section>
+<section id="exercises-mini-group-assignment-3" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="exercises-mini-group-assignment-3">Exercises: (Mini) Group Assignment 3</h2>
+<p>Today, we’ll be doing an abridged version of Group Assignment 3. See how far you can get during class time today. If you don’t finish, I recommend continuing to work on this as a way of studying for Quiz 3. However, you will not turn anything in. As long as you are in class today and are actively engaged in this activity, you will pass Group Assignment 3.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>this page is under construction! please check back soon for updates</p>
+<p>If you miss class today, please get in touch with me as soon as possible to discuss instructions and expectations for making up this assignment.</p>
 </div>
 </div>
-<!-- pull from BH work day slides + AJ "wrap-up" section of book -->
-<section id="settling-in" class="level1 unnumbered">
-<h1 class="unnumbered">Settling In</h1>
+<section id="goals" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="goals">Goals</h3>
+<p>Our goals for this assignment are as follows:</p>
+<ul>
+<li>Conduct an <strong>open-ended unsupervised learning analysis</strong> and deepen your understanding of these concepts.</li>
+<li>Build confidence by working on more open-ended tasks, outside the context of scaffolded in-class exercise or homework prompts</li>
+<li>Work on collaboration!</li>
+<li>Prepare for Quiz 3</li>
+</ul>
+<p>With the final goal in mind, while working on this assignment you should only use resources that will be available to you during Quiz 3. In other words, do NOT use chatGPT, Google, or anything else that you will not not be allowed to access during the quiz. If you get stuck and find yourself wanting to access outside resources, check the course website, talk it through with your group, and then ask Kelsey for help.</p>
 </section>
-<section id="exercises" class="level1 unnumbered">
-<h1 class="unnumbered">Exercises</h1>
+<section id="getting-started" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="getting-started">Getting Started</h3>
+<p>Create a new Quarto document where you can document your analysis and take notes. Each member of your group should create their own QMD, but you should work through the tasks below <strong>as a group</strong>.</p>
+</section>
+<section id="data-context-and-prep" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="data-context-and-prep">Data Context and Prep</h3>
+<p>Our data for this assignment come from a 2021 TidyTuesday challenge focused on data from the <a href="https://en.wikipedia.org/wiki/Billboard_Hot_100">Billboard Top 100 list</a>.</p>
+<p>Some Mac professors did some initial data cleaning for us. We’ll access a “cleaner” version of the data here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>music <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://bcheggeseth.github.io/253_spring_2024/data/billboard.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># check it out</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(music)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 17
+  performer      song       duration_ms danceability energy   key loudness  mode
+  &lt;chr&gt;          &lt;chr&gt;            &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1 Andy Williams  ......And…      166106        0.154  0.185     5   -14.1      1
+2 Sandy Nelson   ...And Th…      172066        0.588  0.672    11   -17.3      0
+3 Britney Spears ...Baby O…      211066        0.759  0.699     0    -5.74     0
+4 Taylor Swift   ...Ready …      208186        0.613  0.764     2    -6.51     1
+5 Paul Davis     '65 Love …      219813        0.647  0.686     2    -4.25     0
+6 Tammy Wynette  'til I Ca…      182080        0.45   0.294     7   -12.0      1
+# ℹ 9 more variables: speechiness &lt;dbl&gt;, acousticness &lt;dbl&gt;,
+#   instrumentalness &lt;dbl&gt;, liveness &lt;dbl&gt;, valence &lt;dbl&gt;, tempo &lt;dbl&gt;,
+#   time_signature &lt;dbl&gt;, spotify_popularity &lt;dbl&gt;, billboard_weeks &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>You can find a codebook and additional details about the data <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-14/readme.md">here</a>. Take a few minutes to read this documentation and explore the dataset in R before you move on.</p>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+</p>
+<p>This is a big dataset. Let’s focus on ONE artist who has at least 25 songs in the dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out artists with at least 25 songs</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>music <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(performer) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;=</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(performer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 101 × 1
+   performer       
+   &lt;chr&gt;           
+ 1 Aerosmith       
+ 2 Andy Williams   
+ 3 Anne Murray     
+ 4 Aretha Franklin 
+ 5 Ariana Grande   
+ 6 B.B. King       
+ 7 Barbra Streisand
+ 8 Barry Manilow   
+ 9 Bee Gees        
+10 Beyonce         
+# ℹ 91 more rows</code></pre>
+</div>
+</div>
+<p>Pick one of these artists to focus on for the remainder of your analysis. Use the code below to filter the data to only include songs by this artist and do a little extra data cleaning.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick just one of these artists to study</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>my_artist <span class="ot">&lt;-</span> music <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(performer <span class="sc">==</span> <span class="st">"___"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>performer) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(song) <span class="sc">%&gt;%</span>       <span class="co"># The last rows deal w songs that appear more than once</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<details>
+<summary>
+“Solution”
+</summary>
+<p>I decided to focus on U2 since they were the first band I ever saw in concert!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick just one of these artists to study</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>my_artist <span class="ot">&lt;-</span> music <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(performer <span class="sc">==</span> <span class="st">"U2"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>performer) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(song) <span class="sc">%&gt;%</span>       <span class="co"># The last rows deal w songs that appear more than once</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># check it out</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_artist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 16
+  song          duration_ms danceability energy   key loudness  mode speechiness
+  &lt;chr&gt;               &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;
+1 (Pride) In T…      228426        0.464  0.839     4    -7.11     1      0.0329
+2 All I Want I…      389933        0.239  0.442     1   -11.5      1      0.0308
+3 Angel Of Har…      229266        0.519  0.694     0   -10.8      1      0.0264
+4 Beautiful Day      246400        0.537  0.921     2    -6.47     1      0.0481
+5 Desire             179360        0.49   0.827     8    -9.48     1      0.0482
+6 Discotheque        318666        0.581  0.825     4    -9.69     0      0.0373
+# ℹ 8 more variables: acousticness &lt;dbl&gt;, instrumentalness &lt;dbl&gt;,
+#   liveness &lt;dbl&gt;, valence &lt;dbl&gt;, tempo &lt;dbl&gt;, time_signature &lt;dbl&gt;,
+#   spotify_popularity &lt;dbl&gt;, billboard_weeks &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</details>
+<p><br>
+<br>
+<br>
+</p>
+</section>
+<section id="clustering-analysis" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="clustering-analysis">Clustering Analysis</h3>
+<p>Your first task is to conduct a clustering analysis.</p>
+<p>Write 1–2 paragraphs with some key takeaways. Be sure to address:</p>
+<ul>
+<li>the various clusters you identify</li>
+<li>the <em>features</em> of these clusters</li>
+<li>which algorithm you used</li>
+<li>any decisions you had to make about how to implement that algorithm (the type of linkage to use, if applicable, how many clusters to create, etc.)</li>
+</ul>
+<p>Create at least 3 visualizations that support these takeaways. These visualizations must each present unique information about the data, i.e.&nbsp;not simply be different approaches to displaying similar information.</p>
+<p>NOTE: We’ve discussed two clustering techniques in this class. Try both, compare/contrast your results, and think about which you would prefer in this setting if you could only present results from one. Suggestion: you might have some members of your group work on one, and some on the other, and then come back together to discuss what you learn and pros/cons of each.</p>
+<p><br>
+<br>
+<br>
+</p>
+</section>
+<section id="dimension-reduction" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="dimension-reduction">Dimension Reduction</h3>
+<p>Next, conduct dimension reduction using Principal Component Analysis.</p>
+<p>Like above, write 1–2 paragraphs with some key takeaways. For this analysis, be sure to address:</p>
+<ul>
+<li>the features of the first 2 principal components</li>
+<li>how many PCs you might retain and why</li>
+<li>the amount of the original information for which your retained PCs account</li>
+</ul>
+<p>Create at least 2 visualizations that support these takeaways. These visualizations must each present unique information about the data, i.e.&nbsp;not simply be different approaches to displaying similar information.</p>
+<p><br>
+<br>
+<br>
+</p>
+</section>
+</section>
+<section id="additional-review-questions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="additional-review-questions">Additional Review Questions</h2>
+<p>If you finish all of the tasks above, talk through the following review questions with your group. Otherwise, come back to this while studying for the quiz.</p>
+<section id="part-1-enduring-big-picture-concepts" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-1-enduring-big-picture-concepts">Part 1: enduring, big picture concepts</h3>
+<p>Slide 1 of the <a href="https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing">STAT 253 Concepts Maps</a> presents a set of enduring, big picture questions that are critical to doing, critiquing, and understanding machine learning analyses. I hope these stick with you for years to come. They are also important for Quiz 3.</p>
+<p>Respond in your own words!</p>
+<ul>
+<li>When do we perform a supervised vs unsupervised learning algorithm?</li>
+<li>Within supervised learning, when do we use a regression vs a classification algorithm?</li>
+<li>What is the importance of <em>model evaluation</em> and what questions does it address?</li>
+<li>What is <em>overfitting</em> and why is it bad?</li>
+<li>What is <em>cross-validation</em>? How does it work and what problem is it trying to address?</li>
+<li>What is the <em>bias-variance tradeoff</em>? What models tend to have high bias? High variance?</li>
+</ul>
+</section>
+<section id="part-2-supervised-learning" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-2-supervised-learning">Part 2: supervised learning</h3>
+<p>Slides 2–8 present a variety of regression &amp; classification algorithms &amp; concepts. On Quiz 3, you won’t be asked about the nitty gritty (eg: how to interpret coefficients, make predictions, do the algorithm by hand). But you should have the following bigger picture understanding of how all of the algorithms fit together.</p>
+<p>For each algorithm:</p>
+<ul>
+<li>In what situations is it useful? Could you use it for regression, classification, or both?</li>
+<li>Is the algorithm parametric or nonparametric? What’s the difference?</li>
+<li>In general, how does the algorithm work?</li>
+</ul>
+</section>
+<section id="part-3-unsupervised-learning" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-3-unsupervised-learning">Part 3: unsupervised learning</h3>
+<p>Slide 9 presents important unsupervised tasks and algorithms. In the table, take notes on the following:</p>
+<ul>
+<li>What’s the goal of clustering? Dimension reduction?</li>
+<li>How are these goals similar? How do they differ?</li>
+<li>Reflect upon the hierarchical clustering algorithm. And think:
+<ul>
+<li>What are the steps of the algorithm?</li>
+<li>Can you implement this algorithm by hand for a small sample?</li>
+<li>Can you interpret and use a dendrogram?</li>
+<li>What’s the difference between complete, single, centroid, and average linkage? What role do these play in hierarchical clustering?</li>
+<li>What are some pros and cons of this algorithm?</li>
+</ul></li>
+<li>Reflect upon the K-means algorithm. And think:
+<ul>
+<li>What is K?</li>
+<li>What values can K take and what impact does this have on our results?</li>
+<li>What are the steps of the algorithm?</li>
+<li>What are some pros and cons of this algorithm?</li>
+</ul></li>
+<li>Reflect upon the principal component analysis algorithm.
+<ul>
+<li>What’s the goal?</li>
+<li>What does PCA produce?</li>
+<li>Can you interpret PCs and understand how they’re defined (the idea, not the math)?</li>
+<li>Can you interpret loadings plots, scree plots, and score plots?</li>
+<li>What are some pros and cons of this algorithm?</li>
+</ul></li>
+</ul>
+</section>
+<section id="part-4-supervised-unsupervised" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="part-4-supervised-unsupervised">Part 4: supervised + unsupervised</h3>
+<p>Principal Component Regression (PCR) combines supervised and unsupervised ideas. It has been added to Slide 11.</p>
+<p>Reflect upon the following:</p>
+<ul>
+<li>What is the goal of PCR?</li>
+<li>What are the general steps of the PCR algorithm?</li>
+<li>How does PCR differ from LASSO? How does it differ from just kicking out some predictors (eg: using backward stepwise regression)?</li>
+<li>What are some pros and cons of PCR relative to LASSO or other variable selection techniques?</li>
+</ul>
+<!-- practice questions: https://ajohns24.github.io/253_Fall_23/looking-back.html#exercises-18 -->
+<p><br>
+<br>
+<br>
+</p>
+</section>
+</section>
 </section>
 <section id="wrapping-up" class="level1 unnumbered">
 <h1 class="unnumbered">Wrapping Up</h1>
+<p>Upcoming Due Dates:</p>
+<ul>
+<li>Quiz 3: during class next Tuesday (12/10)</li>
+<li><strong>MAKE-UP</strong> (only for people who missed class today) Group Assignment 3: next Wednesday (12/11)</li>
+<li>HW6 Revisions (if needed): due one week after receiving feedback (approx. 12/16)</li>
+<li>Final Learning Reflection: during finals week (12/17)</li>
+</ul>
 
 
 </section>

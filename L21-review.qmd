@@ -9,14 +9,317 @@ knitr::opts_chunk$set(echo=TRUE, eval=FALSE)
 library(tidyverse)
 ```
 
-::: {.callout-warning}
-this page is under construction! please check back soon for updates
-:::
 
 <!-- pull from BH work day slides + AJ "wrap-up" section of book -->
 
 # Settling In {-}
 
-# Exercises {-}
+- Sit with the same group as last class (if you were gone: check with me to get your new group number)
+- Hand in your Quiz 2 Revisions
+- Check Slack for recent announcements and other posts
+- Prepare to take notes (create a new Quarto document --- I don't have a template for you today)
+
+
+# End-of-Course Survey {-}
+
+Just as you rely on feedback and suggestions from me (on assignments, in office hours, etc.) to help guide your learning, I likewise rely on *your* feedback to help me improve my courses and become a better teacher in general.
+
+This is especially true for me this semester given that this was my first time teaching STAT 253!
+
+I would **GREATLY** appreciate hearing your thoughts on what worked well for you in this class, and what you think could be improved. 
+To that end, please take ~15 minutes to fill out the End-of-Course Survey to share your thoughts. 
+FYI: Your responses to this survey are anonymous, and I will not have access to them until after final grades have been submitted.
+
+You can access this survey in two ways:
+
+- Find the link in the email you got about end-of-course surveys
+- Go to [Moodle](https://moodle.macalester.edu/) (the general homepage, not the specific page for this class) > find the link to EvaluationKit > find the survey for this class
+
+# Preparing for Quiz 3 {-}
+
+## Reminders {-}
+
+- During class time next Tuesday (December 10)
+- Format: same as Quizzes 1 and 2
+- Content: cumulative, but focus on unsupervised learning
+- Study Tips: 
+  - Use the course [Learning Goals](https://kegrinde.github.io/stat253_coursenotes/learning-objectives.html) as a study guide
+  - Fill out the [STAT 253 Concepts Maps](https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing) (slides 10--12)
+  - Review old CPs, HWs, and in-class exercises
+  - Work on Group Assignment 3 (today!)
+
+NOTE: because you are taking the quiz during our last in-person meeting, there will not be an opportunity for revisions.
+
+\
+\
+\
+
+## Exercises: (Mini) Group Assignment 3 {-}
+
+Today, we'll be doing an abridged version of Group Assignment 3. 
+See how far you can get during class time today. 
+If you don't finish, I recommend continuing to work on this as a way of studying for Quiz 3. 
+However, you will not turn anything in. 
+As long as you are in class today and are actively engaged in this activity, you will pass Group Assignment 3.
+
+::: {.callout-note}
+If you miss class today, please get in touch with me as soon as possible to discuss instructions and expectations for making up this assignment. 
+:::
+
+### Goals {-}
+
+Our goals for this assignment are as follows: 
+
+- Conduct an **open-ended unsupervised learning analysis** and deepen your understanding of these concepts.
+- Build confidence by working on more open-ended tasks, outside the context of scaffolded in-class exercise or homework prompts
+- Work on collaboration! 
+- Prepare for Quiz 3
+
+With the final goal in mind, while working on this assignment you should only use resources that will be available to you during Quiz 3. 
+In other words, do NOT use chatGPT, Google, or anything else that you will not not be allowed to access during the quiz. 
+If you get stuck and find yourself wanting to access outside resources, check the course website, talk it through with your group, and then ask Kelsey for help.
+
+### Getting Started {-}
+
+Create a new Quarto document where you can document your analysis and take notes.
+Each member of your group should create their own QMD, but you should work through the tasks below **as a group**.
+
+
+### Data Context and Prep {-}
+
+Our data for this assignment come from a 2021 TidyTuesday challenge focused on data from the [Billboard Top 100 list](https://en.wikipedia.org/wiki/Billboard_Hot_100). 
+
+Some Mac professors did some initial data cleaning for us. We'll access a "cleaner" version of the data here:
+
+```{r}
+# load data
+library(tidyverse)
+music <- read_csv("https://bcheggeseth.github.io/253_spring_2024/data/billboard.csv")
+
+# check it out
+head(music)
+```
+
+You can find a codebook and additional details about the data  [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-09-14/readme.md). 
+Take a few minutes to read this documentation and explore the dataset in R before you move on.
+
+\
+\
+\
+\
+\
+
+This is a big dataset. Let's focus on ONE artist who has at least 25 songs in the dataset:
+
+```{r}
+# Check out artists with at least 25 songs
+music %>% 
+  count(performer) %>% 
+  filter(n >= 25) %>% 
+  select(performer)
+```
+
+Pick one of these artists to focus on for the remainder of your analysis. 
+Use the code below to filter the data to only include songs by this artist and do a little extra data cleaning. 
+
+```{r}
+# Pick just one of these artists to study
+my_artist <- music %>% 
+  filter(performer == "___") %>% 
+  select(-performer) %>% 
+  group_by(song) %>%       # The last rows deal w songs that appear more than once
+  slice_sample(n = 1) %>% 
+  ungroup()
+```
+
+<details>
+<summary>"Solution"</summary>
+
+I decided to focus on U2 since they were the first band I ever saw in concert!
+
+```{r}
+#| eval: true
+# Pick just one of these artists to study
+my_artist <- music %>% 
+  filter(performer == "U2") %>% 
+  select(-performer) %>% 
+  group_by(song) %>%       # The last rows deal w songs that appear more than once
+  slice_sample(n = 1) %>% 
+  ungroup()
+
+# check it out
+head(my_artist)
+```
+
+</details>
+
+
+\
+\
+\
+
+### Clustering Analysis {-}
+
+Your first task is to conduct a clustering analysis. 
+
+Write 1--2 paragraphs with some key takeaways. Be sure to address:
+
+- the various clusters you identify
+- the *features* of these clusters
+- which algorithm you used
+- any decisions you had to make about how to implement that algorithm (the type of linkage to use, if applicable, how many clusters to create, etc.)
+
+Create at least 3 visualizations that support these takeaways. These visualizations must each present unique information about the data, i.e. not simply be different approaches to displaying similar information.
+
+NOTE: We've discussed two clustering techniques in this class. Try both, compare/contrast your results, and think about which you would prefer in this setting if you could only present results from one. Suggestion: you might have some members of your group work on one, and some on the other, and then come back together to discuss what you learn and pros/cons of each.
+
+
+```{r}
+#| eval: false
+#| include: false
+library(cluster)
+
+my_artist <- my_artist %>%
+  column_to_rownames("song")
+
+heatmap(scale(data.matrix(my_artist)), Colv = NA)
+
+hier_model <- hclust(daisy(my_artist, metric = "gower"), method = "complete")
+fviz_dend(hier_model, horiz = TRUE, cex = 0.5)
+fviz_dend(hier_model, horiz = TRUE, cex = 0.5, k = 4)
+
+# group_by cluster and then calculate means 
+cluster_data <- my_artist %>% 
+  mutate(hier_cluster_k = as.factor(cutree(hier_model, k = 4)))
+cluster_data %>%
+  group_by(hier_cluster_k) %>%
+  summarize_all(mean)
+
+# scatterplots of predictors with points colored by cluster assignment
+# try a different number of clusters
+# try a different type of linkage
+
+#### try kmeans
+# use SS to compare different K
+# use silhoutte to compare different K
+# plot cluster assignments against features
+# average feature values for each cluster
+```
+
+\
+\
+\
+
+### Dimension Reduction {-}
+
+Next, conduct dimension reduction using Principal Component Analysis. 
+
+Like above, write 1--2 paragraphs with some key takeaways. 
+For this analysis, be sure to address:
+
+- the features of the first 2 principal components
+- how many PCs you might retain and why
+- the amount of the original information for which your retained PCs account
+
+Create at least 2 visualizations that support these takeaways. These visualizations must each present unique information about the data, i.e. not simply be different approaches to displaying similar information.
+
+
+```{r}
+#| eval: false
+#| include: false
+sample_data_new <- data.frame(model.matrix(~ . - 1, data = sample_data))
+rownames(sample_data_new) <- rownames(sample_data)
+
+
+pca_time <- prcomp(sample_data_new, scale = TRUE)
+fviz_pca_var(pca_time, repel = TRUE)
+fviz_pca_ind(pca_time, repel = TRUE)
+```
+
+\
+\
+\
+
+## Additional Review Questions {-}
+
+If you finish all of the tasks above, talk through the following review questions with your group. 
+Otherwise, come back to this while studying for the quiz.
+
+### Part 1: enduring, big picture concepts {-}
+
+Slide 1 of the [STAT 253 Concepts Maps](https://docs.google.com/presentation/d/1tOqe8NQMyQSgjn38MfAAVWGPNAC1swLhmblpE4tFXlE/edit?usp=sharing) presents a set of enduring, big picture questions that are critical to doing, critiquing, and understanding machine learning analyses. 
+I hope these stick with you for years to come. They are also important for Quiz 3. 
+
+Respond in your own words!
+
+- When do we perform a supervised vs unsupervised learning algorithm?
+- Within supervised learning, when do we use a regression vs a classification algorithm?
+- What is the importance of *model evaluation* and what questions does it address?
+- What is *overfitting* and why is it bad?
+- What is *cross-validation*? How does it work and what problem is it trying to address?
+- What is the *bias-variance tradeoff*? What models tend to have high bias? High variance?
+
+### Part 2: supervised learning {-}
+
+Slides 2–8 present a variety of regression & classification algorithms & concepts.
+On Quiz 3, you won’t be asked about the nitty gritty (eg: how to interpret coefficients, make predictions, do the algorithm by hand). 
+But you should have the following bigger picture understanding of how all of the algorithms fit together. 
+
+For each algorithm:
+
+- In what situations is it useful? Could you use it for regression, classification, or both?
+- Is the algorithm parametric or nonparametric? What's the difference?
+- In general, how does the algorithm work?
+
+### Part 3: unsupervised learning {-}
+
+Slide 9 presents important unsupervised tasks and algorithms. 
+In the table, take notes on the following:
+
+- What's the goal of clustering? Dimension reduction?
+- How are these goals similar? How do they differ?
+- Reflect upon the hierarchical clustering algorithm. And think:
+    - What are the steps of the algorithm?
+    - Can you implement this algorithm by hand for a small sample?
+    - Can you interpret and use a dendrogram?
+    - What's the difference between complete, single, centroid, and average linkage? What role do these play in hierarchical clustering?
+    - What are some pros and cons of this algorithm?
+- Reflect upon the K-means algorithm. And think:
+    - What is K?
+    - What values can K take and what impact does this have on our results?
+    - What are the steps of the algorithm?
+    - What are some pros and cons of this algorithm?
+- Reflect upon the principal component analysis algorithm.
+    - What's the goal?
+    - What does PCA produce?
+    - Can you interpret PCs and understand how they're defined (the idea, not the math)?
+    - Can you interpret loadings plots, scree plots, and score plots?
+    - What are some pros and cons of this algorithm?
+    
+### Part 4: supervised + unsupervised {-}
+
+Principal Component Regression (PCR) combines supervised and unsupervised ideas. 
+It has been added to Slide 11. 
+
+Reflect upon the following:
+
+- What is the goal of PCR?
+- What are the general steps of the PCR algorithm?
+- How does PCR differ from LASSO? How does it differ from just kicking out some predictors (eg: using backward stepwise regression)?
+- What are some pros and cons of PCR relative to LASSO or other variable selection techniques?
+
+<!-- practice questions: https://ajohns24.github.io/253_Fall_23/looking-back.html#exercises-18 -->
+
+\
+\
+\
 
 # Wrapping Up {-}
+
+Upcoming Due Dates: 
+
+- Quiz 3: during class next Tuesday (12/10)
+- **MAKE-UP** (only for people who missed class today) Group Assignment 3: next Wednesday (12/11)
+- HW6 Revisions (if needed): due one week after receiving feedback (approx. 12/16)
+- Final Learning Reflection: during finals week (12/17)
+
